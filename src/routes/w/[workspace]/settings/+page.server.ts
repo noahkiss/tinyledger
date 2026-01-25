@@ -6,8 +6,8 @@ import { updateWorkspaceName } from '$lib/server/workspace/registry';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	// Get settings from parent layout
-	const { settings } = await parent();
-	return { settings };
+	const { settings, workspaceId } = await parent();
+	return { settings, workspaceId };
 };
 
 export const actions: Actions = {
