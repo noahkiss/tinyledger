@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Workspace isolation, database layer, void-first model
 - [x] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
-- [ ] **Phase 3: Tags & Categories** - Tag system with allocation percentages
+- [x] **Phase 3: Tags & Categories** - Tag system with allocation percentages
 - [ ] **Phase 4: Attachments** - Receipt upload, storage, and management
 - [ ] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [ ] **Phase 6: Reports Dashboard** - Summary cards and charts
@@ -71,8 +71,8 @@ Plans:
 **Plans**: 2 plans in 1 wave
 
 Plans:
-- [ ] 03-01-PLAN.md - Tag infrastructure: Schedule C seeding, lock mode, tags management page (Wave 1)
-- [ ] 03-02-PLAN.md - Predictive entry: payee autocomplete, tag suggestions, inline creation (Wave 1)
+- [x] 03-01-PLAN.md - Tag infrastructure: Schedule C seeding, lock mode, tags management page (Wave 1)
+- [x] 03-02-PLAN.md - Predictive entry: payee autocomplete, tag suggestions, inline creation (Wave 1)
 
 ### Phase 4: Attachments
 **Goal**: Receipt attachment system with workspace-namespaced storage
@@ -177,7 +177,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-25 |
 | 2. Core Transactions | 4/4 | Complete | 2026-01-25 |
-| 3. Tags & Categories | 0/2 | Planned | - |
+| 3. Tags & Categories | 2/2 | Complete | 2026-01-25 |
 | 4. Attachments | 0/1 | Not started | - |
 | 5. Timeline & Navigation | 0/2 | Not started | - |
 | 6. Reports Dashboard | 0/1 | Not started | - |

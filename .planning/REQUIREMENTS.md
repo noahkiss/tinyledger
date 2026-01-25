@@ -16,7 +16,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **WKSP-05**: User can set founded year to enable historical fiscal year views
 - [x] **WKSP-06**: User can switch between workspaces via logo dropdown in header
 - [x] **WKSP-07**: Last-used workspace remembered per device (localStorage)
-- [ ] **WKSP-08**: New workspaces include pre-seeded common tags (Schedule C categories)
+- [x] **WKSP-08**: New workspaces include pre-seeded common tags (Schedule C categories)
 
 ### Transactions
 
@@ -31,9 +31,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Predictive Entry
 
-- [ ] **PRED-01**: Payee field autocompletes from transaction history (fuzzy/substring matching)
-- [ ] **PRED-02**: Tag suggestions appear based on selected payee's history
-- [ ] **PRED-03**: Amount pre-fills based on payee match (optional, user can override)
+- [x] **PRED-01**: Payee field autocompletes from transaction history (fuzzy/substring matching)
+- [x] **PRED-02**: Tag suggestions appear based on selected payee's history
+- [x] **PRED-03**: Amount pre-fills based on payee match (optional, user can override)
 
 ### Input UX
 
@@ -85,10 +85,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Tags & Categories
 
-- [ ] **TAGS-01**: User can create tags on-the-fly during transaction entry
-- [ ] **TAGS-02**: Tags management page in settings (view, rename, merge, delete)
-- [ ] **TAGS-03**: Optional "lock tags" mode prevents new tag creation
-- [ ] **TAGS-04**: Pre-seeded tags based on IRS Schedule C categories
+- [x] **TAGS-01**: User can create tags on-the-fly during transaction entry
+- [x] **TAGS-02**: Tags management page in settings (view, rename, merge, delete)
+- [x] **TAGS-03**: Optional "lock tags" mode prevents new tag creation
+- [x] **TAGS-04**: Pre-seeded tags based on IRS Schedule C categories
 
 ### Tax Configuration
 
@@ -213,7 +213,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WKSP-05 | Phase 1 | Pending |
 | WKSP-06 | Phase 1 | Pending |
 | WKSP-07 | Phase 1 | Pending |
-| WKSP-08 | Phase 3 | Pending |
+| WKSP-08 | Phase 3 | Complete |
 | TXNS-01 | Phase 2 | Pending |
 | TXNS-02 | Phase 2 | Pending |
 | TXNS-03 | Phase 2 | Pending |
@@ -222,9 +222,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TXNS-06 | Phase 2 | Pending |
 | TXNS-07 | Phase 2 | Pending |
 | TXNS-08 | Phase 2 | Pending |
-| PRED-01 | Phase 3 | Pending |
-| PRED-02 | Phase 3 | Pending |
-| PRED-03 | Phase 3 | Pending |
+| PRED-01 | Phase 3 | Complete |
+| PRED-02 | Phase 3 | Complete |
+| PRED-03 | Phase 3 | Complete |
 | INUX-01 | Phase 2 | Pending |
 | INUX-02 | Phase 2 | Pending |
 | INUX-03 | Phase 2 | Pending |
@@ -258,10 +258,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FISC-03 | Phase 5 | Pending |
 | FISC-04 | Phase 5 | Pending |
 | FISC-05 | Phase 5 | Pending |
-| TAGS-01 | Phase 3 | Pending |
-| TAGS-02 | Phase 3 | Pending |
-| TAGS-03 | Phase 3 | Pending |
-| TAGS-04 | Phase 3 | Pending |
+| TAGS-01 | Phase 3 | Complete |
+| TAGS-02 | Phase 3 | Complete |
+| TAGS-03 | Phase 3 | Complete |
+| TAGS-04 | Phase 3 | Complete |
 | TAXC-01 | Phase 7 | Pending |
 | TAXC-02 | Phase 7 | Pending |
 | TAXC-03 | Phase 7 | Pending |
