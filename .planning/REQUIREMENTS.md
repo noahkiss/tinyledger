@@ -206,15 +206,109 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WKSP-01 | TBD | Pending |
-| WKSP-02 | TBD | Pending |
-| ... | ... | ... |
+| WKSP-01 | Phase 1 | Pending |
+| WKSP-02 | Phase 1 | Pending |
+| WKSP-03 | Phase 1 | Pending |
+| WKSP-04 | Phase 1 | Pending |
+| WKSP-05 | Phase 1 | Pending |
+| WKSP-06 | Phase 1 | Pending |
+| WKSP-07 | Phase 1 | Pending |
+| WKSP-08 | Phase 3 | Pending |
+| TXNS-01 | Phase 2 | Pending |
+| TXNS-02 | Phase 2 | Pending |
+| TXNS-03 | Phase 2 | Pending |
+| TXNS-04 | Phase 2 | Pending |
+| TXNS-05 | Phase 2 | Pending |
+| TXNS-06 | Phase 2 | Pending |
+| TXNS-07 | Phase 2 | Pending |
+| TXNS-08 | Phase 2 | Pending |
+| PRED-01 | Phase 3 | Pending |
+| PRED-02 | Phase 3 | Pending |
+| PRED-03 | Phase 3 | Pending |
+| INUX-01 | Phase 2 | Pending |
+| INUX-02 | Phase 2 | Pending |
+| INUX-03 | Phase 2 | Pending |
+| INUX-04 | Phase 2 | Pending |
+| INUX-05 | Phase 2 | Pending |
+| RCUR-01 | Phase 8 | Pending |
+| RCUR-02 | Phase 8 | Pending |
+| RCUR-03 | Phase 8 | Pending |
+| RCUR-04 | Phase 8 | Pending |
+| RCUR-05 | Phase 8 | Pending |
+| RCUR-06 | Phase 8 | Pending |
+| RCUR-07 | Phase 8 | Pending |
+| ATCH-01 | Phase 4 | Pending |
+| ATCH-02 | Phase 4 | Pending |
+| ATCH-03 | Phase 4 | Pending |
+| ATCH-04 | Phase 4 | Pending |
+| ATCH-05 | Phase 4 | Pending |
+| ATCH-06 | Phase 4 | Pending |
+| TMLN-01 | Phase 5 | Pending |
+| TMLN-02 | Phase 5 | Pending |
+| TMLN-03 | Phase 5 | Pending |
+| TMLN-04 | Phase 5 | Pending |
+| TMLN-05 | Phase 5 | Pending |
+| TMLN-06 | Phase 5 | Pending |
+| TMLN-07 | Phase 5 | Pending |
+| TMLN-08 | Phase 5 | Pending |
+| TMLN-09 | Phase 5 | Pending |
+| TMLN-10 | Phase 5 | Pending |
+| FISC-01 | Phase 5 | Pending |
+| FISC-02 | Phase 5 | Pending |
+| FISC-03 | Phase 5 | Pending |
+| FISC-04 | Phase 5 | Pending |
+| FISC-05 | Phase 5 | Pending |
+| TAGS-01 | Phase 3 | Pending |
+| TAGS-02 | Phase 3 | Pending |
+| TAGS-03 | Phase 3 | Pending |
+| TAGS-04 | Phase 3 | Pending |
+| TAXC-01 | Phase 7 | Pending |
+| TAXC-02 | Phase 7 | Pending |
+| TAXC-03 | Phase 7 | Pending |
+| TAXC-04 | Phase 7 | Pending |
+| TAXC-05 | Phase 7 | Pending |
+| CALC-01 | Phase 7 | Pending |
+| CALC-02 | Phase 7 | Pending |
+| CALC-03 | Phase 7 | Pending |
+| CALC-04 | Phase 7 | Pending |
+| CALC-05 | Phase 7 | Pending |
+| CALC-06 | Phase 7 | Pending |
+| CALC-07 | Phase 7 | Pending |
+| QRTR-01 | Phase 7 | Pending |
+| QRTR-02 | Phase 7 | Pending |
+| QRTR-03 | Phase 7 | Pending |
+| QRTR-04 | Phase 7 | Pending |
+| RPTS-01 | Phase 6 | Pending |
+| RPTS-02 | Phase 6 | Pending |
+| RPTS-03 | Phase 6 | Pending |
+| RPTS-04 | Phase 6 | Pending |
+| RGEN-01 | Phase 8 | Pending |
+| RGEN-02 | Phase 8 | Pending |
+| RGEN-03 | Phase 8 | Pending |
+| RGEN-04 | Phase 8 | Pending |
+| RGEN-05 | Phase 8 | Pending |
+| DATA-01 | Phase 8 | Pending |
+| DATA-02 | Phase 8 | Pending |
+| DATA-03 | Phase 8 | Pending |
+| DATA-04 | Phase 8 | Pending |
+| INTG-01 | Phase 2 | Pending |
+| INTG-02 | Phase 2 | Pending |
+| INTG-03 | Phase 2 | Pending |
+| INTG-04 | Phase 1 | Pending |
+| MOBL-01 | Phase 9 | Pending |
+| MOBL-02 | Phase 9 | Pending |
+| MOBL-03 | Phase 9 | Pending |
+| MOBL-04 | Phase 9 | Pending |
+| DPLY-01 | Phase 9 | Pending |
+| DPLY-02 | Phase 9 | Pending |
+| DPLY-03 | Phase 9 | Pending |
+| DPLY-04 | Phase 9 | Pending |
 
 **Coverage:**
 - v1 requirements: 74 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 74 ⚠️
+- Mapped to phases: 74
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 after initial definition*
+*Last updated: 2026-01-24 after roadmap creation*
