@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 2 of 9 (Core Transactions)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-25 - Completed 02-01-PLAN.md (Transaction Schema)
+Last activity: 2026-01-25 - Completed 02-02-PLAN.md (Form Input Components)
 
-Progress: [██░░░░░░░░] 17%
+Progress: [██░░░░░░░░] 22%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 37 min
-- Total execution time: 1.8 hours
+- Total plans completed: 4
+- Average duration: 29 min
+- Total execution time: 1.9 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 99 min | 50 min |
-| 02-core-transactions | 1 | 6 min | 6 min |
+| 02-core-transactions | 2 | 10 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 54 min, 45 min, 6 min
+- Last 5 plans: 54 min, 45 min, 6 min, 4 min
 - Trend: Improving
 
 *Updated after each plan completion*
@@ -56,6 +56,8 @@ Recent decisions affecting current work:
 | Dual ID system (id + publicId) | 02-01 | Internal id for FKs, UUID publicId for URLs |
 | Date as text YYYY-MM-DD | 02-01 | Avoid timezone issues with date shifts |
 | History table pattern | 02-01 | Audit trail with JSON previousState snapshots |
+| Native type=date input | 02-02 | Mobile picker support without custom library |
+| Hidden cents input for forms | 02-02 | Submit integer cents while displaying formatted dollars |
 
 ### Pending Todos
 
@@ -67,6 +69,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-25T18:42:57Z
-Stopped at: Completed 02-01-PLAN.md (Transaction Schema)
+Last session: 2026-01-25T18:49:15Z
+Stopped at: Completed 02-02-PLAN.md (Form Input Components)
 Resume file: None
