@@ -96,4 +96,12 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 
 	// Enable foreign key enforcement
 	db.run(sql`PRAGMA foreign_keys = ON`);
+
+	// Migration: Add tags_locked column to workspace_settings
+	// Wrapped in try/catch as column may already exist
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN tags_locked INTEGER DEFAULT 0 NOT NULL`);
+	} catch {
+		// Column already exists, ignore
+	}
 }

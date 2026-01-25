@@ -4,6 +4,7 @@ import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import * as schema from '$lib/server/db/schema';
 import { initializeSchema } from '$lib/server/db/migrate';
+import { seedScheduleCTags } from '$lib/server/db/seed-tags';
 import { addWorkspace as addToRegistry } from './registry';
 
 const DATA_DIR = process.env.DATA_DIR ?? './data';
@@ -90,6 +91,9 @@ export function createWorkspace(
 			updatedAt: new Date().toISOString()
 		})
 		.run();
+
+	// Seed Schedule C categories for new workspaces
+	seedScheduleCTags(db);
 
 	// Add to registry
 	addToRegistry(workspaceId, name);

@@ -15,6 +15,7 @@ export const workspaceSettings = sqliteTable('workspace_settings', {
 	responsibleParty: text('responsible_party'),
 	foundedYear: integer('founded_year'),
 	logoFilename: text('logo_filename'),
+	tagsLocked: integer('tags_locked').default(0).notNull(), // SQLite boolean: 0 = false, 1 = true
 	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
 });
