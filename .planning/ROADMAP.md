@@ -34,11 +34,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can edit workspace details (name, type, business info, logo)
   4. Each workspace has isolated SQLite database with WAL mode enabled
   5. Last-used workspace is remembered when returning to the app
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md - SvelteKit project + database infrastructure (Wave 1)
+- [ ] 01-02-PLAN.md - Workspace CRUD, settings UI, header switcher (Wave 2)
 
 ### Phase 2: Core Transactions
 **Goal**: User can create, edit, and void income/expense transactions
@@ -170,11 +170,11 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Not started | - |
+| 1. Foundation | 0/2 | Planned | - |
 | 2. Core Transactions | 0/3 | Not started | - |
 | 3. Tags & Categories | 0/2 | Not started | - |
 | 4. Attachments | 0/1 | Not started | - |
