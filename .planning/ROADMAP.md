@@ -12,7 +12,7 @@ TinyLedger delivers a lightweight, mobile-first ledger for sole proprietors in 9
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Workspace isolation, database layer, void-first model
+- [x] **Phase 1: Foundation** - Workspace isolation, database layer, void-first model
 - [ ] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
 - [ ] **Phase 3: Tags & Categories** - Tag system with allocation percentages
 - [ ] **Phase 4: Attachments** - Receipt upload, storage, and management
@@ -37,8 +37,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 01-01-PLAN.md - SvelteKit project + database infrastructure (Wave 1)
-- [ ] 01-02-PLAN.md - Workspace CRUD, settings UI, header switcher (Wave 2)
+- [x] 01-01-PLAN.md - SvelteKit project + database infrastructure (Wave 1)
+- [x] 01-02-PLAN.md - Workspace CRUD, settings UI, header switcher (Wave 2)
 
 ### Phase 2: Core Transactions
 **Goal**: User can create, edit, and void income/expense transactions
@@ -174,7 +174,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Planned | - |
+| 1. Foundation | 2/2 | Complete | 2026-01-25 |
 | 2. Core Transactions | 0/3 | Not started | - |
 | 3. Tags & Categories | 0/2 | Not started | - |
 | 4. Attachments | 0/1 | Not started | - |
