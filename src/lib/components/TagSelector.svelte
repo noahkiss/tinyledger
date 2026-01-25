@@ -6,18 +6,63 @@
 		percentage: number;
 	};
 
+	type SuggestedTag = {
+		id: number;
+		name: string;
+		percentage: number;
+	};
+
 	let {
 		availableTags = [],
-		allocations = $bindable<TagAllocation[]>([])
+		allocations = $bindable<TagAllocation[]>([]),
+		onCreateTag,
+		locked = false,
+		suggestedTags = []
 	}: {
 		availableTags: Tag[];
 		allocations?: TagAllocation[];
+		onCreateTag?: (name: string) => Promise<Tag | null>;
+		locked?: boolean;
+		suggestedTags?: SuggestedTag[];
 	} = $props();
+
+	// State for inline tag creation
+	let newTagName = $state('');
+	let isCreating = $state(false);
+	let createError = $state('');
+
+	// Track if we've auto-populated from suggestions
+	let hasAutoPopulated = $state(false);
 
 	// Computed validation
 	let totalPercentage = $derived(allocations.reduce((sum, a) => sum + a.percentage, 0));
 	let isValid = $derived(totalPercentage === 100);
 	let remainingPercentage = $derived(100 - totalPercentage);
+
+	// Auto-populate from suggested tags when allocations is empty and suggestions exist
+	$effect(() => {
+		if (suggestedTags.length > 0 && allocations.length === 0 && !hasAutoPopulated) {
+			// Verify suggested tags exist in available tags
+			const validSuggestions = suggestedTags.filter((s) =>
+				availableTags.some((t) => t.id === s.id)
+			);
+			if (validSuggestions.length > 0) {
+				allocations = validSuggestions.map((t) => ({
+					tagId: t.id,
+					percentage: t.percentage
+				}));
+				hasAutoPopulated = true;
+			}
+		}
+	});
+
+	// Reset auto-populated flag when suggested tags change
+	$effect(() => {
+		// When suggestedTags changes (e.g., different payee selected), allow re-population
+		if (suggestedTags.length === 0) {
+			hasAutoPopulated = false;
+		}
+	});
 
 	function addTag() {
 		// Default to remaining percentage or 0
@@ -48,6 +93,40 @@
 		allocations = allocations.map((a, i) =>
 			i === lastIdx ? { ...a, percentage: a.percentage + remainingPercentage } : a
 		);
+	}
+
+	// Handle inline tag creation
+	async function handleCreateTag() {
+		if (!onCreateTag || !newTagName.trim() || locked || isCreating) return;
+
+		createError = '';
+		isCreating = true;
+		try {
+			const newTag = await onCreateTag(newTagName.trim());
+			if (newTag) {
+				// Add to allocations with remaining percentage
+				const remaining = 100 - allocations.reduce((sum, a) => sum + a.percentage, 0);
+				allocations = [
+					...allocations,
+					{
+						tagId: newTag.id,
+						percentage: remaining > 0 ? remaining : 0
+					}
+				];
+				newTagName = '';
+			}
+		} catch (err) {
+			createError = err instanceof Error ? err.message : 'Failed to create tag';
+		} finally {
+			isCreating = false;
+		}
+	}
+
+	function handleCreateKeydown(e: KeyboardEvent) {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			handleCreateTag();
+		}
 	}
 </script>
 
@@ -123,5 +202,31 @@
 
 	{#if allocations.length > 0 && !isValid}
 		<p class="text-sm text-red-600">Tag percentages must sum to exactly 100%</p>
+	{/if}
+
+	<!-- Inline tag creation section -->
+	{#if !locked && onCreateTag}
+		<div class="mt-3 flex gap-2 border-t border-gray-200 pt-3">
+			<input
+				type="text"
+				bind:value={newTagName}
+				placeholder="Create new tag..."
+				onkeydown={handleCreateKeydown}
+				class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			/>
+			<button
+				type="button"
+				onclick={handleCreateTag}
+				disabled={isCreating || !newTagName.trim()}
+				class="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+			>
+				{isCreating ? '...' : 'Create'}
+			</button>
+		</div>
+		{#if createError}
+			<p class="mt-1 text-sm text-red-600">{createError}</p>
+		{/if}
+	{:else if locked}
+		<p class="mt-2 text-xs text-gray-500">Tag creation is locked. Manage tags in settings.</p>
 	{/if}
 </div>
