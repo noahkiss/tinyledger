@@ -6,6 +6,8 @@
 	import DateInput from '$lib/components/DateInput.svelte';
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
+	import PayeeAutocomplete from '$lib/components/PayeeAutocomplete.svelte';
+	import type { Tag } from '$lib/server/db/schema';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -23,6 +25,13 @@
 	let checkNumber = $state('');
 	let tagAllocations = $state<{ tagId: number; percentage: number }[]>([]);
 
+	// Predictive entry state
+	let suggestedTags = $state<{ id: number; name: string; percentage: number }[]>([]);
+	let suggestedAmount = $state<number | null>(null);
+
+	// Keep track of available tags (can be updated when new tags are created)
+	let availableTags = $state<Tag[]>(data.tags);
+
 	// Helper to get today's date in YYYY-MM-DD format
 	function getTodayDate(): string {
 		const today = new Date();
@@ -30,6 +39,54 @@
 		const month = String(today.getMonth() + 1).padStart(2, '0');
 		const day = String(today.getDate()).padStart(2, '0');
 		return `${year}-${month}-${day}`;
+	}
+
+	// Handle payee selection from autocomplete
+	function handlePayeeSelect(payeeData: (typeof data.payeeHistory)[0]) {
+		// Set tag suggestions (will be auto-populated by TagSelector if allocations is empty)
+		suggestedTags = payeeData.lastTags;
+
+		// Set amount hint (only if same transaction type)
+		if (payeeData.lastType === transactionType) {
+			suggestedAmount = payeeData.lastAmount;
+		} else {
+			suggestedAmount = null;
+		}
+	}
+
+	// Handle using suggested amount
+	function useSuggestedAmount() {
+		if (suggestedAmount !== null) {
+			amountCents = suggestedAmount;
+			suggestedAmount = null;
+		}
+	}
+
+	// Handle inline tag creation
+	async function handleCreateTag(name: string): Promise<Tag | null> {
+		const formData = new FormData();
+		formData.set('name', name);
+
+		const response = await fetch('?/createTag', {
+			method: 'POST',
+			body: formData
+		});
+
+		const result = await response.json();
+
+		if (result.type === 'success' && result.data?.tag) {
+			// Add to available tags list
+			availableTags = [...availableTags, result.data.tag].sort((a: Tag, b: Tag) =>
+				a.name.localeCompare(b.name)
+			);
+			return result.data.tag;
+		}
+
+		if (result.data?.error) {
+			throw new Error(result.data.error);
+		}
+
+		return null;
 	}
 
 	// Derived for UI
@@ -84,6 +141,14 @@
 			<div class="mt-1">
 				<CurrencyInput bind:value={amountCents} name="amount" id="amount" required class="w-full" />
 			</div>
+			{#if suggestedAmount !== null}
+				<p class="mt-1 text-xs text-gray-500">
+					Last amount: ${(suggestedAmount / 100).toFixed(2)}
+					<button type="button" class="ml-1 text-blue-600 hover:underline" onclick={useSuggestedAmount}>
+						Use this
+					</button>
+				</p>
+			{/if}
 		</div>
 
 		<!-- Date -->
@@ -94,19 +159,16 @@
 			</div>
 		</div>
 
-		<!-- Payee -->
+		<!-- Payee with autocomplete -->
 		<div>
 			<label for="payee" class="block text-sm font-medium text-gray-700">
 				{transactionType === 'income' ? 'Received from' : 'Paid to'}
 			</label>
 			<div class="mt-1">
-				<input
-					type="text"
-					id="payee"
-					name="payee"
+				<PayeeAutocomplete
+					payees={data.payeeHistory}
 					bind:value={payee}
-					required
-					class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+					onSelect={handlePayeeSelect}
 					placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
 				/>
 			</div>
@@ -145,13 +207,13 @@
 				<span class="font-normal text-gray-500">(optional)</span>
 			</label>
 			<div class="mt-1">
-				{#if data.tags.length === 0}
-					<p class="text-sm text-gray-500">
-						No tags available. Tags can be created in settings.
-					</p>
-				{:else}
-					<TagSelector availableTags={data.tags} bind:allocations={tagAllocations} />
-				{/if}
+				<TagSelector
+					{availableTags}
+					bind:allocations={tagAllocations}
+					onCreateTag={data.tagsLocked ? undefined : handleCreateTag}
+					locked={data.tagsLocked}
+					{suggestedTags}
+				/>
 			</div>
 		</div>
 

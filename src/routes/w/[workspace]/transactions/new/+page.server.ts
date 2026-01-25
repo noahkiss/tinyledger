@@ -1,6 +1,13 @@
 import type { PageServerLoad, Actions } from './$types';
 import { error, fail, redirect } from '@sveltejs/kit';
-import { tags, transactions, transactionTags, transactionHistory } from '$lib/server/db/schema';
+import {
+	tags,
+	transactions,
+	transactionTags,
+	transactionHistory,
+	workspaceSettings
+} from '$lib/server/db/schema';
+import { sql, desc, and, isNull, eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const db = locals.db;
@@ -12,8 +19,65 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// Get all available tags for the form
 	const availableTags = db.select().from(tags).orderBy(tags.name).all();
 
+	// Get payee history with aggregated data for predictive entry
+	const payeeHistoryRaw = db
+		.select({
+			payee: transactions.payee,
+			count: sql<number>`count(*)`,
+			lastAmount: sql<number>`(
+				SELECT amount_cents FROM transactions t2
+				WHERE t2.payee = ${transactions.payee}
+				AND t2.voided_at IS NULL AND t2.deleted_at IS NULL
+				ORDER BY t2.date DESC, t2.id DESC LIMIT 1
+			)`,
+			lastType: sql<string>`(
+				SELECT type FROM transactions t2
+				WHERE t2.payee = ${transactions.payee}
+				AND t2.voided_at IS NULL AND t2.deleted_at IS NULL
+				ORDER BY t2.date DESC, t2.id DESC LIMIT 1
+			)`,
+			lastTransactionId: sql<number>`(
+				SELECT id FROM transactions t2
+				WHERE t2.payee = ${transactions.payee}
+				AND t2.voided_at IS NULL AND t2.deleted_at IS NULL
+				ORDER BY t2.date DESC, t2.id DESC LIMIT 1
+			)`
+		})
+		.from(transactions)
+		.where(and(isNull(transactions.voidedAt), isNull(transactions.deletedAt)))
+		.groupBy(transactions.payee)
+		.orderBy(desc(sql`count(*)`))
+		.all();
+
+	// For each payee, get the tags from their last transaction
+	const payeeHistory = payeeHistoryRaw.map((p) => {
+		const lastTags = db
+			.select({
+				id: tags.id,
+				name: tags.name,
+				percentage: transactionTags.percentage
+			})
+			.from(transactionTags)
+			.innerJoin(tags, eq(transactionTags.tagId, tags.id))
+			.where(eq(transactionTags.transactionId, p.lastTransactionId))
+			.all();
+
+		return {
+			payee: p.payee,
+			count: p.count,
+			lastAmount: p.lastAmount,
+			lastType: p.lastType as 'income' | 'expense',
+			lastTags
+		};
+	});
+
+	// Get workspace settings for tagsLocked
+	const settings = db.select().from(workspaceSettings).limit(1).get();
+
 	return {
-		tags: availableTags
+		tags: availableTags,
+		payeeHistory,
+		tagsLocked: settings?.tagsLocked === 1
 	};
 };
 
@@ -125,5 +189,35 @@ export const actions: Actions = {
 
 		// Redirect to the new transaction's detail page
 		throw redirect(303, `/w/${params.workspace}/transactions/${publicId}`);
+	},
+
+	createTag: async ({ locals, request }) => {
+		const db = locals.db;
+
+		if (!db) {
+			return fail(500, { error: 'Database not initialized' });
+		}
+
+		const formData = await request.formData();
+		const name = (formData.get('name') as string)?.trim();
+
+		if (!name) {
+			return fail(400, { error: 'Tag name is required' });
+		}
+
+		// Check for duplicate (case-insensitive)
+		const existing = db
+			.select()
+			.from(tags)
+			.where(sql`LOWER(${tags.name}) = LOWER(${name})`)
+			.get();
+
+		if (existing) {
+			return fail(400, { error: 'Tag already exists', existingTag: existing });
+		}
+
+		const result = db.insert(tags).values({ name }).returning().get();
+
+		return { success: true, tag: result };
 	}
 };

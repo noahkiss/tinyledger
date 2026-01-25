@@ -6,6 +6,8 @@
 	import DateInput from '$lib/components/DateInput.svelte';
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
+	import PayeeAutocomplete from '$lib/components/PayeeAutocomplete.svelte';
+	import type { Tag } from '$lib/server/db/schema';
 
 	let { data, form } = $props();
 
@@ -26,6 +28,9 @@
 			percentage: t.percentage
 		}))
 	);
+
+	// Keep track of available tags (can be updated when new tags are created)
+	let availableTags = $state<Tag[]>(data.availableTags);
 
 	// Reset form to current data
 	function resetForm() {
@@ -50,6 +55,33 @@
 	function cancelEdit() {
 		editMode = false;
 		resetForm();
+	}
+
+	// Handle inline tag creation
+	async function handleCreateTag(name: string): Promise<Tag | null> {
+		const formData = new FormData();
+		formData.set('name', name);
+
+		const response = await fetch('?/createTag', {
+			method: 'POST',
+			body: formData
+		});
+
+		const result = await response.json();
+
+		if (result.type === 'success' && result.data?.tag) {
+			// Add to available tags list
+			availableTags = [...availableTags, result.data.tag].sort((a: Tag, b: Tag) =>
+				a.name.localeCompare(b.name)
+			);
+			return result.data.tag;
+		}
+
+		if (result.data?.error) {
+			throw new Error(result.data.error);
+		}
+
+		return null;
 	}
 
 	// Format date for display
@@ -174,16 +206,13 @@
 						<DateInput bind:value={editDate} name="date" id="date" required class="w-full" />
 					</div>
 
-					<!-- Payee -->
+					<!-- Payee with autocomplete -->
 					<div>
 						<label for="payee" class="block text-sm font-medium text-gray-700 mb-2">Payee</label>
-						<input
-							type="text"
-							id="payee"
-							name="payee"
+						<PayeeAutocomplete
+							payees={data.payeeHistory}
 							bind:value={editPayee}
-							required
-							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							placeholder="Enter payee name..."
 						/>
 					</div>
 
@@ -206,12 +235,15 @@
 					</div>
 
 					<!-- Tags -->
-					{#if data.availableTags.length > 0}
-						<div>
-							<label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-							<TagSelector availableTags={data.availableTags} bind:allocations={editAllocations} />
-						</div>
-					{/if}
+					<div>
+						<label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+						<TagSelector
+							{availableTags}
+							bind:allocations={editAllocations}
+							onCreateTag={data.tagsLocked ? undefined : handleCreateTag}
+							locked={data.tagsLocked}
+						/>
+					</div>
 				</div>
 
 				<!-- Edit Actions -->
