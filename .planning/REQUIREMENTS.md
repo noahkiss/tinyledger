@@ -9,25 +9,25 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Workspaces
 
-- [ ] **WKSP-01**: User can create a new workspace with name and type (sole prop or volunteer org)
-- [ ] **WKSP-02**: User can edit workspace details (name, type, business info)
-- [ ] **WKSP-03**: User can upload workspace logo (enforced dimensions) or use 2-letter abbreviation
-- [ ] **WKSP-04**: User can set business details (name, address, phone, responsible party)
-- [ ] **WKSP-05**: User can set founded year to enable historical fiscal year views
-- [ ] **WKSP-06**: User can switch between workspaces via logo dropdown in header
-- [ ] **WKSP-07**: Last-used workspace remembered per device (localStorage)
+- [x] **WKSP-01**: User can create a new workspace with name and type (sole prop or volunteer org)
+- [x] **WKSP-02**: User can edit workspace details (name, type, business info)
+- [x] **WKSP-03**: User can upload workspace logo (enforced dimensions) or use 2-letter abbreviation
+- [x] **WKSP-04**: User can set business details (name, address, phone, responsible party)
+- [x] **WKSP-05**: User can set founded year to enable historical fiscal year views
+- [x] **WKSP-06**: User can switch between workspaces via logo dropdown in header
+- [x] **WKSP-07**: Last-used workspace remembered per device (localStorage)
 - [ ] **WKSP-08**: New workspaces include pre-seeded common tags (Schedule C categories)
 
 ### Transactions
 
-- [ ] **TXNS-01**: User can create income transaction with amount, date, payee, tags, description, payment method
-- [ ] **TXNS-02**: User can create expense transaction with amount, date, payee, tags, description, payment method
-- [ ] **TXNS-03**: User can select payment method (cash, card, check with check number)
-- [ ] **TXNS-04**: User can assign multiple tags with allocation percentages (must sum to 100%)
-- [ ] **TXNS-05**: User can edit existing transactions
-- [ ] **TXNS-06**: User can void transactions (keeps record, excludes from totals)
-- [ ] **TXNS-07**: User can delete only already-voided transactions (soft delete)
-- [ ] **TXNS-08**: System tracks full edit history for audit trail
+- [x] **TXNS-01**: User can create income transaction with amount, date, payee, tags, description, payment method
+- [x] **TXNS-02**: User can create expense transaction with amount, date, payee, tags, description, payment method
+- [x] **TXNS-03**: User can select payment method (cash, card, check with check number)
+- [x] **TXNS-04**: User can assign multiple tags with allocation percentages (must sum to 100%)
+- [x] **TXNS-05**: User can edit existing transactions
+- [x] **TXNS-06**: User can void transactions (keeps record, excludes from totals)
+- [x] **TXNS-07**: User can delete only already-voided transactions (soft delete)
+- [x] **TXNS-08**: System tracks full edit history for audit trail
 
 ### Predictive Entry
 
@@ -37,11 +37,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Input UX
 
-- [ ] **INUX-01**: Currency input auto-formats (adds $ sign, .00 if no decimal)
-- [ ] **INUX-02**: Date input accepts flexible formats (with/without slashes)
-- [ ] **INUX-03**: Date input includes mobile-friendly date picker
-- [ ] **INUX-04**: Percentage input for tag allocation is intuitive and validates sum
-- [ ] **INUX-05**: Warning displayed if date is >1 year in future (fat-finger protection)
+- [x] **INUX-01**: Currency input auto-formats (adds $ sign, .00 if no decimal)
+- [x] **INUX-02**: Date input accepts flexible formats (with/without slashes)
+- [x] **INUX-03**: Date input includes mobile-friendly date picker
+- [x] **INUX-04**: Percentage input for tag allocation is intuitive and validates sum
+- [x] **INUX-05**: Warning displayed if date is >1 year in future (fat-finger protection)
 
 ### Recurring Transactions
 
@@ -139,10 +139,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Data Integrity
 
-- [ ] **INTG-01**: Void-first deletion model (void is default, delete only on voided items)
-- [ ] **INTG-02**: All deletes are soft deletes (deleted_at timestamp, data retained)
-- [ ] **INTG-03**: Full edit history tracked for each transaction (audit trail)
-- [ ] **INTG-04**: SQLite configured with WAL mode and busy_timeout
+- [x] **INTG-01**: Void-first deletion model (void is default, delete only on voided items)
+- [x] **INTG-02**: All deletes are soft deletes (deleted_at timestamp, data retained)
+- [x] **INTG-03**: Full edit history tracked for each transaction (audit trail)
+- [x] **INTG-04**: SQLite configured with WAL mode and busy_timeout
 
 ### Mobile & PWA
 

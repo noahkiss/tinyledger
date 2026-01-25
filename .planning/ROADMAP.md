@@ -13,7 +13,7 @@ TinyLedger delivers a lightweight, mobile-first ledger for sole proprietors in 9
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Workspace isolation, database layer, void-first model
-- [ ] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
+- [x] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
 - [ ] **Phase 3: Tags & Categories** - Tag system with allocation percentages
 - [ ] **Phase 4: Attachments** - Receipt upload, storage, and management
 - [ ] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
@@ -53,10 +53,10 @@ Plans:
 **Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 02-01-PLAN.md - Database schema extension with transaction tables (Wave 1)
-- [ ] 02-02-PLAN.md - Input components: currency, date, tags, payment method (Wave 2)
-- [ ] 02-03-PLAN.md - Create transaction form and list view (Wave 3)
-- [ ] 02-04-PLAN.md - View/edit transaction, void/delete, history (Wave 3)
+- [x] 02-01-PLAN.md - Database schema extension with transaction tables (Wave 1)
+- [x] 02-02-PLAN.md - Input components: currency, date, tags, payment method (Wave 2)
+- [x] 02-03-PLAN.md - Create transaction form and list view (Wave 3)
+- [x] 02-04-PLAN.md - View/edit transaction, void/delete, history (Wave 3)
 
 ### Phase 3: Tags & Categories
 **Goal**: Complete tag management system with Schedule C pre-seeding
@@ -176,7 +176,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-25 |
-| 2. Core Transactions | 0/4 | Ready for execution | - |
+| 2. Core Transactions | 4/4 | Complete | 2026-01-25 |
 | 3. Tags & Categories | 0/2 | Not started | - |
 | 4. Attachments | 0/1 | Not started | - |
 | 5. Timeline & Navigation | 0/2 | Not started | - |

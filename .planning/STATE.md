@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 2 - Core Transactions (Complete)
+**Current focus:** Phase 3 - Tags & Categories
 
 ## Current Position
 
-Phase: 2 of 9 (Core Transactions)
-Plan: 4 of 4 in current phase
-Status: Phase complete
-Last activity: 2026-01-25 - Completed 02-04-PLAN.md (Transaction View/Edit)
+Phase: 3 of 9 (Tags & Categories)
+Plan: 0 of 2 in current phase
+Status: Ready to plan
+Last activity: 2026-01-25 - Completed Phase 2 (Core Transactions)
 
 Progress: [████░░░░░░] 40%
 
