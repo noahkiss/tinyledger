@@ -50,12 +50,13 @@ Plans:
   3. Currency and date inputs auto-format with mobile-friendly pickers
   4. User can edit existing transactions with full edit history tracked
   5. User can void transactions (keeps record) and delete only voided items (soft delete)
-**Plans**: TBD
+**Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md - Database schema extension with transaction tables (Wave 1)
+- [ ] 02-02-PLAN.md - Input components: currency, date, tags, payment method (Wave 2)
+- [ ] 02-03-PLAN.md - Create transaction form and list view (Wave 3)
+- [ ] 02-04-PLAN.md - View/edit transaction, void/delete, history (Wave 3)
 
 ### Phase 3: Tags & Categories
 **Goal**: Complete tag management system with Schedule C pre-seeding
@@ -175,7 +176,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-01-25 |
-| 2. Core Transactions | 0/3 | Not started | - |
+| 2. Core Transactions | 0/4 | Ready for execution | - |
 | 3. Tags & Categories | 0/2 | Not started | - |
 | 4. Attachments | 0/1 | Not started | - |
 | 5. Timeline & Navigation | 0/2 | Not started | - |
@@ -186,4 +187,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-01-24*
+*Last updated: 2026-01-25*
