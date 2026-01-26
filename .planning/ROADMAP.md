@@ -84,10 +84,11 @@ Plans:
   3. User can view attachment full-size and download it
   4. User can replace existing attachment on a transaction
   5. Attachments are auto-renamed for bulk export (YYYY-MM-DD_Payee_Amount.ext)
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md - Storage infrastructure: schema, storage module, API endpoint (Wave 1)
+- [ ] 04-02-PLAN.md - UI integration: AttachmentUpload component, form integration, detail view (Wave 2)
 
 ### Phase 5: Timeline & Navigation
 **Goal**: Fiscal year navigation and filtered transaction timeline
@@ -178,7 +179,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 1. Foundation | 2/2 | Complete | 2026-01-25 |
 | 2. Core Transactions | 4/4 | Complete | 2026-01-25 |
 | 3. Tags & Categories | 2/2 | Complete | 2026-01-25 |
-| 4. Attachments | 0/1 | Not started | - |
+| 4. Attachments | 0/2 | Not started | - |
 | 5. Timeline & Navigation | 0/2 | Not started | - |
 | 6. Reports Dashboard | 0/1 | Not started | - |
 | 7. Tax System | 0/2 | Not started | - |
