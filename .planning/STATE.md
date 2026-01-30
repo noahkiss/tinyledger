@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 4 of 9 (Attachments)
-Plan: 0 of 1 in current phase
-Status: Ready to plan
-Last activity: 2026-01-25 - Completed Phase 3 (Tags & Categories)
+Plan: 1 of 1 in current phase
+Status: Phase complete
+Last activity: 2026-01-30 - Completed 04-01-PLAN.md
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 55%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 22 min
-- Total execution time: 2.7 hours
+- Total plans completed: 9
+- Average duration: 20 min
+- Total execution time: 2.8 hours
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [█████░░░░░] 50%
 | 01-foundation | 2 | 99 min | 50 min |
 | 02-core-transactions | 4 | 27 min | 7 min |
 | 03-tags-categories | 2 | 32 min | 16 min |
+| 04-attachments | 1 | 5 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 4 min, 8 min, 9 min, 7 min, 25 min
+- Last 5 plans: 8 min, 9 min, 7 min, 25 min, 5 min
 - Trend: Stable execution
 
 *Updated after each plan completion*
@@ -66,6 +67,9 @@ Recent decisions affecting current work:
 | 29 Schedule C categories | 03-01 | Complete IRS coverage including COGS and all income types |
 | microfuzz for fuzzy search | 03-02 | Lightweight (<5KB), fast, simple API |
 | Inline tag creation | 03-02 | Reduces friction - create tags during transaction entry |
+| One attachment per transaction | 04-01 | Unique constraint on transactionId for simplicity |
+| Sharp re-encoding for attachments | 04-01 | Security: GIF preserved, others converted to JPEG q90 |
+| Export filename format | 04-01 | YYYY-MM-DD_Payee_$Amount.ext for tax-friendly naming |
 
 ### Pending Todos
 
@@ -77,6 +81,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-25T22:55:00Z
-Stopped at: Completed Phase 3 (Tags & Categories)
+Last session: 2026-01-30T07:05:41Z
+Stopped at: Completed 04-01-PLAN.md (Phase 4 complete)
 Resume file: None
