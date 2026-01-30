@@ -7,8 +7,10 @@ import {
 	transactionHistory,
 	tags,
 	workspaceSettings,
+	attachments,
 	type Transaction
 } from '$lib/server/db/schema';
+import { saveAttachment, deleteAttachment } from '$lib/server/storage/attachment';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const db = locals.db;
@@ -98,12 +100,26 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	// Get workspace settings for tagsLocked
 	const settings = db.select().from(workspaceSettings).limit(1).get();
 
+	// Get attachment for this transaction
+	const attachment = db
+		.select()
+		.from(attachments)
+		.where(eq(attachments.transactionId, transaction.id))
+		.get();
+
 	return {
 		transaction,
 		tagAllocations,
 		availableTags,
 		payeeHistory,
-		tagsLocked: settings?.tagsLocked === 1
+		tagsLocked: settings?.tagsLocked === 1,
+		attachment: attachment
+			? {
+					url: `/api/attachment/${params.workspace}/${transaction.publicId}`,
+					filename: attachment.originalName,
+					downloadUrl: `/api/attachment/${params.workspace}/${transaction.publicId}?download=true`
+				}
+			: null
 	};
 };
 
@@ -232,6 +248,34 @@ export const actions: Actions = {
 					percentage: allocation.percentage
 				})
 				.run();
+		}
+
+		// Handle attachment changes
+		const removeAttachment = formData.get('removeAttachment') === 'true';
+		const newAttachment = formData.get('attachment') as File | null;
+
+		if (removeAttachment) {
+			// Delete existing attachment
+			deleteAttachment(params.workspace, existing.publicId);
+			db.delete(attachments).where(eq(attachments.transactionId, existing.id)).run();
+		} else if (newAttachment && newAttachment.size > 0) {
+			// Replace with new attachment
+			try {
+				const result = await saveAttachment(params.workspace, existing.publicId, newAttachment);
+				// Delete old record first, then insert new
+				db.delete(attachments).where(eq(attachments.transactionId, existing.id)).run();
+				db.insert(attachments)
+					.values({
+						transactionId: existing.id,
+						filename: result.filename,
+						originalName: newAttachment.name,
+						mimeType: result.mimeType,
+						sizeBytes: result.sizeBytes
+					})
+					.run();
+			} catch (err) {
+				console.error('Attachment upload failed:', err);
+			}
 		}
 
 		return { success: true };

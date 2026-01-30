@@ -7,6 +7,7 @@
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
 	import PayeeAutocomplete from '$lib/components/PayeeAutocomplete.svelte';
+	import AttachmentUpload from '$lib/components/AttachmentUpload.svelte';
 	import type { Tag } from '$lib/server/db/schema';
 
 	let { data, form } = $props();
@@ -32,6 +33,10 @@
 	// Keep track of available tags (can be updated when new tags are created)
 	let availableTags = $state<Tag[]>(data.availableTags);
 
+	// Attachment state for edit mode
+	let removeAttachment = $state(false);
+	let editExistingUrl = $state<string | null>(data.attachment?.url || null);
+
 	// Reset form to current data
 	function resetForm() {
 		editType = data.transaction.type;
@@ -45,6 +50,26 @@
 			tagId: t.tagId,
 			percentage: t.percentage
 		}));
+		removeAttachment = false;
+		editExistingUrl = data.attachment?.url || null;
+	}
+
+	// Handle attachment removal in edit mode
+	function handleAttachmentRemove() {
+		removeAttachment = true;
+		editExistingUrl = null;
+	}
+
+	// Generate export filename for download link
+	function getExportFilename(): string {
+		const date = data.transaction.date;
+		// Sanitize payee: remove special chars, replace spaces with _, limit 30 chars
+		const sanitizedPayee = data.transaction.payee
+			.replace(/[^a-zA-Z0-9\s]/g, '')
+			.replace(/\s+/g, '_')
+			.substring(0, 30);
+		const amountDollars = Math.round(data.transaction.amountCents / 100);
+		return `${date}_${sanitizedPayee}_$${amountDollars}.jpg`;
 	}
 
 	function enterEditMode() {
@@ -168,7 +193,7 @@
 	<div class="rounded-lg bg-white shadow-sm border border-gray-200" class:opacity-75={isVoided && !editMode}>
 		{#if editMode}
 			<!-- Edit Mode -->
-			<form method="POST" action="?/edit" use:enhance={() => {
+			<form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance={() => {
 				return async ({ update }) => {
 					await update();
 					editMode = false;
@@ -242,6 +267,21 @@
 							bind:allocations={editAllocations}
 							onCreateTag={data.tagsLocked ? undefined : handleCreateTag}
 							locked={data.tagsLocked}
+						/>
+					</div>
+
+					<!-- Receipt Attachment -->
+					<div>
+						<label class="block text-sm font-medium text-gray-700 mb-2">
+							Receipt
+							<span class="font-normal text-gray-500">(optional)</span>
+						</label>
+						<input type="hidden" name="removeAttachment" value={removeAttachment.toString()} />
+						<AttachmentUpload
+							name="attachment"
+							existingUrl={editExistingUrl}
+							existingFilename={data.attachment?.filename}
+							onRemove={handleAttachmentRemove}
 						/>
 					</div>
 				</div>
@@ -331,6 +371,36 @@
 									<span class="ml-1 text-gray-500">({allocation.percentage}%)</span>
 								</span>
 							{/each}
+						</dd>
+					</div>
+				{/if}
+
+				<!-- Attachment -->
+				{#if data.attachment}
+					<div>
+						<dt class="text-sm font-medium text-gray-500">Receipt</dt>
+						<dd class="mt-2">
+							<img
+								src={data.attachment.url}
+								alt="Receipt attachment"
+								class="max-h-64 rounded-lg shadow-sm"
+							/>
+							<div class="mt-2 flex gap-3 text-sm">
+								<a
+									href={data.attachment.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-blue-600 hover:text-blue-800"
+								>
+									View full size
+								</a>
+								<a
+									href="{data.attachment.downloadUrl}&exportName={encodeURIComponent(getExportFilename())}"
+									class="text-blue-600 hover:text-blue-800"
+								>
+									Download
+								</a>
+							</div>
 						</dd>
 					</div>
 				{/if}
