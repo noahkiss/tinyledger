@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Workspace isolation, database layer, void-first model
 - [x] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
 - [x] **Phase 3: Tags & Categories** - Tag system with allocation percentages
-- [ ] **Phase 4: Attachments** - Receipt upload, storage, and management
+- [x] **Phase 4: Attachments** - Receipt upload, storage, and management
 - [ ] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [ ] **Phase 6: Reports Dashboard** - Summary cards and charts
 - [ ] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
@@ -87,8 +87,8 @@ Plans:
 **Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 04-01-PLAN.md - Storage infrastructure: schema, storage module, API endpoint (Wave 1)
-- [ ] 04-02-PLAN.md - UI integration: AttachmentUpload component, form integration, detail view (Wave 2)
+- [x] 04-01-PLAN.md - Storage infrastructure: schema, storage module, API endpoint (Wave 1)
+- [x] 04-02-PLAN.md - UI integration: AttachmentUpload component, form integration, detail view (Wave 2)
 
 ### Phase 5: Timeline & Navigation
 **Goal**: Fiscal year navigation and filtered transaction timeline
@@ -179,7 +179,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 1. Foundation | 2/2 | Complete | 2026-01-25 |
 | 2. Core Transactions | 4/4 | Complete | 2026-01-25 |
 | 3. Tags & Categories | 2/2 | Complete | 2026-01-25 |
-| 4. Attachments | 0/2 | Not started | - |
+| 4. Attachments | 2/2 | Complete | 2026-01-30 |
 | 5. Timeline & Navigation | 0/2 | Not started | - |
 | 6. Reports Dashboard | 0/1 | Not started | - |
 | 7. Tax System | 0/2 | Not started | - |
@@ -188,4 +188,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-01-25*
+*Last updated: 2026-01-30*

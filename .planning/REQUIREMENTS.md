@@ -55,12 +55,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Attachments
 
-- [ ] **ATCH-01**: User can upload receipt attachment via file picker
-- [ ] **ATCH-02**: Attachments stored in workspace-namespaced filesystem directory
-- [ ] **ATCH-03**: User can view attachment full-size
-- [ ] **ATCH-04**: User can download attachment
-- [ ] **ATCH-05**: User can replace existing attachment
-- [ ] **ATCH-06**: Attachments auto-renamed smartly for bulk export (e.g., YYYY-MM-DD_Payee_Amount.ext)
+- [x] **ATCH-01**: User can upload receipt attachment via file picker
+- [x] **ATCH-02**: Attachments stored in workspace-namespaced filesystem directory
+- [x] **ATCH-03**: User can view attachment full-size
+- [x] **ATCH-04**: User can download attachment
+- [x] **ATCH-05**: User can replace existing attachment
+- [x] **ATCH-06**: Attachments auto-renamed smartly for bulk export (e.g., YYYY-MM-DD_Payee_Amount.ext)
 
 ### Timeline View
 
@@ -206,30 +206,30 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WKSP-01 | Phase 1 | Pending |
-| WKSP-02 | Phase 1 | Pending |
-| WKSP-03 | Phase 1 | Pending |
-| WKSP-04 | Phase 1 | Pending |
-| WKSP-05 | Phase 1 | Pending |
-| WKSP-06 | Phase 1 | Pending |
-| WKSP-07 | Phase 1 | Pending |
+| WKSP-01 | Phase 1 | Complete |
+| WKSP-02 | Phase 1 | Complete |
+| WKSP-03 | Phase 1 | Complete |
+| WKSP-04 | Phase 1 | Complete |
+| WKSP-05 | Phase 1 | Complete |
+| WKSP-06 | Phase 1 | Complete |
+| WKSP-07 | Phase 1 | Complete |
 | WKSP-08 | Phase 3 | Complete |
-| TXNS-01 | Phase 2 | Pending |
-| TXNS-02 | Phase 2 | Pending |
-| TXNS-03 | Phase 2 | Pending |
-| TXNS-04 | Phase 2 | Pending |
-| TXNS-05 | Phase 2 | Pending |
-| TXNS-06 | Phase 2 | Pending |
-| TXNS-07 | Phase 2 | Pending |
-| TXNS-08 | Phase 2 | Pending |
+| TXNS-01 | Phase 2 | Complete |
+| TXNS-02 | Phase 2 | Complete |
+| TXNS-03 | Phase 2 | Complete |
+| TXNS-04 | Phase 2 | Complete |
+| TXNS-05 | Phase 2 | Complete |
+| TXNS-06 | Phase 2 | Complete |
+| TXNS-07 | Phase 2 | Complete |
+| TXNS-08 | Phase 2 | Complete |
 | PRED-01 | Phase 3 | Complete |
 | PRED-02 | Phase 3 | Complete |
 | PRED-03 | Phase 3 | Complete |
-| INUX-01 | Phase 2 | Pending |
-| INUX-02 | Phase 2 | Pending |
-| INUX-03 | Phase 2 | Pending |
-| INUX-04 | Phase 2 | Pending |
-| INUX-05 | Phase 2 | Pending |
+| INUX-01 | Phase 2 | Complete |
+| INUX-02 | Phase 2 | Complete |
+| INUX-03 | Phase 2 | Complete |
+| INUX-04 | Phase 2 | Complete |
+| INUX-05 | Phase 2 | Complete |
 | RCUR-01 | Phase 8 | Pending |
 | RCUR-02 | Phase 8 | Pending |
 | RCUR-03 | Phase 8 | Pending |
@@ -237,12 +237,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RCUR-05 | Phase 8 | Pending |
 | RCUR-06 | Phase 8 | Pending |
 | RCUR-07 | Phase 8 | Pending |
-| ATCH-01 | Phase 4 | Pending |
-| ATCH-02 | Phase 4 | Pending |
-| ATCH-03 | Phase 4 | Pending |
-| ATCH-04 | Phase 4 | Pending |
-| ATCH-05 | Phase 4 | Pending |
-| ATCH-06 | Phase 4 | Pending |
+| ATCH-01 | Phase 4 | Complete |
+| ATCH-02 | Phase 4 | Complete |
+| ATCH-03 | Phase 4 | Complete |
+| ATCH-04 | Phase 4 | Complete |
+| ATCH-05 | Phase 4 | Complete |
+| ATCH-06 | Phase 4 | Complete |
 | TMLN-01 | Phase 5 | Pending |
 | TMLN-02 | Phase 5 | Pending |
 | TMLN-03 | Phase 5 | Pending |
@@ -291,10 +291,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DATA-02 | Phase 8 | Pending |
 | DATA-03 | Phase 8 | Pending |
 | DATA-04 | Phase 8 | Pending |
-| INTG-01 | Phase 2 | Pending |
-| INTG-02 | Phase 2 | Pending |
-| INTG-03 | Phase 2 | Pending |
-| INTG-04 | Phase 1 | Pending |
+| INTG-01 | Phase 2 | Complete |
+| INTG-02 | Phase 2 | Complete |
+| INTG-03 | Phase 2 | Complete |
+| INTG-04 | Phase 1 | Complete |
 | MOBL-01 | Phase 9 | Pending |
 | MOBL-02 | Phase 9 | Pending |
 | MOBL-03 | Phase 9 | Pending |
@@ -311,4 +311,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-24 after roadmap creation*
+*Last updated: 2026-01-30 after Phase 4 completion*
