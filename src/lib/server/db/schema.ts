@@ -127,9 +127,10 @@ export type TransactionHistory = typeof transactionHistory.$inferSelect;
 export type NewTransactionHistory = typeof transactionHistory.$inferInsert;
 
 // Drizzle relations for query builder
-export const transactionsRelations = relations(transactions, ({ many }) => ({
+export const transactionsRelations = relations(transactions, ({ one, many }) => ({
 	tagAllocations: many(transactionTags),
-	history: many(transactionHistory)
+	history: many(transactionHistory),
+	attachment: one(attachments)
 }));
 
 export const transactionTagsRelations = relations(transactionTags, ({ one }) => ({
@@ -150,6 +151,40 @@ export const tagsRelations = relations(tags, ({ many }) => ({
 export const transactionHistoryRelations = relations(transactionHistory, ({ one }) => ({
 	transaction: one(transactions, {
 		fields: [transactionHistory.transactionId],
+		references: [transactions.id]
+	})
+}));
+
+/**
+ * Attachments table - receipt images for transactions
+ * One attachment per transaction (unique constraint on transactionId)
+ */
+export const attachments = sqliteTable(
+	'attachments',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		transactionId: integer('transaction_id')
+			.notNull()
+			.unique()
+			.references(() => transactions.id, { onDelete: 'cascade' }),
+		filename: text('filename').notNull(), // Stored filename like "abc-123.jpg"
+		originalName: text('original_name').notNull(), // User's original filename for display
+		mimeType: text('mime_type').notNull(), // e.g., "image/jpeg"
+		sizeBytes: integer('size_bytes').notNull(),
+		createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+		updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
+	},
+	(table) => [index('attachments_transaction_idx').on(table.transactionId)]
+);
+
+// Type exports for attachments
+export type Attachment = typeof attachments.$inferSelect;
+export type NewAttachment = typeof attachments.$inferInsert;
+
+// Relations for attachments
+export const attachmentsRelations = relations(attachments, ({ one }) => ({
+	transaction: one(transactions, {
+		fields: [attachments.transactionId],
 		references: [transactions.id]
 	})
 }));
