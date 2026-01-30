@@ -16,6 +16,7 @@ export const workspaceSettings = sqliteTable('workspace_settings', {
 	foundedYear: integer('founded_year'),
 	logoFilename: text('logo_filename'),
 	tagsLocked: integer('tags_locked').default(0).notNull(), // SQLite boolean: 0 = false, 1 = true
+	fiscalYearStartMonth: integer('fiscal_year_start_month').default(1).notNull(), // 1=January (calendar year), 7=July, etc.
 	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
 });

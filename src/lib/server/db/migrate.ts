@@ -104,4 +104,14 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 	} catch {
 		// Column already exists, ignore
 	}
+
+	// Migration: Add fiscal_year_start_month column to workspace_settings
+	// Default 1 = January (calendar year)
+	try {
+		db.run(
+			sql`ALTER TABLE workspace_settings ADD COLUMN fiscal_year_start_month INTEGER DEFAULT 1 NOT NULL`
+		);
+	} catch {
+		// Column already exists, ignore
+	}
 }
