@@ -64,24 +64,24 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Timeline View
 
-- [ ] **TMLN-01**: Transaction feed displays for selected fiscal year
-- [ ] **TMLN-02**: Net Income YTD displayed prominently at top
-- [ ] **TMLN-03**: Large Income/Expense entry buttons accessible
-- [ ] **TMLN-04**: Visual timeline design with vertical line showing dates (Flowbite-inspired)
-- [ ] **TMLN-05**: "Scroll to current" auto-scrolls to most recent transaction
-- [ ] **TMLN-06**: Filter by payee (search)
-- [ ] **TMLN-07**: Filter by tags
-- [ ] **TMLN-08**: Filter by date range
-- [ ] **TMLN-09**: Filter by type (income/expense)
-- [ ] **TMLN-10**: Filter by payment method
+- [x] **TMLN-01**: Transaction feed displays for selected fiscal year
+- [x] **TMLN-02**: Net Income YTD displayed prominently at top
+- [x] **TMLN-03**: Large Income/Expense entry buttons accessible
+- [x] **TMLN-04**: Visual timeline design with vertical line showing dates (Flowbite-inspired)
+- [x] **TMLN-05**: "Scroll to current" auto-scrolls to most recent transaction
+- [x] **TMLN-06**: Filter by payee (search)
+- [x] **TMLN-07**: Filter by tags
+- [x] **TMLN-08**: Filter by date range
+- [x] **TMLN-09**: Filter by type (income/expense)
+- [x] **TMLN-10**: Filter by payment method
 
 ### Fiscal Year
 
-- [ ] **FISC-01**: User can select fiscal year to view (dropdown/selector)
-- [ ] **FISC-02**: Fiscal year defaults to calendar year (Jan-Dec)
-- [ ] **FISC-03**: User can configure fiscal year start month in workspace settings
-- [ ] **FISC-04**: Historical fiscal years available back to founded year
-- [ ] **FISC-05**: Next fiscal year viewable (for recurring planning)
+- [x] **FISC-01**: User can select fiscal year to view (dropdown/selector)
+- [x] **FISC-02**: Fiscal year defaults to calendar year (Jan-Dec)
+- [x] **FISC-03**: User can configure fiscal year start month in workspace settings
+- [x] **FISC-04**: Historical fiscal years available back to founded year
+- [x] **FISC-05**: Next fiscal year viewable (for recurring planning)
 
 ### Tags & Categories
 
@@ -243,21 +243,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ATCH-04 | Phase 4 | Complete |
 | ATCH-05 | Phase 4 | Complete |
 | ATCH-06 | Phase 4 | Complete |
-| TMLN-01 | Phase 5 | Pending |
-| TMLN-02 | Phase 5 | Pending |
-| TMLN-03 | Phase 5 | Pending |
-| TMLN-04 | Phase 5 | Pending |
-| TMLN-05 | Phase 5 | Pending |
-| TMLN-06 | Phase 5 | Pending |
-| TMLN-07 | Phase 5 | Pending |
-| TMLN-08 | Phase 5 | Pending |
-| TMLN-09 | Phase 5 | Pending |
-| TMLN-10 | Phase 5 | Pending |
-| FISC-01 | Phase 5 | Pending |
-| FISC-02 | Phase 5 | Pending |
-| FISC-03 | Phase 5 | Pending |
-| FISC-04 | Phase 5 | Pending |
-| FISC-05 | Phase 5 | Pending |
+| TMLN-01 | Phase 5 | Complete |
+| TMLN-02 | Phase 5 | Complete |
+| TMLN-03 | Phase 5 | Complete |
+| TMLN-04 | Phase 5 | Complete |
+| TMLN-05 | Phase 5 | Complete |
+| TMLN-06 | Phase 5 | Complete |
+| TMLN-07 | Phase 5 | Complete |
+| TMLN-08 | Phase 5 | Complete |
+| TMLN-09 | Phase 5 | Complete |
+| TMLN-10 | Phase 5 | Complete |
+| FISC-01 | Phase 5 | Complete |
+| FISC-02 | Phase 5 | Complete |
+| FISC-03 | Phase 5 | Complete |
+| FISC-04 | Phase 5 | Complete |
+| FISC-05 | Phase 5 | Complete |
 | TAGS-01 | Phase 3 | Complete |
 | TAGS-02 | Phase 3 | Complete |
 | TAGS-03 | Phase 3 | Complete |
@@ -311,4 +311,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-30 after Phase 4 completion*
+*Last updated: 2026-01-30 after Phase 5 completion*

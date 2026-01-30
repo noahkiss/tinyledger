@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Core Transactions** - Income/expense entry, edit, void operations
 - [x] **Phase 3: Tags & Categories** - Tag system with allocation percentages
 - [x] **Phase 4: Attachments** - Receipt upload, storage, and management
-- [ ] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
+- [x] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [ ] **Phase 6: Reports Dashboard** - Summary cards and charts
 - [ ] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
 - [ ] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
@@ -103,9 +103,9 @@ Plans:
 **Plans**: 3 plans in 3 waves
 
 Plans:
-- [ ] 05-01-PLAN.md - Fiscal year utilities and workspace settings (Wave 1)
-- [ ] 05-02-PLAN.md - Timeline view with filters and sticky header (Wave 2)
-- [ ] 05-03-PLAN.md - Quick entry FAB with slide-up form (Wave 3)
+- [x] 05-01-PLAN.md - Fiscal year utilities and workspace settings (Wave 1)
+- [x] 05-02-PLAN.md - Timeline view with filters and sticky header (Wave 2)
+- [x] 05-03-PLAN.md - Quick entry FAB with slide-up form (Wave 3)
 
 ### Phase 6: Reports Dashboard
 **Goal**: Summary cards and visual charts for financial overview
@@ -181,7 +181,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 2. Core Transactions | 4/4 | Complete | 2026-01-25 |
 | 3. Tags & Categories | 2/2 | Complete | 2026-01-25 |
 | 4. Attachments | 2/2 | Complete | 2026-01-30 |
-| 5. Timeline & Navigation | 0/3 | Not started | - |
+| 5. Timeline & Navigation | 3/3 | Complete | 2026-01-30 |
 | 6. Reports Dashboard | 0/1 | Not started | - |
 | 7. Tax System | 0/2 | Not started | - |
 | 8. Report Generation & Data | 0/3 | Not started | - |
