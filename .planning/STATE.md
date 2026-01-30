@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 4 - Attachments (complete)
+**Current focus:** Phase 5 - Timeline & Navigation
 
 ## Current Position
 
-Phase: 4 of 9 (Attachments)
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-01-30 - Completed 04-02-PLAN.md
+Phase: 5 of 9 (Timeline & Navigation)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-01-30 - Completed 05-01-PLAN.md
 
-Progress: [██████░░░░] 60%
+Progress: [██████░░░░] 63%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: 18 min
-- Total execution time: 3.0 hours
+- Total plans completed: 11
+- Average duration: 17 min
+- Total execution time: 3.1 hours
 
 **By Phase:**
 
@@ -31,10 +31,11 @@ Progress: [██████░░░░] 60%
 | 02-core-transactions | 4 | 27 min | 7 min |
 | 03-tags-categories | 2 | 32 min | 16 min |
 | 04-attachments | 2 | 10 min | 5 min |
+| 05-timeline-navigation | 1 | 7 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 9 min, 7 min, 25 min, 5 min, 5 min
-- Trend: Stable execution
+- Last 5 plans: 7 min, 25 min, 5 min, 5 min, 7 min
+- Trend: Stable fast execution
 
 *Updated after each plan completion*
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 | Export filename format | 04-01 | YYYY-MM-DD_Payee_$Amount.ext for tax-friendly naming |
 | Object URL cleanup in $effect | 04-02 | Memory management for file previews |
 | Client-side export filename | 04-02 | Generate download filename from transaction data |
+| FY number convention | 05-01 | Year FY ends in (FY 2026 w/ Jul start = Jul 2025-Jun 2026) |
+| Calendar year default | 05-01 | startMonth=1 (January) for most small businesses |
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-30T07:14:06Z
-Stopped at: Completed 04-02-PLAN.md (Phase 4 complete)
+Last session: 2026-01-30T21:10:23Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
