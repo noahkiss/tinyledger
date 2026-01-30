@@ -7,6 +7,7 @@
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
 	import PayeeAutocomplete from '$lib/components/PayeeAutocomplete.svelte';
+	import AttachmentUpload from '$lib/components/AttachmentUpload.svelte';
 	import type { Tag } from '$lib/server/db/schema';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -131,7 +132,7 @@
 	{/if}
 
 	<!-- Form -->
-	<form method="POST" use:enhance class="space-y-6">
+	<form method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
 		<!-- Hidden field for transaction type -->
 		<input type="hidden" name="type" value={transactionType} />
 
@@ -214,6 +215,17 @@
 					locked={data.tagsLocked}
 					{suggestedTags}
 				/>
+			</div>
+		</div>
+
+		<!-- Receipt Attachment -->
+		<div>
+			<label class="block text-sm font-medium text-gray-700">
+				Receipt
+				<span class="font-normal text-gray-500">(optional)</span>
+			</label>
+			<div class="mt-1">
+				<AttachmentUpload name="attachment" />
 			</div>
 		</div>
 

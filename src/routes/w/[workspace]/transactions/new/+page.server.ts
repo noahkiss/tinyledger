@@ -5,9 +5,11 @@ import {
 	transactions,
 	transactionTags,
 	transactionHistory,
-	workspaceSettings
+	workspaceSettings,
+	attachments
 } from '$lib/server/db/schema';
 import { sql, desc, and, isNull, eq } from 'drizzle-orm';
+import { saveAttachment } from '$lib/server/storage/attachment';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const db = locals.db;
@@ -186,6 +188,27 @@ export const actions: Actions = {
 				action: 'created'
 			})
 			.run();
+
+		// Handle attachment upload if provided
+		const attachment = formData.get('attachment') as File | null;
+		if (attachment && attachment.size > 0) {
+			try {
+				const result = await saveAttachment(params.workspace, publicId, attachment);
+				db.insert(attachments)
+					.values({
+						transactionId,
+						filename: result.filename,
+						originalName: attachment.name,
+						mimeType: result.mimeType,
+						sizeBytes: result.sizeBytes
+					})
+					.run();
+			} catch (err) {
+				// Transaction was created, but attachment failed
+				// Log the error but don't fail the entire request
+				console.error('Attachment upload failed:', err);
+			}
+		}
 
 		// Redirect to the new transaction's detail page
 		throw redirect(303, `/w/${params.workspace}/transactions/${publicId}`);
