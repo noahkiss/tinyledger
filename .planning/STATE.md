@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 4 - Attachments
+**Current focus:** Phase 4 - Attachments (complete)
 
 ## Current Position
 
 Phase: 4 of 9 (Attachments)
-Plan: 1 of 1 in current phase
+Plan: 2 of 2 in current phase
 Status: Phase complete
-Last activity: 2026-01-30 - Completed 04-01-PLAN.md
+Last activity: 2026-01-30 - Completed 04-02-PLAN.md
 
-Progress: [██████░░░░] 55%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 20 min
-- Total execution time: 2.8 hours
+- Total plans completed: 10
+- Average duration: 18 min
+- Total execution time: 3.0 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [██████░░░░] 55%
 | 01-foundation | 2 | 99 min | 50 min |
 | 02-core-transactions | 4 | 27 min | 7 min |
 | 03-tags-categories | 2 | 32 min | 16 min |
-| 04-attachments | 1 | 5 min | 5 min |
+| 04-attachments | 2 | 10 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 8 min, 9 min, 7 min, 25 min, 5 min
+- Last 5 plans: 9 min, 7 min, 25 min, 5 min, 5 min
 - Trend: Stable execution
 
 *Updated after each plan completion*
@@ -70,6 +70,8 @@ Recent decisions affecting current work:
 | One attachment per transaction | 04-01 | Unique constraint on transactionId for simplicity |
 | Sharp re-encoding for attachments | 04-01 | Security: GIF preserved, others converted to JPEG q90 |
 | Export filename format | 04-01 | YYYY-MM-DD_Payee_$Amount.ext for tax-friendly naming |
+| Object URL cleanup in $effect | 04-02 | Memory management for file previews |
+| Client-side export filename | 04-02 | Generate download filename from transaction data |
 
 ### Pending Todos
 
@@ -81,6 +83,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-30T07:05:41Z
-Stopped at: Completed 04-01-PLAN.md (Phase 4 complete)
+Last session: 2026-01-30T07:14:06Z
+Stopped at: Completed 04-02-PLAN.md (Phase 4 complete)
 Resume file: None
