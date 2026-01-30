@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 5 of 9 (Timeline & Navigation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-01-30 - Completed 05-01-PLAN.md
+Last activity: 2026-01-30 - Completed 05-02-PLAN.md
 
-Progress: [██████░░░░] 63%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 17 min
-- Total execution time: 3.1 hours
+- Total plans completed: 12
+- Average duration: 16 min
+- Total execution time: 3.2 hours
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [██████░░░░] 63%
 | 02-core-transactions | 4 | 27 min | 7 min |
 | 03-tags-categories | 2 | 32 min | 16 min |
 | 04-attachments | 2 | 10 min | 5 min |
-| 05-timeline-navigation | 1 | 7 min | 7 min |
+| 05-timeline-navigation | 2 | 12 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 7 min, 25 min, 5 min, 5 min, 7 min
+- Last 5 plans: 25 min, 5 min, 5 min, 7 min, 5 min
 - Trend: Stable fast execution
 
 *Updated after each plan completion*
@@ -75,6 +75,9 @@ Recent decisions affecting current work:
 | Client-side export filename | 04-02 | Generate download filename from transaction data |
 | FY number convention | 05-01 | Year FY ends in (FY 2026 w/ Jul start = Jul 2025-Jun 2026) |
 | Calendar year default | 05-01 | startMonth=1 (January) for most small businesses |
+| FY totals exclude voided | 05-02 | Totals show accurate financial summary without voided transactions |
+| Tag filter OR-based | 05-02 | Transaction matches if it has ANY selected tag |
+| URL state for filters | 05-02 | replaceState with noScroll for seamless filter navigation |
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-30T21:10:23Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-01-30T21:19:05Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
