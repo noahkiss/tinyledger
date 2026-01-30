@@ -6,6 +6,7 @@
 	import FilterBar from '$lib/components/FilterBar.svelte';
 	import TimelineEntry from '$lib/components/TimelineEntry.svelte';
 	import TimelineDateMarker from '$lib/components/TimelineDateMarker.svelte';
+	import QuickEntryFAB from '$lib/components/QuickEntryFAB.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -192,3 +193,10 @@
 		</ol>
 	{/if}
 </div>
+
+<!-- Quick Entry FAB -->
+<QuickEntryFAB
+	workspaceId={data.workspaceId}
+	availableTags={data.tags}
+	payeeHistory={data.payeeHistory}
+/>
