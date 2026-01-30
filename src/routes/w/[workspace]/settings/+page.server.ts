@@ -28,6 +28,8 @@ export const actions: Actions = {
 		const responsibleParty = formData.get('responsibleParty')?.toString().trim() || null;
 		const foundedYearStr = formData.get('foundedYear')?.toString().trim();
 		const foundedYear = foundedYearStr ? parseInt(foundedYearStr, 10) : null;
+		const fiscalYearStartMonthStr = formData.get('fiscalYearStartMonth')?.toString().trim();
+		const fiscalYearStartMonth = fiscalYearStartMonthStr ? parseInt(fiscalYearStartMonthStr, 10) : 1;
 		const logoFile = formData.get('logo') as File | null;
 
 		// Validation
@@ -41,6 +43,10 @@ export const actions: Actions = {
 
 		if (foundedYear !== null && (foundedYear < 1800 || foundedYear > new Date().getFullYear())) {
 			return fail(400, { error: 'Invalid founded year' });
+		}
+
+		if (fiscalYearStartMonth < 1 || fiscalYearStartMonth > 12) {
+			return fail(400, { error: 'Invalid fiscal year start month' });
 		}
 
 		// Process logo upload if provided
@@ -73,6 +79,7 @@ export const actions: Actions = {
 			phone,
 			responsibleParty,
 			foundedYear,
+			fiscalYearStartMonth,
 			updatedAt: new Date().toISOString()
 		};
 

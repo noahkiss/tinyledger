@@ -5,6 +5,22 @@
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
+	// Month names for fiscal year selector
+	const months = [
+		{ value: 1, name: 'January', label: 'January (Calendar Year)' },
+		{ value: 2, name: 'February', label: 'February' },
+		{ value: 3, name: 'March', label: 'March' },
+		{ value: 4, name: 'April', label: 'April' },
+		{ value: 5, name: 'May', label: 'May' },
+		{ value: 6, name: 'June', label: 'June' },
+		{ value: 7, name: 'July', label: 'July' },
+		{ value: 8, name: 'August', label: 'August' },
+		{ value: 9, name: 'September', label: 'September' },
+		{ value: 10, name: 'October', label: 'October' },
+		{ value: 11, name: 'November', label: 'November' },
+		{ value: 12, name: 'December', label: 'December' }
+	];
+
 	// Preview for logo upload
 	let logoPreviewUrl = $state<string | null>(null);
 
@@ -183,6 +199,28 @@
 				placeholder="Owner/manager name"
 				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 			/>
+		</div>
+
+		<!-- Fiscal Year -->
+		<div class="rounded-lg border border-gray-100 bg-gray-50 p-4">
+			<label for="fiscalYearStartMonth" class="block text-sm font-medium text-gray-700"
+				>Fiscal Year Start Month</label
+			>
+			<p class="mb-2 mt-1 text-xs text-gray-500">
+				Fiscal year runs from the selected month through the following year. Most businesses use
+				calendar year (January).
+			</p>
+			<select
+				id="fiscalYearStartMonth"
+				name="fiscalYearStartMonth"
+				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
+			>
+				{#each months as month}
+					<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
+						{month.label}
+					</option>
+				{/each}
+			</select>
 		</div>
 
 		<div class="flex justify-end gap-3 pt-4">
