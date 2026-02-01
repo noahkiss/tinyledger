@@ -31,6 +31,7 @@
 	"dependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
 		"better-sqlite3": "^12.6.2",
+		"chart.js": "^4.5.1",
 		"drizzle-orm": "^0.45.1",
 		"sharp": "^0.34.5",
 		"uuid": "^13.0.0"
