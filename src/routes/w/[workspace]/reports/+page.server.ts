@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { transactions, workspaceSettings } from '$lib/server/db/schema';
-import { isNull, and, gte, lte, sql } from 'drizzle-orm';
+import { transactions, transactionTags, tags, workspaceSettings } from '$lib/server/db/schema';
+import { isNull, and, gte, lte, eq, sql } from 'drizzle-orm';
 import {
 	getCurrentFiscalYear,
 	getFiscalYearRange,
@@ -9,7 +9,7 @@ import {
 } from '$lib/utils/fiscal-year';
 import { getMonthsInFiscalYear, TAX_SET_ASIDE_RATE } from '$lib/utils/reports';
 
-export const load: PageServerLoad = async ({ locals, url }) => {
+export const load: PageServerLoad = async ({ locals, url, params }) => {
 	const db = locals.db;
 
 	if (!db) {
@@ -146,6 +146,40 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	// Build sparkline data: one value per month, 0 if no transactions
 	const netIncomeTrend = monthsInFY.map((month) => periodMap.get(month) ?? 0);
 
+	// Spending breakdown by tag (expense transactions only)
+	// Uses percentage allocation to properly handle split transactions
+	const spendingByTagRaw = db
+		.select({
+			tagId: tags.id,
+			tagName: tags.name,
+			totalCents: sql<number>`CAST(SUM(${transactions.amountCents} * ${transactionTags.percentage} / 100.0) AS INTEGER)`
+		})
+		.from(transactionTags)
+		.innerJoin(transactions, eq(transactionTags.transactionId, transactions.id))
+		.innerJoin(tags, eq(transactionTags.tagId, tags.id))
+		.where(
+			and(
+				eq(transactions.type, 'expense'),
+				isNull(transactions.voidedAt),
+				isNull(transactions.deletedAt),
+				gte(transactions.date, fyStart),
+				lte(transactions.date, fyEnd)
+			)
+		)
+		.groupBy(tags.id)
+		.orderBy(sql`3 DESC`) // Order by totalCents descending
+		.all();
+
+	// Limit to top 10 tags, group remainder as "Other"
+	let spendingByTag: { tagId: number; tagName: string; totalCents: number }[];
+	if (spendingByTagRaw.length <= 10) {
+		spendingByTag = spendingByTagRaw;
+	} else {
+		const top10 = spendingByTagRaw.slice(0, 10);
+		const otherTotal = spendingByTagRaw.slice(10).reduce((sum, t) => sum + (t.totalCents ?? 0), 0);
+		spendingByTag = [...top10, { tagId: -1, tagName: 'Other', totalCents: otherTotal }];
+	}
+
 	return {
 		totals: {
 			income: totalIncome,
@@ -156,9 +190,11 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		previousPeriod,
 		periodData,
 		netIncomeTrend,
+		spendingByTag,
 		granularity,
 		fiscalYear,
 		availableFiscalYears,
-		fiscalYearStartMonth
+		fiscalYearStartMonth,
+		workspaceId: params.workspace
 	};
 };
