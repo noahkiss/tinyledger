@@ -5,6 +5,9 @@
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
 	import SummaryCard from '$lib/components/SummaryCard.svelte';
 	import Sparkline from '$lib/components/charts/Sparkline.svelte';
+	import NetIncomeChart from '$lib/components/charts/NetIncomeChart.svelte';
+	import IncomeVsExpense from '$lib/components/charts/IncomeVsExpense.svelte';
+	import SpendingBreakdown from '$lib/components/charts/SpendingBreakdown.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -63,26 +66,38 @@
 		</div>
 	</section>
 
-	<!-- Placeholder for charts (Plan 02) -->
-	<section class="space-y-4">
-		<h2 class="text-lg font-semibold text-gray-900">Charts</h2>
-		<div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center">
-			<svg
-				class="mx-auto h-12 w-12 text-gray-400"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-				/>
-			</svg>
-			<p class="mt-4 text-gray-500">
-				Income vs Expense chart and Spending Breakdown will be added in Plan 02
-			</p>
+	<!-- Financial Overview Charts -->
+	<section class="space-y-6 mt-8">
+		<h2 class="text-lg font-semibold text-gray-900">Financial Overview</h2>
+
+		<!-- Net Income Over Time -->
+		<div class="rounded-xl border border-gray-200 bg-white p-4">
+			<h3 class="text-sm font-medium text-gray-700 mb-4">Net Income Over Time</h3>
+			<NetIncomeChart
+				data={data.periodData.map((p) => ({ period: p.period, net: p.net }))}
+				workspaceId={data.workspaceId}
+				fiscalYear={data.fiscalYear}
+			/>
+		</div>
+
+		<!-- Income vs Expense by Month -->
+		<div class="rounded-xl border border-gray-200 bg-white p-4">
+			<h3 class="text-sm font-medium text-gray-700 mb-4">Income vs Expense by Month</h3>
+			<IncomeVsExpense
+				data={data.periodData}
+				workspaceId={data.workspaceId}
+				fiscalYear={data.fiscalYear}
+			/>
+		</div>
+
+		<!-- Spending by Category -->
+		<div class="rounded-xl border border-gray-200 bg-white p-4">
+			<h3 class="text-sm font-medium text-gray-700 mb-4">Spending by Category</h3>
+			<SpendingBreakdown
+				data={data.spendingByTag}
+				workspaceId={data.workspaceId}
+				fiscalYear={data.fiscalYear}
+			/>
 		</div>
 	</section>
 

@@ -97,7 +97,7 @@
 					},
 					tooltip: {
 						callbacks: {
-							label: (ctx) => `${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+							label: (ctx) => `${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y ?? 0)}`
 						}
 					}
 				},
@@ -108,7 +108,8 @@
 					y: {
 						grid: { color: 'rgba(0, 0, 0, 0.05)' },
 						ticks: {
-							callback: (value) => formatCurrency(value as number)
+							callback: (value) =>
+								typeof value === 'number' ? formatCurrency(value) : String(value)
 						}
 					}
 				},
