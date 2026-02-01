@@ -1,0 +1,139 @@
+<script lang="ts">
+	import {
+		Chart,
+		LineController,
+		LineElement,
+		PointElement,
+		LinearScale,
+		CategoryScale,
+		Tooltip,
+		Legend,
+		Filler
+	} from 'chart.js';
+	import type { ChartEvent, ActiveElement } from 'chart.js';
+	import { goto } from '$app/navigation';
+	import { formatCurrency } from '$lib/utils/currency';
+
+	// Register required Chart.js components
+	Chart.register(
+		LineController,
+		LineElement,
+		PointElement,
+		LinearScale,
+		CategoryScale,
+		Tooltip,
+		Legend,
+		Filler
+	);
+
+	interface Props {
+		data: { period: string; net: number }[];
+		workspaceId: string;
+		fiscalYear: number;
+	}
+
+	let { data, workspaceId, fiscalYear }: Props = $props();
+
+	let canvas: HTMLCanvasElement;
+	let chart: Chart | null = null;
+
+	// Get last day of month helper
+	function getLastDayOfMonth(year: string, month: string): string {
+		const y = parseInt(year, 10);
+		const m = parseInt(month, 10);
+		const lastDay = new Date(y, m, 0).getDate();
+		return lastDay.toString().padStart(2, '0');
+	}
+
+	// Format period label for display (e.g., "2026-01" -> "Jan")
+	function formatPeriodLabel(period: string): string {
+		const [year, month] = period.split('-');
+		const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1);
+		return date.toLocaleString('en-US', { month: 'short' });
+	}
+
+	// Click handler: navigate to transactions with date filter
+	function handleClick(_event: ChartEvent, elements: ActiveElement[]) {
+		if (elements.length === 0) return;
+		const period = data[elements[0].index].period;
+		const [year, month] = period.split('-');
+		const from = `${year}-${month}-01`;
+		const to = `${year}-${month}-${getLastDayOfMonth(year, month)}`;
+		goto(`/w/${workspaceId}/transactions?fy=${fiscalYear}&from=${from}&to=${to}`);
+	}
+
+	$effect(() => {
+		// Cleanup previous chart instance
+		if (chart) {
+			chart.destroy();
+			chart = null;
+		}
+
+		if (!canvas || data.length === 0) return;
+
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return;
+
+		chart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: data.map((d) => formatPeriodLabel(d.period)),
+				datasets: [
+					{
+						label: 'Net Income',
+						data: data.map((d) => d.net),
+						borderColor: '#3b82f6',
+						backgroundColor: 'rgba(59, 130, 246, 0.1)',
+						borderWidth: 2,
+						fill: true,
+						pointRadius: 4,
+						pointHoverRadius: 6,
+						tension: 0.3
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				onClick: handleClick,
+				plugins: {
+					legend: { display: false },
+					tooltip: {
+						callbacks: {
+							label: (ctx) => formatCurrency(ctx.parsed.y)
+						}
+					}
+				},
+				scales: {
+					x: {
+						grid: { display: false }
+					},
+					y: {
+						grid: { color: 'rgba(0, 0, 0, 0.05)' },
+						ticks: {
+							callback: (value) => formatCurrency(value as number)
+						}
+					}
+				},
+				interaction: {
+					intersect: false,
+					mode: 'index'
+				}
+			}
+		});
+
+		// Cleanup on unmount or when dependencies change
+		return () => {
+			chart?.destroy();
+			chart = null;
+		};
+	});
+</script>
+
+{#if data.length === 0}
+	<div class="flex h-64 items-center justify-center text-gray-500">No data available</div>
+{:else}
+	<div class="h-64">
+		<canvas bind:this={canvas}></canvas>
+	</div>
+{/if}
