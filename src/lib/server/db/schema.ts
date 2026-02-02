@@ -17,6 +17,15 @@ export const workspaceSettings = sqliteTable('workspace_settings', {
 	logoFilename: text('logo_filename'),
 	tagsLocked: integer('tags_locked').default(0).notNull(), // SQLite boolean: 0 = false, 1 = true
 	fiscalYearStartMonth: integer('fiscal_year_start_month').default(1).notNull(), // 1=January (calendar year), 7=July, etc.
+
+	// Tax configuration (added in Phase 7)
+	state: text('state').default('PA'), // Two-letter state code
+	federalBracketRate: integer('federal_bracket_rate'), // Stored as percentage (e.g., 22 for 22%)
+	stateRateOverride: integer('state_rate_override'), // Rate * 10000 (e.g., 307 for 3.07%), null = use default
+	localEitRate: integer('local_eit_rate'), // Rate * 10000 (e.g., 100 for 1%)
+	taxNotes: text('tax_notes'), // Free text for user reference
+	taxConfigured: integer('tax_configured', { mode: 'boolean' }).default(false).notNull(), // Has user configured taxes?
+
 	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
 });
@@ -189,3 +198,30 @@ export const attachmentsRelations = relations(attachments, ({ one }) => ({
 		references: [transactions.id]
 	})
 }));
+
+/**
+ * Quarterly payments table - tracks estimated tax payments
+ * One record per fiscal year per quarter
+ */
+export const quarterlyPayments = sqliteTable(
+	'quarterly_payments',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		fiscalYear: integer('fiscal_year').notNull(),
+		quarter: integer('quarter').notNull(), // 1-4
+		federalPaidCents: integer('federal_paid_cents'), // null = unpaid
+		statePaidCents: integer('state_paid_cents'), // null = unpaid
+		paidAt: text('paid_at'), // ISO timestamp when marked paid
+		notes: text('notes'),
+		createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+		updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
+	},
+	(table) => [
+		// Unique constraint: one payment record per fiscal year per quarter
+		index('quarterly_payments_year_quarter_idx').on(table.fiscalYear, table.quarter)
+	]
+);
+
+// Type exports for quarterly payments
+export type QuarterlyPayment = typeof quarterlyPayments.$inferSelect;
+export type NewQuarterlyPayment = typeof quarterlyPayments.$inferInsert;

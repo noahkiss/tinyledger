@@ -114,4 +114,70 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 	} catch {
 		// Column already exists, ignore
 	}
+
+	// Phase 7 Migrations: Tax configuration columns
+
+	// Migration: Add state column to workspace_settings
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN state TEXT DEFAULT 'PA'`);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Add federal_bracket_rate column to workspace_settings
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN federal_bracket_rate INTEGER`);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Add state_rate_override column to workspace_settings
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN state_rate_override INTEGER`);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Add local_eit_rate column to workspace_settings
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN local_eit_rate INTEGER`);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Add tax_notes column to workspace_settings
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN tax_notes TEXT`);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Add tax_configured column to workspace_settings
+	try {
+		db.run(
+			sql`ALTER TABLE workspace_settings ADD COLUMN tax_configured INTEGER DEFAULT 0 NOT NULL`
+		);
+	} catch {
+		// Column already exists, ignore
+	}
+
+	// Migration: Create quarterly_payments table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS quarterly_payments (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			fiscal_year INTEGER NOT NULL,
+			quarter INTEGER NOT NULL,
+			federal_paid_cents INTEGER,
+			state_paid_cents INTEGER,
+			paid_at TEXT,
+			notes TEXT,
+			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
+			updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+		)
+	`);
+
+	// Create index for quarterly_payments lookup
+	db.run(
+		sql`CREATE INDEX IF NOT EXISTS quarterly_payments_year_quarter_idx ON quarterly_payments(fiscal_year, quarter)`
+	);
 }
