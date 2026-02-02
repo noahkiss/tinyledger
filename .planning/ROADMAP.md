@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Attachments** - Receipt upload, storage, and management
 - [x] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [x] **Phase 6: Reports Dashboard** - Summary cards and charts
-- [ ] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
+- [x] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
 - [ ] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
 - [ ] **Phase 9: Mobile & Deployment** - PWA configuration, Docker, production readiness
 
@@ -136,10 +136,10 @@ Plans:
 **Plans**: 4 plans in 4 waves
 
 Plans:
-- [ ] 07-01-PLAN.md - Tax data files, calculation utilities, schema extension (Wave 1)
-- [ ] 07-02-PLAN.md - Tax configuration UI in workspace settings (Wave 2)
-- [ ] 07-03-PLAN.md - Taxes tab with breakdowns and quarterly tracking (Wave 3)
-- [ ] 07-04-PLAN.md - Timeline integration and reports update (Wave 4)
+- [x] 07-01-PLAN.md - Tax data files, calculation utilities, schema extension (Wave 1)
+- [x] 07-02-PLAN.md - Tax configuration UI in workspace settings (Wave 2)
+- [x] 07-03-PLAN.md - Taxes tab with breakdowns and quarterly tracking (Wave 3)
+- [x] 07-04-PLAN.md - Timeline integration and reports update (Wave 4)
 
 ### Phase 8: Report Generation & Data
 **Goal**: Tax-ready reports, PDF/CSV export, data import/export
@@ -187,10 +187,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 4. Attachments | 2/2 | Complete | 2026-01-30 |
 | 5. Timeline & Navigation | 3/3 | Complete | 2026-01-30 |
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
-| 7. Tax System | 0/4 | Not started | - |
+| 7. Tax System | 4/4 | Complete | 2026-02-02 |
 | 8. Report Generation & Data | 0/3 | Not started | - |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-01*
+*Last updated: 2026-02-02*

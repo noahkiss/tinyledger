@@ -92,35 +92,35 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Tax Configuration
 
-- [ ] **TAXC-01**: User can set federal tax bracket (pick from list or calculate from outside earnings)
+- [x] **TAXC-01**: User can set federal tax bracket (pick from list or calculate from outside earnings)
 - [ ] **TAXC-02**: User can enter estimated outside earnings to suggest bracket
-- [ ] **TAXC-03**: PA state tax rate pre-filled (3.07%)
-- [ ] **TAXC-04**: User can enter local EIT rate (required for sole prop workspaces)
-- [ ] **TAXC-05**: Tax notes field for user's reference (free-form with suggestions for what to include: agency links, forms, deadlines)
+- [x] **TAXC-03**: PA state tax rate pre-filled (3.07%)
+- [x] **TAXC-04**: User can enter local EIT rate (required for sole prop workspaces)
+- [x] **TAXC-05**: Tax notes field for user's reference (free-form with suggestions for what to include: agency links, forms, deadlines)
 
 ### Tax Calculations
 
-- [ ] **CALC-01**: Self-employment tax calculated correctly (15.3% of 92.35% of net income)
-- [ ] **CALC-02**: Federal income tax estimated based on bracket
-- [ ] **CALC-03**: PA state tax calculated (3.07% of net)
-- [ ] **CALC-04**: Local EIT calculated based on user-entered rate
-- [ ] **CALC-05**: Total estimated taxes YTD displayed
-- [ ] **CALC-06**: Projected year-end tax estimate displayed (based on current trajectory)
-- [ ] **CALC-07**: Recommended set-aside amount displayed (conservatively padded)
+- [x] **CALC-01**: Self-employment tax calculated correctly (15.3% of 92.35% of net income)
+- [x] **CALC-02**: Federal income tax estimated based on bracket
+- [x] **CALC-03**: PA state tax calculated (3.07% of net)
+- [x] **CALC-04**: Local EIT calculated based on user-entered rate
+- [x] **CALC-05**: Total estimated taxes YTD displayed
+- [x] **CALC-06**: Projected year-end tax estimate displayed (based on current trajectory)
+- [x] **CALC-07**: Recommended set-aside amount displayed (conservatively padded)
 
 ### Quarterly Payments
 
-- [ ] **QRTR-01**: Quarterly payment due dates visible in timeline (Apr 15, Jun 15, Sep 15, Jan 15)
-- [ ] **QRTR-02**: Projected quarterly payment amount displayed (refines as date approaches)
-- [ ] **QRTR-03**: User can mark quarterly payment as paid
-- [ ] **QRTR-04**: Paid quarterly payments show in timeline as completed
+- [x] **QRTR-01**: Quarterly payment due dates visible in timeline (Apr 15, Jun 15, Sep 15, Jan 15)
+- [x] **QRTR-02**: Projected quarterly payment amount displayed (refines as date approaches)
+- [x] **QRTR-03**: User can mark quarterly payment as paid
+- [x] **QRTR-04**: Paid quarterly payments show in timeline as completed
 
 ### Reports Dashboard
 
-- [ ] **RPTS-01**: Summary cards: YTD income, YTD expenses, net income, tax set-aside
-- [ ] **RPTS-02**: Chart: Net income over time (line chart)
-- [ ] **RPTS-03**: Chart: Spending by tag (pie or bar chart)
-- [ ] **RPTS-04**: Chart: Income vs expense by month (bar chart)
+- [x] **RPTS-01**: Summary cards: YTD income, YTD expenses, net income, tax set-aside
+- [x] **RPTS-02**: Chart: Net income over time (line chart)
+- [x] **RPTS-03**: Chart: Spending by tag (pie or bar chart)
+- [x] **RPTS-04**: Chart: Income vs expense by month (bar chart)
 
 ### Report Generation
 
@@ -262,26 +262,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TAGS-02 | Phase 3 | Complete |
 | TAGS-03 | Phase 3 | Complete |
 | TAGS-04 | Phase 3 | Complete |
-| TAXC-01 | Phase 7 | Pending |
-| TAXC-02 | Phase 7 | Pending |
-| TAXC-03 | Phase 7 | Pending |
-| TAXC-04 | Phase 7 | Pending |
-| TAXC-05 | Phase 7 | Pending |
-| CALC-01 | Phase 7 | Pending |
-| CALC-02 | Phase 7 | Pending |
-| CALC-03 | Phase 7 | Pending |
-| CALC-04 | Phase 7 | Pending |
-| CALC-05 | Phase 7 | Pending |
-| CALC-06 | Phase 7 | Pending |
-| CALC-07 | Phase 7 | Pending |
-| QRTR-01 | Phase 7 | Pending |
-| QRTR-02 | Phase 7 | Pending |
-| QRTR-03 | Phase 7 | Pending |
-| QRTR-04 | Phase 7 | Pending |
-| RPTS-01 | Phase 6 | Pending |
-| RPTS-02 | Phase 6 | Pending |
-| RPTS-03 | Phase 6 | Pending |
-| RPTS-04 | Phase 6 | Pending |
+| TAXC-01 | Phase 7 | Complete |
+| TAXC-02 | Phase 7 | Partial |
+| TAXC-03 | Phase 7 | Complete |
+| TAXC-04 | Phase 7 | Complete |
+| TAXC-05 | Phase 7 | Complete |
+| CALC-01 | Phase 7 | Complete |
+| CALC-02 | Phase 7 | Complete |
+| CALC-03 | Phase 7 | Complete |
+| CALC-04 | Phase 7 | Complete |
+| CALC-05 | Phase 7 | Complete |
+| CALC-06 | Phase 7 | Complete |
+| CALC-07 | Phase 7 | Complete |
+| QRTR-01 | Phase 7 | Complete |
+| QRTR-02 | Phase 7 | Complete |
+| QRTR-03 | Phase 7 | Complete |
+| QRTR-04 | Phase 7 | Complete |
+| RPTS-01 | Phase 6 | Complete |
+| RPTS-02 | Phase 6 | Complete |
+| RPTS-03 | Phase 6 | Complete |
+| RPTS-04 | Phase 6 | Complete |
 | RGEN-01 | Phase 8 | Pending |
 | RGEN-02 | Phase 8 | Pending |
 | RGEN-03 | Phase 8 | Pending |
@@ -311,4 +311,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-30 after Phase 5 completion*
+*Last updated: 2026-02-02 after Phase 7 completion*
