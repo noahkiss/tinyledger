@@ -45,20 +45,49 @@
 		return lastDay.toString().padStart(2, '0');
 	}
 
-	// Format period label for display (e.g., "2026-01" -> "Jan")
+	// Format period label for display
+	// Monthly: "2026-01" -> "Jan"
+	// Quarterly: "2026-Q1" -> "Q1"
 	function formatPeriodLabel(period: string): string {
+		if (period.includes('Q')) {
+			// Quarterly format: "2026-Q1" -> "Q1"
+			return period.split('-')[1];
+		}
+		// Monthly format: "2026-01" -> "Jan"
 		const [year, month] = period.split('-');
 		const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1);
 		return date.toLocaleString('en-US', { month: 'short' });
+	}
+
+	// Get quarter date range
+	function getQuarterDateRange(
+		year: string,
+		quarter: string
+	): { from: string; to: string } {
+		const q = parseInt(quarter.replace('Q', ''), 10);
+		const startMonth = (q - 1) * 3 + 1;
+		const endMonth = q * 3;
+		const from = `${year}-${startMonth.toString().padStart(2, '0')}-01`;
+		const to = `${year}-${endMonth.toString().padStart(2, '0')}-${getLastDayOfMonth(year, endMonth.toString().padStart(2, '0'))}`;
+		return { from, to };
 	}
 
 	// Click handler: navigate to transactions with date filter
 	function handleClick(_event: ChartEvent, elements: ActiveElement[]) {
 		if (elements.length === 0) return;
 		const period = data[elements[0].index].period;
-		const [year, month] = period.split('-');
-		const from = `${year}-${month}-01`;
-		const to = `${year}-${month}-${getLastDayOfMonth(year, month)}`;
+		let from: string, to: string;
+
+		if (period.includes('Q')) {
+			// Quarterly format: "2026-Q1"
+			const [year, quarter] = period.split('-');
+			({ from, to } = getQuarterDateRange(year, quarter));
+		} else {
+			// Monthly format: "2026-01"
+			const [year, month] = period.split('-');
+			from = `${year}-${month}-01`;
+			to = `${year}-${month}-${getLastDayOfMonth(year, month)}`;
+		}
 		goto(`/w/${workspaceId}/transactions?fy=${fiscalYear}&from=${from}&to=${to}`);
 	}
 

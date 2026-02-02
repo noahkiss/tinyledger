@@ -146,6 +146,15 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 	// Build sparkline data: one value per month, 0 if no transactions
 	const netIncomeTrend = monthsInFY.map((month) => periodMap.get(month) ?? 0);
 
+	// Determine if current period is partial (viewing today's fiscal year)
+	const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+	const isCurrentFiscalYear = fiscalYear === currentFiscalYear;
+	const todayWithinFY = today >= fyStart && today <= fyEnd;
+	const currentPeriodPartial = isCurrentFiscalYear && todayWithinFY;
+
+	// Format asOfDate for display
+	const asOfDate = currentPeriodPartial ? today : null;
+
 	// Spending breakdown by tag (expense transactions only)
 	// Uses percentage allocation to properly handle split transactions
 	const spendingByTagRaw = db
@@ -192,6 +201,8 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 		netIncomeTrend,
 		spendingByTag,
 		granularity,
+		currentPeriodPartial,
+		asOfDate,
 		fiscalYear,
 		availableFiscalYears,
 		fiscalYearStartMonth,
