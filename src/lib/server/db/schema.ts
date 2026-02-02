@@ -225,3 +225,29 @@ export const quarterlyPayments = sqliteTable(
 // Type exports for quarterly payments
 export type QuarterlyPayment = typeof quarterlyPayments.$inferSelect;
 export type NewQuarterlyPayment = typeof quarterlyPayments.$inferInsert;
+
+/**
+ * Filings table - tracks compliance filing completion status
+ * Covers both sole_prop (Schedule C, SE, 1040-ES, PA forms) and volunteer_org (990-N, BCO-10)
+ */
+export const filings = sqliteTable(
+	'filings',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		fiscalYear: integer('fiscal_year').notNull(),
+		formId: text('form_id').notNull(), // References filing definition ID (e.g., 'schedule-c', '1040-es-q1')
+		filedAt: text('filed_at'), // ISO timestamp when marked complete (null = not filed)
+		confirmationNumber: text('confirmation_number'), // Optional confirmation/receipt number
+		notes: text('notes'), // User notes
+		createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+		updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
+	},
+	(table) => [
+		// Index for looking up filings by fiscal year and form
+		index('filings_year_form_idx').on(table.fiscalYear, table.formId)
+	]
+);
+
+// Type exports for filings
+export type Filing = typeof filings.$inferSelect;
+export type NewFiling = typeof filings.$inferInsert;
