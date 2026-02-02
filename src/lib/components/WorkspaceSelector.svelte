@@ -2,13 +2,17 @@
 	import { goto } from '$app/navigation';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 	import type { WorkspaceEntry } from '$lib/server/workspace/registry';
+	import WorkspaceLogo from './WorkspaceLogo.svelte';
 
 	interface Props {
 		currentWorkspaceId: string;
 		workspaces: WorkspaceEntry[];
+		currentName: string;
+		currentType: 'sole_prop' | 'volunteer_org';
+		logoFilename: string | null;
 	}
 
-	let { currentWorkspaceId, workspaces }: Props = $props();
+	let { currentWorkspaceId, workspaces, currentName, currentType, logoFilename }: Props = $props();
 
 	let isOpen = $state(false);
 
@@ -21,8 +25,8 @@
 		// Update last workspace store
 		lastWorkspace.set(workspaceId);
 
-		// Navigate to selected workspace
-		goto(`/w/${workspaceId}/`);
+		// Navigate to selected workspace (transactions is now the default)
+		goto(`/w/${workspaceId}/transactions`);
 		isOpen = false;
 	}
 
@@ -46,26 +50,40 @@
 	});
 </script>
 
-<div class="workspace-selector relative">
+<div class="workspace-selector relative" data-component="workspace-selector">
+	<!-- Trigger: Logo + Name + Dropdown indicator -->
 	<button
 		type="button"
 		onclick={toggleDropdown}
-		class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+		class="flex items-center gap-3 rounded-lg border border-gray-200 px-2 py-1.5 hover:bg-gray-50 transition-colors"
 	>
-		<span>Switch</span>
-		<svg
-			class="h-4 w-4 transition-transform {isOpen ? 'rotate-180' : ''}"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-		</svg>
+		<WorkspaceLogo
+			workspaceId={currentWorkspaceId}
+			{logoFilename}
+			name={currentName}
+			size="md"
+		/>
+		<div class="text-left">
+			<div class="flex items-center gap-1.5">
+				<h1 class="font-semibold text-gray-900">{currentName}</h1>
+				<svg
+					class="h-4 w-4 text-gray-400 transition-transform {isOpen ? 'rotate-180' : ''}"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+				</svg>
+			</div>
+			<p class="text-xs text-gray-500">
+				{currentType === 'sole_prop' ? 'Sole Proprietor' : 'Volunteer Organization'}
+			</p>
+		</div>
 	</button>
 
 	{#if isOpen}
 		<div
-			class="absolute right-0 top-full z-50 mt-1 w-64 rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+			class="absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
 		>
 			{#each workspaces as workspace}
 				<button

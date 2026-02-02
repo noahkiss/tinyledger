@@ -40,6 +40,7 @@
 	href="/w/{workspaceId}/transactions/{transaction.publicId}"
 	class="block rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition-all hover:border-gray-200 hover:shadow-md
 		{transaction.voidedAt ? 'opacity-60' : ''}"
+	data-component="transaction-card"
 >
 	<div class="flex items-start justify-between">
 		<div class="min-w-0 flex-1">

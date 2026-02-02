@@ -26,6 +26,7 @@
 	value={fiscalYear}
 	onchange={handleChange}
 	class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+	data-component="fiscal-year-picker"
 >
 	{#each availableYears as year}
 		<option value={year}>{formatFiscalYear(year, startMonth)}</option>

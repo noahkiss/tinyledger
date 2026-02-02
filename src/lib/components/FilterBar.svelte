@@ -121,7 +121,7 @@
 	}
 </script>
 
-<div class="flex flex-col gap-3 py-3">
+<div class="flex flex-col gap-3 py-3" data-component="filter-bar">
 	<!-- First row: Type filter + Payee search + Count -->
 	<div class="flex items-center gap-3">
 		<!-- Type segmented buttons -->

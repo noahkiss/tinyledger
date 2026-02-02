@@ -55,30 +55,15 @@
 			data.currentFilters.method
 	);
 
-	// Scroll to current/most recent on initial load
-	let timelineContainer: HTMLElement | undefined = $state();
-	let hasScrolled = $state(false);
-
-	$effect(() => {
-		// Only scroll on initial load when no filters are active
-		if (timelineContainer && !hasScrolled && !hasActiveFilters && data.transactions.length > 0) {
-			// Find today's date or most recent
-			const today = new Date().toISOString().split('T')[0];
-			const todayMarker = timelineContainer.querySelector(`[data-date="${today}"]`);
-			const firstMarker = timelineContainer.querySelector('[data-date]');
-
-			const targetEl = todayMarker || firstMarker;
-			if (targetEl) {
-				// Scroll after a brief delay to ensure layout is complete
-				setTimeout(() => {
-					targetEl.scrollIntoView({ behavior: 'instant', block: 'start' });
-					// Adjust for sticky header (approximately 60px)
-					window.scrollBy(0, -70);
-				}, 50);
-			}
-			hasScrolled = true;
-		}
-	});
+	// Determine day type for timeline markers (income, expense, mixed)
+	function getDayType(txns: typeof data.transactions): 'income' | 'expense' | 'mixed' | 'neutral' {
+		const hasIncome = txns.some((t) => t.type === 'income');
+		const hasExpense = txns.some((t) => t.type === 'expense');
+		if (hasIncome && hasExpense) return 'mixed';
+		if (hasIncome) return 'income';
+		if (hasExpense) return 'expense';
+		return 'neutral';
+	}
 </script>
 
 <svelte:head>
@@ -87,10 +72,11 @@
 
 <div class="space-y-4">
 	<!-- Income / Expense buttons -->
-	<div class="grid grid-cols-2 gap-4">
+	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=income"
 			class="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-green-700 active:bg-green-800"
+			data-component="add-income-button"
 		>
 			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
@@ -100,6 +86,7 @@
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=expense"
 			class="flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-red-700 active:bg-red-800"
+			data-component="add-expense-button"
 		>
 			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
@@ -110,7 +97,8 @@
 
 	<!-- Sticky header with fiscal year and totals -->
 	<header
-		class="sticky top-0 z-10 -mx-4 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur"
+		class="sticky top-3 z-10 rounded-xl border border-gray-100 bg-white/95 px-4 py-3 shadow-sm backdrop-blur"
+		data-component="fiscal-header"
 	>
 		<div class="flex items-center justify-between">
 			<FiscalYearPicker
@@ -152,7 +140,7 @@
 
 	<!-- Timeline -->
 	{#if data.transactions.length === 0}
-		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center">
+		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center" data-component="empty-state">
 			<svg
 				class="mx-auto h-12 w-12 text-gray-400"
 				fill="none"
@@ -179,18 +167,22 @@
 			{/if}
 		</div>
 	{:else}
-		<ol bind:this={timelineContainer} class="relative ms-3 border-s-2 border-gray-200">
-			{#each groupedTransactions() as [date, txns] (date)}
-				<li class="mb-6 ms-6" data-date={date}>
-					<TimelineDateMarker {date} />
-					<div class="space-y-2">
-						{#each txns as txn (txn.id)}
-							<TimelineEntry transaction={txn} workspaceId={data.workspaceId} />
-						{/each}
-					</div>
-				</li>
-			{/each}
-		</ol>
+		<div class="relative ms-3" data-component="transaction-timeline">
+			<ol class="relative border-s-2 border-gray-200">
+				{#each groupedTransactions() as [date, txns] (date)}
+					<li class="mb-6 ms-6" data-date={date}>
+						<TimelineDateMarker {date} dayType={getDayType(txns)} />
+						<div class="space-y-2" data-component="transaction-list">
+							{#each txns as txn (txn.id)}
+								<TimelineEntry transaction={txn} workspaceId={data.workspaceId} />
+							{/each}
+						</div>
+					</li>
+				{/each}
+			</ol>
+			<!-- Timeline end marker -->
+			<div class="absolute -bottom-2 -left-1.5 flex h-3 w-3 items-center justify-center rounded-full border-2 border-gray-300 bg-white"></div>
+		</div>
 	{/if}
 </div>
 

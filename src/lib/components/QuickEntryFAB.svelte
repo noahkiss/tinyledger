@@ -44,6 +44,7 @@
 	onclick={() => (showForm = true)}
 	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-transform hover:bg-blue-700 active:scale-95"
 	aria-label="Add transaction"
+	data-component="quick-entry-fab"
 >
 	<svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
