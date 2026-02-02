@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 7.1 - Filings
+**Current focus:** Phase 7.1 - Filings (Complete)
 
 ## Current Position
 
 Phase: 7.1 of 9 (Filings)
-Plan: 1 of N in current phase
-Status: In progress
-Last activity: 2026-02-02 - Completed 07.1-01-PLAN.md
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-02 - Completed 07.1-02-PLAN.md
 
-Progress: [██████████░] ~95% (Phase 7 complete, 7.1 started)
+Progress: [██████████░] ~97% (Phase 7.1 complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
-- Average duration: 12 min
-- Total execution time: 4.2 hours
+- Total plans completed: 23
+- Average duration: 11 min
+- Total execution time: 4.4 hours
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: [██████████░] ~95% (Phase 7 complete, 7.1 starte
 | 05-timeline-navigation | 3 | 16 min | 5 min |
 | 06-reports-dashboard | 3 | 29 min | 10 min |
 | 07-tax-system | 4 | 25 min | 6 min |
-| 07.1-filings | 1 | 6 min | 6 min |
+| 07.1-filings | 2 | 14 min | 7 min |
 
 **Recent Trend:**
-- Last 5 plans: 7 min, 4 min, 6 min, 8 min, 6 min
+- Last 5 plans: 4 min, 6 min, 8 min, 6 min, 8 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -111,6 +111,10 @@ Recent decisions affecting current work:
 | Q4 deadline edge case | 07.1-01 | Q4 payments due Jan 15 of next year (fiscalYear + 1) |
 | 990-N deadline calculation | 07.1-01 | 5th month after FY end (May 15 for calendar year) |
 | BCO-10 proxy date | 07.1-01 | Nov 15 as proxy for anniversary-based deadline |
+| Filings tab for all workspaces | 07.1-02 | Both sole_prop and volunteer_org see Filings tab |
+| Tab order with Filings | 07.1-02 | Transactions | Reports | Taxes (sole_prop) | Filings |
+| Status-based card colors | 07.1-02 | Inherited from quarterly payments (green/red/yellow) |
+| Taxes page links to Filings | 07.1-02 | Taxes page simplified, quarterly moved to Filings |
 
 ### Pending Todos
 
@@ -122,6 +126,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-02T15:16:38Z
-Stopped at: Completed 07.1-01-PLAN.md
+Last session: 2026-02-02T15:27:00Z
+Stopped at: Completed 07.1-02-PLAN.md (Phase 7.1 complete)
 Resume file: None
