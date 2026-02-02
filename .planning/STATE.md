@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 7 - Tax System
+**Current focus:** Phase 7.1 - Filings
 
 ## Current Position
 
-Phase: 7 of 9 (Tax System) - COMPLETE
-Plan: 4 of 4 in current phase
-Status: Phase complete
-Last activity: 2026-02-02 - Completed 07-04-PLAN.md
+Phase: 7.1 of 9 (Filings)
+Plan: 1 of N in current phase
+Status: In progress
+Last activity: 2026-02-02 - Completed 07.1-01-PLAN.md
 
-Progress: [██████████] 100% (Phase 7)
+Progress: [██████████░] ~95% (Phase 7 complete, 7.1 started)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 20
+- Total plans completed: 21
 - Average duration: 12 min
-- Total execution time: 4.1 hours
+- Total execution time: 4.2 hours
 
 **By Phase:**
 
@@ -34,9 +34,10 @@ Progress: [██████████] 100% (Phase 7)
 | 05-timeline-navigation | 3 | 16 min | 5 min |
 | 06-reports-dashboard | 3 | 29 min | 10 min |
 | 07-tax-system | 4 | 25 min | 6 min |
+| 07.1-filings | 1 | 6 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 12 min, 7 min, 4 min, 6 min, 8 min
+- Last 5 plans: 7 min, 4 min, 6 min, 8 min, 6 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -106,6 +107,10 @@ Recent decisions affecting current work:
 | Timeline merge pattern | 07-04 | Merge quarterly payments into transaction groups by date |
 | Tax day type | 07-04 | Yellow dot for dates with only quarterly markers |
 | Effective rate display | 07-04 | Show actual rate in reports for transparency |
+| Filing getDeadline function | 07.1-01 | Each filing definition has inline deadline calculator |
+| Q4 deadline edge case | 07.1-01 | Q4 payments due Jan 15 of next year (fiscalYear + 1) |
+| 990-N deadline calculation | 07.1-01 | 5th month after FY end (May 15 for calendar year) |
+| BCO-10 proxy date | 07.1-01 | Nov 15 as proxy for anniversary-based deadline |
 
 ### Pending Todos
 
@@ -117,6 +122,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-02T06:30:00Z
-Stopped at: Completed 07-04-PLAN.md (Phase 7 complete)
+Last session: 2026-02-02T15:16:38Z
+Stopped at: Completed 07.1-01-PLAN.md
 Resume file: None
