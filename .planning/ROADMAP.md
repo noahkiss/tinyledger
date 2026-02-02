@@ -133,11 +133,13 @@ Plans:
   3. Total estimated taxes YTD and projected year-end estimate displayed
   4. Quarterly payment due dates visible in timeline with projected amounts
   5. User can mark quarterly payments as paid and see them as completed
-**Plans**: TBD
+**Plans**: 4 plans in 4 waves
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
+- [ ] 07-01-PLAN.md - Tax data files, calculation utilities, schema extension (Wave 1)
+- [ ] 07-02-PLAN.md - Tax configuration UI in workspace settings (Wave 2)
+- [ ] 07-03-PLAN.md - Taxes tab with breakdowns and quarterly tracking (Wave 3)
+- [ ] 07-04-PLAN.md - Timeline integration and reports update (Wave 4)
 
 ### Phase 8: Report Generation & Data
 **Goal**: Tax-ready reports, PDF/CSV export, data import/export
@@ -185,7 +187,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 4. Attachments | 2/2 | Complete | 2026-01-30 |
 | 5. Timeline & Navigation | 3/3 | Complete | 2026-01-30 |
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
-| 7. Tax System | 0/2 | Not started | - |
+| 7. Tax System | 0/4 | Not started | - |
 | 8. Report Generation & Data | 0/3 | Not started | - |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
