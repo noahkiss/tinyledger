@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 7 of 9 (Tax System)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-02 - Completed 07-02-PLAN.md
+Last activity: 2026-02-02 - Completed 07-03-PLAN.md
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 95%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 18
+- Total plans completed: 19
 - Average duration: 12 min
-- Total execution time: 3.9 hours
+- Total execution time: 4.0 hours
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [█████████░] 90%
 | 04-attachments | 2 | 10 min | 5 min |
 | 05-timeline-navigation | 3 | 16 min | 5 min |
 | 06-reports-dashboard | 3 | 29 min | 10 min |
-| 07-tax-system | 2 | 11 min | 6 min |
+| 07-tax-system | 3 | 17 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 8 min, 9 min, 12 min, 7 min, 4 min
+- Last 5 plans: 9 min, 12 min, 7 min, 4 min, 6 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -100,6 +100,9 @@ Recent decisions affecting current work:
 | Rate input format | 07-02 | User enters "3.07", stored as 30700 for precision |
 | Warning thresholds | 07-02 | Warn at >15% state rate and >5% local EIT |
 | Tax configured logic | 07-02 | taxConfigured = true when state AND federalBracketRate both set |
+| 70-30 payment split | 07-03 | Default federal/state payment split 70%/30% for mark-as-paid |
+| Payment status colors | 07-03 | Green=paid, red=past-due, yellow=upcoming (traffic light) |
+| Collapsible forms ref | 07-03 | Tax forms in details element as secondary content |
 
 ### Pending Todos
 
@@ -111,6 +114,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-02T06:09:13Z
-Stopped at: Completed 07-02-PLAN.md
+Last session: 2026-02-02T06:18:52Z
+Stopped at: Completed 07-03-PLAN.md
 Resume file: None
