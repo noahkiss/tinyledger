@@ -5,7 +5,8 @@ import {
 	transactionTags,
 	tags,
 	workspaceSettings,
-	transactionHistory
+	transactionHistory,
+	quarterlyPayments
 } from '$lib/server/db/schema';
 import { eq, isNull, desc, and, gte, lte, like, sql } from 'drizzle-orm';
 import {
@@ -13,6 +14,14 @@ import {
 	getFiscalYearRange,
 	getAvailableFiscalYears
 } from '$lib/utils/fiscal-year';
+import {
+	getQuarterlyDueDates,
+	calculateSelfEmploymentTax,
+	calculateFederalIncomeTax,
+	calculateStateIncomeTax,
+	calculateLocalEIT
+} from '$lib/utils/tax-calculations';
+import { getStateRate } from '$lib/data/state-tax-rates';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	const db = locals.db;
@@ -228,6 +237,103 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		method: methodFilter || ''
 	};
 
+	// Calculate quarterly payment data for timeline (only for sole_prop with tax configured)
+	let quarterlyPaymentsData: {
+		quarter: 1 | 2 | 3 | 4;
+		dueDate: string;
+		dueDateLabel: string;
+		federalRecommendedCents: number;
+		stateRecommendedCents: number;
+		isPaid: boolean;
+		paidFederalCents: number | null;
+		paidStateCents: number | null;
+		isPastDue: boolean;
+		isUpcoming: boolean;
+	}[] = [];
+
+	if (settings.type === 'sole_prop' && settings.taxConfigured) {
+		// Calculate tax rates from stored settings
+		const federalRate = (settings.federalBracketRate ?? 22) / 100;
+		let stateRate: number;
+		if (settings.stateRateOverride !== null) {
+			stateRate = settings.stateRateOverride / 10000;
+		} else {
+			const stateData = getStateRate(settings.state ?? 'PA');
+			stateRate = stateData?.rate ?? 0.0307;
+		}
+		const localEitRate = settings.localEitRate ? settings.localEitRate / 10000 : 0;
+
+		// Calculate taxes using net income
+		const selfEmploymentTax = calculateSelfEmploymentTax(netIncome);
+		const federalTaxCents = calculateFederalIncomeTax(
+			netIncome,
+			federalRate,
+			selfEmploymentTax.deductibleCents
+		);
+		const stateTaxCents = calculateStateIncomeTax(netIncome, stateRate);
+		const localEitCents = calculateLocalEIT(netIncome, localEitRate);
+
+		const totalEstimatedTaxCents =
+			selfEmploymentTax.totalCents + federalTaxCents + stateTaxCents + localEitCents;
+
+		// Query paid quarterly payments from database
+		const paidPaymentsRaw = db
+			.select()
+			.from(quarterlyPayments)
+			.where(eq(quarterlyPayments.fiscalYear, fiscalYear))
+			.all();
+
+		// Get quarterly due dates
+		const dueDates = getQuarterlyDueDates(fiscalYear);
+		const today = new Date().toISOString().slice(0, 10);
+		const todayDate = new Date(today);
+
+		// Calculate total already paid
+		const totalPaidCents = paidPaymentsRaw.reduce(
+			(sum, p) => sum + (p.federalPaidCents ?? 0) + (p.statePaidCents ?? 0),
+			0
+		);
+		const remainingTaxCents = Math.max(0, totalEstimatedTaxCents - totalPaidCents);
+
+		// Count remaining unpaid quarters
+		const paidQuarters = new Set(paidPaymentsRaw.map((p) => p.quarter));
+		const unpaidQuarters = [1, 2, 3, 4].filter((q) => !paidQuarters.has(q)).length;
+
+		// Calculate per-quarter recommended amount
+		const perQuarterCents = unpaidQuarters > 0 ? Math.round(remainingTaxCents / unpaidQuarters) : 0;
+
+		// Split recommended amounts: federal portion and state portion
+		const totalTaxRate = federalRate + selfEmploymentTax.totalCents / (netIncome || 1);
+		const federalPortion = netIncome > 0 ? (federalTaxCents + selfEmploymentTax.totalCents) / totalEstimatedTaxCents : 0.7;
+		const statePortion = netIncome > 0 ? (stateTaxCents + localEitCents) / totalEstimatedTaxCents : 0.3;
+
+		quarterlyPaymentsData = dueDates.map((dd) => {
+			const dbRecord = paidPaymentsRaw.find((p) => p.quarter === dd.quarter);
+			const isPaid = !!dbRecord;
+			const dueDateObj = new Date(dd.dueDate);
+			const daysUntilDue = Math.floor(
+				(dueDateObj.getTime() - todayDate.getTime()) / (1000 * 60 * 60 * 24)
+			);
+
+			// Recommended split
+			const federalRecommendedCents = Math.round(perQuarterCents * federalPortion);
+			const stateRecommendedCents = perQuarterCents - federalRecommendedCents; // Ensure no rounding loss
+
+			return {
+				quarter: dd.quarter,
+				dueDate: dd.dueDate,
+				dueDateLabel: dd.label,
+				federalRecommendedCents: isPaid ? (dbRecord?.federalPaidCents ?? 0) : federalRecommendedCents,
+				stateRecommendedCents: isPaid ? (dbRecord?.statePaidCents ?? 0) : stateRecommendedCents,
+				isPaid,
+				paidFederalCents: dbRecord?.federalPaidCents ?? null,
+				paidStateCents: dbRecord?.statePaidCents ?? null,
+				isPastDue: !isPaid && dd.dueDate < today,
+				isUpcoming: !isPaid && daysUntilDue >= 0 && daysUntilDue <= 30
+			};
+		});
+	}
+
 	return {
 		transactions: transactionsWithTags,
 		tags: availableTags,
@@ -242,7 +348,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		fiscalYear,
 		filteredCount,
 		totalCount,
-		fiscalYearStartMonth
+		fiscalYearStartMonth,
+		quarterlyPayments: quarterlyPaymentsData
 	};
 };
 

@@ -6,44 +6,75 @@
 	import FilterBar from '$lib/components/FilterBar.svelte';
 	import TimelineEntry from '$lib/components/TimelineEntry.svelte';
 	import TimelineDateMarker from '$lib/components/TimelineDateMarker.svelte';
+	import QuarterlyPaymentMarker from '$lib/components/QuarterlyPaymentMarker.svelte';
 	import QuickEntryFAB from '$lib/components/QuickEntryFAB.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	// Group transactions by date
-	let groupedTransactions = $derived(() => {
-		const groups = new Map<
-			string,
-			{
-				id: number;
-				publicId: string;
-				type: 'income' | 'expense';
-				amountCents: number;
-				date: string;
-				payee: string;
-				description: string | null;
-				paymentMethod: 'cash' | 'card' | 'check';
-				checkNumber: string | null;
-				voidedAt: string | null;
-				deletedAt: string | null;
-				createdAt: string;
-				updatedAt: string;
-				tags: { tagId: number; tagName: string; percentage: number }[];
-			}[]
-		>();
+	// Type for transaction
+	type Transaction = {
+		id: number;
+		publicId: string;
+		type: 'income' | 'expense';
+		amountCents: number;
+		date: string;
+		payee: string;
+		description: string | null;
+		paymentMethod: 'cash' | 'card' | 'check';
+		checkNumber: string | null;
+		voidedAt: string | null;
+		deletedAt: string | null;
+		createdAt: string;
+		updatedAt: string;
+		tags: { tagId: number; tagName: string; percentage: number }[];
+	};
 
+	// Type for quarterly payment marker
+	type QuarterlyMarker = typeof data.quarterlyPayments[number];
+
+	// Create a map of quarterly payments by due date
+	let quarterlyPaymentsByDate = $derived(() => {
+		const map = new Map<string, QuarterlyMarker>();
+		for (const qp of data.quarterlyPayments) {
+			map.set(qp.dueDate, qp);
+		}
+		return map;
+	});
+
+	// Group transactions by date and merge with quarterly payments
+	let timelineGroups = $derived(() => {
+		// Create groups map that can hold transactions and quarterly marker
+		const groups = new Map<string, { transactions: Transaction[]; quarterlyPayment: QuarterlyMarker | null }>();
+
+		// Add transactions to groups
 		for (const txn of data.transactions) {
 			const existing = groups.get(txn.date);
 			if (existing) {
-				existing.push(txn);
+				existing.transactions.push(txn);
 			} else {
-				groups.set(txn.date, [txn]);
+				groups.set(txn.date, { transactions: [txn], quarterlyPayment: null });
+			}
+		}
+
+		// Add quarterly payments to groups (or create new date entries)
+		const qpByDate = quarterlyPaymentsByDate();
+		for (const [dueDate, qp] of qpByDate) {
+			const existing = groups.get(dueDate);
+			if (existing) {
+				existing.quarterlyPayment = qp;
+			} else {
+				groups.set(dueDate, { transactions: [], quarterlyPayment: qp });
 			}
 		}
 
 		// Convert to array sorted by date descending
 		return Array.from(groups.entries()).sort((a, b) => b[0].localeCompare(a[0]));
 	});
+
+	// Check if timeline has any content (transactions or quarterly markers)
+	let hasTimelineContent = $derived(
+		data.transactions.length > 0 || data.quarterlyPayments.length > 0
+	);
 
 	// Check if any filters are active (for empty state messaging)
 	let hasActiveFilters = $derived(
@@ -55,8 +86,14 @@
 			data.currentFilters.method
 	);
 
-	// Determine day type for timeline markers (income, expense, mixed)
-	function getDayType(txns: typeof data.transactions): 'income' | 'expense' | 'mixed' | 'neutral' {
+	// Determine day type for timeline markers (income, expense, mixed, tax)
+	function getDayType(
+		txns: Transaction[],
+		hasQuarterlyPayment: boolean
+	): 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' {
+		// If only quarterly payment marker (no transactions), show tax type
+		if (txns.length === 0 && hasQuarterlyPayment) return 'tax';
+
 		const hasIncome = txns.some((t) => t.type === 'income');
 		const hasExpense = txns.some((t) => t.type === 'expense');
 		if (hasIncome && hasExpense) return 'mixed';
@@ -139,7 +176,7 @@
 	/>
 
 	<!-- Timeline -->
-	{#if data.transactions.length === 0}
+	{#if !hasTimelineContent}
 		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center" data-component="empty-state">
 			<svg
 				class="mx-auto h-12 w-12 text-gray-400"
@@ -169,10 +206,27 @@
 	{:else}
 		<div class="relative ms-3" data-component="transaction-timeline">
 			<ol class="relative border-s-2 border-gray-200">
-				{#each groupedTransactions() as [date, txns] (date)}
+				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment }] (date)}
 					<li class="mb-6 ms-6" data-date={date}>
-						<TimelineDateMarker {date} dayType={getDayType(txns)} />
-						<div class="space-y-2" data-component="transaction-list">
+						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment)} />
+						<div class="space-y-2" data-component="timeline-items">
+							<!-- Quarterly payment marker appears first (more prominent) -->
+							{#if quarterlyPayment}
+								<QuarterlyPaymentMarker
+									quarter={quarterlyPayment.quarter}
+									dueDate={quarterlyPayment.dueDate}
+									dueDateLabel={quarterlyPayment.dueDateLabel}
+									federalRecommendedCents={quarterlyPayment.federalRecommendedCents}
+									stateRecommendedCents={quarterlyPayment.stateRecommendedCents}
+									isPaid={quarterlyPayment.isPaid}
+									paidFederalCents={quarterlyPayment.paidFederalCents}
+									paidStateCents={quarterlyPayment.paidStateCents}
+									isPastDue={quarterlyPayment.isPastDue}
+									isUpcoming={quarterlyPayment.isUpcoming}
+									workspaceId={data.workspaceId}
+								/>
+							{/if}
+							<!-- Regular transactions -->
 							{#each txns as txn (txn.id)}
 								<TimelineEntry transaction={txn} workspaceId={data.workspaceId} />
 							{/each}
