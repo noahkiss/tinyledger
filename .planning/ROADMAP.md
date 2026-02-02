@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [x] **Phase 6: Reports Dashboard** - Summary cards and charts
 - [x] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
+- [ ] **Phase 7.1: Filings** - Compliance filings tab for both workspace types (INSERTED)
 - [ ] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
 - [ ] **Phase 9: Mobile & Deployment** - PWA configuration, Docker, production readiness
 
@@ -141,9 +142,25 @@ Plans:
 - [x] 07-03-PLAN.md - Taxes tab with breakdowns and quarterly tracking (Wave 3)
 - [x] 07-04-PLAN.md - Timeline integration and reports update (Wave 4)
 
+### Phase 7.1: Filings (INSERTED)
+**Goal**: Dedicated Filings tab for compliance filing tracking with deadline and completion status for both workspace types
+**Depends on**: Phase 7
+**Requirements**: FIL-01, FIL-02, FIL-03, FIL-04, FIL-05 (new feature area)
+**Success Criteria** (what must be TRUE):
+  1. Filings tab visible to both sole_prop and volunteer_org workspaces
+  2. Sole prop sees Schedule C, SE, 1040-ES federal forms plus state forms
+  3. Volunteer org sees 990-N and state registration forms
+  4. User can mark filings as complete for each fiscal year
+  5. Upcoming filing deadlines displayed with status-based sorting (past-due first)
+**Plans**: 2 plans in 2 waves
+
+Plans:
+- [ ] 07.1-01-PLAN.md - Schema extension + filing definitions data (Wave 1)
+- [ ] 07.1-02-PLAN.md - Filings tab UI + Taxes page migration + layout update (Wave 2)
+
 ### Phase 8: Report Generation & Data
 **Goal**: Tax-ready reports, PDF/CSV export, data import/export
-**Depends on**: Phase 4, Phase 7
+**Depends on**: Phase 4, Phase 7.1
 **Requirements**: RGEN-01, RGEN-02, RGEN-03, RGEN-04, RGEN-05, DATA-01, DATA-02, DATA-03, DATA-04, RCUR-01, RCUR-02, RCUR-03, RCUR-04, RCUR-05, RCUR-06, RCUR-07
 **Success Criteria** (what must be TRUE):
   1. User can generate tax-ready report grouped by tag with totals and receipt counts
@@ -177,7 +194,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 9
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -188,9 +205,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
 | 5. Timeline & Navigation | 3/3 | Complete | 2026-01-30 |
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
 | 7. Tax System | 4/4 | Complete | 2026-02-02 |
+| 7.1 Filings | 0/2 | Not started | - |
 | 8. Report Generation & Data | 0/3 | Not started | - |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-02*
+*Last updated: 2026-02-02 (planned Phase 7.1: Filings - 2 plans in 2 waves)*
