@@ -17,6 +17,8 @@
 
 	// Display value (formatted string)
 	let displayValue = $state('');
+	// Track if user is actively typing (input is focused)
+	let isFocused = $state(false);
 
 	// Format cents to display string
 	function formatForDisplay(cents: number): string {
@@ -32,10 +34,12 @@
 		return dollarsToCents(dollars);
 	}
 
-	// Initialize display value from props
+	// Initialize display value from props - only when not focused
 	$effect(() => {
+		// Skip if user is typing - don't overwrite their input
+		if (isFocused) return;
+
 		// Only update display if it doesn't match current value
-		// This prevents overwriting user input during typing
 		const currentCents = parseToCents(displayValue);
 		if (currentCents !== value) {
 			displayValue = formatForDisplay(value);
@@ -45,15 +49,19 @@
 	function handleInput(event: Event) {
 		const input = event.target as HTMLInputElement;
 		displayValue = input.value;
+		// Update bound value as user types for real-time validation
+		value = parseToCents(displayValue);
 	}
 
 	function handleBlur() {
+		isFocused = false;
 		// Parse and reformat on blur
 		value = parseToCents(displayValue);
 		displayValue = formatForDisplay(value);
 	}
 
 	function handleFocus(event: Event) {
+		isFocused = true;
 		const input = event.target as HTMLInputElement;
 		// Select all on focus for easy replacement
 		input.select();
