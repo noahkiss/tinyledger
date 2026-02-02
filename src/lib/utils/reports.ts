@@ -4,9 +4,38 @@
 
 /**
  * Default tax set-aside rate (25%)
- * Can be made configurable in Phase 7
+ * Used as fallback when taxes are not configured.
  */
 export const TAX_SET_ASIDE_RATE = 0.25;
+
+/**
+ * Calculate effective tax rate from configured rates.
+ * This is an approximation that includes SE tax (15.3% on 92.35% of income).
+ *
+ * @param netIncomeCents - Net self-employment income in cents
+ * @param federalRate - Federal bracket rate (e.g., 0.22 for 22%)
+ * @param stateRate - State tax rate (e.g., 0.0307 for 3.07%)
+ * @param localRate - Local EIT rate (e.g., 0.01 for 1%)
+ * @returns Effective tax rate as a decimal (e.g., 0.35 for 35%)
+ */
+export function calculateEffectiveTaxRate(
+	netIncomeCents: number,
+	federalRate: number,
+	stateRate: number,
+	localRate: number
+): number {
+	if (netIncomeCents <= 0) return 0;
+
+	// SE tax base rate (15.3% on 92.35% of income = ~14.13%)
+	const seRate = 0.153 * 0.9235;
+
+	// Federal rate applies to income after SE deduction (half of SE tax)
+	// Simplified: apply federal rate to (1 - seRate/2) of income
+	const federalEffective = federalRate * (1 - seRate / 2);
+
+	// State and local apply to full net income
+	return seRate + federalEffective + stateRate + localRate;
+}
 
 /**
  * Get short month label from a date string.

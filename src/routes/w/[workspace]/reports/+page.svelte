@@ -72,7 +72,17 @@
 				percentChange={expenseChange}
 				valuePrefix="-"
 			/>
-			<SummaryCard label="Tax Set-Aside" value={data.totals.taxSetAside} percentChange={taxChange} />
+			<SummaryCard label="Tax Set-Aside" value={data.totals.taxSetAside} percentChange={taxChange}>
+				{#if !data.totals.taxConfigured}
+					<a href="/w/{data.workspaceId}/settings" class="text-xs text-gray-500 hover:text-blue-600">
+						Estimated at {(data.totals.taxRateUsed * 100).toFixed(0)}% - configure taxes for accuracy
+					</a>
+				{:else}
+					<p class="text-xs text-gray-500">
+						Based on your configured rates ({(data.totals.taxRateUsed * 100).toFixed(1)}% effective)
+					</p>
+				{/if}
+			</SummaryCard>
 		</div>
 	</section>
 

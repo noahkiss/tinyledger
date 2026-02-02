@@ -8,6 +8,13 @@ import {
 	getAvailableFiscalYears
 } from '$lib/utils/fiscal-year';
 import { getMonthsInFiscalYear, TAX_SET_ASIDE_RATE } from '$lib/utils/reports';
+import {
+	calculateSelfEmploymentTax,
+	calculateFederalIncomeTax,
+	calculateStateIncomeTax,
+	calculateLocalEIT
+} from '$lib/utils/tax-calculations';
+import { getStateRate } from '$lib/data/state-tax-rates';
 
 export const load: PageServerLoad = async ({ locals, url, params }) => {
 	const db = locals.db;
@@ -59,7 +66,43 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 	const totalIncome = totalsResult?.totalIncome ?? 0;
 	const totalExpenses = totalsResult?.totalExpenses ?? 0;
 	const netIncome = totalIncome - totalExpenses;
-	const taxSetAside = netIncome > 0 ? Math.round(netIncome * TAX_SET_ASIDE_RATE) : 0;
+
+	// Calculate tax set-aside based on configured rates (if available)
+	let taxSetAside: number;
+	let taxConfigured: boolean;
+	let taxRateUsed: number;
+
+	if (settings.type === 'sole_prop' && settings.taxConfigured && netIncome > 0) {
+		// Use configured tax rates for accurate calculation
+		const federalRate = (settings.federalBracketRate ?? 22) / 100;
+		let stateRate: number;
+		if (settings.stateRateOverride !== null) {
+			stateRate = settings.stateRateOverride / 10000;
+		} else {
+			const stateData = getStateRate(settings.state ?? 'PA');
+			stateRate = stateData?.rate ?? 0.0307;
+		}
+		const localEitRate = settings.localEitRate ? settings.localEitRate / 10000 : 0;
+
+		// Calculate actual tax estimate
+		const selfEmploymentTax = calculateSelfEmploymentTax(netIncome);
+		const federalTax = calculateFederalIncomeTax(
+			netIncome,
+			federalRate,
+			selfEmploymentTax.deductibleCents
+		);
+		const stateTax = calculateStateIncomeTax(netIncome, stateRate);
+		const localTax = calculateLocalEIT(netIncome, localEitRate);
+
+		taxSetAside = selfEmploymentTax.totalCents + federalTax + stateTax + localTax;
+		taxConfigured = true;
+		taxRateUsed = taxSetAside / netIncome; // Effective rate
+	} else {
+		// Fall back to default 25% estimate
+		taxSetAside = netIncome > 0 ? Math.round(netIncome * TAX_SET_ASIDE_RATE) : 0;
+		taxConfigured = false;
+		taxRateUsed = TAX_SET_ASIDE_RATE;
+	}
 
 	// Calculate previous fiscal year totals for comparison
 	const previousFiscalYear = fiscalYear - 1;
@@ -194,7 +237,9 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 			income: totalIncome,
 			expense: totalExpenses,
 			net: netIncome,
-			taxSetAside
+			taxSetAside,
+			taxConfigured,
+			taxRateUsed
 		},
 		previousPeriod,
 		periodData,
