@@ -3,11 +3,18 @@
 	import { formatFiscalYear } from '$lib/utils/fiscal-year';
 	import { calculatePercentChange } from '$lib/utils/reports';
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
+	import GranularityToggle from '$lib/components/GranularityToggle.svelte';
 	import SummaryCard from '$lib/components/SummaryCard.svelte';
 	import Sparkline from '$lib/components/charts/Sparkline.svelte';
 	import NetIncomeChart from '$lib/components/charts/NetIncomeChart.svelte';
 	import IncomeVsExpense from '$lib/components/charts/IncomeVsExpense.svelte';
 	import SpendingBreakdown from '$lib/components/charts/SpendingBreakdown.svelte';
+
+	// Format asOfDate for display
+	function formatAsOfDate(dateStr: string): string {
+		const date = new Date(dateStr + 'T00:00:00');
+		return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+	}
 
 	let { data }: { data: PageData } = $props();
 
@@ -29,14 +36,17 @@
 </svelte:head>
 
 <div class="space-y-6">
-	<!-- Header with FY picker -->
-	<header class="flex items-center justify-between">
+	<!-- Header with FY picker and granularity toggle -->
+	<header class="flex flex-wrap items-center justify-between gap-4">
 		<h1 class="text-2xl font-bold text-gray-900">Reports</h1>
-		<FiscalYearPicker
-			fiscalYear={data.fiscalYear}
-			availableYears={data.availableFiscalYears}
-			startMonth={data.fiscalYearStartMonth}
-		/>
+		<div class="flex items-center gap-2">
+			<FiscalYearPicker
+				fiscalYear={data.fiscalYear}
+				availableYears={data.availableFiscalYears}
+				startMonth={data.fiscalYearStartMonth}
+			/>
+			<GranularityToggle granularity={data.granularity} />
+		</div>
 	</header>
 
 	<!-- Summary Cards -->
@@ -68,7 +78,14 @@
 
 	<!-- Financial Overview Charts -->
 	<section class="space-y-6 mt-8">
-		<h2 class="text-lg font-semibold text-gray-900">Financial Overview</h2>
+		<div class="flex flex-wrap items-center justify-between gap-2">
+			<h2 class="text-lg font-semibold text-gray-900">Financial Overview</h2>
+			{#if data.currentPeriodPartial && data.asOfDate}
+				<p class="text-sm text-gray-500 italic">
+					Current {data.granularity === 'monthly' ? 'month' : 'quarter'} shows data as of {formatAsOfDate(data.asOfDate)}
+				</p>
+			{/if}
+		</div>
 
 		<!-- Net Income Over Time -->
 		<div class="rounded-xl border border-gray-200 bg-white p-4">
@@ -80,9 +97,11 @@
 			/>
 		</div>
 
-		<!-- Income vs Expense by Month -->
+		<!-- Income vs Expense -->
 		<div class="rounded-xl border border-gray-200 bg-white p-4">
-			<h3 class="text-sm font-medium text-gray-700 mb-4">Income vs Expense by Month</h3>
+			<h3 class="text-sm font-medium text-gray-700 mb-4">
+				Income vs Expense by {data.granularity === 'monthly' ? 'Month' : 'Quarter'}
+			</h3>
 			<IncomeVsExpense
 				data={data.periodData}
 				workspaceId={data.workspaceId}
