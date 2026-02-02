@@ -180,4 +180,37 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 	db.run(
 		sql`CREATE INDEX IF NOT EXISTS quarterly_payments_year_quarter_idx ON quarterly_payments(fiscal_year, quarter)`
 	);
+
+	// Migration: Create attachments table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS attachments (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			transaction_id INTEGER NOT NULL UNIQUE REFERENCES transactions(id) ON DELETE CASCADE,
+			filename TEXT NOT NULL,
+			original_filename TEXT NOT NULL,
+			mime_type TEXT NOT NULL,
+			size_bytes INTEGER NOT NULL,
+			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+		)
+	`);
+
+	// Create index for attachments lookup
+	db.run(sql`CREATE INDEX IF NOT EXISTS attachments_transaction_idx ON attachments(transaction_id)`);
+
+	// Migration: Create filings table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS filings (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			fiscal_year INTEGER NOT NULL,
+			form_id TEXT NOT NULL,
+			filed_at TEXT,
+			confirmation_number TEXT,
+			notes TEXT,
+			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
+			updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+		)
+	`);
+
+	// Create index for filings lookup
+	db.run(sql`CREATE INDEX IF NOT EXISTS filings_year_form_idx ON filings(fiscal_year, form_id)`);
 }
