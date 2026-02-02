@@ -3,6 +3,10 @@ import { fail } from '@sveltejs/kit';
 import { workspaceSettings } from '$lib/server/db/schema';
 import { processLogoUpload } from '$lib/server/storage/logo';
 import { updateWorkspaceName } from '$lib/server/workspace/registry';
+import { STATE_TAX_RATES } from '$lib/data/state-tax-rates';
+
+// Valid federal bracket rates for 2026
+const VALID_FEDERAL_BRACKET_RATES = [10, 12, 22, 24, 32, 35, 37];
 
 export const load: PageServerLoad = async ({ parent }) => {
 	// Get settings from parent layout
@@ -32,6 +36,18 @@ export const actions: Actions = {
 		const fiscalYearStartMonth = fiscalYearStartMonthStr ? parseInt(fiscalYearStartMonthStr, 10) : 1;
 		const logoFile = formData.get('logo') as File | null;
 
+		// Extract tax configuration fields
+		const stateCode = formData.get('state')?.toString().trim() || null;
+		const federalBracketRateStr = formData.get('federalBracketRate')?.toString().trim();
+		const stateRateOverrideStr = formData.get('stateRateOverride')?.toString().trim();
+		const localEitRateStr = formData.get('localEitRate')?.toString().trim();
+		const taxNotes = formData.get('taxNotes')?.toString().trim() || null;
+
+		// Parse tax rates
+		const federalBracketRate = federalBracketRateStr ? parseInt(federalBracketRateStr, 10) : null;
+		const stateRateOverride = parseRateFromInput(stateRateOverrideStr);
+		const localEitRate = parseRateFromInput(localEitRateStr);
+
 		// Validation
 		if (!name || name.length < 1) {
 			return fail(400, { error: 'Workspace name is required' });
@@ -47,6 +63,36 @@ export const actions: Actions = {
 
 		if (fiscalYearStartMonth < 1 || fiscalYearStartMonth > 12) {
 			return fail(400, { error: 'Invalid fiscal year start month' });
+		}
+
+		// Validate tax fields (only for sole_prop)
+		const warnings: string[] = [];
+
+		if (type === 'sole_prop') {
+			// Validate state code if provided
+			if (stateCode && stateCode.length !== 2) {
+				return fail(400, { error: 'State must be a 2-letter code' });
+			}
+
+			if (stateCode && !STATE_TAX_RATES.find((s) => s.code === stateCode)) {
+				// Accept unknown states but warn
+				warnings.push(`State "${stateCode}" is not in our list of flat-rate states. Using manual rate.`);
+			}
+
+			// Validate federal bracket rate
+			if (federalBracketRate !== null && !VALID_FEDERAL_BRACKET_RATES.includes(federalBracketRate)) {
+				return fail(400, { error: 'Invalid federal tax bracket' });
+			}
+
+			// Warn on unusual state rate (> 15%)
+			if (stateRateOverride !== null && stateRateOverride > 150000) {
+				warnings.push('State rate seems unusually high (over 15%). Please verify.');
+			}
+
+			// Warn on unusual local EIT rate (> 5%)
+			if (localEitRate !== null && localEitRate > 50000) {
+				warnings.push('Local EIT rate seems unusually high (over 5%). Please verify.');
+			}
 		}
 
 		// Process logo upload if provided
@@ -70,6 +116,9 @@ export const actions: Actions = {
 			}
 		}
 
+		// Determine if tax is configured (state AND federal bracket both set)
+		const taxConfigured = type === 'sole_prop' && stateCode !== null && federalBracketRate !== null ? 1 : 0;
+
 		// Build update object
 		const updateData: Record<string, unknown> = {
 			name,
@@ -83,6 +132,16 @@ export const actions: Actions = {
 			updatedAt: new Date().toISOString()
 		};
 
+		// Only include tax fields for sole_prop
+		if (type === 'sole_prop') {
+			updateData.state = stateCode;
+			updateData.federalBracketRate = federalBracketRate;
+			updateData.stateRateOverride = stateRateOverride;
+			updateData.localEitRate = localEitRate;
+			updateData.taxNotes = taxNotes;
+			updateData.taxConfigured = taxConfigured;
+		}
+
 		// Only update logo if a new one was uploaded
 		if (logoFilename) {
 			updateData.logoFilename = logoFilename;
@@ -94,6 +153,17 @@ export const actions: Actions = {
 		// Update workspace name in registry (for workspace list)
 		updateWorkspaceName(params.workspace, name);
 
-		return { success: true };
+		return { success: true, warnings };
 	}
 };
+
+/**
+ * Parse rate from display format (e.g., "3.07") to storage format (30700).
+ * Returns null if input is empty or invalid.
+ */
+function parseRateFromInput(input: string | undefined | null): number | null {
+	if (!input || input.trim() === '') return null;
+	const rate = parseFloat(input);
+	if (isNaN(rate) || rate < 0) return null;
+	return Math.round(rate * 10000);
+}
