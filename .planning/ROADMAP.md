@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Timeline & Navigation** - Fiscal year views, filtering, timeline UI
 - [x] **Phase 6: Reports Dashboard** - Summary cards and charts
 - [x] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
-- [ ] **Phase 7.1: Filings** - Compliance filings tab for both workspace types (INSERTED)
+- [x] **Phase 7.1: Filings** - Compliance filings tab for both workspace types (INSERTED)
 - [ ] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
 - [ ] **Phase 9: Mobile & Deployment** - PWA configuration, Docker, production readiness
 
@@ -155,8 +155,8 @@ Plans:
 **Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 07.1-01-PLAN.md - Schema extension + filing definitions data (Wave 1)
-- [ ] 07.1-02-PLAN.md - Filings tab UI + Taxes page migration + layout update (Wave 2)
+- [x] 07.1-01-PLAN.md - Schema extension + filing definitions data (Wave 1)
+- [x] 07.1-02-PLAN.md - Filings tab UI + Taxes page migration + layout update (Wave 2)
 
 ### Phase 8: Report Generation & Data
 **Goal**: Tax-ready reports, PDF/CSV export, data import/export
@@ -205,10 +205,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 
 | 5. Timeline & Navigation | 3/3 | Complete | 2026-01-30 |
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
 | 7. Tax System | 4/4 | Complete | 2026-02-02 |
-| 7.1 Filings | 0/2 | Not started | - |
+| 7.1 Filings | 2/2 | Complete | 2026-02-02 |
 | 8. Report Generation & Data | 0/3 | Not started | - |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-02 (planned Phase 7.1: Filings - 2 plans in 2 waves)*
+*Last updated: 2026-02-02 (completed Phase 7.1: Filings)*

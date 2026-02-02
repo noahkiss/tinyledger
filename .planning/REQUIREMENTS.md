@@ -115,6 +115,14 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **QRTR-03**: User can mark quarterly payment as paid
 - [x] **QRTR-04**: Paid quarterly payments show in timeline as completed
 
+### Compliance Filings
+
+- [x] **FIL-01**: Filings tab visible to both sole_prop and volunteer_org workspaces
+- [x] **FIL-02**: Sole prop sees federal forms (Schedule C, SE, quarterly 1040-ES) and state forms (PA-40, quarterly PA-40 ES)
+- [x] **FIL-03**: Volunteer org sees 990-N and state registration forms (BCO-10 for PA)
+- [x] **FIL-04**: User can mark filings as complete with date filed, confirmation number, notes
+- [x] **FIL-05**: Filings sorted by status (past-due first, then upcoming, then complete)
+
 ### Reports Dashboard
 
 - [x] **RPTS-01**: Summary cards: YTD income, YTD expenses, net income, tax set-aside
@@ -278,6 +286,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QRTR-02 | Phase 7 | Complete |
 | QRTR-03 | Phase 7 | Complete |
 | QRTR-04 | Phase 7 | Complete |
+| FIL-01 | Phase 7.1 | Complete |
+| FIL-02 | Phase 7.1 | Complete |
+| FIL-03 | Phase 7.1 | Complete |
+| FIL-04 | Phase 7.1 | Complete |
+| FIL-05 | Phase 7.1 | Complete |
 | RPTS-01 | Phase 6 | Complete |
 | RPTS-02 | Phase 6 | Complete |
 | RPTS-03 | Phase 6 | Complete |
@@ -305,10 +318,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DPLY-04 | Phase 9 | Pending |
 
 **Coverage:**
-- v1 requirements: 74 total
-- Mapped to phases: 74
+- v1 requirements: 79 total
+- Mapped to phases: 79
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-02-02 after Phase 7 completion*
+*Last updated: 2026-02-02 after Phase 7.1 completion*
