@@ -13,16 +13,18 @@
 
 	// Navigation tabs (Dashboard removed - Transactions is home)
 	// Taxes tab only shown for sole_prop workspaces
+	// Filings tab visible to all workspace types
 	const baseNavTabs = [
 		{ href: 'transactions', label: 'Transactions' },
 		{ href: 'reports', label: 'Reports' }
 	];
 
-	// Derived: add Taxes tab for sole_prop workspaces only
+	// Derived: add Taxes tab for sole_prop only, Filings for all
+	// Order: Transactions | Reports | Taxes (sole_prop only) | Filings
 	const navTabs = $derived(
 		data.settings.type === 'sole_prop'
-			? [...baseNavTabs, { href: 'taxes', label: 'Taxes' }]
-			: baseNavTabs
+			? [...baseNavTabs, { href: 'taxes', label: 'Taxes' }, { href: 'filings', label: 'Filings' }]
+			: [...baseNavTabs, { href: 'filings', label: 'Filings' }]
 	);
 
 	// Determine active tab from current path

@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
-	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
 	import TaxBreakdownCard from '$lib/components/TaxBreakdownCard.svelte';
 	import { formatCurrency } from '$lib/utils/currency';
 
@@ -15,32 +13,9 @@
 		goto(`/w/${data.workspaceId}/taxes?fy=${fy}`, { replaceState: true, noScroll: true });
 	}
 
-	// Track which payment forms are open
-	let openPaymentForms = $state<Set<number>>(new Set());
-
-	function togglePaymentForm(quarter: number) {
-		if (openPaymentForms.has(quarter)) {
-			openPaymentForms = new Set([...openPaymentForms].filter((q) => q !== quarter));
-		} else {
-			openPaymentForms = new Set([...openPaymentForms, quarter]);
-		}
-	}
-
 	// Helper to format rate as percentage
 	function formatRate(rate: number): string {
 		return `${(rate * 100).toFixed(2)}%`;
-	}
-
-	// Helper to get payment status color
-	function getPaymentStatusClass(payment: {
-		isPaid: boolean;
-		isPastDue: boolean;
-		isUpcoming: boolean;
-	}): string {
-		if (payment.isPaid) return 'border-green-300 bg-green-50';
-		if (payment.isPastDue) return 'border-red-300 bg-red-50';
-		if (payment.isUpcoming) return 'border-yellow-300 bg-yellow-50';
-		return 'border-gray-200 bg-white';
 	}
 </script>
 
@@ -227,191 +202,20 @@
 			</div>
 		</section>
 
-		<!-- Quarterly Payments Section -->
-		<section>
-			<h2 class="mb-4 text-lg font-semibold text-gray-900">Quarterly Estimated Payments</h2>
-
-			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				{#each data.quarterlyPayments as payment}
-					<div
-						class="rounded-xl border p-4 {getPaymentStatusClass(payment)}"
-						data-quarter={payment.quarter}
-					>
-						<div class="flex items-center justify-between mb-2">
-							<span class="font-semibold text-gray-900">Q{payment.quarter}</span>
-							{#if payment.isPaid}
-								<span
-									class="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800"
-								>
-									Paid
-								</span>
-							{:else if payment.isPastDue}
-								<span
-									class="inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800"
-								>
-									Past Due
-								</span>
-							{:else if payment.isUpcoming}
-								<span
-									class="inline-flex items-center rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800"
-								>
-									Upcoming
-								</span>
-							{/if}
-						</div>
-
-						<p class="text-sm text-gray-600">Due: {payment.dueDateLabel}</p>
-						<p class="mt-1 text-lg font-semibold text-gray-900">
-							{formatCurrency(payment.recommendedCents)}
-						</p>
-
-						{#if payment.isPaid}
-							<!-- Show paid details -->
-							<div class="mt-3 space-y-1 text-sm text-gray-600">
-								{#if payment.federalPaidCents}
-									<p>Federal: {formatCurrency(payment.federalPaidCents)}</p>
-								{/if}
-								{#if payment.statePaidCents}
-									<p>State: {formatCurrency(payment.statePaidCents)}</p>
-								{/if}
-								{#if payment.notes}
-									<p class="text-xs text-gray-500 italic">{payment.notes}</p>
-								{/if}
-							</div>
-
-							<!-- Unmark as paid button -->
-							<form method="POST" action="?/unmarkPaid" use:enhance class="mt-3">
-								<input type="hidden" name="quarter" value={payment.quarter} />
-								<input type="hidden" name="fiscalYear" value={data.fiscalYear} />
-								<button
-									type="submit"
-									class="text-sm text-gray-500 hover:text-gray-700 underline"
-								>
-									Unmark as paid
-								</button>
-							</form>
-						{:else}
-							<!-- Mark as paid button/form -->
-							{#if openPaymentForms.has(payment.quarter)}
-								<form method="POST" action="?/markPaid" use:enhance class="mt-3 space-y-3">
-									<input type="hidden" name="quarter" value={payment.quarter} />
-									<input type="hidden" name="fiscalYear" value={data.fiscalYear} />
-
-									<div>
-										<label
-											for="federal-{payment.quarter}"
-											class="block text-xs font-medium text-gray-700"
-										>
-											Federal Payment
-										</label>
-										<input
-											type="number"
-											id="federal-{payment.quarter}"
-											name="federalPaidCents"
-											value={Math.round(payment.recommendedCents * 0.7)}
-											class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-										/>
-									</div>
-
-									<div>
-										<label
-											for="state-{payment.quarter}"
-											class="block text-xs font-medium text-gray-700"
-										>
-											State Payment
-										</label>
-										<input
-											type="number"
-											id="state-{payment.quarter}"
-											name="statePaidCents"
-											value={Math.round(payment.recommendedCents * 0.3)}
-											class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-										/>
-									</div>
-
-									<div>
-										<label for="notes-{payment.quarter}" class="block text-xs font-medium text-gray-700">
-											Notes (optional)
-										</label>
-										<input
-											type="text"
-											id="notes-{payment.quarter}"
-											name="notes"
-											placeholder="e.g., Check #1234"
-											class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-										/>
-									</div>
-
-									<div class="flex gap-2">
-										<button
-											type="submit"
-											class="flex-1 rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700"
-										>
-											Mark Paid
-										</button>
-										<button
-											type="button"
-											onclick={() => togglePaymentForm(payment.quarter)}
-											class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-										>
-											Cancel
-										</button>
-									</div>
-								</form>
-							{:else}
-								<button
-									type="button"
-									onclick={() => togglePaymentForm(payment.quarter)}
-									class="mt-3 w-full rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-								>
-									Mark as Paid
-								</button>
-							{/if}
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</section>
-
-		<!-- Tax Forms Reference (optional collapsible section) -->
-		<section class="border-t border-gray-200 pt-6">
-			<details>
-				<summary class="cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-900">
-					Tax Forms Reference
-				</summary>
-				<div class="mt-4 space-y-3">
-					{#each data.formChecklist as form}
-						<div class="rounded-lg border border-gray-200 bg-white p-3">
-							<div class="flex items-start justify-between">
-								<div>
-									<h3 class="font-medium text-gray-900">{form.name}</h3>
-									<p class="text-sm text-gray-600">{form.description}</p>
-									<p class="mt-1 text-xs text-gray-500">Due: {form.dueDate}</p>
-								</div>
-								{#if form.irsLink}
-									<a
-										href={form.irsLink}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-sm text-blue-600 hover:text-blue-800"
-									>
-										IRS
-									</a>
-								{:else if form.stateLink}
-									<a
-										href={form.stateLink}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-sm text-blue-600 hover:text-blue-800"
-									>
-										State
-									</a>
-								{/if}
-							</div>
-						</div>
-					{/each}
+		<!-- Filing Tracking Link -->
+		<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+			<div class="flex items-center justify-between">
+				<div>
+					<h3 class="font-medium text-blue-900">Track Your Filings</h3>
+					<p class="text-sm text-blue-700">View deadlines and mark filings complete in the Filings tab.</p>
 				</div>
-			</details>
-		</section>
+				<a
+					href="/w/{data.workspaceId}/filings?fy={data.fiscalYear}"
+					class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+				>
+					View Filings
+				</a>
+			</div>
+		</div>
 	</div>
 {/if}
