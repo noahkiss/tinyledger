@@ -608,4 +608,50 @@
 			</svg>
 		</a>
 	</div>
+
+	<!-- Data Export Section -->
+	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
+		<h2 class="text-lg font-semibold text-gray-900 mb-4">Data Export</h2>
+		<p class="text-sm text-gray-600 mb-4">
+			Export your financial data for backup or migration purposes.
+		</p>
+
+		<div class="space-y-3">
+			<!-- CSV Export -->
+			<div class="flex items-center justify-between py-2">
+				<div>
+					<h3 class="text-sm font-medium text-gray-900">Transactions CSV</h3>
+					<p class="text-xs text-gray-500">All transactions in spreadsheet format</p>
+				</div>
+				<a
+					href="/w/{data.workspaceId}/export/csv"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					download
+				>
+					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+					</svg>
+					Download CSV
+				</a>
+			</div>
+
+			<!-- Full Export -->
+			<div class="flex items-center justify-between py-2 border-t border-gray-100">
+				<div>
+					<h3 class="text-sm font-medium text-gray-900">Full Backup (ZIP)</h3>
+					<p class="text-xs text-gray-500">All data including receipts and attachments</p>
+				</div>
+				<a
+					href="/w/{data.workspaceId}/export/full"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					download
+				>
+					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+					</svg>
+					Download ZIP
+				</a>
+			</div>
+		</div>
+	</section>
 </div>
