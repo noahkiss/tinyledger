@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # Data directory (runtime data)
 /data
+nanobanana-output/
