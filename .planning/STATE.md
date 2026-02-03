@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 8 Complete - Ready for Phase 9
+**Current focus:** Phase 9 In Progress - Docker deployment complete
 
 ## Current Position
 
-Phase: 8 of 9 (Report Generation & Data) - COMPLETE
-Plan: 4 of 4 in phase (all complete)
-Status: Phase complete
-Last activity: 2026-02-03 - Completed 08-04-PLAN.md
+Phase: 9 of 9 (Mobile & Deployment)
+Plan: 2 of 4 in phase (Docker deployment complete)
+Status: In progress
+Last activity: 2026-02-03 - Completed 09-02-PLAN.md
 
-Progress: [███████████] 100% (Phase 8 complete)
+Progress: [████████████░░░] 80% (28/32 plans complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 27
+- Total plans completed: 28
 - Average duration: 11 min
-- Total execution time: 5.0 hours
+- Total execution time: 5.2 hours
 
 **By Phase:**
 
@@ -36,9 +36,10 @@ Progress: [███████████] 100% (Phase 8 complete)
 | 07-tax-system | 4 | 25 min | 6 min |
 | 07.1-filings | 2 | 14 min | 7 min |
 | 08-report-generation-data | 4 | 40 min | 10 min |
+| 09-mobile-deployment | 1 | 14 min | 14 min |
 
 **Recent Trend:**
-- Last 5 plans: 8 min, 12 min, 8 min, 10 min, 11 min
+- Last 5 plans: 12 min, 8 min, 10 min, 11 min, 14 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -130,6 +131,10 @@ Recent decisions affecting current work:
 | rrule string storage | 08-04 | Store rrule.toString() for portable pattern storage |
 | Pending instance calculation | 08-04 | Calculate at load time, no stale data |
 | Soft deactivate | 08-04 | Deactivate vs delete for recurring templates |
+| node:22-slim over Alpine | 09-02 | better-sqlite3 native module compatibility |
+| Non-root nodejs user | 09-02 | Container security best practice (UID 1001) |
+| Separate Docker volumes | 09-02 | User preference: ledger-db and ledger-attachments |
+| Node fetch for health check | 09-02 | No wget/curl needed in runtime image |
 
 ### Pending Todos
 
@@ -141,8 +146,8 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-03T06:17:00Z
-Stopped at: Completed 08-04-PLAN.md (Recurring Transactions)
+Last session: 2026-02-03T14:21:52Z
+Stopped at: Completed 09-02-PLAN.md (Docker Deployment)
 Resume file: None
 
-Phase 8 complete. Ready for Phase 9 (Polish & Mobile).
+Phase 9 in progress. Docker deployment complete. PWA manifest next.
