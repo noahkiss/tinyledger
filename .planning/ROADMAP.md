@@ -186,11 +186,12 @@ Plans:
   3. Docker container builds with multi-stage build and runs with volume mounts
   4. Environment variables configure ORIGIN, DATA_DIR, and BODY_SIZE_LIMIT
   5. SQLite backup strategy documented and tested
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 09-01: TBD
-- [ ] 09-02: TBD
+- [ ] 09-01-PLAN.md - PWA configuration: manifest, icons, offline indicator (Wave 1)
+- [ ] 09-02-PLAN.md - Docker deployment: Dockerfile, docker-compose, health check (Wave 1)
+- [ ] 09-03-PLAN.md - Backup documentation and utility functions (Wave 2)
 
 ## Progress
 
@@ -208,8 +209,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 
 | 7. Tax System | 4/4 | Complete | 2026-02-02 |
 | 7.1 Filings | 2/2 | Complete | 2026-02-02 |
 | 8. Report Generation & Data | 4/4 | Complete | 2026-02-03 |
-| 9. Mobile & Deployment | 0/2 | Not started | - |
+| 9. Mobile & Deployment | 0/3 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-03 (completed Phase 8: Report Generation & Data)*
+*Last updated: 2026-02-03 (planned Phase 9: Mobile & Deployment)*
