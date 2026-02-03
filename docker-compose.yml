@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # REQUIRED: Set to your actual domain
+      - ORIGIN=http://localhost:3000
+      # Data directory (matches Dockerfile default)
+      - DATA_DIR=/data
+      # Request body size limit (10M = 10 megabytes)
+      - BODY_SIZE_LIMIT=10M
+      # Server port (matches EXPOSE in Dockerfile)
+      - PORT=3000
+      # Timezone for date handling
+      - TZ=America/New_York
+      # Optional: Log level for debugging
+      # - LOG_LEVEL=info
+    volumes:
+      # Separate volumes for databases and attachments
+      - ledger-db:/data/db
+      - ledger-attachments:/data/attachments
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+volumes:
+  ledger-db:
+  ledger-attachments:

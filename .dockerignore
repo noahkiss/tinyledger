@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+
+# Build output
+build
+.svelte-kit
+
+# Development files
+.git
+.gitignore
+*.md
+!README.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment files (should not be in build context)
+.env
+.env.*
+
+# Planning files
+.planning
+
+# Test files
+*.test.ts
+*.spec.ts
+scripts/
+
+# OS files
+.DS_Store
+Thumbs.db
