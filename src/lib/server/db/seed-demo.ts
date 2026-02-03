@@ -53,7 +53,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			description: 'January consulting retainer',
 			paymentMethod: 'check',
 			checkNumber: '1001',
-			tags: [{ name: 'Gross receipts or sales', percentage: 100 }]
+			tags: [{ name: 'Service Income', percentage: 100 }]
 		},
 		{
 			type: 'income',
@@ -62,7 +62,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'TechStart Inc',
 			description: 'Website audit project',
 			paymentMethod: 'card',
-			tags: [{ name: 'Gross receipts or sales', percentage: 100 }]
+			tags: [{ name: 'Service Income', percentage: 100 }]
 		},
 		{
 			type: 'income',
@@ -72,7 +72,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			description: 'February consulting retainer',
 			paymentMethod: 'check',
 			checkNumber: '1042',
-			tags: [{ name: 'Gross receipts or sales', percentage: 100 }]
+			tags: [{ name: 'Service Income', percentage: 100 }]
 		},
 		{
 			type: 'income',
@@ -82,7 +82,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			description: 'Workshop presentation fee',
 			paymentMethod: 'check',
 			checkNumber: '5521',
-			tags: [{ name: 'Gross receipts or sales', percentage: 100 }]
+			tags: [{ name: 'Service Income', percentage: 100 }]
 		},
 
 		// Expenses - Office & Supplies
@@ -93,7 +93,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Office Depot',
 			description: 'Printer paper and toner',
 			paymentMethod: 'card',
-			tags: [{ name: 'Office expense', percentage: 100 }]
+			tags: [{ name: 'Office Expenses', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -102,7 +102,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Amazon',
 			description: 'Ergonomic keyboard and mouse',
 			paymentMethod: 'card',
-			tags: [{ name: 'Office expense', percentage: 100 }]
+			tags: [{ name: 'Office Expenses', percentage: 100 }]
 		},
 
 		// Expenses - Software subscriptions
@@ -113,7 +113,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'GitHub',
 			description: 'Pro subscription - January',
 			paymentMethod: 'card',
-			tags: [{ name: 'Other expenses', percentage: 100 }]
+			tags: [{ name: 'Subscriptions & Dues', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -122,7 +122,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Anthropic',
 			description: 'Claude Pro - January',
 			paymentMethod: 'card',
-			tags: [{ name: 'Other expenses', percentage: 100 }]
+			tags: [{ name: 'Computer & Software', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -131,7 +131,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'GitHub',
 			description: 'Pro subscription - February',
 			paymentMethod: 'card',
-			tags: [{ name: 'Other expenses', percentage: 100 }]
+			tags: [{ name: 'Subscriptions & Dues', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -140,7 +140,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Anthropic',
 			description: 'Claude Pro - February',
 			paymentMethod: 'card',
-			tags: [{ name: 'Other expenses', percentage: 100 }]
+			tags: [{ name: 'Computer & Software', percentage: 100 }]
 		},
 
 		// Expenses - Travel
@@ -180,7 +180,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Gibson\'s Steakhouse',
 			description: 'Client dinner - Acme Corp',
 			paymentMethod: 'card',
-			tags: [{ name: 'Meals (deductible)', percentage: 100 }]
+			tags: [{ name: 'Meals & Entertainment', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -189,7 +189,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Corner Bakery',
 			description: 'Lunch meeting - TechStart',
 			paymentMethod: 'card',
-			tags: [{ name: 'Meals (deductible)', percentage: 100 }]
+			tags: [{ name: 'Meals & Entertainment', percentage: 100 }]
 		},
 
 		// Expenses - Professional services
@@ -201,7 +201,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			description: 'Quarterly bookkeeping review',
 			paymentMethod: 'check',
 			checkNumber: '1051',
-			tags: [{ name: 'Legal and professional services', percentage: 100 }]
+			tags: [{ name: 'Legal & Professional', percentage: 100 }]
 		},
 
 		// Expenses - Advertising
@@ -212,7 +212,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'LinkedIn',
 			description: 'Premium subscription - Q1',
 			paymentMethod: 'card',
-			tags: [{ name: 'Advertising', percentage: 100 }]
+			tags: [{ name: 'Advertising & Marketing', percentage: 100 }]
 		},
 
 		// Expenses - Insurance
@@ -223,7 +223,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Hiscox',
 			description: 'Professional liability insurance - January',
 			paymentMethod: 'card',
-			tags: [{ name: 'Insurance (other than health)', percentage: 100 }]
+			tags: [{ name: 'Business Insurance', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -232,7 +232,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Hiscox',
 			description: 'Professional liability insurance - February',
 			paymentMethod: 'card',
-			tags: [{ name: 'Insurance (other than health)', percentage: 100 }]
+			tags: [{ name: 'Business Insurance', percentage: 100 }]
 		},
 
 		// Expenses - Utilities (home office portion)
@@ -243,7 +243,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Verizon',
 			description: 'Business phone line - January',
 			paymentMethod: 'card',
-			tags: [{ name: 'Utilities', percentage: 100 }]
+			tags: [{ name: 'Telephone & Internet', percentage: 100 }]
 		},
 		{
 			type: 'expense',
@@ -252,7 +252,7 @@ export function seedDemoData(db: BetterSQLite3Database<typeof schema>): void {
 			payee: 'Verizon',
 			description: 'Business phone line - February',
 			paymentMethod: 'card',
-			tags: [{ name: 'Utilities', percentage: 100 }]
+			tags: [{ name: 'Telephone & Internet', percentage: 100 }]
 		}
 	];
 
