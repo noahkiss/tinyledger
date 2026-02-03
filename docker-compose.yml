@@ -5,7 +5,7 @@ services:
       - "3000:3000"
     environment:
       # REQUIRED: Set to your actual domain
-      - ORIGIN=http://localhost:3000
+      - BASE_URL=http://localhost:3000
       # Data directory (matches Dockerfile default)
       - DATA_DIR=/data
       # Request body size limit (10M = 10 megabytes)

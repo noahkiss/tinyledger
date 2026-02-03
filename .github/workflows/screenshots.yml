@@ -1,0 +1,102 @@
+name: Update Screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for screenshot update'
+        required: false
+        default: 'Design changes'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - '.github/screenshots/**'
+      - 'SCREENSHOTS.md'
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Start app with demo data
+        run: docker compose -f docker-compose.screenshots.yml up -d --build
+
+      - name: Wait for app to be healthy
+        run: |
+          echo "Waiting for app..."
+          timeout 120 bash -c 'until curl -sf http://localhost:3000/health > /dev/null; do sleep 3; done'
+          echo "App ready!"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: '.github/screenshots/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: .github/screenshots
+        run: npm ci || npm install
+
+      - name: Get Playwright version
+        id: playwright-version
+        working-directory: .github/screenshots
+        run: echo "version=$(npx playwright --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        working-directory: .github/screenshots
+        run: npx playwright install chromium --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      - name: Install Playwright deps (cached)
+        working-directory: .github/screenshots
+        run: npx playwright install-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+
+      - name: Warmup app
+        run: |
+          echo "Warming up the app..."
+          curl -sf http://localhost:3000/ > /dev/null || true
+          sleep 3
+
+      - name: Capture screenshots
+        working-directory: .github/screenshots
+        run: npx playwright test
+
+      - name: Stop services
+        if: always()
+        run: docker compose -f docker-compose.screenshots.yml down
+
+      - name: Commit and push screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/*.png
+          if git diff --staged --quiet; then
+            echo "No screenshot changes to commit"
+          else
+            REASON="${{ github.event.inputs.reason || 'UI changes' }}"
+            git commit -m "docs: update screenshots
+
+          Reason: ${REASON}
+          Triggered by: @${{ github.actor }}"
+            git push
+          fi

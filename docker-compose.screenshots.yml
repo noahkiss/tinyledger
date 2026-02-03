@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - BASE_URL=http://localhost:3000
+      - DATA_DIR=/data
+      - BODY_SIZE_LIMIT=10M
+      - PORT=3000
+      - TZ=America/New_York
+      - SEED_DEMO_DATA=true
+    volumes:
+      - screenshot-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 5
+
+volumes:
+  screenshot-data:

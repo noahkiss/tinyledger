@@ -1,6 +1,20 @@
-# TinyLedger
+<p align="center">
+  <img src="docs/header.png" alt="TinyLedger" width="600">
+</p>
 
-Self-hosted bookkeeping for sole proprietors. Track income and expenses, generate tax reports, attach receipts. No subscription fees, your data stays yours.
+<p align="center">
+  Self-hosted bookkeeping for sole proprietors.<br>
+  Track income and expenses, generate tax reports, attach receipts.<br>
+  No subscription fees, your data stays yours.
+</p>
+
+<p align="center">
+  <a href="SCREENSHOTS.md">Screenshots</a> •
+  <a href="#quick-start-docker">Quick Start</a> •
+  <a href="#features">Features</a>
+</p>
+
+---
 
 ## Features
 
@@ -26,7 +40,7 @@ docker run -d \
   -p 3000:3000 \
   -v tinyledger-db:/data/db \
   -v tinyledger-attachments:/data/attachments \
-  -e ORIGIN=http://localhost:3000 \
+  -e BASE_URL=http://localhost:3000 \
   -e TZ=America/New_York \
   ghcr.io/noahkiss/tinyledger:main
 ```
@@ -40,7 +54,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - ORIGIN=http://localhost:3000
+      - BASE_URL=http://localhost:3000
       - TZ=America/New_York
     volumes:
       - tinyledger-db:/data/db
@@ -58,7 +72,7 @@ Open http://localhost:3000 in your browser.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `ORIGIN` | - | **Required.** The URL where the app is hosted (e.g., `https://ledger.example.com`) |
+| `BASE_URL` | - | **Required.** The URL where the app is hosted (e.g., `https://ledger.example.com`) |
 | `DATA_DIR` | `/data` | Directory for database and attachments |
 | `PORT` | `3000` | Server port |
 | `BODY_SIZE_LIMIT` | `10M` | Max request body size (for file uploads) |
