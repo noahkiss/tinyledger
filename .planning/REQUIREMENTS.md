@@ -154,17 +154,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Mobile & PWA
 
-- [ ] **MOBL-01**: iOS home screen standalone mode configured (proper manifest, icons)
-- [ ] **MOBL-02**: Apple touch icons provided (180x180, 192x192, 512x512)
-- [ ] **MOBL-03**: Mobile-responsive design with large touch targets
-- [ ] **MOBL-04**: Mobile-first layout (works great on phone, adapts to desktop)
+- [x] **MOBL-01**: iOS home screen standalone mode configured (proper manifest, icons)
+- [x] **MOBL-02**: Apple touch icons provided (180x180, 192x192, 512x512)
+- [x] **MOBL-03**: Mobile-responsive design with large touch targets
+- [x] **MOBL-04**: Mobile-first layout (works great on phone, adapts to desktop)
 
 ### Deployment
 
-- [ ] **DPLY-01**: Docker container with multi-stage build
-- [ ] **DPLY-02**: docker-compose.yml with volume mounts for data persistence
-- [ ] **DPLY-03**: Environment variable configuration (ORIGIN, DATA_DIR, BODY_SIZE_LIMIT)
-- [ ] **DPLY-04**: Documentation for SQLite backup strategy
+- [x] **DPLY-01**: Docker container with multi-stage build
+- [x] **DPLY-02**: docker-compose.yml with volume mounts for data persistence
+- [x] **DPLY-03**: Environment variable configuration (ORIGIN, DATA_DIR, BODY_SIZE_LIMIT)
+- [x] **DPLY-04**: Documentation for SQLite backup strategy
 
 ## v2 Requirements
 
@@ -308,14 +308,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INTG-02 | Phase 2 | Complete |
 | INTG-03 | Phase 2 | Complete |
 | INTG-04 | Phase 1 | Complete |
-| MOBL-01 | Phase 9 | Pending |
-| MOBL-02 | Phase 9 | Pending |
-| MOBL-03 | Phase 9 | Pending |
-| MOBL-04 | Phase 9 | Pending |
-| DPLY-01 | Phase 9 | Pending |
-| DPLY-02 | Phase 9 | Pending |
-| DPLY-03 | Phase 9 | Pending |
-| DPLY-04 | Phase 9 | Pending |
+| MOBL-01 | Phase 9 | Complete |
+| MOBL-02 | Phase 9 | Complete |
+| MOBL-03 | Phase 9 | Complete |
+| MOBL-04 | Phase 9 | Complete |
+| DPLY-01 | Phase 9 | Complete |
+| DPLY-02 | Phase 9 | Complete |
+| DPLY-03 | Phase 9 | Complete |
+| DPLY-04 | Phase 9 | Complete |
 
 **Coverage:**
 - v1 requirements: 79 total
@@ -324,4 +324,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-02-02 after Phase 7.1 completion*
+*Last updated: 2026-02-03 after Phase 9 completion*
