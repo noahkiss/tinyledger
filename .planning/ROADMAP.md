@@ -159,7 +159,7 @@ Plans:
 - [x] 07.1-02-PLAN.md - Filings tab UI + Taxes page migration + layout update (Wave 2)
 
 ### Phase 8: Report Generation & Data
-**Goal**: Tax-ready reports, PDF/CSV export, data import/export
+**Goal**: Tax-ready reports, PDF/CSV export, data import/export, recurring transactions
 **Depends on**: Phase 4, Phase 7.1
 **Requirements**: RGEN-01, RGEN-02, RGEN-03, RGEN-04, RGEN-05, DATA-01, DATA-02, DATA-03, DATA-04, RCUR-01, RCUR-02, RCUR-03, RCUR-04, RCUR-05, RCUR-06, RCUR-07
 **Success Criteria** (what must be TRUE):
@@ -168,12 +168,13 @@ Plans:
   3. User can export all data (JSON/CSV) and attachments as ZIP
   4. User can import transactions from CSV with preview before commit
   5. User can create recurring transactions with flexible patterns, confirm/void/delete instances
-**Plans**: TBD
+**Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 08-01: TBD
-- [ ] 08-02: TBD
-- [ ] 08-03: TBD
+- [ ] 08-01-PLAN.md - PDF tax report generation with branded letterhead (Wave 1)
+- [ ] 08-02-PLAN.md - Data export: CSV, JSON, and full ZIP with attachments (Wave 1)
+- [ ] 08-03-PLAN.md - CSV import with column mapping and preview (Wave 2)
+- [ ] 08-04-PLAN.md - Recurring transactions with flexible patterns (Wave 3)
 
 ### Phase 9: Mobile & Deployment
 **Goal**: iOS home screen app experience and Docker production deployment
@@ -206,9 +207,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
 | 7. Tax System | 4/4 | Complete | 2026-02-02 |
 | 7.1 Filings | 2/2 | Complete | 2026-02-02 |
-| 8. Report Generation & Data | 0/3 | Not started | - |
+| 8. Report Generation & Data | 0/4 | Not started | - |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-02 (completed Phase 7.1: Filings)*
+*Last updated: 2026-02-03 (planned Phase 8: Report Generation & Data)*
