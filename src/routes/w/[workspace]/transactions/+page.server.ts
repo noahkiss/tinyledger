@@ -6,7 +6,9 @@ import {
 	tags,
 	workspaceSettings,
 	transactionHistory,
-	quarterlyPayments
+	quarterlyPayments,
+	recurringTemplates,
+	skippedInstances
 } from '$lib/server/db/schema';
 import { eq, isNull, desc, and, gte, lte, like, sql } from 'drizzle-orm';
 import {
@@ -22,6 +24,7 @@ import {
 	calculateLocalEIT
 } from '$lib/utils/tax-calculations';
 import { getStateRate } from '$lib/data/state-tax-rates';
+import { getAllPendingForTimeline, type PendingInstance } from '$lib/server/recurring/instances';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	const db = locals.db;
@@ -334,6 +337,63 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		});
 	}
 
+	// Calculate pending recurring instances
+	let pendingInstances: PendingInstance[] = [];
+
+	// Get active recurring templates
+	const activeTemplates = db
+		.select()
+		.from(recurringTemplates)
+		.where(eq(recurringTemplates.active, true))
+		.all();
+
+	if (activeTemplates.length > 0) {
+		// Get confirmed transaction dates by template
+		const confirmedByTemplate = new Map<number, Set<string>>();
+		const confirmedTransactions = db
+			.select({
+				templateId: transactions.recurringTemplateId,
+				date: transactions.date
+			})
+			.from(transactions)
+			.where(
+				and(
+					sql`${transactions.recurringTemplateId} IS NOT NULL`,
+					isNull(transactions.deletedAt)
+				)
+			)
+			.all();
+
+		for (const ct of confirmedTransactions) {
+			if (ct.templateId) {
+				if (!confirmedByTemplate.has(ct.templateId)) {
+					confirmedByTemplate.set(ct.templateId, new Set());
+				}
+				confirmedByTemplate.get(ct.templateId)!.add(ct.date);
+			}
+		}
+
+		// Get skipped dates by template
+		const skippedByTemplate = new Map<number, Set<string>>();
+		const skippedRecords = db.select().from(skippedInstances).all();
+
+		for (const sr of skippedRecords) {
+			if (!skippedByTemplate.has(sr.templateId)) {
+				skippedByTemplate.set(sr.templateId, new Set());
+			}
+			skippedByTemplate.get(sr.templateId)!.add(sr.date);
+		}
+
+		// Get pending instances for timeline
+		pendingInstances = getAllPendingForTimeline(
+			activeTemplates,
+			confirmedByTemplate,
+			skippedByTemplate,
+			fyStart,
+			fyEnd
+		);
+	}
+
 	return {
 		transactions: transactionsWithTags,
 		tags: availableTags,
@@ -349,7 +409,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		filteredCount,
 		totalCount,
 		fiscalYearStartMonth,
-		quarterlyPayments: quarterlyPaymentsData
+		quarterlyPayments: quarterlyPaymentsData,
+		pendingInstances
 	};
 };
 
@@ -456,5 +517,39 @@ export const actions: Actions = {
 			.run();
 
 		return { success: true, publicId };
+	},
+
+	skip: async ({ locals, request }) => {
+		const db = locals.db;
+
+		if (!db) {
+			return fail(500, { error: 'Database not initialized' });
+		}
+
+		const formData = await request.formData();
+		const templateId = parseInt(formData.get('templateId') as string);
+		const date = formData.get('date') as string;
+
+		if (!templateId || !date) {
+			return fail(400, { error: 'Template ID and date required' });
+		}
+
+		// Check if already skipped
+		const existing = db
+			.select()
+			.from(skippedInstances)
+			.where(and(eq(skippedInstances.templateId, templateId), eq(skippedInstances.date, date)))
+			.get();
+
+		if (!existing) {
+			db.insert(skippedInstances)
+				.values({
+					templateId,
+					date
+				})
+				.run();
+		}
+
+		return { success: true };
 	}
 };

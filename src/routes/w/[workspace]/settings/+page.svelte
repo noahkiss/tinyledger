@@ -609,6 +609,23 @@
 		</a>
 	</div>
 
+	<!-- Recurring Transactions Link -->
+	<div class="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+		<h3 class="text-lg font-medium text-gray-900">Recurring Transactions</h3>
+		<p class="mt-1 text-sm text-gray-500">
+			Set up recurring templates for predictable income and expenses like rent, subscriptions, or regular client payments.
+		</p>
+		<a
+			href="/w/{data.workspaceId}/recurring"
+			class="mt-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+		>
+			Manage Recurring
+			<svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+			</svg>
+		</a>
+	</div>
+
 	<!-- Data Import & Export Section -->
 	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
 		<h2 class="text-lg font-semibold text-gray-900 mb-4">Data Import & Export</h2>

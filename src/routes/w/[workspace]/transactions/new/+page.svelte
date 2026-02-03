@@ -12,19 +12,25 @@
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
-	// Get type from URL query param, default to expense
+	// Check for recurring prefill first, then URL query param
 	let transactionType = $derived(
-		($page.url.searchParams.get('type') as 'income' | 'expense') || 'expense'
+		data.recurringPrefill?.type ||
+			($page.url.searchParams.get('type') as 'income' | 'expense') ||
+			'expense'
 	);
 
-	// Form state
-	let amountCents = $state(0);
-	let dateValue = $state(getTodayDate());
-	let payee = $state('');
-	let description = $state('');
-	let paymentMethod = $state<'cash' | 'card' | 'check'>('cash');
+	// Form state - initialize from recurring prefill if present
+	let amountCents = $state(data.recurringPrefill?.amountCents || 0);
+	let dateValue = $state(data.recurringPrefill?.date || getTodayDate());
+	let payee = $state(data.recurringPrefill?.payee || '');
+	let description = $state(data.recurringPrefill?.description || '');
+	let paymentMethod = $state<'cash' | 'card' | 'check'>(
+		data.recurringPrefill?.paymentMethod || 'cash'
+	);
 	let checkNumber = $state('');
-	let tagAllocations = $state<{ tagId: number; percentage: number }[]>([]);
+	let tagAllocations = $state<{ tagId: number; percentage: number }[]>(
+		data.recurringPrefill?.tags.map((t) => ({ tagId: t.id, percentage: t.percentage })) || []
+	);
 
 	// Predictive entry state
 	let suggestedTags = $state<{ id: number; name: string; percentage: number }[]>([]);
@@ -135,6 +141,10 @@
 	<form method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
 		<!-- Hidden field for transaction type -->
 		<input type="hidden" name="type" value={transactionType} />
+		<!-- Hidden field for recurring template ID (when confirming a recurring instance) -->
+		{#if data.recurringPrefill?.templateId}
+			<input type="hidden" name="recurringTemplateId" value={data.recurringPrefill.templateId} />
+		{/if}
 
 		<!-- Amount -->
 		<div>

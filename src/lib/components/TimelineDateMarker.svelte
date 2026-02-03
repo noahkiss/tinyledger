@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { date, dayType = 'neutral' }: { date: string; dayType?: 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' } = $props();
+	let { date, dayType = 'neutral' }: { date: string; dayType?: 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' | 'pending' } = $props();
 
 	// Format date as "Thursday, January 30, 2026"
 	let formattedDate = $derived(() => {
@@ -23,6 +23,8 @@
 				return 'bg-blue-500';
 			case 'tax':
 				return 'bg-yellow-500';
+			case 'pending':
+				return 'bg-gray-300';
 			default:
 				return 'bg-gray-400';
 		}

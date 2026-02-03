@@ -6,12 +6,14 @@ import {
 	transactionTags,
 	transactionHistory,
 	workspaceSettings,
-	attachments
+	attachments,
+	recurringTemplates,
+	recurringTemplateTags
 } from '$lib/server/db/schema';
 import { sql, desc, and, isNull, eq } from 'drizzle-orm';
 import { saveAttachment } from '$lib/server/storage/attachment';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, url }) => {
 	const db = locals.db;
 
 	if (!db) {
@@ -20,6 +22,52 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	// Get all available tags for the form
 	const availableTags = db.select().from(tags).orderBy(tags.name).all();
+
+	// Check if coming from a recurring template
+	const fromRecurring = url.searchParams.get('from_recurring');
+	const prefillDate = url.searchParams.get('date');
+	let recurringPrefill: {
+		templateId: number;
+		type: 'income' | 'expense';
+		amountCents: number;
+		payee: string;
+		description: string | null;
+		paymentMethod: 'cash' | 'card' | 'check';
+		date: string;
+		tags: { id: number; name: string; percentage: number }[];
+	} | null = null;
+
+	if (fromRecurring) {
+		const template = db
+			.select()
+			.from(recurringTemplates)
+			.where(eq(recurringTemplates.publicId, fromRecurring))
+			.get();
+
+		if (template) {
+			const templateTags = db
+				.select({
+					id: tags.id,
+					name: tags.name,
+					percentage: recurringTemplateTags.percentage
+				})
+				.from(recurringTemplateTags)
+				.innerJoin(tags, eq(recurringTemplateTags.tagId, tags.id))
+				.where(eq(recurringTemplateTags.templateId, template.id))
+				.all();
+
+			recurringPrefill = {
+				templateId: template.id,
+				type: template.type,
+				amountCents: template.amountCents,
+				payee: template.payee,
+				description: template.description,
+				paymentMethod: template.paymentMethod,
+				date: prefillDate || new Date().toISOString().slice(0, 10),
+				tags: templateTags
+			};
+		}
+	}
 
 	// Get payee history with aggregated data for predictive entry
 	const payeeHistoryRaw = db
@@ -79,7 +127,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	return {
 		tags: availableTags,
 		payeeHistory,
-		tagsLocked: settings?.tagsLocked === 1
+		tagsLocked: settings?.tagsLocked === 1,
+		recurringPrefill
 	};
 };
 
@@ -102,6 +151,9 @@ export const actions: Actions = {
 		const paymentMethod = formData.get('paymentMethod') as 'cash' | 'card' | 'check';
 		const checkNumber =
 			paymentMethod === 'check' ? ((formData.get('checkNumber') as string) || null) : null;
+		const recurringTemplateId = formData.get('recurringTemplateId')
+			? parseInt(formData.get('recurringTemplateId') as string)
+			: null;
 
 		// Validate required fields
 		if (!type || !['income', 'expense'].includes(type)) {
@@ -164,7 +216,8 @@ export const actions: Actions = {
 				payee: payee.trim(),
 				description: description?.trim() || null,
 				paymentMethod,
-				checkNumber: checkNumber?.trim() || null
+				checkNumber: checkNumber?.trim() || null,
+				recurringTemplateId
 			})
 			.run();
 

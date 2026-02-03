@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { enhance } from '$app/forms';
 	import { formatCurrency } from '$lib/utils/currency';
 	import { formatFiscalYear } from '$lib/utils/fiscal-year';
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
@@ -30,7 +31,10 @@
 	};
 
 	// Type for quarterly payment marker
-	type QuarterlyMarker = typeof data.quarterlyPayments[number];
+	type QuarterlyMarker = (typeof data.quarterlyPayments)[number];
+
+	// Type for pending recurring instance
+	type PendingInstance = (typeof data.pendingInstances)[number];
 
 	// Create a map of quarterly payments by due date
 	let quarterlyPaymentsByDate = $derived(() => {
@@ -41,10 +45,31 @@
 		return map;
 	});
 
-	// Group transactions by date and merge with quarterly payments
+	// Create a map of pending instances by date
+	let pendingByDate = $derived(() => {
+		const map = new Map<string, PendingInstance[]>();
+		for (const pi of data.pendingInstances) {
+			const existing = map.get(pi.date);
+			if (existing) {
+				existing.push(pi);
+			} else {
+				map.set(pi.date, [pi]);
+			}
+		}
+		return map;
+	});
+
+	// Group transactions by date and merge with quarterly payments and pending instances
 	let timelineGroups = $derived(() => {
-		// Create groups map that can hold transactions and quarterly marker
-		const groups = new Map<string, { transactions: Transaction[]; quarterlyPayment: QuarterlyMarker | null }>();
+		// Create groups map that can hold transactions, quarterly marker, and pending instances
+		const groups = new Map<
+			string,
+			{
+				transactions: Transaction[];
+				quarterlyPayment: QuarterlyMarker | null;
+				pendingInstances: PendingInstance[];
+			}
+		>();
 
 		// Add transactions to groups
 		for (const txn of data.transactions) {
@@ -52,7 +77,7 @@
 			if (existing) {
 				existing.transactions.push(txn);
 			} else {
-				groups.set(txn.date, { transactions: [txn], quarterlyPayment: null });
+				groups.set(txn.date, { transactions: [txn], quarterlyPayment: null, pendingInstances: [] });
 			}
 		}
 
@@ -63,7 +88,18 @@
 			if (existing) {
 				existing.quarterlyPayment = qp;
 			} else {
-				groups.set(dueDate, { transactions: [], quarterlyPayment: qp });
+				groups.set(dueDate, { transactions: [], quarterlyPayment: qp, pendingInstances: [] });
+			}
+		}
+
+		// Add pending instances to groups
+		const piByDate = pendingByDate();
+		for (const [date, instances] of piByDate) {
+			const existing = groups.get(date);
+			if (existing) {
+				existing.pendingInstances = instances;
+			} else {
+				groups.set(date, { transactions: [], quarterlyPayment: null, pendingInstances: instances });
 			}
 		}
 
@@ -71,9 +107,11 @@
 		return Array.from(groups.entries()).sort((a, b) => b[0].localeCompare(a[0]));
 	});
 
-	// Check if timeline has any content (transactions or quarterly markers)
+	// Check if timeline has any content (transactions, quarterly markers, or pending)
 	let hasTimelineContent = $derived(
-		data.transactions.length > 0 || data.quarterlyPayments.length > 0
+		data.transactions.length > 0 ||
+			data.quarterlyPayments.length > 0 ||
+			data.pendingInstances.length > 0
 	);
 
 	// Check if any filters are active (for empty state messaging)
@@ -86,13 +124,17 @@
 			data.currentFilters.method
 	);
 
-	// Determine day type for timeline markers (income, expense, mixed, tax)
+	// Determine day type for timeline markers (income, expense, mixed, tax, pending)
 	function getDayType(
 		txns: Transaction[],
-		hasQuarterlyPayment: boolean
-	): 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' {
+		hasQuarterlyPayment: boolean,
+		pendingInstances: PendingInstance[]
+	): 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' | 'pending' {
 		// If only quarterly payment marker (no transactions), show tax type
-		if (txns.length === 0 && hasQuarterlyPayment) return 'tax';
+		if (txns.length === 0 && pendingInstances.length === 0 && hasQuarterlyPayment) return 'tax';
+
+		// If only pending instances (no real transactions), show pending type
+		if (txns.length === 0 && pendingInstances.length > 0 && !hasQuarterlyPayment) return 'pending';
 
 		const hasIncome = txns.some((t) => t.type === 'income');
 		const hasExpense = txns.some((t) => t.type === 'expense');
@@ -206,9 +248,9 @@
 	{:else}
 		<div class="relative ms-3" data-component="transaction-timeline">
 			<ol class="relative border-s-2 border-gray-200">
-				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment }] (date)}
+				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
 					<li class="mb-6 ms-6" data-date={date}>
-						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment)} />
+						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment, pendingInstances)} />
 						<div class="space-y-2" data-component="timeline-items">
 							<!-- Quarterly payment marker appears first (more prominent) -->
 							{#if quarterlyPayment}
@@ -229,6 +271,97 @@
 							<!-- Regular transactions -->
 							{#each txns as txn (txn.id)}
 								<TimelineEntry transaction={txn} workspaceId={data.workspaceId} />
+							{/each}
+							<!-- Pending recurring instances -->
+							{#each pendingInstances as pending (pending.templatePublicId + pending.date)}
+								<div
+									class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50/50 p-3"
+									data-component="pending-instance"
+								>
+									<div class="flex items-start justify-between">
+										<div class="flex items-start gap-3">
+											<!-- Type indicator (muted) -->
+											<div
+												class="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full {pending.type ===
+												'income'
+													? 'bg-green-100/50'
+													: 'bg-red-100/50'}"
+											>
+												{#if pending.type === 'income'}
+													<svg
+														class="h-3 w-3 text-green-400"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M12 6v12m6-6H6"
+														/>
+													</svg>
+												{:else}
+													<svg
+														class="h-3 w-3 text-red-400"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M20 12H4"
+														/>
+													</svg>
+												{/if}
+											</div>
+
+											<div>
+												<div class="flex items-center gap-2">
+													<span class="font-medium text-gray-500">{pending.payee}</span>
+													<span
+														class="text-sm {pending.type === 'income'
+															? 'text-green-500'
+															: 'text-red-500'}"
+													>
+														{pending.type === 'income' ? '+' : '-'}{formatCurrency(
+															pending.amountCents
+														)}
+													</span>
+													<span
+														class="rounded-full bg-gray-200 px-1.5 py-0.5 text-xs text-gray-500"
+														>Pending</span
+													>
+												</div>
+												<div class="mt-0.5 text-xs text-gray-400">
+													{pending.patternDescription}
+												</div>
+											</div>
+										</div>
+
+										<!-- Actions -->
+										<div class="flex items-center gap-1">
+											<a
+												href="/w/{data.workspaceId}/transactions/new?type={pending.type}&from_recurring={pending.templatePublicId}&date={pending.date}"
+												class="rounded-lg bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200"
+											>
+												Confirm
+											</a>
+											<form method="POST" action="?/skip" use:enhance class="inline">
+												<input type="hidden" name="templateId" value={pending.templateId} />
+												<input type="hidden" name="date" value={pending.date} />
+												<button
+													type="submit"
+													class="rounded-lg px-2 py-1 text-xs text-gray-500 hover:bg-gray-200"
+												>
+													Skip
+												</button>
+											</form>
+										</div>
+									</div>
+								</div>
 							{/each}
 						</div>
 					</li>
