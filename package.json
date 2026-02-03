@@ -19,6 +19,7 @@
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/better-sqlite3": "^7.6.13",
+		"@types/pdfkit": "^0.17.4",
 		"@types/uuid": "^10.0.0",
 		"drizzle-kit": "^0.31.8",
 		"svelte": "^5.45.6",
@@ -30,9 +31,13 @@
 	},
 	"dependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
+		"archiver": "^7.0.1",
 		"better-sqlite3": "^12.6.2",
 		"chart.js": "^4.5.1",
+		"date-fns": "^4.1.0",
 		"drizzle-orm": "^0.45.1",
+		"papaparse": "^5.5.3",
+		"pdfkit": "^0.17.2",
 		"sharp": "^0.34.5",
 		"uuid": "^13.0.0"
 	}

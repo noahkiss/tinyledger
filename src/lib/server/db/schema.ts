@@ -25,6 +25,7 @@ export const workspaceSettings = sqliteTable('workspace_settings', {
 	localEitRate: integer('local_eit_rate'), // Rate * 10000 (e.g., 100 for 1%)
 	taxNotes: text('tax_notes'), // Free text for user reference
 	taxConfigured: integer('tax_configured', { mode: 'boolean' }).default(false).notNull(), // Has user configured taxes?
+	ein: text('ein'), // Employer Identification Number (format: XX-XXXXXXX)
 
 	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()

@@ -213,4 +213,11 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 
 	// Create index for filings lookup
 	db.run(sql`CREATE INDEX IF NOT EXISTS filings_year_form_idx ON filings(fiscal_year, form_id)`);
+
+	// Migration: Add ein column to workspace_settings (for tax report letterhead)
+	try {
+		db.run(sql`ALTER TABLE workspace_settings ADD COLUMN ein TEXT`);
+	} catch {
+		// Column already exists, ignore
+	}
 }
