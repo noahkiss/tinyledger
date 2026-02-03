@@ -36,7 +36,7 @@
 			<div class="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
 				<p class="text-sm text-blue-800">Continue where you left off</p>
 				<a
-					href="/w/{lastWorkspace.id}/"
+					href="/w/{lastWorkspace.id}/transactions"
 					class="mt-2 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 active:bg-blue-800"
 				>
 					Continue to {lastWorkspace.name}
@@ -52,7 +52,7 @@
 					{#each data.workspaces as workspace}
 						<li>
 							<a
-								href="/w/{workspace.id}/"
+								href="/w/{workspace.id}/transactions"
 								class="block rounded-lg border border-gray-200 bg-white p-4 hover:border-blue-300 hover:bg-blue-50 active:bg-blue-100"
 							>
 								<span class="font-medium text-gray-900">{workspace.name}</span>

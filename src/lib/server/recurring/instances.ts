@@ -1,4 +1,5 @@
-import type { RRule } from 'rrule';
+import rrule from 'rrule';
+type RRule = rrule.RRule;
 import { parseRRuleString } from './patterns';
 
 export interface PendingInstance {

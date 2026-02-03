@@ -1,25 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
-	let { data }: { data: PageData } = $props();
+	// This page redirects to /transactions in +page.server.ts
+	// This component is a fallback if redirect doesn't happen (e.g., JS disabled)
 </script>
 
 <svelte:head>
-	<title>{data.settings.name} - TinyLedger</title>
+	<title>Redirecting... - TinyLedger</title>
 </svelte:head>
 
-<div class="text-center">
-	<h2 class="text-xl font-semibold text-gray-800">Welcome to {data.settings.name}</h2>
-	<p class="mt-2 text-gray-600">
-		Your workspace is ready. Transaction entry will be available in Phase 2.
-	</p>
-
-	<div class="mt-8">
-		<a
-			href="/w/{data.workspaceId}/settings"
-			class="inline-block rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700 active:bg-blue-800"
-		>
-			Configure Workspace Settings
-		</a>
-	</div>
+<div class="text-center py-8">
+	<p class="text-gray-600">Redirecting to transactions...</p>
 </div>

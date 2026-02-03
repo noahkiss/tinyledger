@@ -10,103 +10,70 @@ The core insight: this is a **business activity log for tax purposes**, not a di
 
 **10-second transaction entry that makes tax season painless.** If a user standing in a parking lot can't snap a receipt photo and log an expense before their coffee gets cold, we've failed.
 
+## Current State
+
+**Version:** v1.0 MVP (shipped 2026-02-03)
+**Codebase:** ~15,000 lines TypeScript/Svelte
+**Tech stack:** SvelteKit, SQLite (better-sqlite3 + Drizzle ORM), Chart.js, PDFKit, Tailwind v4
+
+**Shipped features:**
+- Workspace isolation with per-workspace SQLite databases
+- Transaction CRUD with void-first deletion and full audit trail
+- Tag system with 29 Schedule C categories and predictive autocomplete
+- Receipt attachments with Sharp processing
+- Fiscal year navigation and timeline filtering
+- Interactive reports dashboard with Chart.js
+- Complete tax system (SE, federal, PA state, local EIT)
+- Compliance filings tab for both workspace types
+- PDF/CSV/ZIP export, CSV import, recurring transactions
+- PWA manifest for iOS, Docker deployment, backup utilities
+
 ## Requirements
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ Workspace isolation with separate SQLite per tenant — v1.0
+- ✓ Transaction entry with amount, date, payee, tags, payment method — v1.0
+- ✓ Tag allocation (split amounts across categories) — v1.0
+- ✓ Receipt attachments with workspace-namespaced storage — v1.0
+- ✓ Predictive entry (payee autocomplete, tag suggestions) — v1.0
+- ✓ Recurring transactions with flexible rrule patterns — v1.0
+- ✓ Timeline view with fiscal year navigation and filters — v1.0
+- ✓ Reports dashboard with interactive Chart.js visualizations — v1.0
+- ✓ Tax calculations (SE, federal, state, local) — v1.0
+- ✓ Quarterly payment tracking in timeline — v1.0
+- ✓ Compliance filings tab with status tracking — v1.0
+- ✓ PDF tax reports with workspace branding — v1.0
+- ✓ Full data export (JSON/CSV/ZIP) — v1.0
+- ✓ CSV import with column mapping wizard — v1.0
+- ✓ Void-first deletion model with soft deletes — v1.0
+- ✓ Full edit history/audit trail — v1.0
+- ✓ iOS home screen standalone mode (PWA) — v1.0
+- ✓ Docker deployment with volume persistence — v1.0
 
 ### Active
 
-#### Workspaces & Multi-Tenancy
-- [ ] User can create multiple workspaces (e.g., "Consulting LLC", "Non-Profit Board")
-- [ ] Each workspace has isolated data (separate SQLite DB + attachments dir)
-- [ ] Workspace branding: logo upload (enforced dimensions) or 2-letter abbreviation auto-generated
-- [ ] Workspace details: name, address, phone, responsible party
-- [ ] Workspace type: sole prop (enables tax features) or volunteer org (tax features optional)
-- [ ] Switch workspaces instantly via logo dropdown in header
-- [ ] Last-used workspace remembered per device (localStorage)
-- [ ] Founded year setting to enable historical fiscal year views
-
-#### Transaction Entry
-- [ ] Quick entry with large Income/Expense buttons
-- [ ] Fields: amount, date, payee/entity, tags (with allocation), description, payment method, attachment
-- [ ] Payment methods: cash, card, check (with check # field)
-- [ ] Tag allocation: when multiple tags, split amount across them (no double-counting in reports)
-- [ ] Flexible input UX: auto-format currency ($, .00), dates (with/without slashes + mobile picker), percentages
-- [ ] Manual future dates allowed, warn if >1 year out
-- [ ] Attachments stored in filesystem per tenant
-
-#### Predictive Entry & Autocomplete
-- [ ] Payee autocomplete from transaction history (fuzzy/substring, smart sorted)
-- [ ] Tag suggestions based on selected payee's history
-- [ ] Pre-fill fields based on match (amount, tags)
-
-#### Recurring Transactions
-- [ ] Mark transaction as recurring with flexible patterns (daily, weekly, bi-weekly, monthly, last Friday of month, etc.)
-- [ ] Future instances show as "pending" in timeline
-- [ ] Pending scoped to current fiscal year (option to view next FY)
-- [ ] Confirm/edit pending when they occur
-- [ ] Void single instance, void + delete future, or delete current + future
-
-#### Timeline (Main View)
-- [ ] Transaction feed for selected fiscal year
-- [ ] Net Income YTD displayed prominently (not bank balance)
-- [ ] Large Income/Expense entry buttons
-- [ ] Fiscal year selector (current year default, can view historical back to founded year)
-- [ ] Quarterly tax payment due dates visible in timeline
-- [ ] Search/filter by payee, tags, date range, type (income/expense), payment method
-
-#### Tags & Categories
-- [ ] User-created tags on-the-fly during entry
-- [ ] Tag management in settings (rename, merge, delete)
-- [ ] Optional "lock tags" mode to prevent new tag creation
-
-#### Tax Features (Sole Prop)
-- [ ] Tax info per workspace: PA state (3.07%), local EIT rate, federal bracket (pick or calculate from outside earnings)
-- [ ] Self-employment tax calculated (15.3% of 92.35% of net)
-- [ ] Estimated taxes YTD display
-- [ ] Projected year-end tax estimate (based on current trajectory)
-- [ ] Recommended set-aside amount (padded conservatively)
-- [ ] Quarterly estimated payments: projected amounts, shown in timeline, markable as paid
-- [ ] Quarterly amounts refine as due date approaches
-
-#### Reports
-- [ ] Summary cards: YTD income, YTD expenses, net income, tax set-aside
-- [ ] Charts: net income over time, spending by tag, income vs expense by month
-- [ ] Tax-ready report generation for date range
-- [ ] Report grouped by tag with totals (CPA-ready format)
-- [ ] PDF export (lightweight JS library)
-- [ ] Workspace branding on reports (logo, business details)
-
-#### Data Management
-- [ ] Full data export (JSON/CSV + attachments ZIP)
-- [ ] CSV import for initial setup
-- [ ] Void transactions (default action, keeps record)
-- [ ] Delete only available on already-voided items
-- [ ] Soft-delete everything (zero-delete mentality)
-- [ ] Full edit history/audit trail
-
-#### Receipts & Attachments
-- [ ] Upload via file picker (user takes photo with phone camera, uploads file)
-- [ ] View full-size
-- [ ] Download
-- [ ] Replace attachment
+(None — planning next milestone)
 
 ### Out of Scope
 
 - **User authentication** — self-hosted on internal domain, accessed via Tailscale
 - **Multi-user/collaboration** — single user, multiple workspaces
 - **Bank balance tracking** — we track income/expenses for taxes, not account balances
+- **Bank sync (Plaid)** — security liability, subscription costs, vendor lock-in
 - **Bank reconciliation** — overkill for target audience
-- **Interest tracking** — that's the bank's job
 - **Double-entry accounting** — single-entry ledger only
-- **Mileage tracking** — common deduction but adds complexity, maybe v2
-- **Multi-currency** — target audience is local (PA)
-- **Offline/PWA caching** — always-online is fine, but configure for iOS home screen standalone mode
+- **Invoicing** — scope creep, Wave/FreshBooks do this
+- **Payroll** — complex compliance, state-specific rules
+- **Multi-currency** — target audience is US/local
 - **Push notifications** — over-engineered for self-hosted
+
+### Future Considerations (v2+)
+
+- **Mileage tracking** — common deduction, would add complexity
 - **Multi-state tax support** — PA only for v1
-- **Other entity types** — sole prop and volunteer org only for v1
+- **Receipt OCR** — auto-extract amount/vendor from photos
+- **Offline PWA** — full service worker with sync
 
 ## Context
 
@@ -120,16 +87,17 @@ The core insight: this is a **business activity log for tax purposes**, not a di
 
 **Deployment model:**
 - Docker container on homelab
-- Data persists in mounted volume (`data/`)
-- One SQLite DB per tenant + attachments directory
+- Data persists in mounted volumes (ledger-db, ledger-attachments)
+- One SQLite DB per workspace + attachments directory
 - Access via Tailscale on internal domain
 
 **Tech stack:**
-- SvelteKit (full-stack, tiny bundles, great mobile performance)
-- SQLite via better-sqlite3 or Drizzle ORM
+- SvelteKit 2.x with Svelte 5 runes
+- SQLite via better-sqlite3 + Drizzle ORM
 - TypeScript throughout
-- Lightweight PDF generation (html2pdf.js or similar)
-- Chart.js or similar for visualizations
+- PDFKit for report generation
+- Chart.js for visualizations
+- Tailwind v4 via Vite plugin
 
 ## Constraints
 
@@ -143,13 +111,18 @@ The core insight: this is a **business activity log for tax purposes**, not a di
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Net income instead of bank balance | Avoids opening balance complexity, backdated entry issues, reconciliation. Users have bank apps for balances — they need tax tracking. | — Pending |
-| Separate SQLite per tenant | Hard isolation, easy backup/restore per org, matches mental model of "completely separate books" | — Pending |
-| Filesystem for attachments | Keeps DB small and fast, attachments browsable, single volume backup | — Pending |
-| Tag allocation (split amounts) | Prevents double-counting in reports when expense spans categories | — Pending |
-| Void-first deletion | Maintains audit trail, aligns with accounting best practices | — Pending |
-| No auth | Self-hosted on Tailscale, internal domain only | — Pending |
-| SvelteKit + SQLite | Lightweight, full-stack in one, compiles to tiny bundles, room to grow | — Pending |
+| Net income instead of bank balance | Avoids opening balance complexity, backdated entry issues, reconciliation. Users have bank apps for balances — they need tax tracking. | ✓ Good |
+| Separate SQLite per tenant | Hard isolation, easy backup/restore per org, matches mental model of "completely separate books" | ✓ Good |
+| Filesystem for attachments | Keeps DB small and fast, attachments browsable, single volume backup | ✓ Good |
+| Tag allocation (split amounts) | Prevents double-counting in reports when expense spans categories | ✓ Good |
+| Void-first deletion | Maintains audit trail, aligns with accounting best practices | ✓ Good |
+| No auth | Self-hosted on Tailscale, internal domain only | ✓ Good |
+| SvelteKit + SQLite | Lightweight, full-stack in one, compiles to tiny bundles, room to grow | ✓ Good |
+| Integer cents for currency | Avoids floating-point precision errors in financial calculations | ✓ Good |
+| Dual ID system (id + publicId) | Internal id for FKs, UUID publicId for URLs | ✓ Good |
+| Chart.js direct integration | $effect for lifecycle instead of wrapper (simpler Svelte 5) | ✓ Good |
+| rrule for recurring patterns | Standard iCal RRULE format for portable pattern storage | ✓ Good |
+| VACUUM INTO for backups | Safe SQLite backup without stopping application | ✓ Good |
 
 ---
-*Last updated: 2025-01-24 after initialization*
+*Last updated: 2026-02-03 after v1.0 milestone*
