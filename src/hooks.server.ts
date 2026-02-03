@@ -1,6 +1,19 @@
 import type { Handle } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
-import { getWorkspaceDb, workspaceExists } from '$lib/server/workspace';
+import { getWorkspaceDb, workspaceExists, createWorkspace } from '$lib/server/workspace';
+import { seedDemoData } from '$lib/server/db/seed-demo';
+
+// Initialize demo workspace on startup if SEED_DEMO_DATA is set
+if (process.env.SEED_DEMO_DATA === 'true') {
+	if (!workspaceExists('demo')) {
+		console.log('[seed] Creating demo workspace...');
+		createWorkspace('demo', 'Demo Workspace', 'sole_prop');
+	}
+	// Seed demo transactions
+	const db = getWorkspaceDb('demo');
+	seedDemoData(db);
+	console.log('[seed] Demo data ready');
+}
 
 export const handle: Handle = async ({ event, resolve }) => {
 	// Match /w/[workspace]/ routes
