@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Reports Dashboard** - Summary cards and charts
 - [x] **Phase 7: Tax System** - Configuration, calculations, quarterly payments
 - [x] **Phase 7.1: Filings** - Compliance filings tab for both workspace types (INSERTED)
-- [ ] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
+- [x] **Phase 8: Report Generation & Data** - PDF/CSV export, import, full data export
 - [ ] **Phase 9: Mobile & Deployment** - PWA configuration, Docker, production readiness
 
 ## Phase Details
@@ -171,10 +171,10 @@ Plans:
 **Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 08-01-PLAN.md - PDF tax report generation with branded letterhead (Wave 1)
-- [ ] 08-02-PLAN.md - Data export: CSV, JSON, and full ZIP with attachments (Wave 1)
-- [ ] 08-03-PLAN.md - CSV import with column mapping and preview (Wave 2)
-- [ ] 08-04-PLAN.md - Recurring transactions with flexible patterns (Wave 3)
+- [x] 08-01-PLAN.md - PDF tax report generation with branded letterhead (Wave 1)
+- [x] 08-02-PLAN.md - Data export: CSV, JSON, and full ZIP with attachments (Wave 1)
+- [x] 08-03-PLAN.md - CSV import with column mapping and preview (Wave 2)
+- [x] 08-04-PLAN.md - Recurring transactions with flexible patterns (Wave 2)
 
 ### Phase 9: Mobile & Deployment
 **Goal**: iOS home screen app experience and Docker production deployment
@@ -207,9 +207,9 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 7.1 -> 8 -> 
 | 6. Reports Dashboard | 3/3 | Complete | 2026-02-02 |
 | 7. Tax System | 4/4 | Complete | 2026-02-02 |
 | 7.1 Filings | 2/2 | Complete | 2026-02-02 |
-| 8. Report Generation & Data | 0/4 | Not started | - |
+| 8. Report Generation & Data | 4/4 | Complete | 2026-02-03 |
 | 9. Mobile & Deployment | 0/2 | Not started | - |
 
 ---
 *Created: 2026-01-24*
-*Last updated: 2026-02-03 (planned Phase 8: Report Generation & Data)*
+*Last updated: 2026-02-03 (completed Phase 8: Report Generation & Data)*
