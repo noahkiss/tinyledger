@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 8 - Report Generation & Data
+**Current focus:** Phase 8 Complete - Ready for Phase 9
 
 ## Current Position
 
-Phase: 8 of 9 (Report Generation & Data)
-Plan: 2 of 4 in current phase
-Status: In progress
-Last activity: 2026-02-03 - Completed 08-02-PLAN.md
+Phase: 8 of 9 (Report Generation & Data) - COMPLETE
+Plan: 4 of 4 in phase (all complete)
+Status: Phase complete
+Last activity: 2026-02-03 - Completed 08-04-PLAN.md
 
-Progress: [██████████░] ~98% (Phase 8 plan 2 complete)
+Progress: [███████████] 100% (Phase 8 complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
+- Total plans completed: 27
 - Average duration: 11 min
-- Total execution time: 4.7 hours
+- Total execution time: 5.0 hours
 
 **By Phase:**
 
@@ -35,10 +35,10 @@ Progress: [██████████░] ~98% (Phase 8 plan 2 complete)
 | 06-reports-dashboard | 3 | 29 min | 10 min |
 | 07-tax-system | 4 | 25 min | 6 min |
 | 07.1-filings | 2 | 14 min | 7 min |
-| 08-report-generation-data | 2 | 20 min | 10 min |
+| 08-report-generation-data | 4 | 40 min | 10 min |
 
 **Recent Trend:**
-- Last 5 plans: 8 min, 6 min, 8 min, 12 min, 8 min
+- Last 5 plans: 8 min, 12 min, 8 min, 10 min, 11 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -124,6 +124,12 @@ Recent decisions affecting current work:
 | archiver for ZIP | 08-02 | Streaming ZIP creation with zlib level 6 compression |
 | Export schema v1.0 | 08-02 | Versioned JSON export for future compatibility |
 | ZIP structure | 08-02 | data.json + transactions.csv + attachments/ folder |
+| Column mapping wizard | 08-03 | Manual column mapping with preview for CSV import |
+| Skip invalid rows | 08-03 | Import valid rows, skip invalid, report what was skipped |
+| rrule for patterns | 08-04 | Standard iCal RRULE format for recurring patterns |
+| rrule string storage | 08-04 | Store rrule.toString() for portable pattern storage |
+| Pending instance calculation | 08-04 | Calculate at load time, no stale data |
+| Soft deactivate | 08-04 | Deactivate vs delete for recurring templates |
 
 ### Pending Todos
 
@@ -135,6 +141,8 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-03T05:58:00Z
-Stopped at: Completed 08-02-PLAN.md (Data Export - CSV, JSON, ZIP)
+Last session: 2026-02-03T06:17:00Z
+Stopped at: Completed 08-04-PLAN.md (Recurring Transactions)
 Resume file: None
+
+Phase 8 complete. Ready for Phase 9 (Polish & Mobile).
