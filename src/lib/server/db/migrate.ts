@@ -220,4 +220,64 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 	} catch {
 		// Column already exists, ignore
 	}
+
+	// Migration: Create recurring_templates table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS recurring_templates (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			public_id TEXT NOT NULL UNIQUE,
+			type TEXT NOT NULL CHECK(type IN ('income', 'expense')),
+			amount_cents INTEGER NOT NULL,
+			payee TEXT NOT NULL,
+			description TEXT,
+			payment_method TEXT NOT NULL CHECK(payment_method IN ('cash', 'card', 'check')),
+			rrule_string TEXT NOT NULL,
+			pattern_description TEXT NOT NULL,
+			start_date TEXT NOT NULL,
+			end_date TEXT,
+			active INTEGER DEFAULT 1 NOT NULL,
+			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
+			updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+		)
+	`);
+
+	// Migration: Create recurring_template_tags junction table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS recurring_template_tags (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			template_id INTEGER NOT NULL REFERENCES recurring_templates(id) ON DELETE CASCADE,
+			tag_id INTEGER NOT NULL REFERENCES tags(id) ON DELETE RESTRICT,
+			percentage INTEGER NOT NULL
+		)
+	`);
+
+	// Create indexes for recurring_template_tags
+	db.run(
+		sql`CREATE INDEX IF NOT EXISTS recurring_template_tags_template_idx ON recurring_template_tags(template_id)`
+	);
+	db.run(
+		sql`CREATE INDEX IF NOT EXISTS recurring_template_tags_tag_idx ON recurring_template_tags(tag_id)`
+	);
+
+	// Migration: Create skipped_instances table
+	db.run(sql`
+		CREATE TABLE IF NOT EXISTS skipped_instances (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			template_id INTEGER NOT NULL REFERENCES recurring_templates(id) ON DELETE CASCADE,
+			date TEXT NOT NULL,
+			skipped_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+		)
+	`);
+
+	// Create index for skipped_instances
+	db.run(
+		sql`CREATE INDEX IF NOT EXISTS skipped_instances_template_date_idx ON skipped_instances(template_id, date)`
+	);
+
+	// Migration: Add recurring_template_id column to transactions
+	try {
+		db.run(sql`ALTER TABLE transactions ADD COLUMN recurring_template_id INTEGER`);
+	} catch {
+		// Column already exists, ignore
+	}
 }

@@ -53,6 +53,7 @@ export const transactions = sqliteTable(
 			enum: ['cash', 'card', 'check']
 		}).notNull(),
 		checkNumber: text('check_number'), // Only for payment_method = 'check'
+		recurringTemplateId: integer('recurring_template_id'), // Links confirmed transactions to their recurring template
 
 		// Void/delete tracking
 		voidedAt: text('voided_at'), // NULL = active, set = voided
@@ -252,3 +253,77 @@ export const filings = sqliteTable(
 // Type exports for filings
 export type Filing = typeof filings.$inferSelect;
 export type NewFiling = typeof filings.$inferInsert;
+
+/**
+ * Recurring transaction templates
+ * Stores the pattern and template data for generating pending instances
+ */
+export const recurringTemplates = sqliteTable('recurring_templates', {
+	id: integer('id').primaryKey({ autoIncrement: true }),
+	publicId: text('public_id').notNull().unique(), // UUID for URLs
+
+	// Template transaction data
+	type: text('type', { enum: ['income', 'expense'] }).notNull(),
+	amountCents: integer('amount_cents').notNull(),
+	payee: text('payee').notNull(),
+	description: text('description'),
+	paymentMethod: text('payment_method', { enum: ['cash', 'card', 'check'] }).notNull(),
+
+	// Recurrence pattern (rrule string)
+	rruleString: text('rrule_string').notNull(), // Stored rrule
+	patternDescription: text('pattern_description').notNull(), // Human-readable "Every 2 weeks"
+
+	// Dates
+	startDate: text('start_date').notNull(), // YYYY-MM-DD first occurrence
+	endDate: text('end_date'), // YYYY-MM-DD optional end date (null = indefinite)
+
+	// Status
+	active: integer('active', { mode: 'boolean' }).default(true).notNull(),
+
+	// Timestamps
+	createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+	updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()
+});
+
+export type RecurringTemplate = typeof recurringTemplates.$inferSelect;
+export type NewRecurringTemplate = typeof recurringTemplates.$inferInsert;
+
+/**
+ * Tags for recurring templates (mirrors transactionTags pattern)
+ */
+export const recurringTemplateTags = sqliteTable(
+	'recurring_template_tags',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		templateId: integer('template_id')
+			.notNull()
+			.references(() => recurringTemplates.id, { onDelete: 'cascade' }),
+		tagId: integer('tag_id')
+			.notNull()
+			.references(() => tags.id, { onDelete: 'restrict' }),
+		percentage: integer('percentage').notNull()
+	},
+	(table) => [
+		index('recurring_template_tags_template_idx').on(table.templateId),
+		index('recurring_template_tags_tag_idx').on(table.tagId)
+	]
+);
+
+export type RecurringTemplateTag = typeof recurringTemplateTags.$inferSelect;
+
+/**
+ * Tracks skipped instances of recurring templates
+ * When user skips an occurrence, record it here so it doesn't show again
+ */
+export const skippedInstances = sqliteTable(
+	'skipped_instances',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		templateId: integer('template_id')
+			.notNull()
+			.references(() => recurringTemplates.id, { onDelete: 'cascade' }),
+		date: text('date').notNull(), // YYYY-MM-DD of skipped occurrence
+		skippedAt: text('skipped_at').default(sql`CURRENT_TIMESTAMP`).notNull()
+	},
+	(table) => [index('skipped_instances_template_date_idx').on(table.templateId, table.date)]
+);
