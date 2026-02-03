@@ -609,14 +609,33 @@
 		</a>
 	</div>
 
-	<!-- Data Export Section -->
+	<!-- Data Import & Export Section -->
 	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
-		<h2 class="text-lg font-semibold text-gray-900 mb-4">Data Export</h2>
+		<h2 class="text-lg font-semibold text-gray-900 mb-4">Data Import & Export</h2>
 		<p class="text-sm text-gray-600 mb-4">
-			Export your financial data for backup or migration purposes.
+			Import historical data or export for backup and migration.
 		</p>
 
 		<div class="space-y-3">
+			<!-- Import -->
+			<div class="flex items-center justify-between py-2">
+				<div>
+					<h3 class="text-sm font-medium text-gray-900">Import Transactions</h3>
+					<p class="text-xs text-gray-500">Import transactions from CSV file</p>
+				</div>
+				<a
+					href="/w/{data.workspaceId}/import"
+					class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+				>
+					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+					</svg>
+					Import CSV
+				</a>
+			</div>
+
+			<div class="border-t border-gray-200 pt-3"></div>
+
 			<!-- CSV Export -->
 			<div class="flex items-center justify-between py-2">
 				<div>
