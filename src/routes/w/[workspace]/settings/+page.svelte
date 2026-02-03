@@ -690,4 +690,34 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- App Installation -->
+	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
+		<h2 class="text-lg font-semibold text-gray-900 mb-4">App Installation</h2>
+		<p class="text-sm text-gray-600 mb-4">
+			Install Ledger to your device's home screen for quick access and a native app experience.
+		</p>
+
+		<div class="rounded-lg bg-gray-50 border border-gray-100 p-4">
+			<h3 class="text-sm font-medium text-gray-900">iOS (iPhone/iPad)</h3>
+			<ol class="mt-2 text-sm text-gray-600 list-decimal list-inside space-y-1">
+				<li>Open this page in Safari</li>
+				<li>Tap the Share button (square with arrow)</li>
+				<li>Scroll down and tap "Add to Home Screen"</li>
+				<li>Tap "Add" to confirm</li>
+			</ol>
+			<p class="mt-3 text-xs text-gray-500">
+				The app will open in standalone mode without the Safari address bar.
+			</p>
+		</div>
+
+		<div class="mt-4 rounded-lg bg-gray-50 border border-gray-100 p-4">
+			<h3 class="text-sm font-medium text-gray-900">Android / Desktop Chrome</h3>
+			<ol class="mt-2 text-sm text-gray-600 list-decimal list-inside space-y-1">
+				<li>Open the browser menu (three dots)</li>
+				<li>Tap "Install app" or "Add to Home Screen"</li>
+				<li>Follow the prompts to install</li>
+			</ol>
+		</div>
+	</section>
 </div>

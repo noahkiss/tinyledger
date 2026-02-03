@@ -1,4 +1,6 @@
-import { RRule } from 'rrule';
+import rrule, { RRule as RRuleType } from 'rrule';
+const { RRule } = rrule;
+type RRule = RRuleType;
 
 export type RecurringFrequency =
 	| 'daily'
