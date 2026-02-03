@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-24)
 
 **Core value:** 10-second transaction entry that makes tax season painless
-**Current focus:** Phase 9 In Progress - Docker deployment complete
+**Current focus:** Phase 9 In Progress - PWA + Docker complete
 
 ## Current Position
 
 Phase: 9 of 9 (Mobile & Deployment)
-Plan: 2 of 4 in phase (Docker deployment complete)
+Plan: 2 of 3 in phase (PWA manifest + Docker complete)
 Status: In progress
-Last activity: 2026-02-03 - Completed 09-02-PLAN.md
+Last activity: 2026-02-03 - Completed 09-01-PLAN.md
 
-Progress: [████████████░░░] 80% (28/32 plans complete)
+Progress: [████████████░░░] 87% (29/33 plans complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 28
+- Total plans completed: 29
 - Average duration: 11 min
-- Total execution time: 5.2 hours
+- Total execution time: 5.4 hours
 
 **By Phase:**
 
@@ -36,10 +36,10 @@ Progress: [████████████░░░] 80% (28/32 plans compl
 | 07-tax-system | 4 | 25 min | 6 min |
 | 07.1-filings | 2 | 14 min | 7 min |
 | 08-report-generation-data | 4 | 40 min | 10 min |
-| 09-mobile-deployment | 1 | 14 min | 14 min |
+| 09-mobile-deployment | 2 | 26 min | 13 min |
 
 **Recent Trend:**
-- Last 5 plans: 12 min, 8 min, 10 min, 11 min, 14 min
+- Last 5 plans: 8 min, 10 min, 11 min, 14 min, 12 min
 - Trend: Consistently fast execution
 
 *Updated after each plan completion*
@@ -131,6 +131,9 @@ Recent decisions affecting current work:
 | rrule string storage | 08-04 | Store rrule.toString() for portable pattern storage |
 | Pending instance calculation | 08-04 | Calculate at load time, no stale data |
 | Soft deactivate | 08-04 | Deactivate vs delete for recurring templates |
+| .webmanifest extension | 09-01 | Avoids Vite manifest.json conflict |
+| L monogram icon blue-600 | 09-01 | Matches app button color (#2563eb) |
+| No service worker | 09-01 | App requires network, no offline data support |
 | node:22-slim over Alpine | 09-02 | better-sqlite3 native module compatibility |
 | Non-root nodejs user | 09-02 | Container security best practice (UID 1001) |
 | Separate Docker volumes | 09-02 | User preference: ledger-db and ledger-attachments |
@@ -146,8 +149,8 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-03T14:21:52Z
-Stopped at: Completed 09-02-PLAN.md (Docker Deployment)
+Last session: 2026-02-03T09:17:00Z
+Stopped at: Completed 09-01-PLAN.md (PWA Foundation)
 Resume file: None
 
-Phase 9 in progress. Docker deployment complete. PWA manifest next.
+Phase 9 in progress. PWA + Docker complete. Backup documentation (09-03) next.
