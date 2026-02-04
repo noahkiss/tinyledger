@@ -1,21 +1,22 @@
 # Filter Bar Redesign
 
 **Created:** 2026-02-04
-**Status:** Planned
-**Depends on:** TODO-ui-improvements-2026-02-04.md (in testing)
+**Status:** Partially Complete
+**Depends on:** TODO-ui-improvements-2026-02-04.md (complete)
 
 ## Quick Fixes
 
 ### 1. Sort Icon Size
-- Sort toggle icon is slightly smaller than neighbors
-- Match size to Tags/Methods dropdown icons (16x16)
+- ✅ Verified: Sort toggle icon already uses 16x16, same as Tags/Methods
 
 ### 2. FY Dropdown Styling
-- Convert from native `<select>` to custom dropdown (like All Methods)
-- Match height of WorkspaceSelector
-- Use same styling pattern: icon + text + chevron
+- ✅ **Completed 2026-02-04**: Converted from native `<select>` to custom dropdown
+- Calendar icon + text + chevron trigger
+- Click-outside handling to close
+- Checkmark indicator for selected year
+- Matches WorkspaceSelector styling pattern
 
-**Files:** `src/lib/components/FiscalYearPicker.svelte`, `src/routes/w/[workspace]/+layout.svelte`
+**Files:** `src/lib/components/FiscalYearPicker.svelte`
 
 ---
 

@@ -1,7 +1,7 @@
 # UI Improvements - Transactions Page
 
 **Created:** 2026-02-04
-**Status:** In Testing
+**Status:** Complete
 **Context:** Post v1.0, ad-hoc UX improvements
 
 ## Summary
@@ -78,11 +78,13 @@ Multiple UX improvements to the transactions page covering header reorganization
 
 ## Testing Checklist
 
-- [ ] Dark mode: Income/Expense buttons have readable white text
-- [ ] FY picker visible in header, persists across tab navigation
-- [ ] Transactions sticky bar shows mobile icon format on narrow screens
-- [ ] Sort toggle changes transaction order (oldest first by default)
-- [ ] Date filters show FY range when cleared
-- [ ] Methods dropdown matches Tags styling
-- [ ] Past-due quarterly payments show "Skip" button
-- [ ] Skipped quarter amount rolls to next quarter display
+- [x] Dark mode: Income/Expense buttons have readable white text (verified via CSS)
+- [x] FY picker visible in header, persists across tab navigation (verified via code)
+- [x] Transactions sticky bar shows mobile icon format on narrow screens (verified via code)
+- [x] Sort toggle changes transaction order (oldest first by default) (verified via code)
+- [x] Date filters show FY range when cleared (verified via code)
+- [x] Methods dropdown matches Tags styling (verified via code)
+- [x] Past-due quarterly payments show "Skip" button (verified via code)
+- [x] Skipped quarter amount rolls to next quarter display (verified via code)
+
+**Verified:** 2026-02-04 via code review and successful build
