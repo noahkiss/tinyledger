@@ -3,6 +3,8 @@
 ## Project Overview
 Personal bookkeeping app for sole proprietors and small volunteer organizations. SvelteKit frontend with SQLite databases (one per workspace).
 
+run `beans prime` when working.
+
 ## Tech Stack
 - SvelteKit 2 + TypeScript
 - Drizzle ORM + better-sqlite3
