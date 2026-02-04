@@ -1,6 +1,6 @@
 ---
 type: task
-status: todo
+status: done
 title: Migrate to Solar Icons via Iconify
 parent: tinyledger-0001
 ---
@@ -10,11 +10,11 @@ parent: tinyledger-0001
 Replace all inline SVG icons with Solar icon set via Iconify web component for consistency.
 
 ## Tasks
-- [ ] Add Iconify script to `app.html`
-- [ ] Audit all inline SVGs across components and pages
-- [ ] Replace each with equivalent Solar icon (bold variant)
-- [ ] Ensure consistent sizing (w-5 h-5 for nav, w-6 h-6 for actions)
-- [ ] Remove unused SVG code
+- [x] Add Iconify script to `app.html`
+- [x] Audit all inline SVGs across components and pages
+- [x] Replace each with equivalent Solar icon (bold variant)
+- [x] Ensure consistent sizing (w-5 h-5 for nav, w-6 h-6 for actions)
+- [x] Remove unused SVG code
 
 ## Icon Mapping (examples)
 
@@ -31,12 +31,11 @@ Replace all inline SVG icons with Solar icon set via Iconify web component for c
 | Edit/pencil | `solar:pen-bold` |
 | Search | `solar:magnifer-bold` |
 
-## Files to Modify
-- `src/app.html` - Add Iconify script
-- All `.svelte` files containing `<svg>` elements
-- Components: TimelineEntry, QuickEntryFAB, FilterBar, FiscalYearPicker, etc.
+## Files Modified
+- `src/app.html` - Added Iconify script
+- All components now use `<iconify-icon>` web component
+- No inline SVGs remaining
 
 ## Notes
-- Use `<iconify-icon>` web component, not SVG sprites
-- Keep Solar bold variant throughout for consistency
-- Reference: https://icon-sets.iconify.design/solar/
+- Using Solar bold variant throughout for consistency
+- Commit: 5be4999
