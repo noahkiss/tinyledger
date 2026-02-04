@@ -101,7 +101,7 @@
 						id="type"
 						name="type"
 						required
-						class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						class="mt-1 block h-[50px] w-full rounded-lg border border-gray-300 px-4 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
 						<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
 						<option value="volunteer_org" selected={form?.type === 'volunteer_org'}
