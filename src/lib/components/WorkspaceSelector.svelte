@@ -66,14 +66,12 @@
 		<div class="text-left">
 			<div class="flex items-center gap-1.5">
 				<h1 class="font-semibold text-gray-900">{currentName}</h1>
-				<svg
-					class="h-4 w-4 text-gray-400 transition-transform {isOpen ? 'rotate-180' : ''}"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-				</svg>
+				<iconify-icon
+					icon="solar:alt-arrow-down-linear"
+					class="text-gray-400 transition-transform {isOpen ? 'rotate-180' : ''}"
+					width="16"
+					height="16"
+				></iconify-icon>
 			</div>
 			<p class="text-xs text-gray-500">
 				{currentType === 'sole_prop' ? 'Sole Proprietor' : 'Volunteer Organization'}
@@ -96,13 +94,7 @@
 				>
 					<span class="flex-1 truncate">{workspace.name}</span>
 					{#if workspace.id === currentWorkspaceId}
-						<svg class="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								fill-rule="evenodd"
-								d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						<iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="16" height="16"></iconify-icon>
 					{/if}
 				</button>
 			{/each}
@@ -113,14 +105,7 @@
 				href="/"
 				class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
 			>
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 4v16m8-8H4"
-					/>
-				</svg>
+				<iconify-icon icon="solar:add-circle-linear" width="16" height="16"></iconify-icon>
 				<span>Create New Workspace</span>
 			</a>
 		</div>

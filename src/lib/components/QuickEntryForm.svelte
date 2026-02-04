@@ -121,14 +121,7 @@
 			class="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
 			aria-label="Close"
 		>
-			<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M6 18L18 6M6 6l12 12"
-				/>
-			</svg>
+			<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
 		</button>
 	</div>
 
@@ -137,14 +130,7 @@
 		<div
 			class="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 text-green-700 transition-opacity"
 		>
-			<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M5 13l4 4L19 7"
-				/>
-			</svg>
+			<iconify-icon icon="solar:check-circle-bold" width="20" height="20"></iconify-icon>
 			<span class="text-sm font-medium">Transaction added!</span>
 		</div>
 	{/if}

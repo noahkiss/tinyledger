@@ -406,13 +406,9 @@
 									: 'bg-red-100'}"
 							>
 								{#if template.type === 'income'}
-									<svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
-									</svg>
+									<iconify-icon icon="solar:add-circle-bold" class="text-green-600" width="16" height="16"></iconify-icon>
 								{:else}
-									<svg class="h-4 w-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-									</svg>
+									<iconify-icon icon="solar:minus-circle-bold" class="text-red-600" width="16" height="16"></iconify-icon>
 								{/if}
 							</div>
 
@@ -460,14 +456,7 @@
 								onclick={() => editTemplate(template)}
 								title="Edit"
 							>
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-									/>
-								</svg>
+								<iconify-icon icon="solar:pen-bold" width="16" height="16"></iconify-icon>
 							</button>
 							<form method="POST" action="?/deactivate" use:enhance class="inline">
 								<input type="hidden" name="templateId" value={template.id} />
@@ -476,14 +465,7 @@
 									class="rounded-lg p-2 text-gray-400 hover:bg-yellow-50 hover:text-yellow-600"
 									title="Deactivate"
 								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
+									<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
 								</button>
 							</form>
 							<form method="POST" action="?/delete" use:enhance class="inline">
@@ -493,14 +475,7 @@
 									class="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
 									title="Delete"
 								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-										/>
-									</svg>
+									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
 								</button>
 							</form>
 						</div>
@@ -510,14 +485,7 @@
 		</div>
 	{:else if !showCreateForm}
 		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center">
-			<svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-				/>
-			</svg>
+			<iconify-icon icon="solar:restart-bold" class="mx-auto text-gray-400" width="48" height="48"></iconify-icon>
 			<p class="mt-4 text-gray-600">No recurring transactions set up</p>
 			<p class="mt-1 text-sm text-gray-500">
 				Create a recurring template for expenses like rent, subscriptions, or regular client payments.
@@ -562,20 +530,7 @@
 									class="rounded-lg p-2 text-gray-400 hover:bg-green-50 hover:text-green-600"
 									title="Reactivate"
 								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-										/>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
+									<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
 								</button>
 							</form>
 							<form method="POST" action="?/delete" use:enhance class="inline">
@@ -585,14 +540,7 @@
 									class="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
 									title="Delete"
 								>
-									<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-										/>
-									</svg>
+									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
 								</button>
 							</form>
 						</div>

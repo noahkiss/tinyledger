@@ -157,9 +157,7 @@
 			class="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-green-700 active:bg-green-800"
 			data-component="add-income-button"
 		>
-			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
-			</svg>
+			<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
 			Income
 		</a>
 		<a
@@ -167,9 +165,7 @@
 			class="flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-red-700 active:bg-red-800"
 			data-component="add-expense-button"
 		>
-			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-			</svg>
+			<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
 			Expense
 		</a>
 	</div>
@@ -220,19 +216,7 @@
 	<!-- Timeline -->
 	{#if !hasTimelineContent}
 		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center" data-component="empty-state">
-			<svg
-				class="mx-auto h-12 w-12 text-gray-400"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-				/>
-			</svg>
+			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-gray-400" width="48" height="48"></iconify-icon>
 			{#if hasActiveFilters}
 				<p class="mt-4 text-gray-600">No transactions match your filters</p>
 				<p class="mt-1 text-sm text-gray-500">Try adjusting or clearing your filters.</p>
@@ -288,33 +272,9 @@
 													: 'bg-red-100/50'}"
 											>
 												{#if pending.type === 'income'}
-													<svg
-														class="h-3 w-3 text-green-400"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M12 6v12m6-6H6"
-														/>
-													</svg>
+													<iconify-icon icon="solar:add-circle-bold" class="text-green-400" width="12" height="12"></iconify-icon>
 												{:else}
-													<svg
-														class="h-3 w-3 text-red-400"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M20 12H4"
-														/>
-													</svg>
+													<iconify-icon icon="solar:minus-circle-bold" class="text-red-400" width="12" height="12"></iconify-icon>
 												{/if}
 											</div>
 

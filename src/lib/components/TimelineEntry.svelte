@@ -58,20 +58,13 @@
 					</span>
 				{/if}
 				{#if hasAttachment}
-					<svg
-						class="h-4 w-4 text-gray-400"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
+					<iconify-icon
+						icon="solar:paperclip-bold"
+						class="text-gray-400"
+						width="16"
+						height="16"
 						aria-label="Has receipt"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-						/>
-					</svg>
+					></iconify-icon>
 				{/if}
 			</div>
 			{#if primaryTag}
@@ -83,33 +76,19 @@
 
 		<div class="ml-3 flex items-center gap-1.5">
 			{#if transaction.type === 'income'}
-				<svg
-					class="h-4 w-4 {transaction.voidedAt ? 'text-gray-400' : 'text-green-500'}"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M7 11l5-5m0 0l5 5m-5-5v12"
-					/>
-				</svg>
+				<iconify-icon
+					icon="solar:arrow-up-bold"
+					class={transaction.voidedAt ? 'text-gray-400' : 'text-green-500'}
+					width="16"
+					height="16"
+				></iconify-icon>
 			{:else}
-				<svg
-					class="h-4 w-4 {transaction.voidedAt ? 'text-gray-400' : 'text-red-500'}"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M17 13l-5 5m0 0l-5-5m5 5V6"
-					/>
-				</svg>
+				<iconify-icon
+					icon="solar:arrow-down-bold"
+					class={transaction.voidedAt ? 'text-gray-400' : 'text-red-500'}
+					width="16"
+					height="16"
+				></iconify-icon>
 			{/if}
 			<span
 				class="font-semibold

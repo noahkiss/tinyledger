@@ -46,9 +46,7 @@
 	aria-label="Add transaction"
 	data-component="quick-entry-fab"
 >
-	<svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
-	</svg>
+	<iconify-icon icon="solar:add-circle-bold" width="32" height="32"></iconify-icon>
 </button>
 
 <!-- Form overlay -->

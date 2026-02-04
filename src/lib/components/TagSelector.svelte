@@ -167,14 +167,7 @@
 				class="rounded p-1 text-red-600 hover:bg-red-50"
 				aria-label="Remove tag"
 			>
-				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					/>
-				</svg>
+				<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
 			</button>
 		</div>
 	{/each}

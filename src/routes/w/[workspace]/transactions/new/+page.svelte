@@ -117,14 +117,7 @@
 			class="rounded-lg p-2 text-gray-600 hover:bg-gray-100"
 			aria-label="Back to transactions"
 		>
-			<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M15 19l-7-7 7-7"
-				/>
-			</svg>
+			<iconify-icon icon="solar:alt-arrow-left-linear" width="20" height="20"></iconify-icon>
 		</a>
 		<h2 class="text-2xl font-semibold text-gray-900">New {typeLabel} Transaction</h2>
 	</div>

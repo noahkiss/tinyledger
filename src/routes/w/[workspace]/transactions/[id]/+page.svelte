@@ -147,9 +147,7 @@
 <div class="mx-auto max-w-2xl p-6">
 	<!-- Back link -->
 	<a href="/w/{workspace}/transactions" class="mb-4 inline-flex items-center text-blue-600 hover:text-blue-800">
-		<svg class="mr-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-		</svg>
+		<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 		Back to Transactions
 	</a>
 
@@ -157,9 +155,7 @@
 	{#if isVoided}
 		<div class="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-4">
 			<div class="flex items-center gap-2">
-				<svg class="h-5 w-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-				</svg>
+				<iconify-icon icon="solar:danger-triangle-bold" class="text-amber-600" width="20" height="20"></iconify-icon>
 				<div>
 					<p class="font-medium text-amber-800">This transaction is voided</p>
 					<p class="text-sm text-amber-600">Voided on {formatTimestamp(data.transaction.voidedAt!)}</p>

@@ -78,9 +78,7 @@
 				href="/w/{workspace}/transactions"
 				class="inline-flex items-center text-blue-600 hover:text-blue-800"
 			>
-				<svg class="mr-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-				</svg>
+				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transactions
 			</a>
 		{:else}
@@ -88,9 +86,7 @@
 				href="/w/{workspace}/transactions/{data.transaction.publicId}"
 				class="inline-flex items-center text-blue-600 hover:text-blue-800"
 			>
-				<svg class="mr-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-				</svg>
+				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transaction
 			</a>
 		{/if}

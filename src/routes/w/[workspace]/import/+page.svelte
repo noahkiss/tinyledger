@@ -154,10 +154,10 @@
 	<div class="mb-8">
 		<nav class="flex items-center justify-center gap-4">
 			{#each [
-				{ id: 'upload', label: '1. Upload', icon: 'M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12' },
-				{ id: 'mapping', label: '2. Map Columns', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
-				{ id: 'preview', label: '3. Preview', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' },
-				{ id: 'results', label: '4. Results', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' }
+				{ id: 'upload', label: '1. Upload', icon: 'solar:upload-bold' },
+				{ id: 'mapping', label: '2. Map Columns', icon: 'solar:clipboard-list-bold' },
+				{ id: 'preview', label: '3. Preview', icon: 'solar:eye-bold' },
+				{ id: 'results', label: '4. Results', icon: 'solar:check-circle-bold' }
 			] as s}
 				{@const isActive = step === s.id}
 				{@const isPast = ['upload', 'mapping', 'preview', 'results'].indexOf(step) > ['upload', 'mapping', 'preview', 'results'].indexOf(s.id)}
@@ -169,9 +169,7 @@
 								? 'bg-green-500 text-white'
 								: 'bg-gray-200 text-gray-500'}"
 					>
-						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={s.icon} />
-						</svg>
+						<iconify-icon icon={s.icon} width="16" height="16"></iconify-icon>
 					</div>
 					<span class="text-sm font-medium {isActive ? 'text-blue-600' : isPast ? 'text-green-600' : 'text-gray-500'}">
 						{s.label}
@@ -219,9 +217,7 @@
 						type="submit"
 						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
 					>
-						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-						</svg>
+						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						Upload & Preview
 					</button>
 				</div>
@@ -441,9 +437,7 @@
 						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Validate & Preview
-						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-						</svg>
+						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
 					</button>
 				</div>
 			</form>
@@ -611,9 +605,7 @@
 						disabled={validationResult.valid.length === 0 || !allTagsResolved()}
 						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-						</svg>
+						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						Import {validationResult.valid.length} Transactions
 					</button>
 				</div>
@@ -626,9 +618,7 @@
 		<div class="rounded-lg border border-gray-200 bg-white p-6">
 			<div class="text-center mb-6">
 				<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
-					<svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-					</svg>
+					<iconify-icon icon="solar:check-circle-bold" class="text-green-600" width="32" height="32"></iconify-icon>
 				</div>
 				<h3 class="text-xl font-semibold text-gray-900">Import Complete</h3>
 				<p class="mt-2 text-gray-600">
@@ -689,9 +679,7 @@
 					class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
 				>
 					View Transactions
-					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-					</svg>
+					<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
 				</a>
 			</div>
 		</div>

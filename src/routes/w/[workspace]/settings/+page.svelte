@@ -490,14 +490,12 @@
 							onclick={() => (showTaxForms = !showTaxForms)}
 						>
 							<span class="font-medium text-gray-900">Tax Forms & Resources</span>
-							<svg
-								class="h-5 w-5 text-gray-400 transition-transform {showTaxForms ? 'rotate-180' : ''}"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-							</svg>
+							<iconify-icon
+								icon="solar:alt-arrow-down-linear"
+								class="text-gray-400 transition-transform {showTaxForms ? 'rotate-180' : ''}"
+								width="20"
+								height="20"
+							></iconify-icon>
 						</button>
 
 						{#if showTaxForms}
@@ -603,9 +601,7 @@
 			class="mt-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
 		>
 			Manage Tags
-			<svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-			</svg>
+			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
 		</a>
 	</div>
 
@@ -620,9 +616,7 @@
 			class="mt-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
 		>
 			Manage Recurring
-			<svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-			</svg>
+			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
 		</a>
 	</div>
 
@@ -644,9 +638,7 @@
 					href="/w/{data.workspaceId}/import"
 					class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
 				>
-					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-					</svg>
+					<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 					Import CSV
 				</a>
 			</div>
@@ -664,9 +656,7 @@
 					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
 					download
 				>
-					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-					</svg>
+					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
 					Download CSV
 				</a>
 			</div>
@@ -682,9 +672,7 @@
 					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
 					download
 				>
-					<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-					</svg>
+					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
 					Download ZIP
 				</a>
 			</div>

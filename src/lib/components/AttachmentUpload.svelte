@@ -140,9 +140,7 @@
 				class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-700"
 				aria-label="Remove attachment"
 			>
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-				</svg>
+				<iconify-icon icon="solar:close-circle-bold" width="16" height="16"></iconify-icon>
 			</button>
 		</div>
 		{#if displayFilename}
@@ -160,9 +158,7 @@
 				{dragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}"
 		>
 			<!-- Plus icon -->
-			<svg class="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-			</svg>
+			<iconify-icon icon="solar:cloud-upload-linear" class="text-gray-400" width="40" height="40"></iconify-icon>
 			<p class="mt-2 text-sm text-gray-600">Click or drag to upload receipt</p>
 			<p class="mt-1 text-xs text-gray-500">JPEG, PNG, WebP, GIF up to 10MB</p>
 		</button>

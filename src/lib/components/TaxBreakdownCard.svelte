@@ -37,14 +37,12 @@
 			<span class="font-medium text-gray-900">{title}</span>
 			<div class="flex items-center gap-3">
 				<span class="text-lg font-semibold text-gray-900">{formatCurrency(totalCents)}</span>
-				<svg
-					class="h-5 w-5 text-gray-400 transition-transform {isExpanded ? 'rotate-180' : ''}"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-				</svg>
+				<iconify-icon
+					icon="solar:alt-arrow-down-linear"
+					class="text-gray-400 transition-transform {isExpanded ? 'rotate-180' : ''}"
+					width="20"
+					height="20"
+				></iconify-icon>
 			</div>
 		</button>
 

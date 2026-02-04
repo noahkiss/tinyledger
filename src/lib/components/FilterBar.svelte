@@ -154,19 +154,12 @@
 
 		<!-- Payee search -->
 		<div class="relative flex-1">
-			<svg
-				class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-				/>
-			</svg>
+			<iconify-icon
+				icon="solar:magnifer-linear"
+				class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+				width="16"
+				height="16"
+			></iconify-icon>
 			<input
 				type="text"
 				placeholder="Search payee..."
@@ -194,18 +187,9 @@
 					{currentFilters.tags.length > 0 ? 'border-blue-500 text-blue-600' : 'text-gray-600'}"
 				onclick={() => (showTagDropdown = !showTagDropdown)}
 			>
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-					/>
-				</svg>
+				<iconify-icon icon="solar:tag-bold" width="16" height="16"></iconify-icon>
 				{getSelectedTagNames()}
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-				</svg>
+				<iconify-icon icon="solar:alt-arrow-down-linear" width="16" height="16"></iconify-icon>
 			</button>
 
 			{#if showTagDropdown}
@@ -271,14 +255,7 @@
 				onclick={clearAllFilters}
 				class="flex items-center gap-1 rounded-lg px-2 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
 			>
-				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					/>
-				</svg>
+				<iconify-icon icon="solar:close-circle-linear" width="16" height="16"></iconify-icon>
 				Clear
 			</button>
 		{/if}
