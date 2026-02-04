@@ -16,8 +16,8 @@ RUN npm prune --production
 FROM node:22-slim
 WORKDIR /app
 
-# Create non-root user
-RUN groupadd --gid 1001 nodejs && useradd --uid 1001 --gid 1001 -m nodejs
+# Create non-root user (1000:1000 matches typical first user on Linux hosts)
+RUN groupadd --gid 1000 nodejs && useradd --uid 1000 --gid 1000 -m nodejs
 
 # Copy built app and production dependencies
 COPY --from=builder --chown=nodejs:nodejs /app/build build/
