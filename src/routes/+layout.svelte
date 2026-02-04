@@ -14,13 +14,24 @@
 <OfflineIndicator />
 {@render children()}
 
-<!-- Footer with Penny -->
-<footer class="pb-8 pt-12" data-component="penny-footer">
-	<div class="flex justify-center">
-		<img
-			src="/brand/mascot-sitting-transparent.png"
-			alt="Penny the Hedgehog"
-			class="w-64 opacity-60 transition-opacity hover:opacity-80 md:w-96"
-		/>
-	</div>
+<!-- Footer with Penny scene -->
+<footer class="relative mt-8" data-component="penny-footer">
+	<!-- Fade gradient overlay at top -->
+	<div
+		class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-bg to-transparent"
+	></div>
+
+	<!-- Daytime image (light mode) -->
+	<img
+		src="/brand/footer-daytime.png"
+		alt="Penny the Hedgehog reading her ledger on a sunny day"
+		class="mx-auto w-full max-w-2xl dark:hidden"
+	/>
+
+	<!-- Nighttime image (dark mode) -->
+	<img
+		src="/brand/footer-nighttime.png"
+		alt="Penny the Hedgehog reading her ledger under the stars"
+		class="mx-auto hidden w-full max-w-2xl dark:block"
+	/>
 </footer>
