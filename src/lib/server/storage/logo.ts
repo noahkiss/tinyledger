@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { writeFileSync, existsSync, mkdirSync, unlinkSync, readdirSync } from 'node:fs';
+import { writeFileSync, existsSync, mkdirSync, unlinkSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DATA_DIR = process.env.DATA_DIR ?? './data';
@@ -90,7 +90,6 @@ export function getLogoBuffer(workspaceId: string, filename: string): Buffer | n
 		return null;
 	}
 
-	const { readFileSync } = require('node:fs');
 	return readFileSync(logoPath);
 }
 

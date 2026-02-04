@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import type { PageData, ActionData } from './$types';
 	import WorkspaceLogo from '$lib/components/WorkspaceLogo.svelte';
 	import { FEDERAL_BRACKETS_2026 } from '$lib/data/federal-brackets-2026';
@@ -166,7 +167,17 @@
 		method="POST"
 		action="?/save"
 		enctype="multipart/form-data"
-		use:enhance
+		use:enhance={() => {
+			return async ({ result, update }) => {
+				if (result.type === 'success') {
+					// Invalidate data to refresh settings (including new logo filename)
+					await invalidateAll();
+					// Clear logo preview since we now have the server version
+					logoPreviewUrl = null;
+				}
+				await update();
+			};
+		}}
 		class="space-y-6 rounded-lg border border-border bg-card p-6"
 	>
 		{#if form?.error}
@@ -522,7 +533,7 @@
 					</div>
 
 					<!-- Tax Forms & Resources (expandable) -->
-					<div class="rounded-lg border border-border">
+					<div class="overflow-hidden rounded-lg border border-border">
 						<button
 							type="button"
 							class="flex w-full items-center justify-between p-4 text-left hover:bg-surface"
@@ -700,8 +711,10 @@
 				</a>
 			</div>
 
+			<div class="border-t border-border pt-3"></div>
+
 			<!-- Full Export -->
-			<div class="flex items-center justify-between py-2 border-t border-border">
+			<div class="flex items-center justify-between py-2">
 				<div>
 					<h3 class="text-sm font-medium text-fg">Full Backup (ZIP)</h3>
 					<p class="text-xs text-muted">All data including receipts and attachments</p>
