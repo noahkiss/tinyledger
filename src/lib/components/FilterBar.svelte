@@ -128,7 +128,7 @@
 		<div class="flex rounded-lg border border-gray-200 bg-white">
 			<button
 				type="button"
-				class="px-3 py-1.5 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
+				class="px-3 py-2 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
 					{currentFilters.type === '' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
 				onclick={() => handleTypeChange('')}
 			>
@@ -136,7 +136,7 @@
 			</button>
 			<button
 				type="button"
-				class="border-l border-gray-200 px-3 py-1.5 text-sm font-medium transition-colors
+				class="border-l border-gray-200 px-3 py-2 text-sm font-medium transition-colors
 					{currentFilters.type === 'income' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
 				onclick={() => handleTypeChange('income')}
 			>
@@ -144,7 +144,7 @@
 			</button>
 			<button
 				type="button"
-				class="border-l border-gray-200 px-3 py-1.5 text-sm font-medium transition-colors last:rounded-r-lg
+				class="border-l border-gray-200 px-3 py-2 text-sm font-medium transition-colors last:rounded-r-lg
 					{currentFilters.type === 'expense' ? 'bg-red-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
 				onclick={() => handleTypeChange('expense')}
 			>
@@ -172,7 +172,7 @@
 				placeholder="Search payee..."
 				value={payeeInput}
 				oninput={handlePayeeInput}
-				class="w-full rounded-lg border border-gray-200 bg-white py-1.5 pl-9 pr-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
 			/>
 		</div>
 
@@ -190,7 +190,7 @@
 		<div class="relative">
 			<button
 				type="button"
-				class="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm hover:bg-gray-50
+				class="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm hover:bg-gray-50
 					{currentFilters.tags.length > 0 ? 'border-blue-500 text-blue-600' : 'text-gray-600'}"
 				onclick={() => (showTagDropdown = !showTagDropdown)}
 			>
@@ -240,14 +240,14 @@
 				type="date"
 				value={currentFilters.from}
 				onchange={handleFromChange}
-				class="rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
 			/>
 			<span class="text-gray-400">-</span>
 			<input
 				type="date"
 				value={currentFilters.to}
 				onchange={handleToChange}
-				class="rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
 			/>
 		</div>
 
@@ -255,7 +255,7 @@
 		<select
 			value={currentFilters.method}
 			onchange={handleMethodChange}
-			class="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500
+			class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500
 				{currentFilters.method ? 'border-blue-500 text-blue-600' : 'text-gray-600'}"
 		>
 			<option value="">All Methods</option>
@@ -269,7 +269,7 @@
 			<button
 				type="button"
 				onclick={clearAllFilters}
-				class="flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+				class="flex items-center gap-1 rounded-lg px-2 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
 			>
 				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path

@@ -9,5 +9,9 @@ export default defineConfig({
 		fs: {
 			allow: [process.env.DATA_DIR || './data']
 		}
+	},
+	ssr: {
+		// Force bundling of CJS packages that don't work well with ESM interop
+		noExternal: ['@nozbe/microfuzz']
 	}
 });
