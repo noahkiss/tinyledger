@@ -16,18 +16,15 @@ RUN npm prune --production
 FROM node:22-slim
 WORKDIR /app
 
-# Create non-root user (1000:1000 matches typical first user on Linux hosts)
-RUN groupadd --gid 1000 nodejs && useradd --uid 1000 --gid 1000 -m nodejs
-
-# Copy built app and production dependencies
-COPY --from=builder --chown=nodejs:nodejs /app/build build/
-COPY --from=builder --chown=nodejs:nodejs /app/node_modules node_modules/
-COPY --from=builder --chown=nodejs:nodejs /app/package.json .
+# Copy built app and production dependencies (node user is UID 1000:1000)
+COPY --from=builder --chown=node:node /app/build build/
+COPY --from=builder --chown=node:node /app/node_modules node_modules/
+COPY --from=builder --chown=node:node /app/package.json .
 
 # Create data directories
-RUN mkdir -p /data/workspaces /data/attachments && chown -R nodejs:nodejs /data
+RUN mkdir -p /data/workspaces /data/attachments && chown -R node:node /data
 
-USER nodejs
+USER node
 
 # Default environment variables
 ENV NODE_ENV=production
