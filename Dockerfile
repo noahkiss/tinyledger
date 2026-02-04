@@ -25,7 +25,7 @@ COPY --from=builder --chown=nodejs:nodejs /app/node_modules node_modules/
 COPY --from=builder --chown=nodejs:nodejs /app/package.json .
 
 # Create data directories
-RUN mkdir -p /data/db /data/attachments && chown -R nodejs:nodejs /data
+RUN mkdir -p /data/workspaces /data/attachments && chown -R nodejs:nodejs /data
 
 USER nodejs
 

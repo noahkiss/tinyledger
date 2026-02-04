@@ -38,7 +38,7 @@ Pull and run the latest image:
 docker run -d \
   --name tinyledger \
   -p 3000:3000 \
-  -v tinyledger-db:/data/db \
+  -v tinyledger-workspaces:/data/workspaces \
   -v tinyledger-attachments:/data/attachments \
   -e BASE_URL=http://localhost:3000 \
   -e TZ=America/New_York \
@@ -57,12 +57,12 @@ services:
       - BASE_URL=http://localhost:3000
       - TZ=America/New_York
     volumes:
-      - tinyledger-db:/data/db
+      - tinyledger-workspaces:/data/workspaces
       - tinyledger-attachments:/data/attachments
     restart: unless-stopped
 
 volumes:
-  tinyledger-db:
+  tinyledger-workspaces:
   tinyledger-attachments:
 ```
 

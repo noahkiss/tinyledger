@@ -8,10 +8,10 @@ TinyLedger stores two types of data in separate locations:
 
 | Type | Container Path | Docker Volume | Contents |
 |------|---------------|---------------|----------|
-| Databases | `/data/db` | `ledger-db` | SQLite files (one per workspace) |
+| Databases | `/data/workspaces` | `ledger-workspaces` | SQLite files (one per workspace) |
 | Attachments | `/data/attachments` | `ledger-attachments` | Receipt images and documents |
 
-Each workspace has its own database file: `/data/db/workspaces/{workspace-id}.db`
+Each workspace has its own database file: `/data/workspaces/{workspace-id}.db`
 
 Attachments are stored as: `/data/attachments/{workspace-id}/{attachment-id}.{ext}`
 
@@ -41,7 +41,7 @@ This method works on a running container without stopping the application.
 docker exec -it tinyledger-app-1 /bin/sh
 
 # Navigate to workspaces directory
-cd /data/db/workspaces
+cd /data/workspaces
 
 # List available workspaces
 ls -la *.db
@@ -93,7 +93,7 @@ echo "Starting backup to $BACKUP_PATH..."
 
 # Backup databases using VACUUM INTO (safe hot backup)
 docker exec tinyledger-app-1 /bin/sh -c '
-  cd /data/db/workspaces
+  cd /data/workspaces
   for db in *.db; do
     if [ -f "$db" ]; then
       workspace="${db%.db}"
@@ -168,7 +168,7 @@ mkdir -p "$BACKUP_PATH"/{db,attachments}
 echo "[1/3] Backing up databases..."
 docker exec tinyledger-app-1 /bin/sh -c '
   mkdir -p /tmp/backup
-  cd /data/db/workspaces
+  cd /data/workspaces
   for db in *.db 2>/dev/null; do
     if [ -f "$db" ]; then
       echo "  - $db"
@@ -208,7 +208,7 @@ echo "Backup location: $BACKUP_PATH"
 docker compose down
 
 # Copy backup to container
-docker cp ./backups/my-workspace.db tinyledger-app-1:/data/db/workspaces/my-workspace.db
+docker cp ./backups/my-workspace.db tinyledger-app-1:/data/workspaces/my-workspace.db
 
 # Restart container
 docker compose up -d
@@ -227,7 +227,7 @@ docker exec -it tinyledger-app-1 /bin/sh
 
 # Close any existing connections by the app (optional - restart is cleaner)
 # Then restore using VACUUM INTO
-sqlite3 /tmp/restore.db "VACUUM INTO '/data/db/workspaces/my-workspace.db'"
+sqlite3 /tmp/restore.db "VACUUM INTO '/data/workspaces/my-workspace.db'"
 
 # Clean up
 rm /tmp/restore.db
@@ -277,7 +277,7 @@ if [ -d "$BACKUP_PATH/db" ]; then
     if [ -f "$db" ]; then
       filename=$(basename "$db")
       echo "  - $filename"
-      docker cp "$db" "tinyledger-app-1:/data/db/workspaces/$filename"
+      docker cp "$db" "tinyledger-app-1:/data/workspaces/$filename"
     fi
   done
 fi
@@ -314,18 +314,18 @@ After restoring a backup, verify the restore was successful:
 docker exec -it tinyledger-app-1 /bin/sh
 
 # Check database integrity
-sqlite3 /data/db/workspaces/my-workspace.db "PRAGMA integrity_check"
+sqlite3 /data/workspaces/my-workspace.db "PRAGMA integrity_check"
 # Expected output: ok
 
 # Verify table structure
-sqlite3 /data/db/workspaces/my-workspace.db ".tables"
+sqlite3 /data/workspaces/my-workspace.db ".tables"
 # Expected: history, transactions, etc.
 
 # Check transaction count
-sqlite3 /data/db/workspaces/my-workspace.db "SELECT COUNT(*) FROM transactions"
+sqlite3 /data/workspaces/my-workspace.db "SELECT COUNT(*) FROM transactions"
 
 # Verify WAL mode
-sqlite3 /data/db/workspaces/my-workspace.db "PRAGMA journal_mode"
+sqlite3 /data/workspaces/my-workspace.db "PRAGMA journal_mode"
 # Expected: wal
 
 exit

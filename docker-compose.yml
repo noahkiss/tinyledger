@@ -18,7 +18,7 @@ services:
       # - LOG_LEVEL=info
     volumes:
       # Separate volumes for databases and attachments
-      - ledger-db:/data/db
+      - ledger-workspaces:/data/workspaces
       - ledger-attachments:/data/attachments
     restart: unless-stopped
     healthcheck:
@@ -29,5 +29,5 @@ services:
       retries: 3
 
 volumes:
-  ledger-db:
+  ledger-workspaces:
   ledger-attachments:
