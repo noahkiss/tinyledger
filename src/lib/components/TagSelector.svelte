@@ -137,7 +137,7 @@
 				name="tag_{i}"
 				value={allocation.tagId}
 				onchange={(e) => updateTag(i, parseInt(e.currentTarget.value))}
-				class="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 			>
 				{#if availableTags.length === 0}
 					<option value="0" disabled>No tags available</option>
@@ -156,9 +156,9 @@
 					min="0"
 					max="100"
 					oninput={(e) => updatePercentage(i, parseInt(e.currentTarget.value) || 0)}
-					class="w-20 rounded-lg border border-gray-300 px-3 py-2 text-center focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+					class="w-20 rounded-lg border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 				/>
-				<span class="text-gray-500">%</span>
+				<span class="text-muted">%</span>
 			</div>
 
 			<button
@@ -173,7 +173,7 @@
 	{/each}
 
 	<div class="flex items-center justify-between">
-		<button type="button" onclick={addTag} class="text-sm text-blue-600 hover:text-blue-800">
+		<button type="button" onclick={addTag} class="text-sm text-primary hover:text-primary">
 			+ Add Tag
 		</button>
 
@@ -184,7 +184,7 @@
 					<button
 						type="button"
 						onclick={distributeRemaining}
-						class="ml-2 text-blue-600 hover:underline"
+						class="ml-2 text-primary hover:underline"
 					>
 						Add {remainingPercentage}% to last
 					</button>
@@ -199,19 +199,19 @@
 
 	<!-- Inline tag creation section -->
 	{#if !locked && onCreateTag}
-		<div class="mt-3 flex gap-2 border-t border-gray-200 pt-3">
+		<div class="mt-3 flex gap-2 border-t border-border pt-3">
 			<input
 				type="text"
 				bind:value={newTagName}
 				placeholder="Create new tag..."
 				onkeydown={handleCreateKeydown}
-				class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 			/>
 			<button
 				type="button"
 				onclick={handleCreateTag}
 				disabled={isCreating || !newTagName.trim()}
-				class="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+				class="rounded-lg bg-primary px-3 py-2 text-sm text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{isCreating ? '...' : 'Create'}
 			</button>
@@ -220,6 +220,6 @@
 			<p class="mt-1 text-sm text-red-600">{createError}</p>
 		{/if}
 	{:else if locked}
-		<p class="mt-2 text-xs text-gray-500">Tag creation is locked. Manage tags in settings.</p>
+		<p class="mt-2 text-xs text-muted">Tag creation is locked. Manage tags in settings.</p>
 	{/if}
 </div>

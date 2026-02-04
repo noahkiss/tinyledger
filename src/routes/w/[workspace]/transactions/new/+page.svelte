@@ -114,17 +114,17 @@
 	<div class="flex items-center gap-4">
 		<a
 			href="/w/{data.workspaceId}/transactions"
-			class="rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+			class="rounded-lg p-2 text-muted hover:bg-surface"
 			aria-label="Back to transactions"
 		>
 			<iconify-icon icon="solar:alt-arrow-left-linear" width="20" height="20"></iconify-icon>
 		</a>
-		<h2 class="text-2xl font-semibold text-gray-900">New {typeLabel} Transaction</h2>
+		<h2 class="text-2xl font-semibold text-fg">New {typeLabel} Transaction</h2>
 	</div>
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="rounded-lg bg-red-50 p-4 text-red-700">
+		<div class="rounded-lg bg-error/10 p-4 text-error">
 			<p class="font-medium">Error</p>
 			<p class="mt-1 text-sm">{form.error}</p>
 		</div>
@@ -141,14 +141,14 @@
 
 		<!-- Amount -->
 		<div>
-			<label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+			<label for="amount" class="block text-sm font-medium text-fg">Amount</label>
 			<div class="mt-1">
 				<CurrencyInput bind:value={amountCents} name="amount" id="amount" required class="w-full" />
 			</div>
 			{#if suggestedAmount !== null}
-				<p class="mt-1 text-xs text-gray-500">
+				<p class="mt-1 text-xs text-muted">
 					Last amount: ${(suggestedAmount / 100).toFixed(2)}
-					<button type="button" class="ml-1 text-blue-600 hover:underline" onclick={useSuggestedAmount}>
+					<button type="button" class="ml-1 text-primary hover:underline" onclick={useSuggestedAmount}>
 						Use this
 					</button>
 				</p>
@@ -157,7 +157,7 @@
 
 		<!-- Date -->
 		<div>
-			<label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+			<label for="date" class="block text-sm font-medium text-fg">Date</label>
 			<div class="mt-1">
 				<DateInput bind:value={dateValue} name="date" id="date" required class="w-full" />
 			</div>
@@ -165,7 +165,7 @@
 
 		<!-- Payee with autocomplete -->
 		<div>
-			<label for="payee" class="block text-sm font-medium text-gray-700">
+			<label for="payee" class="block text-sm font-medium text-fg">
 				{transactionType === 'income' ? 'Received from' : 'Paid to'}
 			</label>
 			<div class="mt-1">
@@ -180,9 +180,9 @@
 
 		<!-- Description -->
 		<div>
-			<label for="description" class="block text-sm font-medium text-gray-700">
+			<label for="description" class="block text-sm font-medium text-fg">
 				Description
-				<span class="font-normal text-gray-500">(optional)</span>
+				<span class="font-normal text-muted">(optional)</span>
 			</label>
 			<div class="mt-1">
 				<textarea
@@ -190,7 +190,7 @@
 					name="description"
 					bind:value={description}
 					rows="2"
-					class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 					placeholder="Add any notes about this transaction..."
 				></textarea>
 			</div>
@@ -198,7 +198,7 @@
 
 		<!-- Payment Method -->
 		<div>
-			<label class="block text-sm font-medium text-gray-700">Payment Method</label>
+			<label class="block text-sm font-medium text-fg">Payment Method</label>
 			<div class="mt-1">
 				<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
 			</div>
@@ -206,9 +206,9 @@
 
 		<!-- Tags -->
 		<div>
-			<label class="block text-sm font-medium text-gray-700">
+			<label class="block text-sm font-medium text-fg">
 				Tags
-				<span class="font-normal text-gray-500">(optional)</span>
+				<span class="font-normal text-muted">(optional)</span>
 			</label>
 			<div class="mt-1">
 				<TagSelector
@@ -223,9 +223,9 @@
 
 		<!-- Receipt Attachment -->
 		<div>
-			<label class="block text-sm font-medium text-gray-700">
+			<label class="block text-sm font-medium text-fg">
 				Receipt
-				<span class="font-normal text-gray-500">(optional)</span>
+				<span class="font-normal text-muted">(optional)</span>
 			</label>
 			<div class="mt-1">
 				<AttachmentUpload name="attachment" />

@@ -86,7 +86,7 @@
 		{value}
 		oninput={handleInput}
 		onblur={handleBlur}
-		class="rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 {className}"
+		class="rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary {className}"
 	/>
 	{#if showFutureWarning}
 		<p class="mt-1 text-sm text-amber-600">Warning: This date is more than 1 year in the future</p>

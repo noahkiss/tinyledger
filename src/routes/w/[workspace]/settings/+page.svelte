@@ -167,7 +167,7 @@
 		action="?/save"
 		enctype="multipart/form-data"
 		use:enhance
-		class="space-y-6 rounded-lg border border-gray-200 bg-white p-6"
+		class="space-y-6 rounded-lg border border-border bg-card p-6"
 	>
 		{#if form?.error}
 			<div class="rounded-lg bg-red-50 p-3 text-sm text-red-800">
@@ -192,7 +192,7 @@
 
 		<!-- Logo section -->
 		<div>
-			<label for="logo" class="block text-sm font-medium text-gray-700">Logo</label>
+			<label for="logo" class="block text-sm font-medium text-fg">Logo</label>
 			<div class="mt-2 flex items-center gap-4">
 				{#if logoPreviewUrl}
 					<img
@@ -215,9 +215,9 @@
 						name="logo"
 						accept="image/*"
 						onchange={handleLogoChange}
-						class="block w-full text-sm text-gray-500 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
+						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
 					/>
-					<p class="mt-1 text-xs text-gray-500">PNG, JPG, or GIF. Will be resized to 128x128.</p>
+					<p class="mt-1 text-xs text-muted">PNG, JPG, or GIF. Will be resized to 128x128.</p>
 				</div>
 			</div>
 		</div>
@@ -225,24 +225,24 @@
 		<!-- Basic info -->
 		<div class="grid gap-4 sm:grid-cols-2">
 			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Workspace Name</label>
+				<label for="name" class="block text-sm font-medium text-fg">Workspace Name</label>
 				<input
 					type="text"
 					id="name"
 					name="name"
 					value={data.settings.name}
 					required
-					class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 				/>
 			</div>
 
 			<div>
-				<label for="type" class="block text-sm font-medium text-gray-700">Workspace Type</label>
+				<label for="type" class="block text-sm font-medium text-fg">Workspace Type</label>
 				<select
 					id="type"
 					name="type"
 					required
-					class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 				>
 					<option value="sole_prop" selected={data.settings.type === 'sole_prop'}
 						>Sole Proprietor</option
@@ -256,44 +256,44 @@
 
 		<!-- Business details -->
 		<div>
-			<label for="businessName" class="block text-sm font-medium text-gray-700">Business Name</label>
+			<label for="businessName" class="block text-sm font-medium text-fg">Business Name</label>
 			<input
 				type="text"
 				id="businessName"
 				name="businessName"
 				value={data.settings.businessName ?? ''}
 				placeholder="Legal business name"
-				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 			/>
 		</div>
 
 		<div>
-			<label for="address" class="block text-sm font-medium text-gray-700">Business Address</label>
+			<label for="address" class="block text-sm font-medium text-fg">Business Address</label>
 			<textarea
 				id="address"
 				name="address"
 				rows="2"
 				placeholder="Street address, city, state, ZIP"
-				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 				>{data.settings.address ?? ''}</textarea
 			>
 		</div>
 
 		<div class="grid gap-4 sm:grid-cols-2">
 			<div>
-				<label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+				<label for="phone" class="block text-sm font-medium text-fg">Phone Number</label>
 				<input
 					type="tel"
 					id="phone"
 					name="phone"
 					value={data.settings.phone ?? ''}
 					placeholder="(555) 555-5555"
-					class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 				/>
 			</div>
 
 			<div>
-				<label for="foundedYear" class="block text-sm font-medium text-gray-700">Founded Year</label>
+				<label for="foundedYear" class="block text-sm font-medium text-fg">Founded Year</label>
 				<input
 					type="number"
 					id="foundedYear"
@@ -302,13 +302,13 @@
 					min="1800"
 					max={new Date().getFullYear()}
 					placeholder="2020"
-					class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 				/>
 			</div>
 		</div>
 
 		<div>
-			<label for="responsibleParty" class="block text-sm font-medium text-gray-700"
+			<label for="responsibleParty" class="block text-sm font-medium text-fg"
 				>Responsible Party</label
 			>
 			<input
@@ -317,23 +317,23 @@
 				name="responsibleParty"
 				value={data.settings.responsibleParty ?? ''}
 				placeholder="Owner/manager name"
-				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 			/>
 		</div>
 
 		<!-- Fiscal Year -->
-		<div class="rounded-lg border border-gray-100 bg-gray-50 p-4">
-			<label for="fiscalYearStartMonth" class="block text-sm font-medium text-gray-700"
+		<div class="rounded-lg border border-card-border bg-surface p-4">
+			<label for="fiscalYearStartMonth" class="block text-sm font-medium text-fg"
 				>Fiscal Year Start Month</label
 			>
-			<p class="mb-2 mt-1 text-xs text-gray-500">
+			<p class="mb-2 mt-1 text-xs text-muted">
 				Fiscal year runs from the selected month through the following year. Most businesses use
 				calendar year (January).
 			</p>
 			<select
 				id="fiscalYearStartMonth"
 				name="fiscalYearStartMonth"
-				class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
 			>
 				{#each months as month}
 					<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
@@ -345,21 +345,21 @@
 
 		<!-- Tax Configuration (only for sole_prop) -->
 		{#if data.settings.type === 'sole_prop'}
-			<div class="rounded-lg border border-gray-200 bg-white p-6">
-				<h3 class="text-lg font-medium text-gray-900">Tax Configuration</h3>
-				<p class="mt-1 text-sm text-gray-500">
+			<div class="rounded-lg border border-border bg-card p-6">
+				<h3 class="text-lg font-medium text-fg">Tax Configuration</h3>
+				<p class="mt-1 text-sm text-muted">
 					Configure your tax rates for estimated tax calculations. These settings help calculate quarterly estimated payments.
 				</p>
 
 				<div class="mt-6 space-y-6">
 					<!-- State Selection -->
 					<div>
-						<label for="state" class="block text-sm font-medium text-gray-700">State</label>
+						<label for="state" class="block text-sm font-medium text-fg">State</label>
 						<select
 							id="state"
 							name="state"
 							bind:value={selectedState}
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
 						>
 							{#each STATE_TAX_RATES as state}
 								<option value={state.code}>
@@ -367,7 +367,7 @@
 								</option>
 							{/each}
 						</select>
-						<p class="mt-1 text-xs text-gray-500">
+						<p class="mt-1 text-xs text-muted">
 							Select your state for default tax rate. Only flat-rate states are listed.
 						</p>
 					</div>
@@ -375,12 +375,12 @@
 					<!-- Federal Bracket -->
 					<div>
 						<div class="flex items-center justify-between">
-							<label for="federalBracketRate" class="block text-sm font-medium text-gray-700">
+							<label for="federalBracketRate" class="block text-sm font-medium text-fg">
 								Federal Tax Bracket
 							</label>
 							<button
 								type="button"
-								class="text-xs text-blue-600 hover:text-blue-800"
+								class="text-xs text-primary hover:text-primary"
 								onclick={() => (showFederalBracketHelp = !showFederalBracketHelp)}
 							>
 								{showFederalBracketHelp ? 'Hide help' : 'How to choose?'}
@@ -389,7 +389,7 @@
 						<select
 							id="federalBracketRate"
 							name="federalBracketRate"
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
 						>
 							<option value="">Select your bracket...</option>
 							{#each FEDERAL_BRACKETS_2026 as bracket}
@@ -403,22 +403,22 @@
 						</select>
 
 						{#if showFederalBracketHelp}
-							<div class="mt-3 rounded-lg border border-gray-100 bg-gray-50 p-4 text-sm">
-								<p class="font-medium text-gray-700">How to pick your bracket:</p>
-								<p class="mt-1 text-gray-600">
+							<div class="mt-3 rounded-lg border border-card-border bg-surface p-4 text-sm">
+								<p class="font-medium text-fg">How to pick your bracket:</p>
+								<p class="mt-1 text-muted">
 									Select the bracket that matches your expected <strong>taxable income</strong> after all deductions and credits.
 									This is typically your total income minus the standard deduction ($15,000 for single filers in 2026).
 								</p>
 								<table class="mt-3 w-full text-xs">
 									<thead>
-										<tr class="border-b border-gray-200">
-											<th class="pb-2 text-left font-medium text-gray-700">Rate</th>
-											<th class="pb-2 text-left font-medium text-gray-700">Taxable Income Range</th>
+										<tr class="border-b border-border">
+											<th class="pb-2 text-left font-medium text-fg">Rate</th>
+											<th class="pb-2 text-left font-medium text-fg">Taxable Income Range</th>
 										</tr>
 									</thead>
-									<tbody class="text-gray-600">
+									<tbody class="text-muted">
 										{#each FEDERAL_BRACKETS_2026 as bracket}
-											<tr class="border-b border-gray-100">
+											<tr class="border-b border-border">
 												<td class="py-1.5">{bracket.rateLabel}</td>
 												<td class="py-1.5">
 													${bracket.minIncome.toLocaleString()}
@@ -443,19 +443,19 @@
 								type="checkbox"
 								id="useCustomStateRate"
 								bind:checked={useCustomStateRate}
-								class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
 							/>
-							<label for="useCustomStateRate" class="text-sm font-medium text-gray-700">
+							<label for="useCustomStateRate" class="text-sm font-medium text-fg">
 								Use custom state rate
 							</label>
-							<span class="text-xs text-gray-500">
+							<span class="text-xs text-muted">
 								(Default: {currentStateRateLabel()})
 							</span>
 						</div>
 
 						{#if useCustomStateRate}
 							<div class="mt-3">
-								<label for="stateRateOverride" class="block text-sm font-medium text-gray-700">
+								<label for="stateRateOverride" class="block text-sm font-medium text-fg">
 									State Rate Override (%)
 								</label>
 								<input
@@ -464,7 +464,7 @@
 									name="stateRateOverride"
 									bind:value={stateRateOverrideInput}
 									placeholder={(currentStateRate() * 100).toFixed(2)}
-									class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-32"
+									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
 								/>
 								{#if stateRateWarning()}
 									<div class="mt-2 rounded-lg bg-yellow-50 border border-yellow-200 p-2 text-sm text-yellow-800">
@@ -477,7 +477,7 @@
 
 					<!-- Local EIT Rate -->
 					<div>
-						<label for="localEitRate" class="block text-sm font-medium text-gray-700">
+						<label for="localEitRate" class="block text-sm font-medium text-fg">
 							Local Earned Income Tax Rate (%)
 						</label>
 						<input
@@ -486,16 +486,16 @@
 							name="localEitRate"
 							bind:value={localEitRateInput}
 							placeholder="e.g., 1.0"
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-32"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
 						/>
-						<p class="mt-1 text-xs text-gray-500">
+						<p class="mt-1 text-xs text-muted">
 							Municipal earned income tax rate, if applicable.
 							{#if selectedState === 'PA'}
 								<a
 									href="https://apps.dced.pa.gov/munstats-public/ReportInformation2.aspx?report=EitWithCollector_Dyn_Excel&type=R"
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-blue-600 hover:text-blue-800 underline"
+									class="text-primary hover:text-primary underline"
 								>
 									Find your PA local rate
 								</a>
@@ -510,38 +510,38 @@
 
 					<!-- Tax Notes -->
 					<div>
-						<label for="taxNotes" class="block text-sm font-medium text-gray-700">Tax Notes</label>
+						<label for="taxNotes" class="block text-sm font-medium text-fg">Tax Notes</label>
 						<textarea
 							id="taxNotes"
 							name="taxNotes"
 							rows="2"
 							placeholder="Notes for your reference (e.g., CPA contact info, reminders)"
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 							>{data.settings.taxNotes ?? ''}</textarea
 						>
 					</div>
 
 					<!-- Tax Forms & Resources (expandable) -->
-					<div class="rounded-lg border border-gray-200">
+					<div class="rounded-lg border border-border">
 						<button
 							type="button"
-							class="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50"
+							class="flex w-full items-center justify-between p-4 text-left hover:bg-surface"
 							onclick={() => (showTaxForms = !showTaxForms)}
 						>
-							<span class="font-medium text-gray-900">Tax Forms & Resources</span>
+							<span class="font-medium text-fg">Tax Forms & Resources</span>
 							<iconify-icon
 								icon="solar:alt-arrow-down-linear"
-								class="text-gray-400 transition-transform {showTaxForms ? 'rotate-180' : ''}"
+								class="text-muted transition-transform {showTaxForms ? 'rotate-180' : ''}"
 								width="20"
 								height="20"
 							></iconify-icon>
 						</button>
 
 						{#if showTaxForms}
-							<div class="border-t border-gray-200 bg-gray-50 p-4">
+							<div class="border-t border-border bg-surface p-4">
 								<!-- Federal Forms -->
 								<div>
-									<h4 class="text-sm font-medium text-gray-700">Federal Forms</h4>
+									<h4 class="text-sm font-medium text-fg">Federal Forms</h4>
 									<div class="mt-2 space-y-3">
 										{#each federalForms() as form}
 											<div class="text-sm">
@@ -551,17 +551,17 @@
 															href={form.irsLink}
 															target="_blank"
 															rel="noopener noreferrer"
-															class="font-medium text-blue-600 hover:text-blue-800 underline"
+															class="font-medium text-primary hover:text-primary underline"
 														>
 															{form.name}
 														</a>
-														<span class="text-gray-600"> - {form.description}</span>
+														<span class="text-muted"> - {form.description}</span>
 													</div>
 												</div>
-												<div class="mt-1 flex items-center gap-3 text-xs text-gray-500">
+												<div class="mt-1 flex items-center gap-3 text-xs text-muted">
 													<span>Due: {form.dueDate}</span>
 													{#if form.filingThreshold}
-														<span class="text-gray-400">|</span>
+														<span class="text-muted">|</span>
 														<span>{form.filingThreshold}</span>
 													{/if}
 												</div>
@@ -572,8 +572,8 @@
 
 								<!-- State Forms (if any) -->
 								{#if stateForms().length > 0}
-									<div class="mt-4 border-t border-gray-200 pt-4">
-										<h4 class="text-sm font-medium text-gray-700">State Forms ({selectedState})</h4>
+									<div class="mt-4 border-t border-border pt-4">
+										<h4 class="text-sm font-medium text-fg">State Forms ({selectedState})</h4>
 										<div class="mt-2 space-y-3">
 											{#each stateForms() as form}
 												<div class="text-sm">
@@ -583,17 +583,17 @@
 																href={form.stateLink}
 																target="_blank"
 																rel="noopener noreferrer"
-																class="font-medium text-blue-600 hover:text-blue-800 underline"
+																class="font-medium text-primary hover:text-primary underline"
 															>
 																{form.name}
 															</a>
-															<span class="text-gray-600"> - {form.description}</span>
+															<span class="text-muted"> - {form.description}</span>
 														</div>
 													</div>
-													<div class="mt-1 flex items-center gap-3 text-xs text-gray-500">
+													<div class="mt-1 flex items-center gap-3 text-xs text-muted">
 														<span>Due: {form.dueDate}</span>
 														{#if form.filingThreshold}
-															<span class="text-gray-400">|</span>
+															<span class="text-muted">|</span>
 															<span>{form.filingThreshold}</span>
 														{/if}
 													</div>
@@ -603,7 +603,7 @@
 									</div>
 								{/if}
 
-								<p class="mt-4 text-xs text-gray-500 italic">
+								<p class="mt-4 text-xs text-muted italic">
 									These are common forms. Your situation may require additional forms. Consult a tax professional for advice.
 								</p>
 							</div>
@@ -616,13 +616,13 @@
 		<div class="flex justify-end gap-3 pt-4">
 			<a
 				href="/w/{data.workspaceId}/transactions"
-				class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+				class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 			>
 				Cancel
 			</a>
 			<button
 				type="submit"
-				class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 active:bg-blue-800"
+				class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:bg-primary/80"
 			>
 				Save Settings
 			</button>
@@ -630,14 +630,14 @@
 	</form>
 
 	<!-- Tags Management Link -->
-	<div class="mt-6 rounded-lg border border-gray-200 bg-white p-6">
-		<h3 class="text-lg font-medium text-gray-900">Tags & Categories</h3>
-		<p class="mt-1 text-sm text-gray-500">
+	<div class="mt-6 rounded-lg border border-border bg-card p-6">
+		<h3 class="text-lg font-medium text-fg">Tags & Categories</h3>
+		<p class="mt-1 text-sm text-muted">
 			Manage expense categories, rename or merge tags, and control tag creation.
 		</p>
 		<a
 			href="/w/{data.workspaceId}/settings/tags"
-			class="mt-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
 		>
 			Manage Tags
 			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
@@ -645,14 +645,14 @@
 	</div>
 
 	<!-- Recurring Transactions Link -->
-	<div class="mt-6 rounded-lg border border-gray-200 bg-white p-6">
-		<h3 class="text-lg font-medium text-gray-900">Recurring Transactions</h3>
-		<p class="mt-1 text-sm text-gray-500">
+	<div class="mt-6 rounded-lg border border-border bg-card p-6">
+		<h3 class="text-lg font-medium text-fg">Recurring Transactions</h3>
+		<p class="mt-1 text-sm text-muted">
 			Set up recurring templates for predictable income and expenses like rent, subscriptions, or regular client payments.
 		</p>
 		<a
 			href="/w/{data.workspaceId}/recurring"
-			class="mt-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
 		>
 			Manage Recurring
 			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
@@ -660,9 +660,9 @@
 	</div>
 
 	<!-- Data Import & Export Section -->
-	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
-		<h2 class="text-lg font-semibold text-gray-900 mb-4">Data Import & Export</h2>
-		<p class="text-sm text-gray-600 mb-4">
+	<section class="mt-6 rounded-xl border border-border bg-card p-6">
+		<h2 class="text-lg font-semibold text-fg mb-4">Data Import & Export</h2>
+		<p class="text-sm text-muted mb-4">
 			Import historical data or export for backup and migration.
 		</p>
 
@@ -670,29 +670,29 @@
 			<!-- Import -->
 			<div class="flex items-center justify-between py-2">
 				<div>
-					<h3 class="text-sm font-medium text-gray-900">Import Transactions</h3>
-					<p class="text-xs text-gray-500">Import transactions from CSV file</p>
+					<h3 class="text-sm font-medium text-fg">Import Transactions</h3>
+					<p class="text-xs text-muted">Import transactions from CSV file</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/import"
-					class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+					class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 					Import CSV
 				</a>
 			</div>
 
-			<div class="border-t border-gray-200 pt-3"></div>
+			<div class="border-t border-border pt-3"></div>
 
 			<!-- CSV Export -->
 			<div class="flex items-center justify-between py-2">
 				<div>
-					<h3 class="text-sm font-medium text-gray-900">Transactions CSV</h3>
-					<p class="text-xs text-gray-500">All transactions in spreadsheet format</p>
+					<h3 class="text-sm font-medium text-fg">Transactions CSV</h3>
+					<p class="text-xs text-muted">All transactions in spreadsheet format</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/csv"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
 					download
 				>
 					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
@@ -701,14 +701,14 @@
 			</div>
 
 			<!-- Full Export -->
-			<div class="flex items-center justify-between py-2 border-t border-gray-100">
+			<div class="flex items-center justify-between py-2 border-t border-border">
 				<div>
-					<h3 class="text-sm font-medium text-gray-900">Full Backup (ZIP)</h3>
-					<p class="text-xs text-gray-500">All data including receipts and attachments</p>
+					<h3 class="text-sm font-medium text-fg">Full Backup (ZIP)</h3>
+					<p class="text-xs text-muted">All data including receipts and attachments</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/full"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
 					download
 				>
 					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
@@ -719,28 +719,28 @@
 	</section>
 
 	<!-- App Installation -->
-	<section class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
-		<h2 class="text-lg font-semibold text-gray-900 mb-4">App Installation</h2>
-		<p class="text-sm text-gray-600 mb-4">
+	<section class="mt-6 rounded-xl border border-border bg-card p-6">
+		<h2 class="text-lg font-semibold text-fg mb-4">App Installation</h2>
+		<p class="text-sm text-muted mb-4">
 			Install Ledger to your device's home screen for quick access and a native app experience.
 		</p>
 
-		<div class="rounded-lg bg-gray-50 border border-gray-100 p-4">
-			<h3 class="text-sm font-medium text-gray-900">iOS (iPhone/iPad)</h3>
-			<ol class="mt-2 text-sm text-gray-600 list-decimal list-inside space-y-1">
+		<div class="rounded-lg bg-surface border border-card-border p-4">
+			<h3 class="text-sm font-medium text-fg">iOS (iPhone/iPad)</h3>
+			<ol class="mt-2 text-sm text-muted list-decimal list-inside space-y-1">
 				<li>Open this page in Safari</li>
 				<li>Tap the Share button (square with arrow)</li>
 				<li>Scroll down and tap "Add to Home Screen"</li>
 				<li>Tap "Add" to confirm</li>
 			</ol>
-			<p class="mt-3 text-xs text-gray-500">
+			<p class="mt-3 text-xs text-muted">
 				The app will open in standalone mode without the Safari address bar.
 			</p>
 		</div>
 
-		<div class="mt-4 rounded-lg bg-gray-50 border border-gray-100 p-4">
-			<h3 class="text-sm font-medium text-gray-900">Android / Desktop Chrome</h3>
-			<ol class="mt-2 text-sm text-gray-600 list-decimal list-inside space-y-1">
+		<div class="mt-4 rounded-lg bg-surface border border-card-border p-4">
+			<h3 class="text-sm font-medium text-fg">Android / Desktop Chrome</h3>
+			<ol class="mt-2 text-sm text-muted list-decimal list-inside space-y-1">
 				<li>Open the browser menu (three dots)</li>
 				<li>Tap "Install app" or "Add to Home Screen"</li>
 				<li>Follow the prompts to install</li>

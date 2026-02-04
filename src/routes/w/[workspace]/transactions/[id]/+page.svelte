@@ -146,19 +146,19 @@
 
 <div class="mx-auto max-w-2xl p-6">
 	<!-- Back link -->
-	<a href="/w/{workspace}/transactions" class="mb-4 inline-flex items-center text-blue-600 hover:text-blue-800">
+	<a href="/w/{workspace}/transactions" class="mb-4 inline-flex items-center text-primary hover:text-primary">
 		<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 		Back to Transactions
 	</a>
 
 	<!-- Voided banner -->
 	{#if isVoided}
-		<div class="mb-4 rounded-lg bg-amber-50 border border-amber-200 p-4">
+		<div class="mb-4 rounded-lg bg-warning/10 border border-warning/30 p-4">
 			<div class="flex items-center gap-2">
-				<iconify-icon icon="solar:danger-triangle-bold" class="text-amber-600" width="20" height="20"></iconify-icon>
+				<iconify-icon icon="solar:danger-triangle-bold" class="text-warning" width="20" height="20"></iconify-icon>
 				<div>
-					<p class="font-medium text-amber-800">This transaction is voided</p>
-					<p class="text-sm text-amber-600">Voided on {formatTimestamp(data.transaction.voidedAt!)}</p>
+					<p class="font-medium text-warning">This transaction is voided</p>
+					<p class="text-sm text-warning/80">Voided on {formatTimestamp(data.transaction.voidedAt!)}</p>
 				</div>
 			</div>
 		</div>
@@ -166,14 +166,14 @@
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-4 text-red-800">
+		<div class="mb-4 rounded-lg bg-error/10 border border-error/30 p-4 text-error">
 			{form.error}
 		</div>
 	{/if}
 
 	<!-- Success display -->
 	{#if form?.success}
-		<div class="mb-4 rounded-lg bg-green-50 border border-green-200 p-4 text-green-800">
+		<div class="mb-4 rounded-lg bg-success/10 border border-success/30 p-4 text-success">
 			{#if form.action === 'voided'}
 				Transaction has been voided.
 			{:else if form.action === 'unvoided'}
@@ -186,7 +186,7 @@
 		</div>
 	{/if}
 
-	<div class="rounded-lg bg-white shadow-sm border border-gray-200" class:opacity-75={isVoided && !editMode}>
+	<div class="rounded-lg bg-card shadow-sm border border-border" class:opacity-75={isVoided && !editMode}>
 		{#if editMode}
 			<!-- Edit Mode -->
 			<form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance={() => {
@@ -195,41 +195,41 @@
 					editMode = false;
 				};
 			}}>
-				<div class="border-b border-gray-200 p-6">
-					<h1 class="text-xl font-semibold text-gray-900">Edit Transaction</h1>
+				<div class="border-b border-border p-6">
+					<h1 class="text-xl font-semibold text-fg">Edit Transaction</h1>
 				</div>
 
 				<div class="space-y-6 p-6">
 					<!-- Type -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+						<label class="block text-sm font-medium text-fg mb-2">Type</label>
 						<div class="flex gap-4">
 							<label class="flex items-center gap-2 cursor-pointer">
-								<input type="radio" name="type" value="income" bind:group={editType} class="text-green-600 focus:ring-green-500" />
-								<span class="text-green-600 font-medium">Income</span>
+								<input type="radio" name="type" value="income" bind:group={editType} class="text-success focus:ring-success" />
+								<span class="text-success font-medium">Income</span>
 							</label>
 							<label class="flex items-center gap-2 cursor-pointer">
-								<input type="radio" name="type" value="expense" bind:group={editType} class="text-red-600 focus:ring-red-500" />
-								<span class="text-red-600 font-medium">Expense</span>
+								<input type="radio" name="type" value="expense" bind:group={editType} class="text-error focus:ring-error" />
+								<span class="text-error font-medium">Expense</span>
 							</label>
 						</div>
 					</div>
 
 					<!-- Amount -->
 					<div>
-						<label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+						<label for="amount" class="block text-sm font-medium text-fg mb-2">Amount</label>
 						<CurrencyInput bind:value={editAmount} name="amount" id="amount" required class="w-full" />
 					</div>
 
 					<!-- Date -->
 					<div>
-						<label for="date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+						<label for="date" class="block text-sm font-medium text-fg mb-2">Date</label>
 						<DateInput bind:value={editDate} name="date" id="date" required class="w-full" />
 					</div>
 
 					<!-- Payee with autocomplete -->
 					<div>
-						<label for="payee" class="block text-sm font-medium text-gray-700 mb-2">Payee</label>
+						<label for="payee" class="block text-sm font-medium text-fg mb-2">Payee</label>
 						<PayeeAutocomplete
 							payees={data.payeeHistory}
 							bind:value={editPayee}
@@ -239,25 +239,25 @@
 
 					<!-- Description -->
 					<div>
-						<label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description (optional)</label>
+						<label for="description" class="block text-sm font-medium text-fg mb-2">Description (optional)</label>
 						<textarea
 							id="description"
 							name="description"
 							bind:value={editDescription}
 							rows="2"
-							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 						></textarea>
 					</div>
 
 					<!-- Payment Method -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
+						<label class="block text-sm font-medium text-fg mb-2">Payment Method</label>
 						<PaymentMethodSelect bind:value={editPaymentMethod} bind:checkNumber={editCheckNumber} />
 					</div>
 
 					<!-- Tags -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+						<label class="block text-sm font-medium text-fg mb-2">Tags</label>
 						<TagSelector
 							{availableTags}
 							bind:allocations={editAllocations}
@@ -268,9 +268,9 @@
 
 					<!-- Receipt Attachment -->
 					<div>
-						<label class="block text-sm font-medium text-gray-700 mb-2">
+						<label class="block text-sm font-medium text-fg mb-2">
 							Receipt
-							<span class="font-normal text-gray-500">(optional)</span>
+							<span class="font-normal text-muted">(optional)</span>
 						</label>
 						<input type="hidden" name="removeAttachment" value={removeAttachment.toString()} />
 						<AttachmentUpload
@@ -283,18 +283,18 @@
 				</div>
 
 				<!-- Edit Actions -->
-				<div class="flex justify-end gap-3 border-t border-gray-200 p-6">
+				<div class="flex justify-end gap-3 border-t border-border p-6">
 					<button
 						type="button"
 						onclick={cancelEdit}
-						class="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border px-4 py-2 text-fg hover:bg-surface"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
 						disabled={!tagsValid}
-						class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Save Changes
 					</button>
@@ -302,22 +302,22 @@
 			</form>
 		{:else}
 			<!-- View Mode -->
-			<div class="border-b border-gray-200 p-6">
+			<div class="border-b border-border p-6">
 				<div class="flex items-start justify-between">
 					<div>
 						<span
 							class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium
-							{data.transaction.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}"
+							{data.transaction.type === 'income' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}"
 						>
 							{data.transaction.type === 'income' ? 'Income' : 'Expense'}
 						</span>
-						<h1 class="mt-2 text-2xl font-bold text-gray-900">
+						<h1 class="mt-2 text-2xl font-bold text-fg">
 							{formatCurrency(data.transaction.amountCents)}
 						</h1>
 					</div>
 					<a
 						href="/w/{workspace}/transactions/{data.transaction.publicId}/history"
-						class="text-sm text-blue-600 hover:text-blue-800"
+						class="text-sm text-primary hover:text-primary"
 					>
 						View History
 					</a>
@@ -327,31 +327,31 @@
 			<div class="space-y-4 p-6">
 				<!-- Payee -->
 				<div>
-					<dt class="text-sm font-medium text-gray-500">Payee</dt>
-					<dd class="mt-1 text-gray-900">{data.transaction.payee}</dd>
+					<dt class="text-sm font-medium text-muted">Payee</dt>
+					<dd class="mt-1 text-fg">{data.transaction.payee}</dd>
 				</div>
 
 				<!-- Date -->
 				<div>
-					<dt class="text-sm font-medium text-gray-500">Date</dt>
-					<dd class="mt-1 text-gray-900">{formatDate(data.transaction.date)}</dd>
+					<dt class="text-sm font-medium text-muted">Date</dt>
+					<dd class="mt-1 text-fg">{formatDate(data.transaction.date)}</dd>
 				</div>
 
 				<!-- Description -->
 				{#if data.transaction.description}
 					<div>
-						<dt class="text-sm font-medium text-gray-500">Description</dt>
-						<dd class="mt-1 text-gray-900">{data.transaction.description}</dd>
+						<dt class="text-sm font-medium text-muted">Description</dt>
+						<dd class="mt-1 text-fg">{data.transaction.description}</dd>
 					</div>
 				{/if}
 
 				<!-- Payment Method -->
 				<div>
-					<dt class="text-sm font-medium text-gray-500">Payment Method</dt>
-					<dd class="mt-1 text-gray-900 capitalize">
+					<dt class="text-sm font-medium text-muted">Payment Method</dt>
+					<dd class="mt-1 text-fg capitalize">
 						{data.transaction.paymentMethod}
 						{#if data.transaction.checkNumber}
-							<span class="text-gray-500">#{data.transaction.checkNumber}</span>
+							<span class="text-muted">#{data.transaction.checkNumber}</span>
 						{/if}
 					</dd>
 				</div>
@@ -359,12 +359,12 @@
 				<!-- Tags -->
 				{#if data.tagAllocations.length > 0}
 					<div>
-						<dt class="text-sm font-medium text-gray-500">Tags</dt>
+						<dt class="text-sm font-medium text-muted">Tags</dt>
 						<dd class="mt-2 flex flex-wrap gap-2">
 							{#each data.tagAllocations as allocation}
-								<span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">
+								<span class="inline-flex items-center rounded-full bg-surface px-3 py-1 text-sm text-fg">
 									{allocation.tagName}
-									<span class="ml-1 text-gray-500">({allocation.percentage}%)</span>
+									<span class="ml-1 text-muted">({allocation.percentage}%)</span>
 								</span>
 							{/each}
 						</dd>
@@ -374,7 +374,7 @@
 				<!-- Attachment -->
 				{#if data.attachment}
 					<div>
-						<dt class="text-sm font-medium text-gray-500">Receipt</dt>
+						<dt class="text-sm font-medium text-muted">Receipt</dt>
 						<dd class="mt-2">
 							<img
 								src={data.attachment.url}
@@ -386,13 +386,13 @@
 									href={data.attachment.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-blue-600 hover:text-blue-800"
+									class="text-primary hover:text-primary"
 								>
 									View full size
 								</a>
 								<a
 									href="{data.attachment.downloadUrl}&exportName={encodeURIComponent(getExportFilename())}"
-									class="text-blue-600 hover:text-blue-800"
+									class="text-primary hover:text-primary"
 								>
 									Download
 								</a>
@@ -402,7 +402,7 @@
 				{/if}
 
 				<!-- Timestamps -->
-				<div class="border-t border-gray-100 pt-4 text-sm text-gray-500">
+				<div class="border-t border-card-border pt-4 text-sm text-muted">
 					<p>Created: {formatTimestamp(data.transaction.createdAt)}</p>
 					{#if data.transaction.updatedAt !== data.transaction.createdAt}
 						<p>Updated: {formatTimestamp(data.transaction.updatedAt)}</p>
@@ -411,11 +411,11 @@
 			</div>
 
 			<!-- View Actions -->
-			<div class="flex flex-wrap gap-3 border-t border-gray-200 p-6">
+			<div class="flex flex-wrap gap-3 border-t border-border p-6">
 				{#if !isVoided}
 					<button
 						onclick={enterEditMode}
-						class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary/90"
 					>
 						Edit
 					</button>

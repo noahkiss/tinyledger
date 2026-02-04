@@ -114,11 +114,11 @@
 <div class="space-y-4">
 	<!-- Header -->
 	<div class="flex items-center justify-between">
-		<h3 class="text-lg font-semibold text-gray-900">Quick Entry</h3>
+		<h3 class="text-lg font-semibold text-fg">Quick Entry</h3>
 		<button
 			type="button"
 			onclick={onClose}
-			class="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+			class="rounded-lg p-2 text-muted hover:bg-surface"
 			aria-label="Close"
 		>
 			<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
@@ -173,7 +173,7 @@
 
 		<!-- Amount -->
 		<div>
-			<label for="quick-amount" class="block text-sm font-medium text-gray-700">Amount</label>
+			<label for="quick-amount" class="block text-sm font-medium text-fg">Amount</label>
 			<div class="mt-1">
 				<CurrencyInput
 					bind:value={amountCents}
@@ -187,7 +187,7 @@
 
 		<!-- Payee with simple autocomplete -->
 		<div class="relative">
-			<label for="quick-payee" class="block text-sm font-medium text-gray-700">
+			<label for="quick-payee" class="block text-sm font-medium text-fg">
 				{type === 'income' ? 'Received from' : 'Paid to'}
 			</label>
 			<div class="relative mt-1">
@@ -201,22 +201,22 @@
 					onblur={handlePayeeBlur}
 					autocomplete="off"
 					placeholder={type === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
-					class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 				/>
 
 				{#if showPayeeDropdown && filteredPayees.length > 0}
 					<ul
-						class="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg"
+						class="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-border bg-card shadow-lg"
 					>
 						{#each filteredPayees as p (p.payee)}
 							<li>
 								<button
 									type="button"
-									class="w-full px-3 py-2 text-left hover:bg-gray-100"
+									class="w-full px-3 py-2 text-left hover:bg-surface"
 									onmousedown={() => handlePayeeSelect(p)}
 								>
-									<div class="font-medium text-gray-900">{p.payee}</div>
-									<div class="text-xs text-gray-500">
+									<div class="font-medium text-fg">{p.payee}</div>
+									<div class="text-xs text-muted">
 										{p.count}x | ${(p.lastAmount / 100).toFixed(2)}
 									</div>
 								</button>
@@ -229,7 +229,7 @@
 
 		<!-- Date -->
 		<div>
-			<label for="quick-date" class="block text-sm font-medium text-gray-700">Date</label>
+			<label for="quick-date" class="block text-sm font-medium text-fg">Date</label>
 			<div class="mt-1">
 				<DateInput bind:value={dateValue} name="date" id="quick-date" required class="w-full" />
 			</div>
@@ -238,13 +238,13 @@
 		<!-- Tag (simplified - single tag only) -->
 		{#if availableTags.length > 0}
 			<div>
-				<label for="quick-tag" class="block text-sm font-medium text-gray-700">
-					Tag <span class="font-normal text-gray-500">(optional)</span>
+				<label for="quick-tag" class="block text-sm font-medium text-fg">
+					Tag <span class="font-normal text-muted">(optional)</span>
 				</label>
 				<select
 					id="quick-tag"
 					bind:value={selectedTagId}
-					class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+					class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 				>
 					<option value={null}>No tag</option>
 					{#each availableTags as tag (tag.id)}
@@ -260,8 +260,8 @@
 
 		<!-- Description -->
 		<div>
-			<label for="quick-description" class="block text-sm font-medium text-gray-700">
-				Note <span class="font-normal text-gray-500">(optional)</span>
+			<label for="quick-description" class="block text-sm font-medium text-fg">
+				Note <span class="font-normal text-muted">(optional)</span>
 			</label>
 			<input
 				type="text"
@@ -269,7 +269,7 @@
 				name="description"
 				bind:value={description}
 				placeholder="Brief note..."
-				class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 			/>
 		</div>
 

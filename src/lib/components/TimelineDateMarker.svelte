@@ -20,24 +20,24 @@
 			case 'expense':
 				return 'bg-red-500';
 			case 'mixed':
-				return 'bg-blue-500';
+				return 'bg-primary';
 			case 'tax':
 				return 'bg-yellow-500';
 			case 'pending':
-				return 'bg-gray-300';
+				return 'bg-overlay';
 			default:
-				return 'bg-gray-400';
+				return 'bg-overlay';
 		}
 	});
 </script>
 
 <div class="absolute -left-3 flex items-center" data-component="timeline-date-marker">
 	<!-- Circle marker on the timeline -->
-	<span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
+	<span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-border bg-card">
 		<span class="h-2 w-2 rounded-full {dotColorClass()}"></span>
 	</span>
 </div>
 
-<time datetime={date} class="mb-2 block text-sm font-medium text-gray-600">
+<time datetime={date} class="mb-2 block text-sm font-medium text-muted">
 	{formattedDate()}
 </time>

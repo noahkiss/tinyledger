@@ -45,23 +45,23 @@
 <div>
 	<div class="mb-6 flex items-center justify-between">
 		<div>
-			<h2 class="text-xl font-semibold text-gray-800">Manage Tags</h2>
-			<p class="mt-1 text-sm text-gray-500">{data.tags.length} tags</p>
+			<h2 class="text-xl font-semibold text-fg">Manage Tags</h2>
+			<p class="mt-1 text-sm text-muted">{data.tags.length} tags</p>
 		</div>
 
 		<!-- Lock toggle -->
 		<form method="POST" action="?/toggleLock" use:enhance>
 			<label class="flex cursor-pointer items-center gap-3">
-				<span class="text-sm text-gray-700">Lock Tags</span>
+				<span class="text-sm text-fg">Lock Tags</span>
 				<button
 					type="submit"
 					class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors {data.tagsLocked
-						? 'bg-blue-600'
-						: 'bg-gray-200'}"
+						? 'bg-primary'
+						: 'bg-surface-alt'}"
 					aria-pressed={data.tagsLocked}
 				>
 					<span
-						class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform {data.tagsLocked
+						class="inline-block h-4 w-4 transform rounded-full bg-card transition-transform {data.tagsLocked
 							? 'translate-x-6'
 							: 'translate-x-1'}"
 					></span>
@@ -71,7 +71,7 @@
 	</div>
 
 	{#if data.tagsLocked}
-		<div class="mb-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-800">
+		<div class="mb-4 rounded-lg bg-primary/10 p-3 text-sm text-primary">
 			Tags are locked. New tags cannot be created during transaction entry.
 		</div>
 	{/if}
@@ -99,10 +99,10 @@
 	<!-- Tags list -->
 	<div class="space-y-2">
 		{#each data.tags as tag (tag.id)}
-			<div class="flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-4">
+			<div class="flex items-center gap-4 rounded-lg border border-border bg-card p-4">
 				<div class="flex-1">
-					<div class="font-medium text-gray-900">{tag.name}</div>
-					<div class="text-sm text-gray-500">
+					<div class="font-medium text-fg">{tag.name}</div>
+					<div class="text-sm text-muted">
 						Used in {tag.usageCount}
 						{tag.usageCount === 1 ? 'transaction' : 'transactions'}
 					</div>
@@ -112,7 +112,7 @@
 					<button
 						type="button"
 						onclick={() => openRenameDialog(tag.id, tag.name)}
-						class="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200"
+						class="rounded-lg bg-surface px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface-alt"
 					>
 						Rename
 					</button>
@@ -142,7 +142,7 @@
 	</div>
 
 	{#if data.tags.length === 0}
-		<div class="mt-8 text-center text-gray-500">
+		<div class="mt-8 text-center text-muted">
 			<p>No tags yet. Tags will be created when you add transactions.</p>
 		</div>
 	{/if}
@@ -159,12 +159,12 @@
 		tabindex="-1"
 	>
 		<div
-			class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+			class="w-full max-w-md rounded-lg bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}
 			role="document"
 		>
-			<h3 class="mb-4 text-lg font-semibold text-gray-900">Rename Tag</h3>
+			<h3 class="mb-4 text-lg font-semibold text-fg">Rename Tag</h3>
 
 			<form
 				method="POST"
@@ -179,14 +179,14 @@
 				<input type="hidden" name="id" value={renameTagId} />
 
 				<div class="mb-4">
-					<label for="newName" class="block text-sm font-medium text-gray-700">New Name</label>
+					<label for="newName" class="block text-sm font-medium text-fg">New Name</label>
 					<input
 						type="text"
 						id="newName"
 						name="newName"
 						bind:value={renameValue}
 						required
-						class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 					/>
 				</div>
 
@@ -194,13 +194,13 @@
 					<button
 						type="button"
 						onclick={() => closeRenameDialog()}
-						class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+						class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 					>
 						Rename
 					</button>
@@ -222,14 +222,14 @@
 		tabindex="-1"
 	>
 		<div
-			class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+			class="w-full max-w-md rounded-lg bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}
 			role="document"
 		>
-			<h3 class="mb-4 text-lg font-semibold text-gray-900">Merge Tag</h3>
+			<h3 class="mb-4 text-lg font-semibold text-fg">Merge Tag</h3>
 
-			<p class="mb-4 text-gray-600">
+			<p class="mb-4 text-muted">
 				Merge "<span class="font-medium">{sourceTag?.name}</span>" into another tag.
 				{#if sourceTag && sourceTag.usageCount > 0}
 					All {sourceTag.usageCount}
@@ -250,13 +250,13 @@
 				<input type="hidden" name="sourceId" value={mergeSourceId} />
 
 				<div class="mb-4">
-					<label for="targetId" class="block text-sm font-medium text-gray-700">Merge Into</label>
+					<label for="targetId" class="block text-sm font-medium text-fg">Merge Into</label>
 					<select
 						id="targetId"
 						name="targetId"
 						bind:value={mergeTargetId}
 						required
-						class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
 					>
 						<option value="">Select target tag...</option>
 						{#each data.tags.filter((t) => t.id !== mergeSourceId) as tag}
@@ -273,7 +273,7 @@
 					<button
 						type="button"
 						onclick={() => closeMergeDialog()}
-						class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Cancel
 					</button>

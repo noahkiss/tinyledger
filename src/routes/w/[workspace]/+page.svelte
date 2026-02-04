@@ -8,5 +8,5 @@
 </svelte:head>
 
 <div class="text-center py-8">
-	<p class="text-gray-600">Redirecting to transactions...</p>
+	<p class="text-muted">Redirecting to transactions...</p>
 </div>

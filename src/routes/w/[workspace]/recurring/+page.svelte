@@ -137,10 +137,10 @@
 <div class="space-y-6">
 	<!-- Header -->
 	<div class="flex items-center justify-between">
-		<h2 class="text-2xl font-semibold text-gray-900">Recurring Transactions</h2>
+		<h2 class="text-2xl font-semibold text-fg">Recurring Transactions</h2>
 		<button
 			type="button"
-			class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+			class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 			onclick={() => {
 				resetForm();
 				showCreateForm = !showCreateForm;
@@ -167,8 +167,8 @@
 
 	<!-- Create/Edit Form -->
 	{#if showCreateForm}
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
-			<h3 class="mb-4 text-lg font-medium text-gray-900">
+		<div class="rounded-lg border border-border bg-card p-6">
+			<h3 class="mb-4 text-lg font-medium text-fg">
 				{editingTemplate ? 'Edit Recurring Template' : 'Create Recurring Template'}
 			</h3>
 
@@ -191,14 +191,14 @@
 
 				<!-- Type Selection -->
 				<div>
-					<label class="block text-sm font-medium text-gray-700">Type</label>
+					<label class="block text-sm font-medium text-fg">Type</label>
 					<div class="mt-2 flex gap-2">
 						<button
 							type="button"
 							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'income'
 								? 'bg-green-600 text-white'
-								: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+								: 'bg-surface text-fg hover:bg-surface-alt'}"
 							onclick={() => (transactionType = 'income')}
 						>
 							Income
@@ -208,7 +208,7 @@
 							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'expense'
 								? 'bg-red-600 text-white'
-								: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+								: 'bg-surface text-fg hover:bg-surface-alt'}"
 							onclick={() => (transactionType = 'expense')}
 						>
 							Expense
@@ -219,7 +219,7 @@
 
 				<!-- Amount -->
 				<div>
-					<label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+					<label for="amount" class="block text-sm font-medium text-fg">Amount</label>
 					<div class="mt-1">
 						<CurrencyInput bind:value={amountCents} name="amount" id="amount" required class="w-full" />
 					</div>
@@ -227,7 +227,7 @@
 
 				<!-- Payee -->
 				<div>
-					<label for="payee" class="block text-sm font-medium text-gray-700">
+					<label for="payee" class="block text-sm font-medium text-fg">
 						{transactionType === 'income' ? 'Received from' : 'Paid to'}
 					</label>
 					<div class="mt-1">
@@ -238,16 +238,16 @@
 							bind:value={payee}
 							required
 							placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Rent'}
-							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 						/>
 					</div>
 				</div>
 
 				<!-- Description -->
 				<div>
-					<label for="description" class="block text-sm font-medium text-gray-700">
+					<label for="description" class="block text-sm font-medium text-fg">
 						Description
-						<span class="font-normal text-gray-500">(optional)</span>
+						<span class="font-normal text-muted">(optional)</span>
 					</label>
 					<div class="mt-1">
 						<textarea
@@ -255,7 +255,7 @@
 							name="description"
 							bind:value={description}
 							rows="2"
-							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 							placeholder="Add any notes..."
 						></textarea>
 					</div>
@@ -263,7 +263,7 @@
 
 				<!-- Payment Method -->
 				<div>
-					<label class="block text-sm font-medium text-gray-700">Payment Method</label>
+					<label class="block text-sm font-medium text-fg">Payment Method</label>
 					<div class="mt-1">
 						<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
 					</div>
@@ -271,9 +271,9 @@
 
 				<!-- Tags -->
 				<div>
-					<label class="block text-sm font-medium text-gray-700">
+					<label class="block text-sm font-medium text-fg">
 						Tags
-						<span class="font-normal text-gray-500">(optional)</span>
+						<span class="font-normal text-muted">(optional)</span>
 					</label>
 					<div class="mt-1">
 						<TagSelector
@@ -286,14 +286,14 @@
 				</div>
 
 				<!-- Pattern Selection -->
-				<div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
-					<label for="frequency" class="block text-sm font-medium text-gray-700">Recurrence Pattern</label>
+				<div class="rounded-lg border border-border bg-surface p-4">
+					<label for="frequency" class="block text-sm font-medium text-fg">Recurrence Pattern</label>
 					<div class="mt-2">
 						<select
 							id="frequency"
 							name="frequency"
 							bind:value={frequency}
-							class="rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							class="rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 						>
 							<option value="daily">Daily</option>
 							<option value="weekly">Weekly</option>
@@ -307,19 +307,19 @@
 
 					{#if frequency === 'custom'}
 						<div class="mt-3 flex items-center gap-2">
-							<span class="text-sm text-gray-600">Every</span>
+							<span class="text-sm text-muted">Every</span>
 							<input
 								type="number"
 								name="interval"
 								bind:value={interval}
 								min="1"
 								max="365"
-								class="w-16 rounded-lg border border-gray-300 px-2 py-1 text-center focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 							/>
 							<select
 								name="customUnit"
 								bind:value={customUnit}
-								class="rounded-lg border border-gray-300 px-3 py-1 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="rounded-lg border border-input-border bg-input px-3 py-1 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 							>
 								<option value="day">day(s)</option>
 								<option value="week">week(s)</option>
@@ -332,14 +332,14 @@
 				<!-- Date Range -->
 				<div class="grid gap-4 sm:grid-cols-2">
 					<div>
-						<label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+						<label for="startDate" class="block text-sm font-medium text-fg">Start Date</label>
 						<input
 							type="date"
 							id="startDate"
 							name="startDate"
 							bind:value={startDate}
 							required
-							class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+							class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 						/>
 					</div>
 
@@ -350,9 +350,9 @@
 								id="hasEndDate"
 								name="hasEndDate"
 								bind:checked={hasEndDate}
-								class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
 							/>
-							<label for="hasEndDate" class="text-sm font-medium text-gray-700">Set end date</label>
+							<label for="hasEndDate" class="text-sm font-medium text-fg">Set end date</label>
 						</div>
 						{#if hasEndDate}
 							<input
@@ -361,7 +361,7 @@
 								name="endDate"
 								bind:value={endDate}
 								min={startDate}
-								class="mt-2 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+								class="mt-2 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 							/>
 						{/if}
 					</div>
@@ -371,7 +371,7 @@
 				<div class="flex gap-3 pt-4">
 					<button
 						type="button"
-						class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 						onclick={() => {
 							showCreateForm = false;
 							resetForm();
@@ -381,7 +381,7 @@
 					</button>
 					<button
 						type="submit"
-						class="rounded-lg bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700"
+						class="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 					>
 						{editingTemplate ? 'Update Template' : 'Create Recurring'}
 					</button>
@@ -393,9 +393,9 @@
 	<!-- Active Templates -->
 	{#if activeTemplates.length > 0}
 		<div class="space-y-3">
-			<h3 class="text-lg font-medium text-gray-900">Active Recurring ({activeTemplates.length})</h3>
+			<h3 class="text-lg font-medium text-fg">Active Recurring ({activeTemplates.length})</h3>
 			{#each activeTemplates as template (template.id)}
-				<div class="rounded-lg border border-gray-200 bg-white p-4">
+				<div class="rounded-lg border border-border bg-card p-4">
 					<div class="flex items-start justify-between">
 						<div class="flex items-start gap-3">
 							<!-- Type indicator -->
@@ -414,32 +414,32 @@
 
 							<div>
 								<div class="flex items-center gap-2">
-									<span class="font-medium text-gray-900">{template.payee}</span>
+									<span class="font-medium text-fg">{template.payee}</span>
 									<span class="text-lg font-semibold {template.type === 'income' ? 'text-green-600' : 'text-red-600'}">
 										{template.type === 'income' ? '+' : '-'}{formatCurrency(template.amountCents)}
 									</span>
 								</div>
-								<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+								<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
 									<span>{template.patternDescription}</span>
-									<span class="text-gray-300">|</span>
+									<span class="text-muted">|</span>
 									<span>Started {formatDate(template.startDate)}</span>
 									{#if template.endDate}
-										<span class="text-gray-300">|</span>
+										<span class="text-muted">|</span>
 										<span>Ends {formatDate(template.endDate)}</span>
 									{/if}
 								</div>
 								{#if template.nextOccurrence}
-									<div class="mt-1 text-sm text-blue-600">
+									<div class="mt-1 text-sm text-primary">
 										Next: {formatDate(template.nextOccurrence)}
 									</div>
 								{/if}
 								{#if template.tags.length > 0}
 									<div class="mt-2 flex flex-wrap gap-1">
 										{#each template.tags as tag}
-											<span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+											<span class="rounded-full bg-surface px-2 py-0.5 text-xs text-muted">
 												{tag.tagName}
 												{#if tag.percentage < 100}
-													<span class="text-gray-400">({tag.percentage}%)</span>
+													<span class="text-muted">({tag.percentage}%)</span>
 												{/if}
 											</span>
 										{/each}
@@ -452,7 +452,7 @@
 						<div class="flex items-center gap-1">
 							<button
 								type="button"
-								class="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+								class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
 								onclick={() => editTemplate(template)}
 								title="Edit"
 							>
@@ -462,7 +462,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-gray-400 hover:bg-yellow-50 hover:text-yellow-600"
+									class="rounded-lg p-2 text-muted hover:bg-yellow-50 hover:text-yellow-600"
 									title="Deactivate"
 								>
 									<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
@@ -472,7 +472,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
+									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
@@ -484,15 +484,15 @@
 			{/each}
 		</div>
 	{:else if !showCreateForm}
-		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center">
-			<iconify-icon icon="solar:restart-bold" class="mx-auto text-gray-400" width="48" height="48"></iconify-icon>
-			<p class="mt-4 text-gray-600">No recurring transactions set up</p>
-			<p class="mt-1 text-sm text-gray-500">
+		<div class="rounded-lg border border-border bg-card p-8 text-center">
+			<iconify-icon icon="solar:restart-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
+			<p class="mt-4 text-muted">No recurring transactions set up</p>
+			<p class="mt-1 text-sm text-muted">
 				Create a recurring template for expenses like rent, subscriptions, or regular client payments.
 			</p>
 			<button
 				type="button"
-				class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+				class="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				onclick={() => {
 					resetForm();
 					showCreateForm = true;
@@ -506,19 +506,19 @@
 	<!-- Inactive Templates -->
 	{#if inactiveTemplates.length > 0}
 		<div class="mt-8 space-y-3">
-			<h3 class="text-lg font-medium text-gray-500">Inactive ({inactiveTemplates.length})</h3>
+			<h3 class="text-lg font-medium text-muted">Inactive ({inactiveTemplates.length})</h3>
 			{#each inactiveTemplates as template (template.id)}
-				<div class="rounded-lg border border-gray-200 bg-gray-50 p-4 opacity-60">
+				<div class="rounded-lg border border-border bg-surface p-4 opacity-60">
 					<div class="flex items-start justify-between">
 						<div>
 							<div class="flex items-center gap-2">
-								<span class="font-medium text-gray-600">{template.payee}</span>
-								<span class="text-gray-500">
+								<span class="font-medium text-muted">{template.payee}</span>
+								<span class="text-muted">
 									{template.type === 'income' ? '+' : '-'}{formatCurrency(template.amountCents)}
 								</span>
-								<span class="rounded bg-gray-200 px-1.5 py-0.5 text-xs text-gray-600">Inactive</span>
+								<span class="rounded bg-surface-alt px-1.5 py-0.5 text-xs text-muted">Inactive</span>
 							</div>
-							<div class="mt-1 text-sm text-gray-400">
+							<div class="mt-1 text-sm text-muted">
 								{template.patternDescription}
 							</div>
 						</div>
@@ -527,7 +527,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-gray-400 hover:bg-green-50 hover:text-green-600"
+									class="rounded-lg p-2 text-muted hover:bg-green-50 hover:text-green-600"
 									title="Reactivate"
 								>
 									<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
@@ -537,7 +537,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
+									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>

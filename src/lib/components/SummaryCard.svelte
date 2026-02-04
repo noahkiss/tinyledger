@@ -30,23 +30,23 @@
 	// Determine percent change styling
 	const percentClass = $derived(
 		percentChange === null
-			? 'text-gray-500 bg-gray-100'
+			? 'text-muted bg-surface'
 			: percentChange >= 0
-				? 'text-green-700 bg-green-100'
-				: 'text-red-700 bg-red-100'
+				? 'text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-900/50'
+				: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50'
 	);
 </script>
 
 {#if variant === 'hero'}
 	<!-- Hero card: larger, more prominent -->
 	<div
-		class="rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 shadow-sm"
+		class="rounded-xl border border-card-border bg-gradient-to-br from-card to-surface p-6 shadow-sm"
 	>
 		<div class="flex items-start justify-between">
 			<div>
-				<span class="text-sm font-medium text-gray-500">{label}</span>
+				<span class="text-sm font-medium text-muted">{label}</span>
 				<div class="mt-2 flex items-baseline gap-2">
-					<span class="text-3xl font-bold {value >= 0 ? 'text-gray-900' : 'text-red-600'}">
+					<span class="text-3xl font-bold {value >= 0 ? 'text-fg' : 'text-red-600 dark:text-red-400'}">
 						{valuePrefix}{formatCurrency(value)}
 					</span>
 					{#if percentDisplay}
@@ -65,9 +65,9 @@
 	</div>
 {:else}
 	<!-- Default card: compact supporting card -->
-	<div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+	<div class="rounded-xl border border-card-border bg-card p-4 shadow-sm">
 		<div class="flex items-center justify-between">
-			<span class="text-sm font-medium text-gray-500">{label}</span>
+			<span class="text-sm font-medium text-muted">{label}</span>
 			{#if percentDisplay}
 				<span class="rounded-full px-2 py-0.5 text-xs font-medium {percentClass}">
 					{percentDisplay}
@@ -75,7 +75,7 @@
 			{/if}
 		</div>
 		<div class="mt-2">
-			<span class="text-xl font-semibold text-gray-900">
+			<span class="text-xl font-semibold text-fg">
 				{valuePrefix}{formatCurrency(value)}
 			</span>
 		</div>

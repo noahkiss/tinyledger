@@ -26,7 +26,7 @@
 {#if data.needsConfiguration}
 	<!-- Configuration required state -->
 	<div class="space-y-6">
-		<h1 class="text-2xl font-bold text-gray-900">Tax Estimates</h1>
+		<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
 		<div class="rounded-xl border border-yellow-200 bg-yellow-50 p-6">
 			<div class="flex items-start gap-4">
@@ -55,10 +55,10 @@
 	<div class="space-y-6">
 		<!-- Header with fiscal year picker -->
 		<div class="flex items-center justify-between">
-			<h1 class="text-2xl font-bold text-gray-900">Tax Estimates</h1>
+			<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
 			<select
-				class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 				value={data.fiscalYear}
 				onchange={handleFYChange}
 			>
@@ -69,25 +69,25 @@
 		</div>
 
 		<!-- Disclaimer banner -->
-		<div class="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3">
-			<p class="text-sm text-blue-800">
+		<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
+			<p class="text-sm text-primary">
 				<strong>Note:</strong> These estimates are for planning purposes only. Consult a tax professional
 				for actual filing.
 			</p>
 		</div>
 
 		<!-- Net income summary -->
-		<div class="rounded-lg border border-gray-200 bg-white p-4">
+		<div class="rounded-lg border border-border bg-card p-4">
 			<div class="flex items-center justify-between">
-				<span class="text-sm text-gray-600">Net Income (YTD)</span>
-				<span class="text-lg font-semibold text-gray-900">{formatCurrency(data.netIncomeCents)}</span
+				<span class="text-sm text-muted">Net Income (YTD)</span>
+				<span class="text-lg font-semibold text-fg">{formatCurrency(data.netIncomeCents)}</span
 				>
 			</div>
 		</div>
 
 		<!-- Tax breakdown cards -->
 		<section>
-			<h2 class="mb-4 text-lg font-semibold text-gray-900">Tax Breakdown</h2>
+			<h2 class="mb-4 text-lg font-semibold text-fg">Tax Breakdown</h2>
 
 			<div class="grid gap-4 md:grid-cols-2">
 				<!-- Self-Employment Tax -->
@@ -183,15 +183,15 @@
 		</section>
 
 		<!-- Filing Tracking Link -->
-		<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+		<div class="rounded-lg border border-primary/30 bg-primary/10 p-4">
 			<div class="flex items-center justify-between">
 				<div>
-					<h3 class="font-medium text-blue-900">Track Your Filings</h3>
-					<p class="text-sm text-blue-700">View deadlines and mark filings complete in the Filings tab.</p>
+					<h3 class="font-medium text-primary">Track Your Filings</h3>
+					<p class="text-sm text-primary">View deadlines and mark filings complete in the Filings tab.</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/filings?fy={data.fiscalYear}"
-					class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+					class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					View Filings
 				</a>

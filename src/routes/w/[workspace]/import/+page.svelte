@@ -148,7 +148,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-4xl">
-	<h2 class="mb-6 text-xl font-semibold text-gray-800">Import Transactions</h2>
+	<h2 class="mb-6 text-xl font-semibold text-fg">Import Transactions</h2>
 
 	<!-- Progress Steps -->
 	<div class="mb-8">
@@ -164,19 +164,19 @@
 				<div class="flex items-center gap-2">
 					<div
 						class="flex h-8 w-8 items-center justify-center rounded-full {isActive
-							? 'bg-blue-600 text-white'
+							? 'bg-primary text-white'
 							: isPast
 								? 'bg-green-500 text-white'
-								: 'bg-gray-200 text-gray-500'}"
+								: 'bg-surface-alt text-muted'}"
 					>
 						<iconify-icon icon={s.icon} width="16" height="16"></iconify-icon>
 					</div>
-					<span class="text-sm font-medium {isActive ? 'text-blue-600' : isPast ? 'text-green-600' : 'text-gray-500'}">
+					<span class="text-sm font-medium {isActive ? 'text-primary' : isPast ? 'text-green-600' : 'text-muted'}">
 						{s.label}
 					</span>
 				</div>
 				{#if s.id !== 'results'}
-					<div class="h-px w-8 bg-gray-300"></div>
+					<div class="h-px w-8 bg-border"></div>
 				{/if}
 			{/each}
 		</nav>
@@ -190,15 +190,15 @@
 
 	<!-- Step 1: Upload -->
 	{#if step === 'upload'}
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
-			<h3 class="mb-4 text-lg font-medium text-gray-900">Upload CSV File</h3>
-			<p class="mb-6 text-sm text-gray-600">
+		<div class="rounded-lg border border-border bg-card p-6">
+			<h3 class="mb-4 text-lg font-medium text-fg">Upload CSV File</h3>
+			<p class="mb-6 text-sm text-muted">
 				Upload a CSV file containing your transaction data. The file should have headers in the first row.
 			</p>
 
 			<form method="POST" action="?/preview" enctype="multipart/form-data" use:enhance>
 				<div class="mb-6">
-					<label for="file" class="block text-sm font-medium text-gray-700 mb-2">
+					<label for="file" class="block text-sm font-medium text-fg mb-2">
 						Select CSV File
 					</label>
 					<input
@@ -207,15 +207,15 @@
 						name="file"
 						accept=".csv,text/csv"
 						required
-						class="block w-full text-sm text-gray-500 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-blue-700 hover:file:bg-blue-100"
+						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
 					/>
-					<p class="mt-2 text-xs text-gray-500">Maximum file size: 5MB</p>
+					<p class="mt-2 text-xs text-muted">Maximum file size: 5MB</p>
 				</div>
 
 				<div class="flex justify-end">
 					<button
 						type="submit"
-						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						Upload & Preview
@@ -224,13 +224,13 @@
 			</form>
 
 			<!-- Format Help -->
-			<div class="mt-8 rounded-lg border border-gray-100 bg-gray-50 p-4">
-				<h4 class="text-sm font-medium text-gray-700 mb-2">Expected CSV Format</h4>
-				<p class="text-xs text-gray-600 mb-3">
+			<div class="mt-8 rounded-lg border border-card-border bg-surface p-4">
+				<h4 class="text-sm font-medium text-fg mb-2">Expected CSV Format</h4>
+				<p class="text-xs text-muted mb-3">
 					Your CSV should have headers for Date, Type (income/expense), Payee, and Amount.
 					Optional columns: Description, Tags (comma-separated), Payment Method, Check Number.
 				</p>
-				<div class="text-xs font-mono bg-white p-3 rounded border border-gray-200 overflow-x-auto">
+				<div class="text-xs font-mono bg-card p-3 rounded border border-border overflow-x-auto">
 					<pre>Date,Type,Payee,Amount,Description,Tags
 2026-01-15,expense,Office Depot,125.50,Printer paper and ink,Office Supplies
 2026-01-16,income,Client ABC,1500.00,Website development,Consulting</pre>
@@ -241,9 +241,9 @@
 
 	<!-- Step 2: Column Mapping -->
 	{#if step === 'mapping' && previewData}
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
-			<h3 class="mb-4 text-lg font-medium text-gray-900">Map Columns</h3>
-			<p class="mb-6 text-sm text-gray-600">
+		<div class="rounded-lg border border-border bg-card p-6">
+			<h3 class="mb-4 text-lg font-medium text-fg">Map Columns</h3>
+			<p class="mb-6 text-sm text-muted">
 				Map your CSV columns to transaction fields. We've auto-detected some mappings based on column names.
 			</p>
 
@@ -254,14 +254,14 @@
 				<div class="grid gap-4 sm:grid-cols-2">
 					<!-- Date -->
 					<div>
-						<label for="map-date" class="block text-sm font-medium text-gray-700">
+						<label for="map-date" class="block text-sm font-medium text-fg">
 							Date <span class="text-red-500">*</span>
 						</label>
 						<select
 							id="map-date"
 							bind:value={mapping.date}
 							required
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">Select column...</option>
 							{#each previewData.headers as header}
@@ -272,14 +272,14 @@
 
 					<!-- Type -->
 					<div>
-						<label for="map-type" class="block text-sm font-medium text-gray-700">
+						<label for="map-type" class="block text-sm font-medium text-fg">
 							Type (income/expense) <span class="text-red-500">*</span>
 						</label>
 						<select
 							id="map-type"
 							bind:value={mapping.type}
 							required
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">Select column...</option>
 							{#each previewData.headers as header}
@@ -290,14 +290,14 @@
 
 					<!-- Payee -->
 					<div>
-						<label for="map-payee" class="block text-sm font-medium text-gray-700">
+						<label for="map-payee" class="block text-sm font-medium text-fg">
 							Payee <span class="text-red-500">*</span>
 						</label>
 						<select
 							id="map-payee"
 							bind:value={mapping.payee}
 							required
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">Select column...</option>
 							{#each previewData.headers as header}
@@ -308,14 +308,14 @@
 
 					<!-- Amount -->
 					<div>
-						<label for="map-amount" class="block text-sm font-medium text-gray-700">
+						<label for="map-amount" class="block text-sm font-medium text-fg">
 							Amount <span class="text-red-500">*</span>
 						</label>
 						<select
 							id="map-amount"
 							bind:value={mapping.amount}
 							required
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">Select column...</option>
 							{#each previewData.headers as header}
@@ -326,13 +326,13 @@
 
 					<!-- Description (optional) -->
 					<div>
-						<label for="map-description" class="block text-sm font-medium text-gray-700">
-							Description <span class="text-gray-400">(optional)</span>
+						<label for="map-description" class="block text-sm font-medium text-fg">
+							Description <span class="text-muted">(optional)</span>
 						</label>
 						<select
 							id="map-description"
 							bind:value={mapping.description}
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">None</option>
 							{#each previewData.headers as header}
@@ -343,13 +343,13 @@
 
 					<!-- Tags (optional) -->
 					<div>
-						<label for="map-tags" class="block text-sm font-medium text-gray-700">
-							Tags <span class="text-gray-400">(optional)</span>
+						<label for="map-tags" class="block text-sm font-medium text-fg">
+							Tags <span class="text-muted">(optional)</span>
 						</label>
 						<select
 							id="map-tags"
 							bind:value={mapping.tags}
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">None</option>
 							{#each previewData.headers as header}
@@ -360,13 +360,13 @@
 
 					<!-- Payment Method (optional) -->
 					<div>
-						<label for="map-payment" class="block text-sm font-medium text-gray-700">
-							Payment Method <span class="text-gray-400">(optional)</span>
+						<label for="map-payment" class="block text-sm font-medium text-fg">
+							Payment Method <span class="text-muted">(optional)</span>
 						</label>
 						<select
 							id="map-payment"
 							bind:value={mapping.paymentMethod}
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">None (default: card)</option>
 							{#each previewData.headers as header}
@@ -377,13 +377,13 @@
 
 					<!-- Check Number (optional) -->
 					<div>
-						<label for="map-check" class="block text-sm font-medium text-gray-700">
-							Check Number <span class="text-gray-400">(optional)</span>
+						<label for="map-check" class="block text-sm font-medium text-fg">
+							Check Number <span class="text-muted">(optional)</span>
 						</label>
 						<select
 							id="map-check"
 							bind:value={mapping.checkNumber}
-							class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
 						>
 							<option value="">None</option>
 							{#each previewData.headers as header}
@@ -395,30 +395,30 @@
 
 				<!-- Preview of mapped data -->
 				<div class="mt-6">
-					<h4 class="text-sm font-medium text-gray-700 mb-2">Sample Data Preview</h4>
-					<div class="overflow-x-auto rounded-lg border border-gray-200">
-						<table class="min-w-full divide-y divide-gray-200 text-sm">
-							<thead class="bg-gray-50">
+					<h4 class="text-sm font-medium text-fg mb-2">Sample Data Preview</h4>
+					<div class="overflow-x-auto rounded-lg border border-border">
+						<table class="min-w-full divide-y divide-border text-sm">
+							<thead class="bg-surface">
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Row</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Row</th>
 									{#each previewData.headers as header}
-										<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">{header}</th>
+										<th class="px-3 py-2 text-left text-xs font-medium text-muted">{header}</th>
 									{/each}
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-gray-200 bg-white">
+							<tbody class="divide-y divide-border bg-card">
 								{#each previewData.preview.slice(0, 5) as row}
 									<tr>
-										<td class="px-3 py-2 text-gray-400">{row.rowNumber}</td>
+										<td class="px-3 py-2 text-muted">{row.rowNumber}</td>
 										{#each previewData.headers as header}
-											<td class="px-3 py-2 text-gray-900">{row.data[header] || '-'}</td>
+											<td class="px-3 py-2 text-fg">{row.data[header] || '-'}</td>
 										{/each}
 									</tr>
 								{/each}
 							</tbody>
 						</table>
 					</div>
-					<p class="mt-2 text-xs text-gray-500">
+					<p class="mt-2 text-xs text-muted">
 						Showing {Math.min(5, previewData.preview.length)} of {previewData.totalRows} rows
 					</p>
 				</div>
@@ -427,14 +427,14 @@
 					<button
 						type="button"
 						onclick={reset}
-						class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Start Over
 					</button>
 					<button
 						type="submit"
 						disabled={!requiredMappingsSet}
-						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Validate & Preview
 						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
@@ -446,22 +446,22 @@
 
 	<!-- Step 3: Preview & Validation -->
 	{#if step === 'preview' && validationResult}
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
-			<h3 class="mb-4 text-lg font-medium text-gray-900">Validation Results</h3>
+		<div class="rounded-lg border border-border bg-card p-6">
+			<h3 class="mb-4 text-lg font-medium text-fg">Validation Results</h3>
 
 			<!-- Summary Stats -->
 			<div class="mb-6 grid grid-cols-3 gap-4">
-				<div class="rounded-lg bg-gray-50 p-4">
-					<div class="text-2xl font-bold text-gray-900">{validationResult.valid.length + validationResult.invalid.length}</div>
-					<div class="text-sm text-gray-600">Total Rows</div>
+				<div class="rounded-lg bg-surface p-4">
+					<div class="text-2xl font-bold text-fg">{validationResult.valid.length + validationResult.invalid.length}</div>
+					<div class="text-sm text-muted">Total Rows</div>
 				</div>
 				<div class="rounded-lg bg-green-50 p-4">
 					<div class="text-2xl font-bold text-green-700">{validationResult.valid.length}</div>
 					<div class="text-sm text-green-600">Valid</div>
 				</div>
-				<div class="rounded-lg {validationResult.invalid.length > 0 ? 'bg-red-50' : 'bg-gray-50'} p-4">
-					<div class="text-2xl font-bold {validationResult.invalid.length > 0 ? 'text-red-700' : 'text-gray-400'}">{validationResult.invalid.length}</div>
-					<div class="text-sm {validationResult.invalid.length > 0 ? 'text-red-600' : 'text-gray-500'}">Invalid (will skip)</div>
+				<div class="rounded-lg {validationResult.invalid.length > 0 ? 'bg-red-50' : 'bg-surface'} p-4">
+					<div class="text-2xl font-bold {validationResult.invalid.length > 0 ? 'text-red-700' : 'text-muted'}">{validationResult.invalid.length}</div>
+					<div class="text-sm {validationResult.invalid.length > 0 ? 'text-red-600' : 'text-muted'}">Invalid (will skip)</div>
 				</div>
 			</div>
 
@@ -477,8 +477,8 @@
 
 					<div class="space-y-3">
 						{#each validationResult.unknownTags as tag}
-							<div class="flex items-center gap-4 rounded-lg bg-white p-3 border border-amber-100">
-								<span class="font-medium text-gray-900 min-w-24">{tag}</span>
+							<div class="flex items-center gap-4 rounded-lg bg-card p-3 border border-amber-100">
+								<span class="font-medium text-fg min-w-24">{tag}</span>
 								<div class="flex items-center gap-2">
 									<label class="inline-flex items-center">
 										<input
@@ -486,9 +486,9 @@
 											name="tag-{tag}"
 											value="create"
 											bind:group={tagActions[tag]}
-											class="h-4 w-4 text-blue-600 border-gray-300"
+											class="h-4 w-4 text-primary border-input-border"
 										/>
-										<span class="ml-2 text-sm text-gray-700">Create new</span>
+										<span class="ml-2 text-sm text-fg">Create new</span>
 									</label>
 									<label class="inline-flex items-center ml-4">
 										<input
@@ -496,14 +496,14 @@
 											name="tag-{tag}"
 											value="map"
 											bind:group={tagActions[tag]}
-											class="h-4 w-4 text-blue-600 border-gray-300"
+											class="h-4 w-4 text-primary border-input-border"
 										/>
-										<span class="ml-2 text-sm text-gray-700">Map to:</span>
+										<span class="ml-2 text-sm text-fg">Map to:</span>
 									</label>
 									{#if tagActions[tag] === 'map'}
 										<select
 											bind:value={tagMappings[tag]}
-											class="ml-2 rounded-lg border border-gray-300 px-2 py-1 text-sm"
+											class="ml-2 rounded-lg border border-input-border bg-input px-2 py-1 text-sm text-fg"
 										>
 											<option value="">Select...</option>
 											{#each data.tags as existingTag}
@@ -521,7 +521,7 @@
 			<!-- Invalid Rows -->
 			{#if validationResult.invalid.length > 0}
 				<div class="mb-6">
-					<h4 class="text-sm font-medium text-gray-700 mb-2">Invalid Rows (will be skipped)</h4>
+					<h4 class="text-sm font-medium text-fg mb-2">Invalid Rows (will be skipped)</h4>
 					<div class="max-h-48 overflow-y-auto rounded-lg border border-red-200">
 						<table class="min-w-full divide-y divide-red-100 text-sm">
 							<thead class="bg-red-50 sticky top-0">
@@ -530,7 +530,7 @@
 									<th class="px-3 py-2 text-left text-xs font-medium text-red-700">Errors</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-red-100 bg-white">
+							<tbody class="divide-y divide-red-100 bg-card">
 								{#each validationResult.invalid as row}
 									<tr>
 										<td class="px-3 py-2 text-red-600">{row.rowNumber}</td>
@@ -546,39 +546,39 @@
 			<!-- Valid Rows Preview -->
 			{#if validationResult.valid.length > 0}
 				<div class="mb-6">
-					<h4 class="text-sm font-medium text-gray-700 mb-2">Valid Transactions Preview</h4>
-					<div class="overflow-x-auto rounded-lg border border-gray-200">
-						<table class="min-w-full divide-y divide-gray-200 text-sm">
-							<thead class="bg-gray-50">
+					<h4 class="text-sm font-medium text-fg mb-2">Valid Transactions Preview</h4>
+					<div class="overflow-x-auto rounded-lg border border-border">
+						<table class="min-w-full divide-y divide-border text-sm">
+							<thead class="bg-surface">
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Date</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Type</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Payee</th>
-									<th class="px-3 py-2 text-right text-xs font-medium text-gray-500">Amount</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Tags</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Date</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Type</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Payee</th>
+									<th class="px-3 py-2 text-right text-xs font-medium text-muted">Amount</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Tags</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-gray-200 bg-white">
+							<tbody class="divide-y divide-border bg-card">
 								{#each validationResult.valid.slice(0, 10) as tx}
 									<tr>
-										<td class="px-3 py-2 text-gray-900">{tx.date}</td>
+										<td class="px-3 py-2 text-fg">{tx.date}</td>
 										<td class="px-3 py-2">
 											<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium {tx.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
 												{tx.type}
 											</span>
 										</td>
-										<td class="px-3 py-2 text-gray-900">{tx.payee}</td>
-										<td class="px-3 py-2 text-right text-gray-900">
+										<td class="px-3 py-2 text-fg">{tx.payee}</td>
+										<td class="px-3 py-2 text-right text-fg">
 											${(tx.amountCents / 100).toFixed(2)}
 										</td>
-										<td class="px-3 py-2 text-gray-500">{tx.tags.join(', ') || '-'}</td>
+										<td class="px-3 py-2 text-muted">{tx.tags.join(', ') || '-'}</td>
 									</tr>
 								{/each}
 							</tbody>
 						</table>
 					</div>
 					{#if validationResult.valid.length > 10}
-						<p class="mt-2 text-xs text-gray-500">
+						<p class="mt-2 text-xs text-muted">
 							Showing 10 of {validationResult.valid.length} valid transactions
 						</p>
 					{/if}
@@ -596,14 +596,14 @@
 					<button
 						type="button"
 						onclick={() => (step = 'mapping')}
-						class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Back to Mapping
 					</button>
 					<button
 						type="submit"
 						disabled={validationResult.valid.length === 0 || !allTagsResolved()}
-						class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						Import {validationResult.valid.length} Transactions
@@ -615,13 +615,13 @@
 
 	<!-- Step 4: Results -->
 	{#if step === 'results' && importResult}
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
+		<div class="rounded-lg border border-border bg-card p-6">
 			<div class="text-center mb-6">
 				<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
 					<iconify-icon icon="solar:check-circle-bold" class="text-green-600" width="32" height="32"></iconify-icon>
 				</div>
-				<h3 class="text-xl font-semibold text-gray-900">Import Complete</h3>
-				<p class="mt-2 text-gray-600">
+				<h3 class="text-xl font-semibold text-fg">Import Complete</h3>
+				<p class="mt-2 text-muted">
 					Successfully imported {importResult.imported} transaction{importResult.imported !== 1 ? 's' : ''}.
 				</p>
 			</div>
@@ -632,9 +632,9 @@
 					<div class="text-3xl font-bold text-green-700">{importResult.imported}</div>
 					<div class="text-sm text-green-600">Imported</div>
 				</div>
-				<div class="rounded-lg {importResult.skipped > 0 ? 'bg-amber-50' : 'bg-gray-50'} p-4 text-center">
-					<div class="text-3xl font-bold {importResult.skipped > 0 ? 'text-amber-700' : 'text-gray-400'}">{importResult.skipped}</div>
-					<div class="text-sm {importResult.skipped > 0 ? 'text-amber-600' : 'text-gray-500'}">Skipped</div>
+				<div class="rounded-lg {importResult.skipped > 0 ? 'bg-amber-50' : 'bg-surface'} p-4 text-center">
+					<div class="text-3xl font-bold {importResult.skipped > 0 ? 'text-amber-700' : 'text-muted'}">{importResult.skipped}</div>
+					<div class="text-sm {importResult.skipped > 0 ? 'text-amber-600' : 'text-muted'}">Skipped</div>
 				</div>
 			</div>
 
@@ -648,14 +648,14 @@
 						<table class="min-w-full text-sm">
 							<thead>
 								<tr>
-									<th class="px-2 py-1 text-left font-medium text-gray-700">Row</th>
-									<th class="px-2 py-1 text-left font-medium text-gray-700">Errors</th>
+									<th class="px-2 py-1 text-left font-medium text-fg">Row</th>
+									<th class="px-2 py-1 text-left font-medium text-fg">Errors</th>
 								</tr>
 							</thead>
 							<tbody>
 								{#each importResult.skippedRows as row}
 									<tr>
-										<td class="px-2 py-1 text-gray-600">{row.rowNumber}</td>
+										<td class="px-2 py-1 text-muted">{row.rowNumber}</td>
 										<td class="px-2 py-1 text-red-600">{row.errors.join('; ')}</td>
 									</tr>
 								{/each}
@@ -670,13 +670,13 @@
 				<button
 					type="button"
 					onclick={reset}
-					class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 				>
 					Import Another
 				</button>
 				<a
 					href="../transactions"
-					class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+					class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					View Transactions
 					<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>

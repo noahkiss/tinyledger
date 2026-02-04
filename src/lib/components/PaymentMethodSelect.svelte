@@ -44,8 +44,8 @@
 				<span
 					class="block rounded-lg px-4 py-2 text-center transition-colors
 					{value === option.value
-						? 'bg-blue-600 text-white'
-						: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+						? 'bg-primary text-white'
+						: 'bg-surface text-fg hover:bg-surface-alt'}"
 				>
 					{option.label}
 				</span>
@@ -55,14 +55,14 @@
 
 	{#if showCheckNumber}
 		<div class="flex items-center gap-2">
-			<label for="checkNumber" class="text-sm font-medium text-gray-700">Check #</label>
+			<label for="checkNumber" class="text-sm font-medium text-fg">Check #</label>
 			<input
 				type="text"
 				id="checkNumber"
 				name="checkNumber"
 				bind:value={checkNumber}
 				placeholder="Enter check number"
-				class="flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 			/>
 		</div>
 	{/if}

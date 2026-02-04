@@ -137,14 +137,14 @@
 			<button
 				type="button"
 				onclick={handleClear}
-				class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-white hover:bg-gray-700"
+				class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-surface-alt text-white hover:bg-overlay"
 				aria-label="Remove attachment"
 			>
 				<iconify-icon icon="solar:close-circle-bold" width="16" height="16"></iconify-icon>
 			</button>
 		</div>
 		{#if displayFilename}
-			<p class="mt-2 text-sm text-gray-600 truncate max-w-xs">{displayFilename}</p>
+			<p class="mt-2 text-sm text-muted truncate max-w-xs">{displayFilename}</p>
 		{/if}
 	{:else}
 		<!-- Upload zone -->
@@ -155,12 +155,12 @@
 			ondragleave={handleDragLeave}
 			ondrop={handleDrop}
 			class="flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors
-				{dragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}"
+				{dragOver ? 'border-primary bg-primary/10' : 'border-input-border hover:border-overlay'}"
 		>
 			<!-- Plus icon -->
-			<iconify-icon icon="solar:cloud-upload-linear" class="text-gray-400" width="40" height="40"></iconify-icon>
-			<p class="mt-2 text-sm text-gray-600">Click or drag to upload receipt</p>
-			<p class="mt-1 text-xs text-gray-500">JPEG, PNG, WebP, GIF up to 10MB</p>
+			<iconify-icon icon="solar:cloud-upload-linear" class="text-muted" width="40" height="40"></iconify-icon>
+			<p class="mt-2 text-sm text-muted">Click or drag to upload receipt</p>
+			<p class="mt-1 text-xs text-muted">JPEG, PNG, WebP, GIF up to 10MB</p>
 		</button>
 	{/if}
 </div>

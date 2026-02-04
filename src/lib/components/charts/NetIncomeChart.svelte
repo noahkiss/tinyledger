@@ -161,7 +161,7 @@
 </script>
 
 {#if data.length === 0}
-	<div class="flex h-64 items-center justify-center text-gray-500">No data available</div>
+	<div class="flex h-64 items-center justify-center text-muted">No data available</div>
 {:else}
 	<div class="h-64">
 		<canvas bind:this={canvas}></canvas>

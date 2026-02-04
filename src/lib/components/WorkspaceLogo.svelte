@@ -36,7 +36,7 @@
 	/>
 {:else}
 	<div
-		class="flex items-center justify-center rounded-lg bg-blue-600 font-bold text-white {sizeClasses[
+		class="flex items-center justify-center rounded-lg bg-primary font-bold text-white {sizeClasses[
 			size
 		]}"
 	>

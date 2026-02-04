@@ -69,7 +69,7 @@
 </script>
 
 <div class="relative">
-	<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+	<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted">$</span>
 	<input
 		type="text"
 		inputmode="decimal"
@@ -80,7 +80,7 @@
 		oninput={handleInput}
 		onblur={handleBlur}
 		onfocus={handleFocus}
-		class="rounded-lg border border-gray-300 px-3 py-2 pl-7 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 {className}"
+		class="rounded-lg border border-input-border bg-input px-3 py-2 pl-7 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary {className}"
 		placeholder="0.00"
 	/>
 	<!-- Hidden input for form submission with cents value -->

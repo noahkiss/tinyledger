@@ -20,26 +20,26 @@
 	let isExpanded = $state(expanded);
 </script>
 
-<div class="rounded-xl border border-gray-200 bg-white overflow-hidden">
+<div class="rounded-xl border border-card-border bg-card overflow-hidden">
 	{#if variant === 'summary'}
 		<!-- Summary variant: not clickable, no chevron -->
 		<div class="flex items-center justify-between p-4">
-			<span class="font-medium text-gray-900">{title}</span>
-			<span class="text-lg font-semibold text-gray-900">{formatCurrency(totalCents)}</span>
+			<span class="font-medium text-fg">{title}</span>
+			<span class="text-lg font-semibold text-fg">{formatCurrency(totalCents)}</span>
 		</div>
 	{:else}
 		<!-- Default variant: expandable -->
 		<button
 			type="button"
-			class="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
+			class="flex w-full items-center justify-between p-4 text-left hover:bg-surface transition-colors"
 			onclick={() => (isExpanded = !isExpanded)}
 		>
-			<span class="font-medium text-gray-900">{title}</span>
+			<span class="font-medium text-fg">{title}</span>
 			<div class="flex items-center gap-3">
-				<span class="text-lg font-semibold text-gray-900">{formatCurrency(totalCents)}</span>
+				<span class="text-lg font-semibold text-fg">{formatCurrency(totalCents)}</span>
 				<iconify-icon
 					icon="solar:alt-arrow-down-linear"
-					class="text-gray-400 transition-transform {isExpanded ? 'rotate-180' : ''}"
+					class="text-muted transition-transform {isExpanded ? 'rotate-180' : ''}"
 					width="20"
 					height="20"
 				></iconify-icon>
@@ -47,17 +47,17 @@
 		</button>
 
 		{#if isExpanded}
-			<div class="border-t border-gray-100 bg-gray-50 p-4">
+			<div class="border-t border-card-border bg-surface p-4">
 				<dl class="space-y-2">
 					{#each items as item}
 						<div class="flex justify-between text-sm">
-							<dt class="text-gray-600">
+							<dt class="text-muted">
 								{item.label}
 								{#if item.formula}
-									<span class="block text-xs text-gray-400">{item.formula}</span>
+									<span class="block text-xs text-muted">{item.formula}</span>
 								{/if}
 							</dt>
-							<dd class="font-medium text-gray-900">{formatCurrency(item.amountCents)}</dd>
+							<dd class="font-medium text-fg">{formatCurrency(item.amountCents)}</dd>
 						</div>
 					{/each}
 				</dl>

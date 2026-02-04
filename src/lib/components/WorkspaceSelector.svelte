@@ -55,7 +55,7 @@
 	<button
 		type="button"
 		onclick={toggleDropdown}
-		class="flex items-center gap-3 rounded-lg border border-gray-200 px-2 py-1.5 hover:bg-gray-50 transition-colors"
+		class="flex items-center gap-3 rounded-lg border border-border px-2 py-1.5 hover:bg-surface transition-colors"
 	>
 		<WorkspaceLogo
 			workspaceId={currentWorkspaceId}
@@ -65,15 +65,15 @@
 		/>
 		<div class="text-left">
 			<div class="flex items-center gap-1.5">
-				<h1 class="font-semibold text-gray-900">{currentName}</h1>
+				<h1 class="font-semibold text-fg">{currentName}</h1>
 				<iconify-icon
 					icon="solar:alt-arrow-down-linear"
-					class="text-gray-400 transition-transform {isOpen ? 'rotate-180' : ''}"
+					class="text-muted transition-transform {isOpen ? 'rotate-180' : ''}"
 					width="16"
 					height="16"
 				></iconify-icon>
 			</div>
-			<p class="text-xs text-gray-500">
+			<p class="text-xs text-muted">
 				{currentType === 'sole_prop' ? 'Sole Proprietor' : 'Volunteer Organization'}
 			</p>
 		</div>
@@ -81,29 +81,29 @@
 
 	{#if isOpen}
 		<div
-			class="absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+			class="absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-border bg-card py-1 shadow-lg"
 		>
 			{#each workspaces as workspace}
 				<button
 					type="button"
 					onclick={() => handleSelect(workspace.id)}
-					class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-gray-50 {workspace.id ===
+					class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-surface {workspace.id ===
 					currentWorkspaceId
-						? 'bg-blue-50 text-blue-700'
-						: 'text-gray-700'}"
+						? 'bg-primary/10 text-primary'
+						: 'text-fg'}"
 				>
 					<span class="flex-1 truncate">{workspace.name}</span>
 					{#if workspace.id === currentWorkspaceId}
-						<iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="16" height="16"></iconify-icon>
+						<iconify-icon icon="solar:check-circle-bold" class="text-primary" width="16" height="16"></iconify-icon>
 					{/if}
 				</button>
 			{/each}
 
-			<div class="my-1 border-t border-gray-100"></div>
+			<div class="my-1 border-t border-card-border"></div>
 
 			<a
 				href="/"
-				class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+				class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-fg hover:bg-surface"
 			>
 				<iconify-icon icon="solar:add-circle-linear" width="16" height="16"></iconify-icon>
 				<span>Create New Workspace</span>

@@ -258,7 +258,7 @@
 							<!-- Pending recurring instances -->
 							{#each pendingInstances as pending (pending.templatePublicId + pending.date)}
 								<div
-									class="rounded-lg border-2 border-dashed border-gray-300 bg-gray-50/50 p-3"
+									class="rounded-lg border-2 border-dashed border-border bg-surface/50 p-3"
 									data-component="pending-instance"
 								>
 									<div class="flex items-start justify-between">
@@ -267,34 +267,34 @@
 											<div
 												class="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full {pending.type ===
 												'income'
-													? 'bg-green-100/50'
-													: 'bg-red-100/50'}"
+													? 'bg-success/10'
+													: 'bg-error/10'}"
 											>
 												{#if pending.type === 'income'}
-													<iconify-icon icon="solar:add-circle-bold" class="text-green-400" width="12" height="12"></iconify-icon>
+													<iconify-icon icon="solar:add-circle-bold" class="text-success/60" width="12" height="12"></iconify-icon>
 												{:else}
-													<iconify-icon icon="solar:minus-circle-bold" class="text-red-400" width="12" height="12"></iconify-icon>
+													<iconify-icon icon="solar:minus-circle-bold" class="text-error/60" width="12" height="12"></iconify-icon>
 												{/if}
 											</div>
 
 											<div>
 												<div class="flex items-center gap-2">
-													<span class="font-medium text-gray-500">{pending.payee}</span>
+													<span class="font-medium text-muted">{pending.payee}</span>
 													<span
 														class="text-sm {pending.type === 'income'
-															? 'text-green-500'
-															: 'text-red-500'}"
+															? 'text-success'
+															: 'text-error'}"
 													>
 														{pending.type === 'income' ? '+' : '-'}{formatCurrency(
 															pending.amountCents
 														)}
 													</span>
 													<span
-														class="rounded-full bg-gray-200 px-1.5 py-0.5 text-xs text-gray-500"
+														class="rounded-full bg-surface-alt px-1.5 py-0.5 text-xs text-muted"
 														>Pending</span
 													>
 												</div>
-												<div class="mt-0.5 text-xs text-gray-400">
+												<div class="mt-0.5 text-xs text-muted">
 													{pending.patternDescription}
 												</div>
 											</div>
@@ -304,7 +304,7 @@
 										<div class="flex items-center gap-1">
 											<a
 												href="/w/{data.workspaceId}/transactions/new?type={pending.type}&from_recurring={pending.templatePublicId}&date={pending.date}"
-												class="rounded-lg bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200"
+												class="rounded-lg bg-primary/10 px-2 py-1 text-xs font-medium text-primary hover:bg-primary/20"
 											>
 												Confirm
 											</a>
@@ -313,7 +313,7 @@
 												<input type="hidden" name="date" value={pending.date} />
 												<button
 													type="submit"
-													class="rounded-lg px-2 py-1 text-xs text-gray-500 hover:bg-gray-200"
+													class="rounded-lg px-2 py-1 text-xs text-muted hover:bg-surface-alt"
 												>
 													Skip
 												</button>

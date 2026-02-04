@@ -42,7 +42,7 @@
 <button
 	type="button"
 	onclick={() => (showForm = true)}
-	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-transform hover:bg-blue-700 active:scale-95"
+	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:bg-primary/90 active:scale-95"
 	aria-label="Add transaction"
 	data-component="quick-entry-fab"
 >
@@ -62,7 +62,7 @@
 	>
 		<!-- Form sheet -->
 		<div
-			class="fixed inset-x-0 bottom-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-2xl bg-white p-6 shadow-xl md:inset-auto md:bottom-24 md:right-6 md:w-96 md:rounded-2xl"
+			class="fixed inset-x-0 bottom-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-2xl bg-card p-6 shadow-xl md:inset-auto md:bottom-24 md:right-6 md:w-96 md:rounded-2xl"
 			role="dialog"
 			aria-modal="true"
 			aria-label="Quick entry form"

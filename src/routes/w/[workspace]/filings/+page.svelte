@@ -39,10 +39,10 @@
 <div class="space-y-6">
 	<!-- Header with fiscal year picker -->
 	<div class="flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-gray-900">Filings</h1>
+		<h1 class="text-2xl font-bold text-fg">Filings</h1>
 
 		<select
-			class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 			value={data.fiscalYear}
 			onchange={handleFYChange}
 		>
@@ -53,8 +53,8 @@
 	</div>
 
 	<!-- Info banner -->
-	<div class="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3">
-		<p class="text-sm text-blue-800">
+	<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
+		<p class="text-sm text-primary">
 			Track your compliance filings. Past-due filings appear at the top.
 			{#if summary.pastDue > 0}
 				<span class="font-medium text-red-700">You have {summary.pastDue} past-due filing{summary.pastDue === 1 ? '' : 's'}.</span>
@@ -67,30 +67,30 @@
 		{#if summary.pastDue > 0}
 			<div class="flex items-center gap-1">
 				<span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-				<span class="text-gray-600">{summary.pastDue} past due</span>
+				<span class="text-muted">{summary.pastDue} past due</span>
 			</div>
 		{/if}
 		{#if summary.upcoming > 0}
 			<div class="flex items-center gap-1">
 				<span class="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
-				<span class="text-gray-600">{summary.upcoming} upcoming</span>
+				<span class="text-muted">{summary.upcoming} upcoming</span>
 			</div>
 		{/if}
 		<div class="flex items-center gap-1">
 			<span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-			<span class="text-gray-600">{summary.complete} complete</span>
+			<span class="text-muted">{summary.complete} complete</span>
 		</div>
-		<div class="text-gray-400">
+		<div class="text-muted">
 			{summary.total} total
 		</div>
 	</div>
 
 	{#if data.filings.length === 0}
 		<!-- Empty state -->
-		<div class="rounded-xl border border-gray-200 bg-white p-8 text-center">
-			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-gray-400" width="48" height="48"></iconify-icon>
-			<h3 class="mt-4 text-lg font-medium text-gray-900">No filings found</h3>
-			<p class="mt-1 text-sm text-gray-500">
+		<div class="rounded-xl border border-border bg-card p-8 text-center">
+			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
+			<h3 class="mt-4 text-lg font-medium text-fg">No filings found</h3>
+			<p class="mt-1 text-sm text-muted">
 				No compliance filings are configured for this workspace type.
 			</p>
 		</div>
