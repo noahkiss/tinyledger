@@ -1,1 +1,163 @@
 @import "tailwindcss";
+
+/* ==========================================================================
+   Catppuccin Color System
+   Light mode (Latte) as default, Dark mode (Mocha) via .dark class
+   ========================================================================== */
+
+:root {
+	/* Catppuccin Latte (Light) */
+	--color-background: #eff1f5;
+	--color-foreground: #4c4f69;
+	--color-muted: #9ca0b0;
+	--color-surface: #e6e9ef;
+	--color-surface-alt: #dce0e8;
+	--color-overlay: #ccd0da;
+	--color-border: #bcc0cc;
+
+	/* Semantic colors */
+	--color-primary: #1e66f5;
+	--color-primary-hover: #1858d8;
+	--color-primary-muted: #7287fd;
+	--color-success: #40a02b;
+	--color-success-hover: #389424;
+	--color-success-muted: #a6d189;
+	--color-warning: #df8e1d;
+	--color-warning-hover: #c87f1a;
+	--color-warning-muted: #f9e2af;
+	--color-error: #d20f39;
+	--color-error-hover: #bd0d33;
+	--color-error-muted: #f38ba8;
+	--color-accent: #ea76cb;
+	--color-subtle: #179299;
+
+	/* Component-specific */
+	--color-input-bg: #ffffff;
+	--color-input-border: #bcc0cc;
+	--color-input-focus: #1e66f5;
+	--color-card-bg: #ffffff;
+	--color-card-border: #ccd0da;
+}
+
+.dark {
+	/* Catppuccin Mocha (Dark) */
+	--color-background: #1e1e2e;
+	--color-foreground: #cdd6f4;
+	--color-muted: #a6adc8;
+	--color-surface: #313244;
+	--color-surface-alt: #45475a;
+	--color-overlay: #585b70;
+	--color-border: #6c7086;
+
+	/* Semantic colors */
+	--color-primary: #89b4fa;
+	--color-primary-hover: #a6c8ff;
+	--color-primary-muted: #74a8f7;
+	--color-success: #a6e3a1;
+	--color-success-hover: #b8f0b4;
+	--color-success-muted: #94d88f;
+	--color-warning: #f9e2af;
+	--color-warning-hover: #fff0c5;
+	--color-warning-muted: #edd49c;
+	--color-error: #f38ba8;
+	--color-error-hover: #ffa4be;
+	--color-error-muted: #e87d98;
+	--color-accent: #f5c2e7;
+	--color-subtle: #94e2d5;
+
+	/* Component-specific */
+	--color-input-bg: #313244;
+	--color-input-border: #6c7086;
+	--color-input-focus: #89b4fa;
+	--color-card-bg: #313244;
+	--color-card-border: #45475a;
+}
+
+/* Auto-detect system preference when no explicit class */
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) {
+		--color-background: #1e1e2e;
+		--color-foreground: #cdd6f4;
+		--color-muted: #a6adc8;
+		--color-surface: #313244;
+		--color-surface-alt: #45475a;
+		--color-overlay: #585b70;
+		--color-border: #6c7086;
+
+		--color-primary: #89b4fa;
+		--color-primary-hover: #a6c8ff;
+		--color-primary-muted: #74a8f7;
+		--color-success: #a6e3a1;
+		--color-success-hover: #b8f0b4;
+		--color-success-muted: #94d88f;
+		--color-warning: #f9e2af;
+		--color-warning-hover: #fff0c5;
+		--color-warning-muted: #edd49c;
+		--color-error: #f38ba8;
+		--color-error-hover: #ffa4be;
+		--color-error-muted: #e87d98;
+		--color-accent: #f5c2e7;
+		--color-subtle: #94e2d5;
+
+		--color-input-bg: #313244;
+		--color-input-border: #6c7086;
+		--color-input-focus: #89b4fa;
+		--color-card-bg: #313244;
+		--color-card-border: #45475a;
+	}
+}
+
+/* ==========================================================================
+   Tailwind Theme Extension
+   ========================================================================== */
+
+@theme {
+	/* Semantic color tokens */
+	--color-bg: var(--color-background);
+	--color-fg: var(--color-foreground);
+	--color-surface: var(--color-surface);
+	--color-surface-alt: var(--color-surface-alt);
+	--color-overlay: var(--color-overlay);
+	--color-border: var(--color-border);
+	--color-muted: var(--color-muted);
+
+	--color-primary: var(--color-primary);
+	--color-primary-hover: var(--color-primary-hover);
+	--color-primary-muted: var(--color-primary-muted);
+
+	--color-success: var(--color-success);
+	--color-success-hover: var(--color-success-hover);
+	--color-success-muted: var(--color-success-muted);
+
+	--color-warning: var(--color-warning);
+	--color-warning-hover: var(--color-warning-hover);
+	--color-warning-muted: var(--color-warning-muted);
+
+	--color-error: var(--color-error);
+	--color-error-hover: var(--color-error-hover);
+	--color-error-muted: var(--color-error-muted);
+
+	--color-accent: var(--color-accent);
+	--color-subtle: var(--color-subtle);
+
+	--color-card: var(--color-card-bg);
+	--color-card-border: var(--color-card-border);
+	--color-input: var(--color-input-bg);
+	--color-input-border: var(--color-input-border);
+	--color-input-focus: var(--color-input-focus);
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+html {
+	background-color: var(--color-background);
+	color: var(--color-foreground);
+}
+
+body {
+	background-color: var(--color-background);
+	color: var(--color-foreground);
+	min-height: 100vh;
+}

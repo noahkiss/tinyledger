@@ -23,21 +23,21 @@
 	<title>TinyLedger - Simple Bookkeeping</title>
 </svelte:head>
 
-<main class="min-h-screen bg-gray-50 px-4 py-8">
+<main class="min-h-screen bg-bg px-4 py-8">
 	<div class="mx-auto max-w-lg">
 		<!-- Header -->
 		<header class="mb-8 text-center">
-			<h1 class="text-3xl font-bold text-gray-900">TinyLedger</h1>
-			<p class="mt-2 text-gray-600">Simple bookkeeping for small businesses</p>
+			<h1 class="text-3xl font-bold text-fg">TinyLedger</h1>
+			<p class="mt-2 text-muted">Simple bookkeeping for small businesses</p>
 		</header>
 
 		<!-- Quick resume if last workspace exists -->
 		{#if lastWorkspace}
-			<div class="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
-				<p class="text-sm text-blue-800">Continue where you left off</p>
+			<div class="mb-6 rounded-lg border border-primary/30 bg-primary/10 p-4">
+				<p class="text-sm text-primary">Continue where you left off</p>
 				<a
 					href="/w/{lastWorkspace.id}/transactions"
-					class="mt-2 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 active:bg-blue-800"
+					class="mt-2 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:opacity-90"
 				>
 					Continue to {lastWorkspace.name}
 				</a>
@@ -47,16 +47,16 @@
 		<!-- Existing workspaces -->
 		{#if data.workspaces.length > 0}
 			<section class="mb-8">
-				<h2 class="mb-3 text-lg font-semibold text-gray-800">Your Workspaces</h2>
+				<h2 class="mb-3 text-lg font-semibold text-fg">Your Workspaces</h2>
 				<ul class="space-y-2">
 					{#each data.workspaces as workspace}
 						<li>
 							<a
 								href="/w/{workspace.id}/transactions"
-								class="block rounded-lg border border-gray-200 bg-white p-4 hover:border-blue-300 hover:bg-blue-50 active:bg-blue-100"
+								class="block rounded-lg border border-card-border bg-card p-4 hover:border-primary/50 hover:bg-primary/5 active:bg-primary/10"
 							>
-								<span class="font-medium text-gray-900">{workspace.name}</span>
-								<span class="ml-2 text-sm text-gray-500">/{workspace.id}/</span>
+								<span class="font-medium text-fg">{workspace.name}</span>
+								<span class="ml-2 text-sm text-muted">/{workspace.id}/</span>
 							</a>
 						</li>
 					{/each}
@@ -66,7 +66,7 @@
 
 		<!-- Create new workspace form -->
 		<section>
-			<h2 class="mb-3 text-lg font-semibold text-gray-800">
+			<h2 class="mb-3 text-lg font-semibold text-fg">
 				{data.workspaces.length > 0 ? 'Create Another Workspace' : 'Get Started'}
 			</h2>
 
@@ -74,16 +74,16 @@
 				method="POST"
 				action="?/create"
 				use:enhance
-				class="space-y-4 rounded-lg border border-gray-200 bg-white p-6"
+				class="space-y-4 rounded-lg border border-card-border bg-card p-6"
 			>
 				{#if form?.error}
-					<div class="rounded-lg bg-red-50 p-3 text-sm text-red-800">
+					<div class="rounded-lg bg-error/10 p-3 text-sm text-error">
 						{form.error}
 					</div>
 				{/if}
 
 				<div>
-					<label for="name" class="block text-sm font-medium text-gray-700"> Workspace Name </label>
+					<label for="name" class="block text-sm font-medium text-fg"> Workspace Name </label>
 					<input
 						type="text"
 						id="name"
@@ -91,17 +91,17 @@
 						value={form?.name ?? ''}
 						required
 						placeholder="My Business"
-						class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
 					/>
 				</div>
 
 				<div>
-					<label for="type" class="block text-sm font-medium text-gray-700"> Workspace Type </label>
+					<label for="type" class="block text-sm font-medium text-fg"> Workspace Type </label>
 					<select
 						id="type"
 						name="type"
 						required
-						class="mt-1 block h-[50px] w-full rounded-lg border border-gray-300 px-4 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						class="mt-1 block h-[50px] w-full rounded-lg border border-input-border bg-input px-4 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
 					>
 						<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
 						<option value="volunteer_org" selected={form?.type === 'volunteer_org'}
@@ -112,7 +112,7 @@
 
 				<button
 					type="submit"
-					class="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white hover:bg-blue-700 active:bg-blue-800"
+					class="w-full rounded-lg bg-primary px-4 py-3 font-medium text-white hover:bg-primary-hover active:opacity-90"
 				>
 					Create Workspace
 				</button>
