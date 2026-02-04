@@ -4,8 +4,8 @@
   "description": "Lightweight ledger for sole proprietors",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "background_color": "#eff1f5",
+  "theme_color": "#1e66f5",
   "icons": [
     {
       "src": "/icons/icon-192.png",

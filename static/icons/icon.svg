@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Background -->
-  <rect width="512" height="512" fill="#ffffff"/>
-  <!-- Abstract L monogram - modern geometric design -->
-  <path d="M128 96 L128 416 L384 416 L384 352 L192 352 L192 96 Z" fill="#2563eb"/>
+  <!-- Background - Catppuccin Latte base -->
+  <rect width="512" height="512" fill="#eff1f5"/>
+  <!-- Abstract L monogram - Catppuccin blue -->
+  <path d="M128 96 L128 416 L384 416 L384 352 L192 352 L192 96 Z" fill="#1e66f5"/>
 </svg>
