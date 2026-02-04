@@ -1,7 +1,7 @@
 # Filter Bar Redesign
 
 **Created:** 2026-02-04
-**Status:** Partially Complete
+**Status:** Complete
 **Depends on:** TODO-ui-improvements-2026-02-04.md (complete)
 
 ## Quick Fixes
@@ -22,83 +22,42 @@
 
 ## Filter Row Redesign
 
-### Current State
-- Row is left-weighted with loose elements
-- Tags dropdown | Date inputs | Methods dropdown | Sort toggle | Clear
-- Search bar on separate row above
+### 1. Date Range "Pill" Style
+- ✅ **Completed 2026-02-04**: Date inputs converted to dropdown pill
+- Calendar icon + compact date range display (e.g., "Jan 1 - Dec 31")
+- Dropdown contains From/To date inputs
+- "Clear dates" button when filter is active
+- Highlights with primary color when filter is active
 
-### Proposed Changes
+### 2. Unified Filter Bar
+- ✅ **Completed 2026-02-04**: Second row wrapped in card container
+- Rounded corners, border, card background
+- Vertical dividers between filter groups
+- Elements use consistent inner padding/rounding
+- Clear button pushed to right edge
 
-#### 1. Date Range "Pill" Style
-- Wrap date inputs in styled container (like Tags/Methods buttons)
-- Calendar icon on far left
-- Icon divider between from/to dates (instead of dash)
-- Same border/bg treatment as other filter buttons
+### 3. Collapsible Search
+- ✅ **Completed 2026-02-04**: Search collapses to icon button
+- Click expands to full input field
+- Auto-focuses on expand
+- Collapses on blur/click-outside when empty
+- Stays expanded if search term is present
 
-```
-[📅 2025-01-01 | 2025-12-31 ▼]
-```
+### 4. Mobile Layout
+- ✅ **Completed 2026-02-04**: Implemented Option A variant
+- Row 1: Type buttons + collapsible search + count
+- Row 2: Icon-only filters on mobile (labels hidden via `hidden sm:inline`)
+- Filter bar wraps naturally on narrow screens
 
-#### 2. Unified Filter Bar
-- Style entire row as a contained bar (similar to income/expense summary bar)
-- Rounded corners, subtle border, card background
-- Elements evenly distributed or grouped logically
-
-#### 3. Collapsible Search
-- Search starts as icon-only button
-- Click expands input, pushes/minimizes other elements
-- Click away or blur collapses back to icon
-- Keeps filter row cleaner when not searching
-
-#### 4. Mobile Layout Options
-
-**Option A: Two Rows**
-- Row 1: Type buttons (All/Income/Expense) + Search icon
-- Row 2: Tags | Dates | Methods | Sort
-
-**Option B: Icon-Only**
-- All filters collapse to icons on mobile
-- Tap to expand each filter
-- Could use bottom sheet for filter options
-
-**Option C: Hybrid**
-- Type buttons stay visible
-- Other filters collapse to "Filters" button
-- Opens filter panel/sheet with all options
+**Files:** `src/lib/components/FilterBar.svelte`
 
 ---
 
-## Visual Reference
+## Summary
 
-### Desktop
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ [All] [Income] [Expense]  [🔍]  [🏷 Tags ▼] [📅 Jan 1 | Dec 31] [💳 All ▼] [↕] │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Mobile (Option A)
-```
-┌─────────────────────────────┐
-│ [All] [Income] [Expense] [🔍]│
-├─────────────────────────────┤
-│ [🏷] [📅] [💳] [↕] [✕ Clear] │
-└─────────────────────────────┘
-```
-
----
-
-## Implementation Notes
-
-- Use same dropdown pattern established for Methods
-- Consider `click-outside` directive for search collapse
-- Date pill may need custom component or wrapper
-- Test touch targets on mobile (44px minimum)
-- Respect existing URL param behavior for all filters
-
-## Files to Modify
-
-- `src/lib/components/FilterBar.svelte` - Main redesign
-- `src/lib/components/FiscalYearPicker.svelte` - Custom dropdown conversion
-- `src/routes/w/[workspace]/+layout.svelte` - FY picker height matching
-- `src/app.css` - Any new utility classes if needed
+All proposed changes have been implemented:
+- Unified card-style filter bar container
+- Date range as dropdown pill with compact display
+- Collapsible search (icon-only when empty)
+- Mobile-friendly layout with responsive text hiding
+- Consistent styling across all filter elements
