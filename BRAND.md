@@ -3,19 +3,17 @@
 ## Mascot: Penny the Hedgehog
 
 **Character description:**
-A cute baby hedgehog in a children's book illustration style. Slightly curled in a cozy pose, wearing small round glasses and a polka-dot red bowtie. Natural hedgehog coloring with warm browns and tans. Soft, friendly expression with big eyes. Approachable and slightly nerdy.
+A cute baby hedgehog in a children's book illustration style. Sitting in a cozy pose, wearing small round glasses and a polka-dot red bowtie. Natural hedgehog coloring with warm browns and tans. Soft, friendly expression with big eyes. Approachable and slightly nerdy.
 
 **Working prompt (v1 - approved):**
 ```
 A cute baby hedgehog character named Penny in a children's book illustration style.
-She is slightly curled in a cozy pose, wearing small round glasses and a tiny bowtie.
+She is sitting in a cozy pose, wearing small round glasses and a tiny bowtie.
 Natural hedgehog coloring with warm browns and tans. Soft, friendly expression with
 big eyes. The style should be like a classic storybook illustration - soft edges,
 gentle shading, warm and inviting. Simple warm cream/off-white background. The
 hedgehog should look approachable and slightly nerdy. No text.
 ```
-
-**Source file:** `nanobanana-output/a_cute_baby_hedgehog_character_n_2.png`
 
 ## Visual Style
 
@@ -45,6 +43,28 @@ Penny's palette (natural/earthy):
 
 | Asset | Location | Notes |
 |-------|----------|-------|
-| Penny character | `nanobanana-output/a_cute_baby_hedgehog_character_n_2.png` | Base character |
-| App icon | `static/icons/` | TBD - crop from character |
-| GitHub banner | TBD | Penny + "TinyLedger" text |
+| Penny (sitting) | `static/brand/mascot-sitting.png` | Base character with background |
+| Penny (transparent) | `static/brand/mascot-sitting-transparent.png` | For overlays and compositing |
+| App icons | `static/icons/` | Generated from Penny sitting |
+| Hero banner | `static/brand/hero-banner.png` | GitHub README header |
+| Logo | `static/brand/ti-logo.png` | TinyLedger logo |
+| Wordmark | `static/brand/wordmark.png` | Text-only branding |
+
+## Generating New Assets
+
+For transparent backgrounds, use the `/openai-image` skill with `gpt-image-1.5`:
+- Gemini/nanobanana does not support transparency
+- OpenAI's `background: "transparent"` parameter works well
+
+Example to regenerate Penny with transparency:
+```bash
+# Edit existing image to remove background
+curl -s https://api.openai.com/v1/images/edits \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -F "model=gpt-image-1.5" \
+  -F "image=@static/brand/mascot-sitting.png" \
+  -F "prompt=Remove background, keep only the hedgehog, transparent background" \
+  -F "background=transparent" \
+  -F "output_format=png" \
+  | jq -r '.data[0].b64_json' | base64 --decode > output.png
+```
