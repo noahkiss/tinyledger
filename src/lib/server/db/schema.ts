@@ -214,6 +214,7 @@ export const quarterlyPayments = sqliteTable(
 		federalPaidCents: integer('federal_paid_cents'), // null = unpaid
 		statePaidCents: integer('state_paid_cents'), // null = unpaid
 		paidAt: text('paid_at'), // ISO timestamp when marked paid
+		skippedAt: text('skipped_at'), // ISO timestamp when intentionally skipped (missed)
 		notes: text('notes'),
 		createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 		updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`).notNull()

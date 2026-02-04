@@ -3,7 +3,6 @@
 	import { enhance } from '$app/forms';
 	import { formatCurrency } from '$lib/utils/currency';
 	import { formatFiscalYear } from '$lib/utils/fiscal-year';
-	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
 	import FilterBar from '$lib/components/FilterBar.svelte';
 	import TimelineEntry from '$lib/components/TimelineEntry.svelte';
 	import TimelineDateMarker from '$lib/components/TimelineDateMarker.svelte';
@@ -102,8 +101,15 @@
 			}
 		}
 
-		// Convert to array sorted by date descending
-		return Array.from(groups.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+		// Convert to array sorted by date (respecting user sort preference)
+		const entries = Array.from(groups.entries());
+		if (data.currentFilters.sort === 'asc') {
+			// Oldest first (chronological)
+			return entries.sort((a, b) => a[0].localeCompare(b[0]));
+		} else {
+			// Newest first
+			return entries.sort((a, b) => b[0].localeCompare(a[0]));
+		}
 	});
 
 	// Check if timeline has any content (transactions, quarterly markers, or pending)
@@ -169,37 +175,47 @@
 		</a>
 	</div>
 
-	<!-- Sticky header with fiscal year and totals -->
+	<!-- Sticky summary header -->
 	<header
 		class="sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
-		data-component="fiscal-header"
+		data-component="summary-header"
 	>
-		<div class="flex items-center justify-between">
-			<FiscalYearPicker
-				fiscalYear={data.fiscalYear}
-				availableYears={data.availableFiscalYears}
-				startMonth={data.fiscalYearStartMonth}
-			/>
+		<!-- Mobile layout: icon-based compact view -->
+		<div class="flex items-center justify-center gap-2 text-sm md:hidden">
+			<span class="flex items-center gap-1 font-semibold text-success">
+				<iconify-icon icon="solar:add-circle-bold" width="16" height="16"></iconify-icon>
+				<span class="tabular-nums">{formatCurrency(data.totals.income)}</span>
+			</span>
+			<span class="text-muted">/</span>
+			<span class="flex items-center gap-1 font-semibold text-error">
+				<iconify-icon icon="solar:minus-circle-bold" width="16" height="16"></iconify-icon>
+				<span class="tabular-nums">{formatCurrency(data.totals.expense)}</span>
+			</span>
+			<span class="text-muted">=</span>
+			<span class="font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}">
+				{formatCurrency(data.totals.net)}
+			</span>
+		</div>
 
-			<div class="flex items-center gap-4 text-sm">
-				<div class="text-right">
+		<!-- Desktop layout: labels with income/expense left, net right -->
+		<div class="hidden items-center justify-between text-sm md:flex">
+			<div class="flex items-center gap-4">
+				<div>
 					<span class="text-muted">Income</span>
-					<span class="ml-1 font-semibold text-success tabular-nums">+{formatCurrency(data.totals.income)}</span
-					>
+					<span class="ml-1 font-semibold text-success tabular-nums">+{formatCurrency(data.totals.income)}</span>
 				</div>
-				<div class="text-right">
+				<div>
 					<span class="text-muted">Expense</span>
-					<span class="ml-1 font-semibold text-error tabular-nums">-{formatCurrency(data.totals.expense)}</span
-					>
+					<span class="ml-1 font-semibold text-error tabular-nums">-{formatCurrency(data.totals.expense)}</span>
 				</div>
-				<div class="border-l border-border pl-4 text-right">
-					<span class="text-muted">Net</span>
-					<span
-						class="ml-1 font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}"
-					>
-						{data.totals.net >= 0 ? '+' : ''}{formatCurrency(data.totals.net)}
-					</span>
-				</div>
+			</div>
+			<div class="border-l border-border pl-4">
+				<span class="text-muted">Net</span>
+				<span
+					class="ml-1 font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}"
+				>
+					{data.totals.net >= 0 ? '+' : ''}{formatCurrency(data.totals.net)}
+				</span>
 			</div>
 		</div>
 	</header>
@@ -210,6 +226,8 @@
 		availableTags={data.tags}
 		filteredCount={data.filteredCount}
 		totalCount={data.totalCount}
+		fyStart={data.fyStart}
+		fyEnd={data.fyEnd}
 	/>
 
 	<!-- Timeline -->
@@ -248,6 +266,9 @@
 									paidStateCents={quarterlyPayment.paidStateCents}
 									isPastDue={quarterlyPayment.isPastDue}
 									isUpcoming={quarterlyPayment.isUpcoming}
+									isSkipped={quarterlyPayment.isSkipped}
+									rolloverCents={quarterlyPayment.rolloverCents}
+									fiscalYear={quarterlyPayment.fiscalYear}
 									workspaceId={data.workspaceId}
 								/>
 							{/if}

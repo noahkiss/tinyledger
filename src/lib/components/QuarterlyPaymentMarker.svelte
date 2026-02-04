@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/currency';
+	import { enhance } from '$app/forms';
 
 	interface Props {
 		quarter: 1 | 2 | 3 | 4;
@@ -12,7 +13,10 @@
 		paidStateCents?: number | null;
 		isPastDue: boolean;
 		isUpcoming: boolean;
+		isSkipped?: boolean;
+		rolloverCents?: number;
 		workspaceId: string;
+		fiscalYear: number;
 	}
 
 	let {
@@ -26,7 +30,10 @@
 		paidStateCents = null,
 		isPastDue,
 		isUpcoming,
-		workspaceId
+		isSkipped = false,
+		rolloverCents = 0,
+		workspaceId,
+		fiscalYear
 	}: Props = $props();
 
 	// Calculate totals
@@ -36,6 +43,7 @@
 	// Border and background colors based on status
 	let borderClass = $derived(() => {
 		if (isPaid) return 'border-green-400 bg-green-50 dark:bg-green-950/30';
+		if (isSkipped) return 'border-overlay bg-surface-alt';
 		if (isPastDue) return 'border-red-400 bg-red-50 dark:bg-red-950/30';
 		if (isUpcoming) return 'border-yellow-400 bg-yellow-50 dark:bg-yellow-950/30';
 		return 'border-input-border bg-surface';
@@ -44,6 +52,7 @@
 	// Status badge
 	let statusBadge = $derived(() => {
 		if (isPaid) return { text: 'Paid', class: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' };
+		if (isSkipped) return { text: 'Skipped', class: 'bg-surface-alt text-muted' };
 		if (isPastDue) return { text: 'Past Due', class: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' };
 		if (isUpcoming) return { text: 'Upcoming', class: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300' };
 		return null;
@@ -81,28 +90,50 @@
 			<!-- Third row: Amounts -->
 			<div class="mt-1">
 				{#if isPaid}
-					<div class="flex items-center gap-1 text-sm text-green-700">
+					<div class="flex items-center gap-1 text-sm text-green-700 dark:text-green-400">
 						<iconify-icon icon="solar:check-circle-bold" width="14" height="14"></iconify-icon>
 						<span>
 							Federal {formatCurrency(paidFederalCents ?? 0)} | State {formatCurrency(paidStateCents ?? 0)} | Total {formatCurrency(paidTotal)}
 						</span>
 					</div>
+				{:else if isSkipped}
+					<div class="text-sm text-muted">
+						Skipped - amount rolled to next quarter
+					</div>
 				{:else}
 					<div class="text-sm text-muted">
-						Recommended: Federal {formatCurrency(federalRecommendedCents)} + State {formatCurrency(stateRecommendedCents)} = {formatCurrency(recommendedTotal)}
+						Recommended: {formatCurrency(recommendedTotal)}
+						{#if rolloverCents > 0}
+							<span class="text-warning"> (includes {formatCurrency(rolloverCents)} from missed)</span>
+						{/if}
 					</div>
 				{/if}
 			</div>
 
-			<!-- Link text -->
-			<div class="mt-1.5">
-				<span class="text-xs font-medium text-primary hover:text-primary">
-					{#if isPaid}
-						View Details
-					{:else}
-						Mark Paid
-					{/if}
-				</span>
+			<!-- Actions -->
+			<div class="mt-1.5 flex items-center gap-2">
+				{#if isPaid}
+					<span class="text-xs font-medium text-primary">View Details</span>
+				{:else if isSkipped}
+					<span class="text-xs text-muted">Amount rolled forward</span>
+				{:else if isPastDue}
+					<!-- Past due: show both Mark Paid and Skip options -->
+					<span class="text-xs font-medium text-primary">Mark Paid</span>
+					<span class="text-muted">|</span>
+					<form method="POST" action="/w/{workspaceId}/taxes?/skipQuarter" use:enhance class="inline">
+						<input type="hidden" name="fiscalYear" value={fiscalYear} />
+						<input type="hidden" name="quarter" value={quarter} />
+						<button
+							type="submit"
+							class="cursor-pointer text-xs font-medium text-muted hover:text-fg"
+							onclick={(e) => e.stopPropagation()}
+						>
+							Skip
+						</button>
+					</form>
+				{:else}
+					<span class="text-xs font-medium text-primary">Mark Paid</span>
+				{/if}
 			</div>
 		</div>
 	</div>

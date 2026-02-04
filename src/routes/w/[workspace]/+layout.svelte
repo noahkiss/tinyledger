@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import WorkspaceSelector from '$lib/components/WorkspaceSelector.svelte';
 	import BottomTabBar from '$lib/components/BottomTabBar.svelte';
+	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
@@ -46,13 +47,23 @@
 	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
 			<!-- Workspace selector (integrated with logo/name) -->
-			<WorkspaceSelector
-				currentWorkspaceId={data.workspaceId}
-				workspaces={data.allWorkspaces}
-				currentName={data.settings.name}
-				currentType={data.settings.type}
-				logoFilename={data.settings.logoFilename}
-			/>
+			<div class="flex items-center gap-3">
+				<WorkspaceSelector
+					currentWorkspaceId={data.workspaceId}
+					workspaces={data.allWorkspaces}
+					currentName={data.settings.name}
+					currentType={data.settings.type}
+					logoFilename={data.settings.logoFilename}
+				/>
+
+				<!-- Fiscal Year picker -->
+				<FiscalYearPicker
+					fiscalYear={data.fiscalYear}
+					availableYears={data.availableFiscalYears}
+					startMonth={data.fiscalYearStartMonth}
+					compact
+				/>
+			</div>
 
 			<!-- Settings cog -->
 			<a

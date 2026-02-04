@@ -22,17 +22,17 @@
 	function getActionBadge(action: string): { bg: string; text: string; label: string } {
 		switch (action) {
 			case 'created':
-				return { bg: 'bg-green-100', text: 'text-green-800', label: 'Created' };
+				return { bg: 'bg-success/10', text: 'text-success', label: 'Created' };
 			case 'updated':
-				return { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Updated' };
+				return { bg: 'bg-primary/10', text: 'text-primary', label: 'Updated' };
 			case 'voided':
-				return { bg: 'bg-amber-100', text: 'text-amber-800', label: 'Voided' };
+				return { bg: 'bg-warning/10', text: 'text-warning', label: 'Voided' };
 			case 'unvoided':
-				return { bg: 'bg-green-100', text: 'text-green-800', label: 'Restored' };
+				return { bg: 'bg-success/10', text: 'text-success', label: 'Restored' };
 			case 'deleted':
-				return { bg: 'bg-red-100', text: 'text-red-800', label: 'Deleted' };
+				return { bg: 'bg-error/10', text: 'text-error', label: 'Deleted' };
 			default:
-				return { bg: 'bg-gray-100', text: 'text-gray-800', label: action };
+				return { bg: 'bg-surface', text: 'text-fg', label: action };
 		}
 	}
 
@@ -76,7 +76,7 @@
 		{#if data.transaction.isDeleted}
 			<a
 				href="/w/{workspace}/transactions"
-				class="inline-flex items-center text-blue-600 hover:text-blue-800"
+				class="inline-flex items-center text-primary hover:text-primary"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transactions
@@ -84,27 +84,27 @@
 		{:else}
 			<a
 				href="/w/{workspace}/transactions/{data.transaction.publicId}"
-				class="inline-flex items-center text-blue-600 hover:text-blue-800"
+				class="inline-flex items-center text-primary hover:text-primary"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transaction
 			</a>
 		{/if}
-		<h1 class="mt-4 text-2xl font-bold text-gray-900">History for {data.transaction.payee}</h1>
+		<h1 class="mt-4 text-2xl font-bold text-fg">History for {data.transaction.payee}</h1>
 		{#if data.transaction.isDeleted}
-			<p class="mt-1 text-sm text-red-600">This transaction has been deleted</p>
+			<p class="mt-1 text-sm text-error">This transaction has been deleted</p>
 		{/if}
 	</div>
 
 	<!-- Timeline -->
 	{#if data.history.length === 0}
-		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center">
-			<p class="text-gray-500">No history records found</p>
+		<div class="rounded-lg border border-border bg-card p-8 text-center">
+			<p class="text-muted">No history records found</p>
 		</div>
 	{:else}
 		<div class="relative">
 			<!-- Vertical timeline line -->
-			<div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+			<div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
 
 			<!-- History entries -->
 			<div class="space-y-6">
@@ -114,18 +114,18 @@
 					<div class="relative pl-10">
 						<!-- Timeline dot -->
 						<div
-							class="absolute left-2 top-1 h-4 w-4 rounded-full border-2 border-white {badge.bg}"
+							class="absolute left-2 top-1 h-4 w-4 rounded-full border-2 border-card {badge.bg}"
 						></div>
 
 						<!-- Entry card -->
-						<div class="rounded-lg border border-gray-200 bg-white p-4">
+						<div class="rounded-lg border border-border bg-card p-4">
 							<div class="flex items-center justify-between">
 								<span
 									class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {badge.bg} {badge.text}"
 								>
 									{badge.label}
 								</span>
-								<span class="text-sm text-gray-500">
+								<span class="text-sm text-muted">
 									{formatTimestamp(entry.timestamp)}
 								</span>
 							</div>
@@ -133,10 +133,10 @@
 							<!-- Changed fields for updates -->
 							{#if entry.action === 'updated' && changedFields.length > 0}
 								<div class="mt-3">
-									<p class="text-sm font-medium text-gray-700">Changed fields:</p>
+									<p class="text-sm font-medium text-fg">Changed fields:</p>
 									<div class="mt-1 flex flex-wrap gap-1.5">
 										{#each changedFields as field}
-											<span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
+											<span class="inline-flex items-center rounded bg-surface px-2 py-0.5 text-xs text-fg">
 												{formatFieldName(field)}
 											</span>
 										{/each}
@@ -147,10 +147,10 @@
 							<!-- Optional: Expandable previous state -->
 							{#if entry.previousState && entry.action !== 'created'}
 								<details class="mt-3">
-									<summary class="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
+									<summary class="cursor-pointer text-sm text-muted hover:text-fg">
 										View previous state
 									</summary>
-									<pre class="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs text-gray-600">{JSON.stringify(
+									<pre class="mt-2 overflow-x-auto rounded bg-surface p-2 text-xs text-muted">{JSON.stringify(
 											typeof entry.previousState === 'string'
 												? JSON.parse(entry.previousState)
 												: entry.previousState,

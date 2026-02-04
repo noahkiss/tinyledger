@@ -275,5 +275,60 @@ export const actions: Actions = {
 			.run();
 
 		return { success: true };
+	},
+
+	skipQuarter: async ({ request, locals }) => {
+		const db = locals.db;
+		if (!db) {
+			return fail(500, { message: 'Database not initialized' });
+		}
+
+		const formData = await request.formData();
+		const quarter = parseInt(formData.get('quarter') as string, 10);
+		const fiscalYear = parseInt(formData.get('fiscalYear') as string, 10);
+
+		if (isNaN(quarter) || quarter < 1 || quarter > 4) {
+			return fail(400, { message: 'Invalid quarter' });
+		}
+
+		if (isNaN(fiscalYear)) {
+			return fail(400, { message: 'Invalid fiscal year' });
+		}
+
+		const skippedAt = new Date().toISOString();
+		const updatedAt = skippedAt;
+
+		// Check if record exists
+		const existing = db
+			.select()
+			.from(quarterlyPayments)
+			.where(
+				and(eq(quarterlyPayments.fiscalYear, fiscalYear), eq(quarterlyPayments.quarter, quarter))
+			)
+			.get();
+
+		if (existing) {
+			// Update existing record to mark as skipped
+			db.update(quarterlyPayments)
+				.set({
+					skippedAt,
+					updatedAt
+				})
+				.where(
+					and(eq(quarterlyPayments.fiscalYear, fiscalYear), eq(quarterlyPayments.quarter, quarter))
+				)
+				.run();
+		} else {
+			// Insert new record with skippedAt
+			db.insert(quarterlyPayments)
+				.values({
+					fiscalYear,
+					quarter,
+					skippedAt
+				})
+				.run();
+		}
+
+		return { success: true };
 	}
 };

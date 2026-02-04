@@ -10,7 +10,7 @@ import {
 	recurringTemplates,
 	skippedInstances
 } from '$lib/server/db/schema';
-import { eq, isNull, desc, and, gte, lte, like, sql } from 'drizzle-orm';
+import { eq, isNull, desc, asc, and, gte, lte, like, sql } from 'drizzle-orm';
 import {
 	getCurrentFiscalYear,
 	getFiscalYearRange,
@@ -50,6 +50,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const toFilter = url.searchParams.get('to');
 	const typeFilter = url.searchParams.get('type') as 'income' | 'expense' | null;
 	const methodFilter = url.searchParams.get('method') as 'cash' | 'card' | 'check' | null;
+	const sortParam = url.searchParams.get('sort'); // 'asc' (default) or 'desc'
 
 	// Determine fiscal year (default to current)
 	const currentFiscalYear = getCurrentFiscalYear(fiscalYearStartMonth);
@@ -94,12 +95,15 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		filterConditions.push(eq(transactions.paymentMethod, methodFilter));
 	}
 
+	// Determine sort order (default: asc = chronological, oldest first)
+	const sortOrder = sortParam === 'desc' ? desc : asc;
+
 	// Query transactions with all filters
 	let transactionQuery = db
 		.select()
 		.from(transactions)
 		.where(and(...filterConditions))
-		.orderBy(desc(transactions.date), desc(transactions.createdAt));
+		.orderBy(sortOrder(transactions.date), sortOrder(transactions.createdAt));
 
 	let transactionList = transactionQuery.all();
 
@@ -237,7 +241,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		from: fromFilter || '',
 		to: toFilter || '',
 		type: typeFilter || '',
-		method: methodFilter || ''
+		method: methodFilter || '',
+		sort: sortParam || 'asc'
 	};
 
 	// Calculate quarterly payment data for timeline (only for sole_prop with tax configured)
@@ -252,6 +257,9 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		paidStateCents: number | null;
 		isPastDue: boolean;
 		isUpcoming: boolean;
+		isSkipped: boolean;
+		rolloverCents: number;
+		fiscalYear: number;
 	}[] = [];
 
 	if (settings.type === 'sole_prop' && settings.taxConfigured) {
@@ -279,8 +287,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		const totalEstimatedTaxCents =
 			selfEmploymentTax.totalCents + federalTaxCents + stateTaxCents + localEitCents;
 
-		// Query paid quarterly payments from database
-		const paidPaymentsRaw = db
+		// Query quarterly payment records from database (includes paid and skipped)
+		const quarterPaymentRecords = db
 			.select()
 			.from(quarterlyPayments)
 			.where(eq(quarterlyPayments.fiscalYear, fiscalYear))
@@ -291,48 +299,67 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		const today = new Date().toISOString().slice(0, 10);
 		const todayDate = new Date(today);
 
-		// Calculate total already paid
-		const totalPaidCents = paidPaymentsRaw.reduce(
-			(sum, p) => sum + (p.federalPaidCents ?? 0) + (p.statePaidCents ?? 0),
+		// Calculate total already paid (excluding skipped)
+		const totalPaidCents = quarterPaymentRecords.reduce(
+			(sum, p) => sum + (p.paidAt ? ((p.federalPaidCents ?? 0) + (p.statePaidCents ?? 0)) : 0),
 			0
 		);
 		const remainingTaxCents = Math.max(0, totalEstimatedTaxCents - totalPaidCents);
 
-		// Count remaining unpaid quarters
-		const paidQuarters = new Set(paidPaymentsRaw.map((p) => p.quarter));
-		const unpaidQuarters = [1, 2, 3, 4].filter((q) => !paidQuarters.has(q)).length;
+		// Count remaining unpaid quarters (not paid and not skipped)
+		const processedQuarters = new Set(quarterPaymentRecords.map((p) => p.quarter));
+		const activeQuarters = [1, 2, 3, 4].filter((q) => {
+			const record = quarterPaymentRecords.find((p) => p.quarter === q);
+			// Count if: no record, or record exists but is neither paid nor skipped
+			return !record || (!record.paidAt && !record.skippedAt);
+		}).length;
 
 		// Calculate per-quarter recommended amount
-		const perQuarterCents = unpaidQuarters > 0 ? Math.round(remainingTaxCents / unpaidQuarters) : 0;
+		const perQuarterCents = activeQuarters > 0 ? Math.round(remainingTaxCents / activeQuarters) : 0;
 
 		// Split recommended amounts: federal portion and state portion
-		const totalTaxRate = federalRate + selfEmploymentTax.totalCents / (netIncome || 1);
-		const federalPortion = netIncome > 0 ? (federalTaxCents + selfEmploymentTax.totalCents) / totalEstimatedTaxCents : 0.7;
-		const statePortion = netIncome > 0 ? (stateTaxCents + localEitCents) / totalEstimatedTaxCents : 0.3;
+		const federalPortion = netIncome > 0 && totalEstimatedTaxCents > 0
+			? (federalTaxCents + selfEmploymentTax.totalCents) / totalEstimatedTaxCents
+			: 0.7;
 
+		// Calculate rollover amounts from skipped quarters
+		let rolloverCents = 0;
 		quarterlyPaymentsData = dueDates.map((dd) => {
-			const dbRecord = paidPaymentsRaw.find((p) => p.quarter === dd.quarter);
-			const isPaid = !!dbRecord;
+			const dbRecord = quarterPaymentRecords.find((p) => p.quarter === dd.quarter);
+			const isPaid = !!(dbRecord?.paidAt);
+			const isSkipped = !!(dbRecord?.skippedAt);
 			const dueDateObj = new Date(dd.dueDate);
 			const daysUntilDue = Math.floor(
 				(dueDateObj.getTime() - todayDate.getTime()) / (1000 * 60 * 60 * 24)
 			);
 
-			// Recommended split
-			const federalRecommendedCents = Math.round(perQuarterCents * federalPortion);
-			const stateRecommendedCents = perQuarterCents - federalRecommendedCents; // Ensure no rounding loss
+			// Base recommended split
+			const baseFederalCents = Math.round(perQuarterCents * federalPortion);
+			const baseStateCents = perQuarterCents - baseFederalCents;
+
+			// If this quarter was skipped, add its amount to rollover for next quarters
+			const currentRollover = rolloverCents;
+			if (isSkipped) {
+				rolloverCents += perQuarterCents;
+			} else if (isPaid) {
+				// Payment resets rollover (catches up)
+				rolloverCents = 0;
+			}
 
 			return {
 				quarter: dd.quarter,
 				dueDate: dd.dueDate,
 				dueDateLabel: dd.label,
-				federalRecommendedCents: isPaid ? (dbRecord?.federalPaidCents ?? 0) : federalRecommendedCents,
-				stateRecommendedCents: isPaid ? (dbRecord?.statePaidCents ?? 0) : stateRecommendedCents,
+				federalRecommendedCents: isPaid ? (dbRecord?.federalPaidCents ?? 0) : baseFederalCents,
+				stateRecommendedCents: isPaid ? (dbRecord?.statePaidCents ?? 0) : baseStateCents,
 				isPaid,
 				paidFederalCents: dbRecord?.federalPaidCents ?? null,
 				paidStateCents: dbRecord?.statePaidCents ?? null,
-				isPastDue: !isPaid && dd.dueDate < today,
-				isUpcoming: !isPaid && daysUntilDue >= 0 && daysUntilDue <= 30
+				isPastDue: !isPaid && !isSkipped && dd.dueDate < today,
+				isUpcoming: !isPaid && !isSkipped && daysUntilDue >= 0 && daysUntilDue <= 30,
+				isSkipped,
+				rolloverCents: currentRollover,
+				fiscalYear
 			};
 		});
 	}
@@ -410,7 +437,9 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		totalCount,
 		fiscalYearStartMonth,
 		quarterlyPayments: quarterlyPaymentsData,
-		pendingInstances
+		pendingInstances,
+		fyStart,
+		fyEnd
 	};
 };
 

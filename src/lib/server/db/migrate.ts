@@ -280,4 +280,11 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 	} catch {
 		// Column already exists, ignore
 	}
+
+	// Migration: Add skipped_at column to quarterly_payments (for skipped/missed quarters)
+	try {
+		db.run(sql`ALTER TABLE quarterly_payments ADD COLUMN skipped_at TEXT`);
+	} catch {
+		// Column already exists, ignore
+	}
 }
