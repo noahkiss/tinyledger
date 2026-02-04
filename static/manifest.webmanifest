@@ -1,7 +1,7 @@
 {
-  "name": "Ledger",
-  "short_name": "Ledger",
-  "description": "Lightweight ledger for sole proprietors",
+  "name": "TinyLedger",
+  "short_name": "TinyLedger",
+  "description": "Personal bookkeeping for sole proprietors",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#eff1f5",
