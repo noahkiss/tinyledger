@@ -5,6 +5,7 @@
 	import { FEDERAL_BRACKETS_2026 } from '$lib/data/federal-brackets-2026';
 	import { STATE_TAX_RATES, getStateRate } from '$lib/data/state-tax-rates';
 	import { getFormsForState } from '$lib/data/tax-forms';
+	import { themePreference, type ThemePreference } from '$lib/stores/theme';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -121,7 +122,45 @@
 </svelte:head>
 
 <div>
-	<h2 class="mb-6 text-xl font-semibold text-gray-800">Workspace Settings</h2>
+	<h2 class="mb-6 text-xl font-semibold text-fg">Workspace Settings</h2>
+
+	<!-- Appearance Section -->
+	<section data-section="appearance" class="mb-6 rounded-lg border border-card-border bg-card p-6">
+		<h3 class="text-lg font-medium text-fg">Appearance</h3>
+		<p class="mt-1 text-sm text-muted">Choose how Ledger looks to you.</p>
+
+		<div class="mt-4">
+			<label class="block text-sm font-medium text-fg">Theme</label>
+			<div class="mt-2 flex gap-2">
+				{#each [
+					{ value: 'system', label: 'System', icon: 'solar:monitor-linear' },
+					{ value: 'light', label: 'Light', icon: 'solar:sun-linear' },
+					{ value: 'dark', label: 'Dark', icon: 'solar:moon-linear' }
+				] as option}
+					<button
+						type="button"
+						onclick={() => themePreference.set(option.value as ThemePreference)}
+						class="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors cursor-pointer {$themePreference ===
+						option.value
+							? 'border-primary bg-primary/10 text-primary'
+							: 'border-border bg-surface text-fg hover:bg-surface-alt'}"
+					>
+						<iconify-icon icon={option.icon} width="18" height="18"></iconify-icon>
+						{option.label}
+					</button>
+				{/each}
+			</div>
+			<p class="mt-2 text-xs text-muted">
+				{#if $themePreference === 'system'}
+					Automatically matches your device's appearance setting.
+				{:else if $themePreference === 'light'}
+					Always use light mode.
+				{:else}
+					Always use dark mode.
+				{/if}
+			</p>
+		</div>
+	</section>
 
 	<form
 		method="POST"
