@@ -8,7 +8,6 @@
 	import TimelineEntry from '$lib/components/TimelineEntry.svelte';
 	import TimelineDateMarker from '$lib/components/TimelineDateMarker.svelte';
 	import QuarterlyPaymentMarker from '$lib/components/QuarterlyPaymentMarker.svelte';
-	import QuickEntryFAB from '$lib/components/QuickEntryFAB.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -333,9 +332,3 @@
 	{/if}
 </div>
 
-<!-- Quick Entry FAB -->
-<QuickEntryFAB
-	workspaceId={data.workspaceId}
-	availableTags={data.tags}
-	payeeHistory={data.payeeHistory}
-/>

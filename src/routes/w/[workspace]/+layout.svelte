@@ -2,6 +2,7 @@
 	import type { LayoutData } from './$types';
 	import { page } from '$app/stores';
 	import WorkspaceSelector from '$lib/components/WorkspaceSelector.svelte';
+	import BottomTabBar from '$lib/components/BottomTabBar.svelte';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
@@ -40,9 +41,9 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gray-50" data-component="app-shell">
+<div class="min-h-screen bg-bg" data-component="app-shell">
 	<!-- Header -->
-	<header class="border-b border-gray-200 bg-white" data-component="header">
+	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
 			<!-- Workspace selector (integrated with logo/name) -->
 			<WorkspaceSelector
@@ -56,7 +57,7 @@
 			<!-- Settings cog -->
 			<a
 				href="/w/{data.workspaceId}/settings"
-				class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+				class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
 				title="Settings"
 				data-component="settings-button"
 			>
@@ -64,16 +65,16 @@
 			</a>
 		</div>
 
-		<!-- Navigation -->
-		<nav class="mx-auto max-w-4xl px-4" data-component="nav-tabs">
+		<!-- Navigation (desktop only - mobile uses bottom tab bar) -->
+		<nav class="mx-auto hidden max-w-4xl px-4 md:block" data-component="nav-tabs">
 			<ul class="flex gap-1 text-sm">
 				{#each navTabs as tab}
 					<li>
 						<a
 							href="/w/{data.workspaceId}/{tab.href}"
 							class="inline-block rounded-t-lg border-b-2 px-4 py-2 {isActiveTab(tab.href)
-								? 'border-blue-500 text-blue-600 font-medium'
-								: 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900'}"
+								? 'border-primary text-primary font-medium'
+								: 'border-transparent text-muted hover:border-border hover:text-fg'}"
 						>
 							{tab.label}
 						</a>
@@ -87,4 +88,7 @@
 	<main class="mx-auto max-w-4xl px-4 py-6" data-component="main-content">
 		{@render children()}
 	</main>
+
+	<!-- Bottom Tab Bar (mobile only) -->
+	<BottomTabBar workspaceId={data.workspaceId} workspaceType={data.settings.type} />
 </div>
