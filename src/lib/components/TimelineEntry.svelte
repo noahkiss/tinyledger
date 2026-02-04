@@ -38,7 +38,7 @@
 
 <a
 	href="/w/{workspaceId}/transactions/{transaction.publicId}"
-	class="block rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition-all hover:border-gray-200 hover:shadow-md
+	class="block rounded-lg border border-card-border bg-card p-3 shadow-sm transition-all hover:border-border hover:shadow-md
 		{transaction.voidedAt ? 'opacity-60' : ''}"
 	data-component="transaction-card"
 >
@@ -46,13 +46,13 @@
 		<div class="min-w-0 flex-1">
 			<div class="flex items-center gap-2">
 				<span
-					class="font-medium {transaction.voidedAt ? 'text-gray-500 line-through' : 'text-gray-900'}"
+					class="font-medium {transaction.voidedAt ? 'text-muted line-through' : 'text-fg'}"
 				>
 					{transaction.payee}
 				</span>
 				{#if transaction.voidedAt}
 					<span
-						class="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600"
+						class="inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-xs font-medium text-muted"
 					>
 						Voided
 					</span>
@@ -60,7 +60,7 @@
 				{#if hasAttachment}
 					<iconify-icon
 						icon="solar:paperclip-bold"
-						class="text-gray-400"
+						class="text-muted"
 						width="16"
 						height="16"
 						aria-label="Has receipt"
@@ -68,7 +68,7 @@
 				{/if}
 			</div>
 			{#if primaryTag}
-				<span class="mt-1 inline-block text-xs text-gray-500">
+				<span class="mt-1 inline-block text-xs text-muted">
 					{primaryTag.tagName}
 				</span>
 			{/if}
@@ -78,25 +78,25 @@
 			{#if transaction.type === 'income'}
 				<iconify-icon
 					icon="solar:arrow-up-bold"
-					class={transaction.voidedAt ? 'text-gray-400' : 'text-green-500'}
+					class={transaction.voidedAt ? 'text-muted' : 'text-success'}
 					width="16"
 					height="16"
 				></iconify-icon>
 			{:else}
 				<iconify-icon
 					icon="solar:arrow-down-bold"
-					class={transaction.voidedAt ? 'text-gray-400' : 'text-red-500'}
+					class={transaction.voidedAt ? 'text-muted' : 'text-error'}
 					width="16"
 					height="16"
 				></iconify-icon>
 			{/if}
 			<span
-				class="font-semibold
+				class="font-semibold tabular-nums
 					{transaction.voidedAt
-					? 'text-gray-400 line-through'
+					? 'text-muted line-through'
 					: transaction.type === 'income'
-						? 'text-green-600'
-						: 'text-red-600'}"
+						? 'text-success'
+						: 'text-error'}"
 			>
 				{transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amountCents)}
 			</span>

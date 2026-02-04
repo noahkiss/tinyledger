@@ -153,7 +153,7 @@
 	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=income"
-			class="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-green-700 active:bg-green-800"
+			class="flex items-center justify-center gap-2 rounded-xl bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
 			data-component="add-income-button"
 		>
 			<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
@@ -161,7 +161,7 @@
 		</a>
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=expense"
-			class="flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-red-700 active:bg-red-800"
+			class="flex items-center justify-center gap-2 rounded-xl bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
 			data-component="add-expense-button"
 		>
 			<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
@@ -171,7 +171,7 @@
 
 	<!-- Sticky header with fiscal year and totals -->
 	<header
-		class="sticky top-3 z-10 rounded-xl border border-gray-100 bg-white/95 px-4 py-3 shadow-sm backdrop-blur"
+		class="sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
 		data-component="fiscal-header"
 	>
 		<div class="flex items-center justify-between">
@@ -183,19 +183,19 @@
 
 			<div class="flex items-center gap-4 text-sm">
 				<div class="text-right">
-					<span class="text-gray-500">Income</span>
-					<span class="ml-1 font-semibold text-green-600">+{formatCurrency(data.totals.income)}</span
+					<span class="text-muted">Income</span>
+					<span class="ml-1 font-semibold text-success tabular-nums">+{formatCurrency(data.totals.income)}</span
 					>
 				</div>
 				<div class="text-right">
-					<span class="text-gray-500">Expense</span>
-					<span class="ml-1 font-semibold text-red-600">-{formatCurrency(data.totals.expense)}</span
+					<span class="text-muted">Expense</span>
+					<span class="ml-1 font-semibold text-error tabular-nums">-{formatCurrency(data.totals.expense)}</span
 					>
 				</div>
-				<div class="border-l border-gray-300 pl-4 text-right">
-					<span class="text-gray-500">Net</span>
+				<div class="border-l border-border pl-4 text-right">
+					<span class="text-muted">Net</span>
 					<span
-						class="ml-1 font-bold {data.totals.net >= 0 ? 'text-green-600' : 'text-red-600'}"
+						class="ml-1 font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}"
 					>
 						{data.totals.net >= 0 ? '+' : ''}{formatCurrency(data.totals.net)}
 					</span>
@@ -214,23 +214,23 @@
 
 	<!-- Timeline -->
 	{#if !hasTimelineContent}
-		<div class="rounded-lg border border-gray-200 bg-white p-8 text-center" data-component="empty-state">
-			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-gray-400" width="48" height="48"></iconify-icon>
+		<div class="rounded-lg border border-card-border bg-card p-8 text-center" data-component="empty-state" data-state="empty">
+			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
 			{#if hasActiveFilters}
-				<p class="mt-4 text-gray-600">No transactions match your filters</p>
-				<p class="mt-1 text-sm text-gray-500">Try adjusting or clearing your filters.</p>
+				<p class="mt-4 text-fg">No transactions match your filters</p>
+				<p class="mt-1 text-sm text-muted">Try adjusting or clearing your filters.</p>
 			{:else}
-				<p class="mt-4 text-gray-600">
+				<p class="mt-4 text-fg">
 					No transactions in {formatFiscalYear(data.fiscalYear, data.fiscalYearStartMonth)}
 				</p>
-				<p class="mt-1 text-sm text-gray-500">
+				<p class="mt-1 text-sm text-muted">
 					Tap Income or Expense above to add your first transaction.
 				</p>
 			{/if}
 		</div>
 	{:else}
 		<div class="relative ms-3" data-component="transaction-timeline">
-			<ol class="relative border-s-2 border-gray-200">
+			<ol class="relative border-s-2 border-border">
 				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
 					<li class="mb-6 ms-6" data-date={date}>
 						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment, pendingInstances)} />
@@ -327,7 +327,7 @@
 				{/each}
 			</ol>
 			<!-- Timeline end marker -->
-			<div class="absolute -bottom-2 -left-1.5 flex h-3 w-3 items-center justify-center rounded-full border-2 border-gray-300 bg-white"></div>
+			<div class="absolute -bottom-2 -left-1.5 flex h-3 w-3 items-center justify-center rounded-full border-2 border-border bg-card"></div>
 		</div>
 	{/if}
 </div>

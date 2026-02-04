@@ -125,27 +125,27 @@
 	<!-- First row: Type filter + Payee search + Count -->
 	<div class="flex items-center gap-3">
 		<!-- Type segmented buttons -->
-		<div class="flex rounded-lg border border-gray-200 bg-white">
+		<div class="flex rounded-lg border border-border bg-card">
 			<button
 				type="button"
-				class="px-3 py-2 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
-					{currentFilters.type === '' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
+				class="cursor-pointer px-3 py-2 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
+					{currentFilters.type === '' ? 'bg-primary text-white' : 'text-muted hover:bg-surface'}"
 				onclick={() => handleTypeChange('')}
 			>
 				All
 			</button>
 			<button
 				type="button"
-				class="border-l border-gray-200 px-3 py-2 text-sm font-medium transition-colors
-					{currentFilters.type === 'income' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
+				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors
+					{currentFilters.type === 'income' ? 'bg-success text-white' : 'text-muted hover:bg-surface'}"
 				onclick={() => handleTypeChange('income')}
 			>
 				Income
 			</button>
 			<button
 				type="button"
-				class="border-l border-gray-200 px-3 py-2 text-sm font-medium transition-colors last:rounded-r-lg
-					{currentFilters.type === 'expense' ? 'bg-red-600 text-white' : 'text-gray-600 hover:bg-gray-50'}"
+				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors last:rounded-r-lg
+					{currentFilters.type === 'expense' ? 'bg-error text-white' : 'text-muted hover:bg-surface'}"
 				onclick={() => handleTypeChange('expense')}
 			>
 				Expense
@@ -156,7 +156,7 @@
 		<div class="relative flex-1">
 			<iconify-icon
 				icon="solar:magnifer-linear"
-				class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+				class="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
 				width="16"
 				height="16"
 			></iconify-icon>
@@ -165,12 +165,12 @@
 				placeholder="Search payee..."
 				value={payeeInput}
 				oninput={handlePayeeInput}
-				class="w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="w-full rounded-lg border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
 			/>
 		</div>
 
 		<!-- Filter count -->
-		<div class="text-sm text-gray-500">
+		<div class="text-sm text-muted">
 			{filteredCount === totalCount
 				? `${totalCount} transactions`
 				: `${filteredCount} of ${totalCount}`}
@@ -183,8 +183,8 @@
 		<div class="relative">
 			<button
 				type="button"
-				class="flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm hover:bg-gray-50
-					{currentFilters.tags.length > 0 ? 'border-blue-500 text-blue-600' : 'text-gray-600'}"
+				class="flex cursor-pointer items-center gap-1 rounded-lg border bg-card px-3 py-2 text-sm hover:bg-surface
+					{currentFilters.tags.length > 0 ? 'border-primary text-primary' : 'border-border text-muted'}"
 				onclick={() => (showTagDropdown = !showTagDropdown)}
 			>
 				<iconify-icon icon="solar:tag-bold" width="16" height="16"></iconify-icon>
@@ -197,20 +197,20 @@
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="fixed inset-0 z-10" onclick={() => (showTagDropdown = false)}></div>
 				<div
-					class="absolute left-0 top-full z-20 mt-1 max-h-64 w-48 overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg"
+					class="absolute left-0 top-full z-20 mt-1 max-h-64 w-48 overflow-auto rounded-lg border border-border bg-card shadow-lg"
 				>
 					{#if availableTags.length === 0}
-						<div class="px-3 py-2 text-sm text-gray-500">No tags available</div>
+						<div class="px-3 py-2 text-sm text-muted">No tags available</div>
 					{:else}
 						{#each availableTags as tag}
-							<label class="flex cursor-pointer items-center gap-2 px-3 py-2 hover:bg-gray-50">
+							<label class="flex cursor-pointer items-center gap-2 px-3 py-2 hover:bg-surface">
 								<input
 									type="checkbox"
 									checked={currentFilters.tags.includes(tag.id)}
 									onchange={() => handleTagToggle(tag.id)}
-									class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+									class="rounded border-border text-primary focus:ring-primary"
 								/>
-								<span class="text-sm text-gray-700">{tag.name}</span>
+								<span class="text-sm text-fg">{tag.name}</span>
 							</label>
 						{/each}
 					{/if}
@@ -224,14 +224,14 @@
 				type="date"
 				value={currentFilters.from}
 				onchange={handleFromChange}
-				class="rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="rounded-lg border border-input-border bg-input px-2 py-2 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
 			/>
-			<span class="text-gray-400">-</span>
+			<span class="text-muted">-</span>
 			<input
 				type="date"
 				value={currentFilters.to}
 				onchange={handleToChange}
-				class="rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="rounded-lg border border-input-border bg-input px-2 py-2 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
 			/>
 		</div>
 
@@ -239,8 +239,8 @@
 		<select
 			value={currentFilters.method}
 			onchange={handleMethodChange}
-			class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500
-				{currentFilters.method ? 'border-blue-500 text-blue-600' : 'text-gray-600'}"
+			class="cursor-pointer rounded-lg border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus
+				{currentFilters.method ? 'border-primary text-primary' : 'border-input-border text-muted'}"
 		>
 			<option value="">All Methods</option>
 			<option value="cash">Cash</option>
@@ -253,7 +253,7 @@
 			<button
 				type="button"
 				onclick={clearAllFilters}
-				class="flex items-center gap-1 rounded-lg px-2 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+				class="flex cursor-pointer items-center gap-1 rounded-lg px-2 py-2 text-sm text-muted hover:bg-surface hover:text-fg"
 			>
 				<iconify-icon icon="solar:close-circle-linear" width="16" height="16"></iconify-icon>
 				Clear
