@@ -154,10 +154,34 @@
 html {
 	background-color: var(--color-background);
 	color: var(--color-foreground);
+	/* Ensure minimum 16px base font size */
+	font-size: 100%;
 }
 
 body {
 	background-color: var(--color-background);
 	color: var(--color-foreground);
 	min-height: 100vh;
+	/* Line height for readability (1.5-1.75 range) */
+	line-height: 1.6;
+	/* Optimize text rendering */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Prose content: constrain line length for readability */
+.prose-content {
+	max-width: 65ch;
+}
+
+/* Tabular numbers for financial data */
+.tabular-nums {
+	font-variant-numeric: tabular-nums;
+}
+
+/* Currency and number display */
+[data-currency],
+.currency {
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: "tnum" 1;
 }
