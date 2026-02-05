@@ -1,6 +1,6 @@
-import rrule, { RRule as RRuleType } from 'rrule';
+import rrule from 'rrule';
 const { RRule } = rrule;
-type RRule = RRuleType;
+type RRuleInstance = InstanceType<typeof RRule>;
 
 export type RecurringFrequency =
 	| 'daily'
@@ -22,7 +22,7 @@ export interface RecurringPattern {
 /**
  * Create an RRule from pattern definition.
  */
-export function createRRule(pattern: RecurringPattern, startDate: string, endDate?: string): RRule {
+export function createRRule(pattern: RecurringPattern, startDate: string, endDate?: string): RRuleInstance {
 	// Parse start date as local date (no timezone)
 	const [year, month, day] = startDate.split('-').map(Number);
 	const dtstart = new Date(year, month - 1, day, 12, 0, 0); // Noon to avoid DST issues
@@ -116,6 +116,6 @@ export function getPatternDescription(pattern: RecurringPattern): string {
 /**
  * Parse pattern from stored rrule string.
  */
-export function parseRRuleString(rruleString: string): RRule {
+export function parseRRuleString(rruleString: string): RRuleInstance {
 	return RRule.fromString(rruleString);
 }

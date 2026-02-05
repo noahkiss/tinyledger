@@ -1,6 +1,7 @@
 import rrule from 'rrule';
-type RRule = rrule.RRule;
 import { parseRRuleString } from './patterns';
+
+type RRuleInstance = InstanceType<typeof rrule.RRule>;
 
 export interface PendingInstance {
 	templateId: number;
@@ -18,7 +19,7 @@ export interface PendingInstance {
  * Excludes already confirmed (transactions exist) and skipped instances.
  */
 export function getPendingInstances(
-	rule: RRule,
+	rule: RRuleInstance,
 	startDate: Date,
 	endDate: Date,
 	confirmedDates: Set<string>,
