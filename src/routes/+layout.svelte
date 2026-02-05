@@ -18,20 +18,20 @@
 <footer class="relative mt-8" data-component="penny-footer">
 	<!-- Fade gradient overlay at top -->
 	<div
-		class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-bg to-transparent"
+		class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-bg to-transparent md:h-32"
 	></div>
 
 	<!-- Daytime image (light mode) -->
 	<img
 		src="/brand/footer-daytime.png"
-		alt="Penny the Hedgehog reading her ledger on a sunny day"
-		class="mx-auto w-full max-w-2xl dark:hidden"
+		alt="TinyLedger - Penny the Hedgehog reading her ledger on a sunny day"
+		class="mx-auto w-full max-w-4xl dark:hidden"
 	/>
 
 	<!-- Nighttime image (dark mode) -->
 	<img
 		src="/brand/footer-nighttime.png"
-		alt="Penny the Hedgehog reading her ledger under the stars"
-		class="mx-auto hidden w-full max-w-2xl dark:block"
+		alt="TinyLedger - Penny the Hedgehog reading her ledger under the stars"
+		class="mx-auto hidden w-full max-w-4xl dark:block"
 	/>
 </footer>
