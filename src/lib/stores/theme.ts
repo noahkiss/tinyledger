@@ -21,8 +21,11 @@ function applyTheme(theme: ResolvedTheme) {
 	if (!browser) return;
 
 	const root = document.documentElement;
-	root.classList.remove('light', 'dark');
-	root.classList.add(theme);
+	if (theme === 'dark') {
+		root.classList.add('dark');
+	} else {
+		root.classList.remove('dark');
+	}
 
 	// Update theme-color meta for mobile browsers
 	const meta = document.querySelector('meta.theme-color-meta');

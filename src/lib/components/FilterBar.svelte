@@ -210,8 +210,8 @@
 </script>
 
 <div class="flex flex-col gap-3 py-3" data-component="filter-bar">
-	<!-- First row: Type filter + Search + Count -->
-	<div class="flex items-center gap-3">
+	<!-- Filter bar (unified container) -->
+	<div class="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2">
 		<!-- Type segmented buttons -->
 		<div class="flex rounded-lg border border-border bg-card">
 			<button
@@ -240,8 +240,11 @@
 			</button>
 		</div>
 
+		<!-- Divider -->
+		<div class="h-5 w-px bg-border"></div>
+
 		<!-- Collapsible Search -->
-		<div class="flex-1" data-search-container>
+		<div data-search-container>
 			{#if searchExpanded || payeeInput}
 				<div class="relative">
 					<iconify-icon
@@ -264,7 +267,7 @@
 				<button
 					type="button"
 					onclick={expandSearch}
-					class="flex cursor-pointer items-center gap-1 rounded-lg border border-border bg-card px-3 py-2 text-sm text-muted hover:bg-surface hover:text-fg"
+					class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm text-muted hover:bg-surface hover:text-fg"
 				>
 					<iconify-icon icon="solar:magnifer-linear" width="16" height="16"></iconify-icon>
 					<span class="hidden sm:inline">Search</span>
@@ -272,16 +275,8 @@
 			{/if}
 		</div>
 
-		<!-- Filter count -->
-		<div class="text-sm text-muted whitespace-nowrap">
-			{filteredCount === totalCount
-				? `${totalCount} transactions`
-				: `${filteredCount} of ${totalCount}`}
-		</div>
-	</div>
-
-	<!-- Second row: Filter bar (unified container) -->
-	<div class="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2">
+		<!-- Divider -->
+		<div class="h-5 w-px bg-border"></div>
 		<!-- Tags dropdown -->
 		<div class="relative">
 			<button
@@ -446,8 +441,15 @@
 			{/if}
 		</button>
 
-		<!-- Spacer to push clear to the right -->
+		<!-- Spacer to push count and clear to the right -->
 		<div class="flex-1"></div>
+
+		<!-- Filter count -->
+		<div class="text-sm text-muted whitespace-nowrap">
+			{filteredCount === totalCount
+				? `${totalCount} transactions`
+				: `${filteredCount} of ${totalCount}`}
+		</div>
 
 		<!-- Clear filters -->
 		{#if hasActiveFilters}

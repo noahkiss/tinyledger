@@ -4,6 +4,7 @@
 	import WorkspaceSelector from '$lib/components/WorkspaceSelector.svelte';
 	import BottomTabBar from '$lib/components/BottomTabBar.svelte';
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
@@ -66,14 +67,17 @@
 			</div>
 
 			<!-- Settings cog -->
-			<a
-				href="/w/{data.workspaceId}/settings"
-				class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
-				title="Settings"
-				data-component="settings-button"
-			>
-				<iconify-icon icon="solar:settings-bold" width="20" height="20"></iconify-icon>
-			</a>
+			<div class="flex items-center gap-1">
+				<ThemeToggle />
+				<a
+					href="/w/{data.workspaceId}/settings"
+					class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+					title="Settings"
+					data-component="settings-button"
+				>
+					<iconify-icon icon="solar:settings-bold" width="20" height="20"></iconify-icon>
+				</a>
+			</div>
 		</div>
 
 		<!-- Navigation (desktop only - mobile uses bottom tab bar) -->
