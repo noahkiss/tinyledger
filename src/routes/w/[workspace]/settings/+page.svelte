@@ -123,16 +123,16 @@
 </svelte:head>
 
 <div>
-	<h2 class="mb-6 text-xl font-semibold text-fg">Workspace Settings</h2>
+	<h2 class="title is-4 mb-5">Workspace Settings</h2>
 
 	<!-- Appearance Section -->
-	<section data-section="appearance" class="mb-6 rounded-lg border border-card-border bg-card p-6">
-		<h3 class="text-lg font-medium text-fg">Appearance</h3>
-		<p class="mt-1 text-sm text-muted">Choose how Ledger looks to you.</p>
+	<section data-section="appearance" class="box mb-5">
+		<h3 class="title is-5 mb-1">Appearance</h3>
+		<p class="is-size-7 has-text-grey">Choose how Ledger looks to you.</p>
 
 		<div class="mt-4">
-			<label class="block text-sm font-medium text-fg">Theme</label>
-			<div class="mt-2 flex gap-2">
+			<label class="label">Theme</label>
+			<div class="theme-buttons">
 				{#each [
 					{ value: 'system', label: 'System', icon: 'solar:monitor-linear' },
 					{ value: 'light', label: 'Light', icon: 'solar:sun-linear' },
@@ -141,17 +141,16 @@
 					<button
 						type="button"
 						onclick={() => themePreference.set(option.value as ThemePreference)}
-						class="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors cursor-pointer {$themePreference ===
-						option.value
-							? 'border-primary bg-primary/10 text-primary'
-							: 'border-border bg-surface text-fg hover:bg-surface-alt'}"
+						class="button theme-btn {$themePreference === option.value ? 'is-active' : ''}"
 					>
-						<iconify-icon icon={option.icon} width="18" height="18"></iconify-icon>
-						{option.label}
+						<span class="icon is-small">
+							<iconify-icon icon={option.icon} width="18" height="18"></iconify-icon>
+						</span>
+						<span>{option.label}</span>
 					</button>
 				{/each}
 			</div>
-			<p class="mt-2 text-xs text-muted">
+			<p class="is-size-7 has-text-grey mt-2">
 				{#if $themePreference === 'system'}
 					Automatically matches your device's appearance setting.
 				{:else if $themePreference === 'light'}
@@ -178,22 +177,22 @@
 				await update();
 			};
 		}}
-		class="space-y-6 rounded-lg border border-border bg-card p-6"
+		class="box settings-form"
 	>
 		{#if form?.error}
-			<div class="rounded-lg bg-red-50 p-3 text-sm text-red-800">
+			<div class="notification is-danger is-light">
 				{form.error}
 			</div>
 		{/if}
 
 		{#if form?.success}
-			<div class="rounded-lg bg-green-50 p-3 text-sm text-green-800">Settings saved successfully!</div>
+			<div class="notification is-success is-light">Settings saved successfully!</div>
 		{/if}
 
 		{#if form?.warnings && form.warnings.length > 0}
-			<div class="rounded-lg bg-yellow-50 border border-yellow-200 p-3">
-				<p class="text-sm font-medium text-yellow-800">Settings saved with warnings:</p>
-				<ul class="mt-1 text-sm text-yellow-700 list-disc list-inside">
+			<div class="notification is-warning is-light">
+				<p class="has-text-weight-medium">Settings saved with warnings:</p>
+				<ul class="mt-1 warnings-list">
 					{#each form.warnings as warning}
 						<li>{warning}</li>
 					{/each}
@@ -202,14 +201,14 @@
 		{/if}
 
 		<!-- Logo section -->
-		<div>
-			<label for="logo" class="block text-sm font-medium text-fg">Logo</label>
-			<div class="mt-2 flex items-center gap-4">
+		<div class="field">
+			<label for="logo" class="label">Logo</label>
+			<div class="logo-upload">
 				{#if logoPreviewUrl}
 					<img
 						src={logoPreviewUrl}
 						alt="Logo preview"
-						class="h-16 w-16 rounded-lg object-cover"
+						class="logo-preview"
 					/>
 				{:else}
 					<WorkspaceLogo
@@ -220,218 +219,253 @@
 					/>
 				{/if}
 				<div>
-					<input
-						type="file"
-						id="logo"
-						name="logo"
-						accept="image/*"
-						onchange={handleLogoChange}
-						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
-					/>
-					<p class="mt-1 text-xs text-muted">PNG, JPG, or GIF. Will be resized to 128x128.</p>
+					<div class="file has-name">
+						<label class="file-label">
+							<input
+								type="file"
+								id="logo"
+								name="logo"
+								accept="image/*"
+								onchange={handleLogoChange}
+								class="file-input"
+							/>
+							<span class="file-cta">
+								<span class="file-label">Choose a file...</span>
+							</span>
+						</label>
+					</div>
+					<p class="help">PNG, JPG, or GIF. Will be resized to 128x128.</p>
 				</div>
 			</div>
 		</div>
 
 		<!-- Basic info -->
-		<div class="grid gap-4 sm:grid-cols-2">
-			<div>
-				<label for="name" class="block text-sm font-medium text-fg">Workspace Name</label>
-				<input
-					type="text"
-					id="name"
-					name="name"
-					value={data.settings.name}
-					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-				/>
+		<div class="columns">
+			<div class="column">
+				<div class="field">
+					<label for="name" class="label">Workspace Name</label>
+					<div class="control">
+						<input
+							type="text"
+							id="name"
+							name="name"
+							value={data.settings.name}
+							required
+							class="input"
+						/>
+					</div>
+				</div>
 			</div>
 
-			<div>
-				<label for="type" class="block text-sm font-medium text-fg">Workspace Type</label>
-				<select
-					id="type"
-					name="type"
-					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-				>
-					<option value="sole_prop" selected={data.settings.type === 'sole_prop'}
-						>Sole Proprietor</option
-					>
-					<option value="volunteer_org" selected={data.settings.type === 'volunteer_org'}
-						>Volunteer Organization</option
-					>
-				</select>
+			<div class="column">
+				<div class="field">
+					<label for="type" class="label">Workspace Type</label>
+					<div class="control">
+						<div class="select is-fullwidth">
+							<select
+								id="type"
+								name="type"
+								required
+							>
+								<option value="sole_prop" selected={data.settings.type === 'sole_prop'}
+									>Sole Proprietor</option
+								>
+								<option value="volunteer_org" selected={data.settings.type === 'volunteer_org'}
+									>Volunteer Organization</option
+								>
+							</select>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<!-- Business details -->
-		<div>
-			<label for="businessName" class="block text-sm font-medium text-fg">Business Name</label>
-			<input
-				type="text"
-				id="businessName"
-				name="businessName"
-				value={data.settings.businessName ?? ''}
-				placeholder="Legal business name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-			/>
-		</div>
-
-		<div>
-			<label for="address" class="block text-sm font-medium text-fg">Business Address</label>
-			<textarea
-				id="address"
-				name="address"
-				rows="2"
-				placeholder="Street address, city, state, ZIP"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-				>{data.settings.address ?? ''}</textarea
-			>
-		</div>
-
-		<div class="grid gap-4 sm:grid-cols-2">
-			<div>
-				<label for="phone" class="block text-sm font-medium text-fg">Phone Number</label>
+		<div class="field">
+			<label for="businessName" class="label">Business Name</label>
+			<div class="control">
 				<input
-					type="tel"
-					id="phone"
-					name="phone"
-					value={data.settings.phone ?? ''}
-					placeholder="(555) 555-5555"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-				/>
-			</div>
-
-			<div>
-				<label for="foundedYear" class="block text-sm font-medium text-fg">Founded Year</label>
-				<input
-					type="number"
-					id="foundedYear"
-					name="foundedYear"
-					value={data.settings.foundedYear ?? ''}
-					min="1800"
-					max={new Date().getFullYear()}
-					placeholder="2020"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+					type="text"
+					id="businessName"
+					name="businessName"
+					value={data.settings.businessName ?? ''}
+					placeholder="Legal business name"
+					class="input"
 				/>
 			</div>
 		</div>
 
-		<div>
-			<label for="responsibleParty" class="block text-sm font-medium text-fg"
-				>Responsible Party</label
-			>
-			<input
-				type="text"
-				id="responsibleParty"
-				name="responsibleParty"
-				value={data.settings.responsibleParty ?? ''}
-				placeholder="Owner/manager name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-			/>
+		<div class="field">
+			<label for="address" class="label">Business Address</label>
+			<div class="control">
+				<textarea
+					id="address"
+					name="address"
+					rows="2"
+					placeholder="Street address, city, state, ZIP"
+					class="textarea"
+					>{data.settings.address ?? ''}</textarea
+				>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column">
+				<div class="field">
+					<label for="phone" class="label">Phone Number</label>
+					<div class="control">
+						<input
+							type="tel"
+							id="phone"
+							name="phone"
+							value={data.settings.phone ?? ''}
+							placeholder="(555) 555-5555"
+							class="input"
+						/>
+					</div>
+				</div>
+			</div>
+
+			<div class="column">
+				<div class="field">
+					<label for="foundedYear" class="label">Founded Year</label>
+					<div class="control">
+						<input
+							type="number"
+							id="foundedYear"
+							name="foundedYear"
+							value={data.settings.foundedYear ?? ''}
+							min="1800"
+							max={new Date().getFullYear()}
+							placeholder="2020"
+							class="input"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="field">
+			<label for="responsibleParty" class="label">Responsible Party</label>
+			<div class="control">
+				<input
+					type="text"
+					id="responsibleParty"
+					name="responsibleParty"
+					value={data.settings.responsibleParty ?? ''}
+					placeholder="Owner/manager name"
+					class="input"
+				/>
+			</div>
 		</div>
 
 		<!-- Fiscal Year -->
-		<div class="rounded-lg border border-card-border bg-surface p-4">
-			<label for="fiscalYearStartMonth" class="block text-sm font-medium text-fg"
-				>Fiscal Year Start Month</label
-			>
-			<p class="mb-2 mt-1 text-xs text-muted">
+		<div class="box fiscal-year-box">
+			<label for="fiscalYearStartMonth" class="label">Fiscal Year Start Month</label>
+			<p class="help mb-2">
 				Fiscal year runs from the selected month through the following year. Most businesses use
 				calendar year (January).
 			</p>
-			<select
-				id="fiscalYearStartMonth"
-				name="fiscalYearStartMonth"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
-			>
-				{#each months as month}
-					<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
-						{month.label}
-					</option>
-				{/each}
-			</select>
+			<div class="control">
+				<div class="select">
+					<select
+						id="fiscalYearStartMonth"
+						name="fiscalYearStartMonth"
+					>
+						{#each months as month}
+							<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
+								{month.label}
+							</option>
+						{/each}
+					</select>
+				</div>
+			</div>
 		</div>
 
 		<!-- Tax Configuration (only for sole_prop) -->
 		{#if data.settings.type === 'sole_prop'}
-			<div class="rounded-lg border border-border bg-card p-6">
-				<h3 class="text-lg font-medium text-fg">Tax Configuration</h3>
-				<p class="mt-1 text-sm text-muted">
+			<div class="box">
+				<h3 class="title is-5 mb-1">Tax Configuration</h3>
+				<p class="is-size-7 has-text-grey">
 					Configure your tax rates for estimated tax calculations. These settings help calculate quarterly estimated payments.
 				</p>
 
-				<div class="mt-6 space-y-6">
+				<div class="tax-fields mt-5">
 					<!-- State Selection -->
-					<div>
-						<label for="state" class="block text-sm font-medium text-fg">State</label>
-						<select
-							id="state"
-							name="state"
-							bind:value={selectedState}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
-						>
-							{#each STATE_TAX_RATES as state}
-								<option value={state.code}>
-									{state.name} ({state.rateLabel})
-								</option>
-							{/each}
-						</select>
-						<p class="mt-1 text-xs text-muted">
+					<div class="field">
+						<label for="state" class="label">State</label>
+						<div class="control">
+							<div class="select">
+								<select
+									id="state"
+									name="state"
+									bind:value={selectedState}
+								>
+									{#each STATE_TAX_RATES as state}
+										<option value={state.code}>
+											{state.name} ({state.rateLabel})
+										</option>
+									{/each}
+								</select>
+							</div>
+						</div>
+						<p class="help">
 							Select your state for default tax rate. Only flat-rate states are listed.
 						</p>
 					</div>
 
 					<!-- Federal Bracket -->
-					<div>
-						<div class="flex items-center justify-between">
-							<label for="federalBracketRate" class="block text-sm font-medium text-fg">
+					<div class="field">
+						<div class="is-flex is-align-items-center is-justify-content-space-between">
+							<label for="federalBracketRate" class="label mb-0">
 								Federal Tax Bracket
 							</label>
 							<button
 								type="button"
-								class="text-xs text-primary hover:text-primary"
+								class="button is-ghost is-small help-toggle"
 								onclick={() => (showFederalBracketHelp = !showFederalBracketHelp)}
 							>
 								{showFederalBracketHelp ? 'Hide help' : 'How to choose?'}
 							</button>
 						</div>
-						<select
-							id="federalBracketRate"
-							name="federalBracketRate"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
-						>
-							<option value="">Select your bracket...</option>
-							{#each FEDERAL_BRACKETS_2026 as bracket}
-								<option
-									value={Math.round(bracket.rate * 100)}
-									selected={data.settings.federalBracketRate === Math.round(bracket.rate * 100)}
+						<div class="control">
+							<div class="select">
+								<select
+									id="federalBracketRate"
+									name="federalBracketRate"
 								>
-									{bracket.label}
-								</option>
-							{/each}
-						</select>
+									<option value="">Select your bracket...</option>
+									{#each FEDERAL_BRACKETS_2026 as bracket}
+										<option
+											value={Math.round(bracket.rate * 100)}
+											selected={data.settings.federalBracketRate === Math.round(bracket.rate * 100)}
+										>
+											{bracket.label}
+										</option>
+									{/each}
+								</select>
+							</div>
+						</div>
 
 						{#if showFederalBracketHelp}
-							<div class="mt-3 rounded-lg border border-card-border bg-surface p-4 text-sm">
-								<p class="font-medium text-fg">How to pick your bracket:</p>
-								<p class="mt-1 text-muted">
+							<div class="box bracket-help mt-3">
+								<p class="has-text-weight-medium">How to pick your bracket:</p>
+								<p class="mt-1 has-text-grey">
 									Select the bracket that matches your expected <strong>taxable income</strong> after all deductions and credits.
 									This is typically your total income minus the standard deduction ($15,000 for single filers in 2026).
 								</p>
-								<table class="mt-3 w-full text-xs">
+								<table class="table is-fullwidth is-size-7 mt-3">
 									<thead>
-										<tr class="border-b border-border">
-											<th class="pb-2 text-left font-medium text-fg">Rate</th>
-											<th class="pb-2 text-left font-medium text-fg">Taxable Income Range</th>
+										<tr>
+											<th>Rate</th>
+											<th>Taxable Income Range</th>
 										</tr>
 									</thead>
-									<tbody class="text-muted">
+									<tbody>
 										{#each FEDERAL_BRACKETS_2026 as bracket}
-											<tr class="border-b border-border">
-												<td class="py-1.5">{bracket.rateLabel}</td>
-												<td class="py-1.5">
+											<tr>
+												<td>{bracket.rateLabel}</td>
+												<td>
 													${bracket.minIncome.toLocaleString()}
 													{#if bracket.maxIncome}
 														- ${bracket.maxIncome.toLocaleString()}
@@ -448,37 +482,38 @@
 					</div>
 
 					<!-- State Rate Override -->
-					<div>
-						<div class="flex items-center gap-2">
-							<input
-								type="checkbox"
-								id="useCustomStateRate"
-								bind:checked={useCustomStateRate}
-								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
-							/>
-							<label for="useCustomStateRate" class="text-sm font-medium text-fg">
+					<div class="field">
+						<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+							<label class="checkbox">
+								<input
+									type="checkbox"
+									id="useCustomStateRate"
+									bind:checked={useCustomStateRate}
+								/>
 								Use custom state rate
 							</label>
-							<span class="text-xs text-muted">
+							<span class="is-size-7 has-text-grey">
 								(Default: {currentStateRateLabel()})
 							</span>
 						</div>
 
 						{#if useCustomStateRate}
 							<div class="mt-3">
-								<label for="stateRateOverride" class="block text-sm font-medium text-fg">
+								<label for="stateRateOverride" class="label">
 									State Rate Override (%)
 								</label>
-								<input
-									type="text"
-									id="stateRateOverride"
-									name="stateRateOverride"
-									bind:value={stateRateOverrideInput}
-									placeholder={(currentStateRate() * 100).toFixed(2)}
-									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
-								/>
+								<div class="control">
+									<input
+										type="text"
+										id="stateRateOverride"
+										name="stateRateOverride"
+										bind:value={stateRateOverrideInput}
+										placeholder={(currentStateRate() * 100).toFixed(2)}
+										class="input rate-input"
+									/>
+								</div>
 								{#if stateRateWarning()}
-									<div class="mt-2 rounded-lg bg-yellow-50 border border-yellow-200 p-2 text-sm text-yellow-800">
+									<div class="notification is-warning is-light is-size-7 mt-2 py-2 px-3">
 										{stateRateWarning()}
 									</div>
 								{/if}
@@ -487,92 +522,92 @@
 					</div>
 
 					<!-- Local EIT Rate -->
-					<div>
-						<label for="localEitRate" class="block text-sm font-medium text-fg">
+					<div class="field">
+						<label for="localEitRate" class="label">
 							Local Earned Income Tax Rate (%)
 						</label>
-						<input
-							type="text"
-							id="localEitRate"
-							name="localEitRate"
-							bind:value={localEitRateInput}
-							placeholder="e.g., 1.0"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
-						/>
-						<p class="mt-1 text-xs text-muted">
+						<div class="control">
+							<input
+								type="text"
+								id="localEitRate"
+								name="localEitRate"
+								bind:value={localEitRateInput}
+								placeholder="e.g., 1.0"
+								class="input rate-input"
+							/>
+						</div>
+						<p class="help">
 							Municipal earned income tax rate, if applicable.
 							{#if selectedState === 'PA'}
 								<a
 									href="https://apps.dced.pa.gov/munstats-public/ReportInformation2.aspx?report=EitWithCollector_Dyn_Excel&type=R"
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-primary hover:text-primary underline"
 								>
 									Find your PA local rate
 								</a>
 							{/if}
 						</p>
 						{#if localEitWarning()}
-							<div class="mt-2 rounded-lg bg-yellow-50 border border-yellow-200 p-2 text-sm text-yellow-800">
+							<div class="notification is-warning is-light is-size-7 mt-2 py-2 px-3">
 								{localEitWarning()}
 							</div>
 						{/if}
 					</div>
 
 					<!-- Tax Notes -->
-					<div>
-						<label for="taxNotes" class="block text-sm font-medium text-fg">Tax Notes</label>
-						<textarea
-							id="taxNotes"
-							name="taxNotes"
-							rows="2"
-							placeholder="Notes for your reference (e.g., CPA contact info, reminders)"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
-							>{data.settings.taxNotes ?? ''}</textarea
-						>
+					<div class="field">
+						<label for="taxNotes" class="label">Tax Notes</label>
+						<div class="control">
+							<textarea
+								id="taxNotes"
+								name="taxNotes"
+								rows="2"
+								placeholder="Notes for your reference (e.g., CPA contact info, reminders)"
+								class="textarea"
+								>{data.settings.taxNotes ?? ''}</textarea
+							>
+						</div>
 					</div>
 
 					<!-- Tax Forms & Resources (expandable) -->
-					<div class="overflow-hidden rounded-lg border border-border">
+					<div class="box tax-forms-box p-0">
 						<button
 							type="button"
-							class="flex w-full items-center justify-between p-4 text-left hover:bg-surface"
+							class="tax-forms-toggle"
 							onclick={() => (showTaxForms = !showTaxForms)}
 						>
-							<span class="font-medium text-fg">Tax Forms & Resources</span>
+							<span class="has-text-weight-medium">Tax Forms & Resources</span>
 							<iconify-icon
 								icon="solar:alt-arrow-down-linear"
-								class="text-muted transition-transform {showTaxForms ? 'rotate-180' : ''}"
+								class="has-text-grey toggle-icon {showTaxForms ? 'is-rotated' : ''}"
 								width="20"
 								height="20"
 							></iconify-icon>
 						</button>
 
 						{#if showTaxForms}
-							<div class="border-t border-border bg-surface p-4">
+							<div class="tax-forms-content">
 								<!-- Federal Forms -->
 								<div>
-									<h4 class="text-sm font-medium text-fg">Federal Forms</h4>
-									<div class="mt-2 space-y-3">
+									<h4 class="label">Federal Forms</h4>
+									<div class="form-list">
 										{#each federalForms() as form}
-											<div class="text-sm">
-												<div class="flex items-start justify-between">
-													<div>
-														<a
-															href={form.irsLink}
-															target="_blank"
-															rel="noopener noreferrer"
-															class="font-medium text-primary hover:text-primary underline"
-														>
-															{form.name}
-														</a>
-														<span class="text-muted"> - {form.description}</span>
-													</div>
+											<div class="is-size-7">
+												<div>
+													<a
+														href={form.irsLink}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														{form.name}
+													</a>
+													<span class="has-text-grey"> - {form.description}</span>
 												</div>
-												<div class="mt-1 flex items-center gap-3 text-xs text-muted">
+												<div class="mt-1 is-flex is-align-items-center has-text-grey" style="gap: 0.75rem;">
 													<span>Due: {form.dueDate}</span>
 													{#if form.filingThreshold}
-														<span class="text-muted">|</span>
+														<span class="has-text-grey">|</span>
 														<span>{form.filingThreshold}</span>
 													{/if}
 												</div>
@@ -583,28 +618,25 @@
 
 								<!-- State Forms (if any) -->
 								{#if stateForms().length > 0}
-									<div class="mt-4 border-t border-border pt-4">
-										<h4 class="text-sm font-medium text-fg">State Forms ({selectedState})</h4>
-										<div class="mt-2 space-y-3">
+									<div class="state-forms-section">
+										<h4 class="label">State Forms ({selectedState})</h4>
+										<div class="form-list">
 											{#each stateForms() as form}
-												<div class="text-sm">
-													<div class="flex items-start justify-between">
-														<div>
-															<a
-																href={form.stateLink}
-																target="_blank"
-																rel="noopener noreferrer"
-																class="font-medium text-primary hover:text-primary underline"
-															>
-																{form.name}
-															</a>
-															<span class="text-muted"> - {form.description}</span>
-														</div>
+												<div class="is-size-7">
+													<div>
+														<a
+															href={form.stateLink}
+															target="_blank"
+															rel="noopener noreferrer"
+														>
+															{form.name}
+														</a>
+														<span class="has-text-grey"> - {form.description}</span>
 													</div>
-													<div class="mt-1 flex items-center gap-3 text-xs text-muted">
+													<div class="mt-1 is-flex is-align-items-center has-text-grey" style="gap: 0.75rem;">
 														<span>Due: {form.dueDate}</span>
 														{#if form.filingThreshold}
-															<span class="text-muted">|</span>
+															<span class="has-text-grey">|</span>
 															<span>{form.filingThreshold}</span>
 														{/if}
 													</div>
@@ -614,7 +646,7 @@
 									</div>
 								{/if}
 
-								<p class="mt-4 text-xs text-muted italic">
+								<p class="mt-4 is-size-7 has-text-grey is-italic">
 									These are common forms. Your situation may require additional forms. Consult a tax professional for advice.
 								</p>
 							</div>
@@ -624,16 +656,16 @@
 			</div>
 		{/if}
 
-		<div class="flex justify-end gap-3 pt-4">
+		<div class="is-flex is-justify-content-flex-end pt-4 form-actions">
 			<a
 				href="/w/{data.workspaceId}/transactions"
-				class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+				class="button is-light"
 			>
 				Cancel
 			</a>
 			<button
 				type="submit"
-				class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:bg-primary/80"
+				class="button is-primary"
 			>
 				Save Settings
 			</button>
@@ -641,119 +673,129 @@
 	</form>
 
 	<!-- Tags Management Link -->
-	<div class="mt-6 rounded-lg border border-border bg-card p-6">
-		<h3 class="text-lg font-medium text-fg">Tags & Categories</h3>
-		<p class="mt-1 text-sm text-muted">
+	<div class="box mt-5">
+		<h3 class="title is-5 mb-1">Tags & Categories</h3>
+		<p class="is-size-7 has-text-grey">
 			Manage expense categories, rename or merge tags, and control tag creation.
 		</p>
 		<a
 			href="/w/{data.workspaceId}/settings/tags"
-			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
+			class="button mt-4"
 		>
-			Manage Tags
-			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
+			<span>Manage Tags</span>
+			<span class="icon is-small">
+				<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+			</span>
 		</a>
 	</div>
 
 	<!-- Recurring Transactions Link -->
-	<div class="mt-6 rounded-lg border border-border bg-card p-6">
-		<h3 class="text-lg font-medium text-fg">Recurring Transactions</h3>
-		<p class="mt-1 text-sm text-muted">
+	<div class="box mt-5">
+		<h3 class="title is-5 mb-1">Recurring Transactions</h3>
+		<p class="is-size-7 has-text-grey">
 			Set up recurring templates for predictable income and expenses like rent, subscriptions, or regular client payments.
 		</p>
 		<a
 			href="/w/{data.workspaceId}/recurring"
-			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
+			class="button mt-4"
 		>
-			Manage Recurring
-			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
+			<span>Manage Recurring</span>
+			<span class="icon is-small">
+				<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+			</span>
 		</a>
 	</div>
 
 	<!-- Data Import & Export Section -->
-	<section class="mt-6 rounded-xl border border-border bg-card p-6">
-		<h2 class="text-lg font-semibold text-fg mb-4">Data Import & Export</h2>
-		<p class="text-sm text-muted mb-4">
+	<section class="box mt-5">
+		<h2 class="title is-5 mb-4">Data Import & Export</h2>
+		<p class="is-size-7 has-text-grey mb-4">
 			Import historical data or export for backup and migration.
 		</p>
 
-		<div class="space-y-3">
+		<div class="import-export-list">
 			<!-- Import -->
-			<div class="flex items-center justify-between py-2">
+			<div class="is-flex is-align-items-center is-justify-content-space-between py-2">
 				<div>
-					<h3 class="text-sm font-medium text-fg">Import Transactions</h3>
-					<p class="text-xs text-muted">Import transactions from CSV file</p>
+					<h3 class="has-text-weight-medium is-size-7">Import Transactions</h3>
+					<p class="is-size-7 has-text-grey">Import transactions from CSV file</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/import"
-					class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-hover"
+					class="button is-primary is-small"
 				>
-					<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
-					Import CSV
+					<span class="icon is-small">
+						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
+					</span>
+					<span>Import CSV</span>
 				</a>
 			</div>
 
-			<div class="border-t border-border pt-3"></div>
+			<hr class="import-export-divider" />
 
 			<!-- CSV Export -->
-			<div class="flex items-center justify-between py-2">
+			<div class="is-flex is-align-items-center is-justify-content-space-between py-2">
 				<div>
-					<h3 class="text-sm font-medium text-fg">Transactions CSV</h3>
-					<p class="text-xs text-muted">All transactions in spreadsheet format</p>
+					<h3 class="has-text-weight-medium is-size-7">Transactions CSV</h3>
+					<p class="is-size-7 has-text-grey">All transactions in spreadsheet format</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/csv"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+					class="button is-light is-small"
 					download
 				>
-					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
-					Download CSV
+					<span class="icon is-small">
+						<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
+					</span>
+					<span>Download CSV</span>
 				</a>
 			</div>
 
-			<div class="border-t border-border pt-3"></div>
+			<hr class="import-export-divider" />
 
 			<!-- Full Export -->
-			<div class="flex items-center justify-between py-2">
+			<div class="is-flex is-align-items-center is-justify-content-space-between py-2">
 				<div>
-					<h3 class="text-sm font-medium text-fg">Full Backup (ZIP)</h3>
-					<p class="text-xs text-muted">All data including receipts and attachments</p>
+					<h3 class="has-text-weight-medium is-size-7">Full Backup (ZIP)</h3>
+					<p class="is-size-7 has-text-grey">All data including receipts and attachments</p>
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/full"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+					class="button is-light is-small"
 					download
 				>
-					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
-					Download ZIP
+					<span class="icon is-small">
+						<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
+					</span>
+					<span>Download ZIP</span>
 				</a>
 			</div>
 		</div>
 	</section>
 
 	<!-- App Installation -->
-	<section class="mt-6 rounded-xl border border-border bg-card p-6">
-		<h2 class="text-lg font-semibold text-fg mb-4">App Installation</h2>
-		<p class="text-sm text-muted mb-4">
+	<section class="box mt-5">
+		<h2 class="title is-5 mb-4">App Installation</h2>
+		<p class="is-size-7 has-text-grey mb-4">
 			Install Ledger to your device's home screen for quick access and a native app experience.
 		</p>
 
-		<div class="rounded-lg bg-surface border border-card-border p-4">
-			<h3 class="text-sm font-medium text-fg">iOS (iPhone/iPad)</h3>
-			<ol class="mt-2 text-sm text-muted list-decimal list-inside space-y-1">
+		<div class="box install-instructions">
+			<h3 class="has-text-weight-medium is-size-7">iOS (iPhone/iPad)</h3>
+			<ol class="mt-2 is-size-7 has-text-grey install-steps">
 				<li>Open this page in Safari</li>
 				<li>Tap the Share button (square with arrow)</li>
 				<li>Scroll down and tap "Add to Home Screen"</li>
 				<li>Tap "Add" to confirm</li>
 			</ol>
-			<p class="mt-3 text-xs text-muted">
+			<p class="mt-3 is-size-7 has-text-grey">
 				The app will open in standalone mode without the Safari address bar.
 			</p>
 		</div>
 
-		<div class="mt-4 rounded-lg bg-surface border border-card-border p-4">
-			<h3 class="text-sm font-medium text-fg">Android / Desktop Chrome</h3>
-			<ol class="mt-2 text-sm text-muted list-decimal list-inside space-y-1">
+		<div class="box install-instructions mt-4">
+			<h3 class="has-text-weight-medium is-size-7">Android / Desktop Chrome</h3>
+			<ol class="mt-2 is-size-7 has-text-grey install-steps">
 				<li>Open the browser menu (three dots)</li>
 				<li>Tap "Install app" or "Add to Home Screen"</li>
 				<li>Follow the prompts to install</li>
@@ -761,3 +803,159 @@
 		</div>
 	</section>
 </div>
+
+<style>
+	/* Theme buttons */
+	.theme-buttons {
+		display: flex;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+	.theme-btn {
+		border-color: var(--color-border);
+		background-color: var(--color-surface);
+		color: var(--color-foreground);
+	}
+	.theme-btn:hover {
+		background-color: var(--color-surface-alt);
+	}
+	.theme-btn.is-active {
+		border-color: var(--color-primary);
+		background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+		color: var(--color-primary);
+	}
+
+	/* Settings form spacing */
+	.settings-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	/* Warnings list */
+	.warnings-list {
+		list-style: disc;
+		list-style-position: inside;
+		font-size: 0.875rem;
+	}
+
+	/* Logo upload */
+	.logo-upload {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 0.5rem;
+	}
+	.logo-preview {
+		width: 4rem;
+		height: 4rem;
+		border-radius: 0.5rem;
+		object-fit: cover;
+	}
+
+	/* Fiscal year box */
+	.fiscal-year-box {
+		background-color: var(--color-surface);
+	}
+
+	/* Tax fields spacing */
+	.tax-fields {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	/* Rate input width */
+	.rate-input {
+		max-width: 8rem;
+	}
+
+	/* Help toggle button */
+	.help-toggle {
+		color: var(--color-primary);
+		text-decoration: none;
+		font-size: 0.75rem;
+	}
+
+	/* Bracket help box */
+	.bracket-help {
+		background-color: var(--color-surface);
+		font-size: 0.875rem;
+	}
+
+	/* Tax forms expandable */
+	.tax-forms-box {
+		overflow: hidden;
+	}
+	.tax-forms-toggle {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem;
+		text-align: left;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: var(--color-foreground);
+	}
+	.tax-forms-toggle:hover {
+		background-color: var(--color-surface);
+	}
+	.toggle-icon {
+		transition: transform 0.2s;
+	}
+	.toggle-icon.is-rotated {
+		transform: rotate(180deg);
+	}
+	.tax-forms-content {
+		border-top: 1px solid var(--color-border);
+		background-color: var(--color-surface);
+		padding: 1rem;
+	}
+
+	/* Form list spacing */
+	.form-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	/* State forms section */
+	.state-forms-section {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Form action buttons */
+	.form-actions {
+		gap: 0.75rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Import/export list */
+	.import-export-list {
+		display: flex;
+		flex-direction: column;
+	}
+	.import-export-divider {
+		margin: 0.5rem 0;
+		background-color: var(--color-border);
+		height: 1px;
+		border: none;
+	}
+
+	/* Install instructions */
+	.install-instructions {
+		background-color: var(--color-surface);
+	}
+	.install-steps {
+		list-style: decimal;
+		list-style-position: inside;
+	}
+	.install-steps li + li {
+		margin-top: 0.25rem;
+	}
+</style>

@@ -19,20 +19,20 @@
 	}
 
 	// Get badge color based on action
-	function getActionBadge(action: string): { bg: string; text: string; label: string } {
+	function getActionBadge(action: string): { cls: string; label: string } {
 		switch (action) {
 			case 'created':
-				return { bg: 'bg-success/10', text: 'text-success', label: 'Created' };
+				return { cls: 'is-success', label: 'Created' };
 			case 'updated':
-				return { bg: 'bg-primary/10', text: 'text-primary', label: 'Updated' };
+				return { cls: 'is-info', label: 'Updated' };
 			case 'voided':
-				return { bg: 'bg-warning/10', text: 'text-warning', label: 'Voided' };
+				return { cls: 'is-warning', label: 'Voided' };
 			case 'unvoided':
-				return { bg: 'bg-success/10', text: 'text-success', label: 'Restored' };
+				return { cls: 'is-success', label: 'Restored' };
 			case 'deleted':
-				return { bg: 'bg-error/10', text: 'text-error', label: 'Deleted' };
+				return { cls: 'is-danger', label: 'Deleted' };
 			default:
-				return { bg: 'bg-surface', text: 'text-fg', label: action };
+				return { cls: '', label: action };
 		}
 	}
 
@@ -70,13 +70,13 @@
 	<title>History - {data.transaction.payee} | TinyLedger</title>
 </svelte:head>
 
-<div class="mx-auto max-w-2xl p-6">
+<div class="container history-container">
 	<!-- Header -->
-	<div class="mb-6">
+	<div class="mb-5">
 		{#if data.transaction.isDeleted}
 			<a
 				href="/w/{workspace}/transactions"
-				class="inline-flex items-center text-primary hover:text-primary"
+				class="back-link"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transactions
@@ -84,48 +84,44 @@
 		{:else}
 			<a
 				href="/w/{workspace}/transactions/{data.transaction.publicId}"
-				class="inline-flex items-center text-primary hover:text-primary"
+				class="back-link"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transaction
 			</a>
 		{/if}
-		<h1 class="mt-4 text-2xl font-bold text-fg">History for {data.transaction.payee}</h1>
+		<h1 class="title is-4 mt-4">History for {data.transaction.payee}</h1>
 		{#if data.transaction.isDeleted}
-			<p class="mt-1 text-sm text-error">This transaction has been deleted</p>
+			<p class="mt-1 is-size-7 has-text-danger">This transaction has been deleted</p>
 		{/if}
 	</div>
 
 	<!-- Timeline -->
 	{#if data.history.length === 0}
-		<div class="rounded-lg border border-border bg-card p-8 text-center">
-			<p class="text-muted">No history records found</p>
+		<div class="box has-text-centered" style="padding: 2rem;">
+			<p class="has-text-grey">No history records found</p>
 		</div>
 	{:else}
-		<div class="relative">
+		<div class="timeline">
 			<!-- Vertical timeline line -->
-			<div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+			<div class="timeline-line"></div>
 
 			<!-- History entries -->
-			<div class="space-y-6">
+			<div class="timeline-entries">
 				{#each data.history as entry, index}
 					{@const badge = getActionBadge(entry.action)}
 					{@const changedFields = parseChangedFields(entry.changedFields)}
-					<div class="relative pl-10">
+					<div class="timeline-entry">
 						<!-- Timeline dot -->
-						<div
-							class="absolute left-2 top-1 h-4 w-4 rounded-full border-2 border-card {badge.bg}"
-						></div>
+						<div class="timeline-dot {badge.cls}"></div>
 
 						<!-- Entry card -->
-						<div class="rounded-lg border border-border bg-card p-4">
-							<div class="flex items-center justify-between">
-								<span
-									class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {badge.bg} {badge.text}"
-								>
+						<div class="box mb-0 entry-card">
+							<div class="is-flex is-align-items-center is-justify-content-space-between">
+								<span class="tag is-light {badge.cls}">
 									{badge.label}
 								</span>
-								<span class="text-sm text-muted">
+								<span class="is-size-7 has-text-grey">
 									{formatTimestamp(entry.timestamp)}
 								</span>
 							</div>
@@ -133,12 +129,10 @@
 							<!-- Changed fields for updates -->
 							{#if entry.action === 'updated' && changedFields.length > 0}
 								<div class="mt-3">
-									<p class="text-sm font-medium text-fg">Changed fields:</p>
-									<div class="mt-1 flex flex-wrap gap-1.5">
+									<p class="is-size-7 has-text-weight-medium">Changed fields:</p>
+									<div class="mt-1 tags are-small">
 										{#each changedFields as field}
-											<span class="inline-flex items-center rounded bg-surface px-2 py-0.5 text-xs text-fg">
-												{formatFieldName(field)}
-											</span>
+											<span class="tag">{formatFieldName(field)}</span>
 										{/each}
 									</div>
 								</div>
@@ -147,10 +141,10 @@
 							<!-- Optional: Expandable previous state -->
 							{#if entry.previousState && entry.action !== 'created'}
 								<details class="mt-3">
-									<summary class="cursor-pointer text-sm text-muted hover:text-fg">
+									<summary class="is-size-7 has-text-grey previous-state-toggle">
 										View previous state
 									</summary>
-									<pre class="mt-2 overflow-x-auto rounded bg-surface p-2 text-xs text-muted">{JSON.stringify(
+									<pre class="previous-state-pre">{JSON.stringify(
 											typeof entry.previousState === 'string'
 												? JSON.parse(entry.previousState)
 												: entry.previousState,
@@ -166,3 +160,79 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.history-container {
+		max-width: 42rem;
+		padding: 1.5rem;
+	}
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		color: var(--color-primary);
+	}
+	.back-link:hover {
+		color: var(--color-primary);
+		opacity: 0.85;
+	}
+	.timeline {
+		position: relative;
+	}
+	.timeline-line {
+		position: absolute;
+		left: 1rem;
+		top: 0;
+		bottom: 0;
+		width: 2px;
+		background-color: var(--color-border);
+	}
+	.timeline-entries {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.timeline-entry {
+		position: relative;
+		padding-left: 2.5rem;
+	}
+	.timeline-dot {
+		position: absolute;
+		left: 0.5rem;
+		top: 0.25rem;
+		width: 1rem;
+		height: 1rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-card-bg);
+		background-color: var(--color-surface);
+	}
+	.timeline-dot.is-success {
+		background-color: var(--color-success);
+	}
+	.timeline-dot.is-info {
+		background-color: var(--color-primary);
+	}
+	.timeline-dot.is-warning {
+		background-color: var(--color-warning);
+	}
+	.timeline-dot.is-danger {
+		background-color: var(--color-error);
+	}
+	.entry-card {
+		padding: 1rem;
+	}
+	.previous-state-toggle {
+		cursor: pointer;
+	}
+	.previous-state-toggle:hover {
+		color: var(--color-foreground);
+	}
+	.previous-state-pre {
+		margin-top: 0.5rem;
+		overflow-x: auto;
+		border-radius: 0.375rem;
+		background-color: var(--color-surface);
+		padding: 0.5rem;
+		font-size: 0.75rem;
+		color: var(--color-muted);
+	}
+</style>

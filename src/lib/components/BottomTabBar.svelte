@@ -90,21 +90,22 @@
 
 <!-- Bottom Tab Bar (mobile only) -->
 <nav
-	class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card md:hidden"
+	class="bottom-tab-bar"
 	style="padding-bottom: env(safe-area-inset-bottom, 0px);"
 	data-component="bottom-tab-bar"
 >
-	<div class="grid grid-cols-5 items-center">
+	<div class="tab-grid">
 		<!-- Left tabs -->
 		{#each leftTabs() as tab}
 			{@const active = isActiveTab(tab.href)}
 			<a
 				href="/w/{workspaceId}/{tab.href}"
-				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
+				class="tab-link"
+				class:is-active={active}
 			>
 				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
 				></iconify-icon>
-				<span class="mt-0.5 text-xs">{tab.label}</span>
+				<span class="tab-label">{tab.label}</span>
 			</a>
 		{/each}
 
@@ -112,17 +113,15 @@
 		<button
 			type="button"
 			onclick={() => (showAddMenu = !showAddMenu)}
-			class="flex flex-col items-center justify-center py-2 text-primary cursor-pointer"
+			class="tab-link tab-add-trigger"
 			aria-label="Add transaction"
 		>
-			<div
-				class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md -mt-4"
-			>
+			<div class="add-button">
 				<iconify-icon
 					icon="solar:add-circle-bold"
 					width="28"
 					height="28"
-					class="transition-transform {showAddMenu ? 'rotate-45' : ''}"
+					class="add-icon {showAddMenu ? 'is-rotated' : ''}"
 				></iconify-icon>
 			</div>
 		</button>
@@ -132,11 +131,12 @@
 			{@const active = isActiveTab(tab.href)}
 			<a
 				href="/w/{workspaceId}/{tab.href}"
-				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
+				class="tab-link"
+				class:is-active={active}
 			>
 				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
 				></iconify-icon>
-				<span class="mt-0.5 text-xs">{tab.label}</span>
+				<span class="tab-label">{tab.label}</span>
 			</a>
 		{/each}
 	</div>
@@ -145,7 +145,7 @@
 <!-- Add menu overlay -->
 {#if showAddMenu}
 	<div
-		class="fixed inset-0 z-30 bg-black/30 md:hidden"
+		class="add-overlay"
 		onclick={handleBackdropClick}
 		onkeydown={(e) => e.key === 'Escape' && (showAddMenu = false)}
 		role="button"
@@ -154,28 +154,150 @@
 	>
 		<!-- Add menu -->
 		<div
-			class="fixed bottom-24 left-1/2 z-40 flex -translate-x-1/2 gap-4"
+			class="add-menu"
 			style="padding-bottom: env(safe-area-inset-bottom, 0px);"
 		>
 			<a
 				href="/w/{workspaceId}/transactions/new?type=income"
-				class="flex h-14 items-center gap-2 rounded-full bg-success px-5 text-white shadow-lg hover:bg-success-hover active:scale-95"
+				class="add-menu-btn add-menu-btn--income"
 				onclick={() => (showAddMenu = false)}
 			>
 				<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
-				<span class="font-semibold">Income</span>
+				<span class="add-menu-label">Income</span>
 			</a>
 			<a
 				href="/w/{workspaceId}/transactions/new?type=expense"
-				class="flex h-14 items-center gap-2 rounded-full bg-error px-5 text-white shadow-lg hover:bg-error-hover active:scale-95"
+				class="add-menu-btn add-menu-btn--expense"
 				onclick={() => (showAddMenu = false)}
 			>
 				<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
-				<span class="font-semibold">Expense</span>
+				<span class="add-menu-label">Expense</span>
 			</a>
 		</div>
 	</div>
 {/if}
 
 <!-- Spacer for fixed bottom bar (mobile only) -->
-<div class="h-20 md:hidden" aria-hidden="true"></div>
+<div class="bottom-spacer" aria-hidden="true"></div>
+
+<style>
+	/* Bottom tab bar - mobile only */
+	.bottom-tab-bar {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 40;
+		border-top: 1px solid var(--color-border);
+		background-color: var(--color-card-bg);
+	}
+	.tab-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		align-items: center;
+	}
+	.tab-link {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 0;
+		color: var(--color-muted);
+		cursor: pointer;
+		background: none;
+		border: none;
+		text-decoration: none;
+	}
+	.tab-link.is-active {
+		color: var(--color-primary);
+	}
+	.tab-label {
+		margin-top: 0.125rem;
+		font-size: 0.75rem;
+	}
+
+	/* Center add button */
+	.tab-add-trigger {
+		color: var(--color-primary);
+	}
+	.add-button {
+		display: flex;
+		height: 3rem;
+		width: 3rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 9999px;
+		background-color: var(--color-primary);
+		color: white;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+		margin-top: -1rem;
+	}
+	.add-icon {
+		transition: transform 0.2s;
+	}
+	.add-icon.is-rotated {
+		transform: rotate(45deg);
+	}
+
+	/* Overlay backdrop */
+	.add-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		background: rgba(0, 0, 0, 0.3);
+	}
+
+	/* Add menu floating buttons */
+	.add-menu {
+		position: fixed;
+		bottom: 6rem;
+		left: 50%;
+		z-index: 40;
+		display: flex;
+		transform: translateX(-50%);
+		gap: 1rem;
+	}
+	.add-menu-btn {
+		display: flex;
+		height: 3.5rem;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 9999px;
+		padding: 0 1.25rem;
+		color: white;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+		text-decoration: none;
+	}
+	.add-menu-btn:active {
+		transform: scale(0.95);
+	}
+	.add-menu-btn--income {
+		background-color: var(--color-success);
+	}
+	.add-menu-btn--income:hover {
+		filter: brightness(0.9);
+	}
+	.add-menu-btn--expense {
+		background-color: var(--color-error);
+	}
+	.add-menu-btn--expense:hover {
+		filter: brightness(0.9);
+	}
+	.add-menu-label {
+		font-weight: 600;
+	}
+
+	/* Spacer - mobile only */
+	.bottom-spacer {
+		height: 5rem;
+	}
+
+	/* Hide on desktop */
+	@media (min-width: 769px) {
+		.bottom-tab-bar,
+		.add-overlay,
+		.bottom-spacer {
+			display: none;
+		}
+	}
+</style>

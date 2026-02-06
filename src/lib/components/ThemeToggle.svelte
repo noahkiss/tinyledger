@@ -10,13 +10,29 @@
 <button
 	type="button"
 	onclick={toggleTheme}
-	class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+	class="button theme-toggle-btn"
 	title="Toggle theme"
 	data-component="theme-toggle"
 >
-	{#if $resolvedTheme === 'dark'}
-		<iconify-icon icon="solar:sun-bold" width="20" height="20"></iconify-icon>
-	{:else}
-		<iconify-icon icon="solar:moon-bold" width="20" height="20"></iconify-icon>
-	{/if}
+	<span class="icon">
+		{#if $resolvedTheme === 'dark'}
+			<iconify-icon icon="solar:sun-bold" width="20" height="20"></iconify-icon>
+		{:else}
+			<iconify-icon icon="solar:moon-bold" width="20" height="20"></iconify-icon>
+		{/if}
+	</span>
 </button>
+
+<style>
+	.theme-toggle-btn {
+		background: transparent;
+		border: none;
+		color: var(--color-muted);
+		border-radius: 0.5rem;
+		padding: 0.5rem;
+	}
+	.theme-toggle-btn:hover {
+		background-color: var(--color-surface);
+		color: var(--color-foreground);
+	}
+</style>

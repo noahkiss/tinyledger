@@ -19,27 +19,49 @@
 
 	const abbreviation = $derived(getAbbreviation(name));
 	const logoUrl = $derived(logoFilename ? `/api/logo/${workspaceId}/${logoFilename}` : null);
-
-	// Size classes
-	const sizeClasses = {
-		sm: 'w-8 h-8 text-xs',
-		md: 'w-10 h-10 text-sm',
-		lg: 'w-16 h-16 text-xl'
-	};
 </script>
 
 {#if logoUrl}
 	<img
 		src={logoUrl}
 		alt="{name} logo"
-		class="rounded-lg object-cover {sizeClasses[size].split(' ').slice(0, 2).join(' ')}"
+		class="workspace-logo workspace-logo--{size}"
 	/>
 {:else}
-	<div
-		class="flex items-center justify-center rounded-lg bg-primary font-bold text-white {sizeClasses[
-			size
-		]}"
-	>
+	<div class="workspace-logo workspace-logo--{size} workspace-logo--fallback">
 		{abbreviation}
 	</div>
 {/if}
+
+<style>
+	.workspace-logo {
+		border-radius: 0.5rem;
+		flex-shrink: 0;
+	}
+	.workspace-logo--sm {
+		width: 2rem;
+		height: 2rem;
+		font-size: 0.75rem;
+	}
+	.workspace-logo--md {
+		width: 2.5rem;
+		height: 2.5rem;
+		font-size: 0.875rem;
+	}
+	.workspace-logo--lg {
+		width: 4rem;
+		height: 4rem;
+		font-size: 1.25rem;
+	}
+	img.workspace-logo {
+		object-fit: cover;
+	}
+	.workspace-logo--fallback {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--color-primary);
+		color: white;
+		font-weight: 700;
+	}
+</style>

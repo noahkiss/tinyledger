@@ -7,6 +7,12 @@
 	<title>Redirecting... - TinyLedger</title>
 </svelte:head>
 
-<div class="text-center py-8">
-	<p class="text-muted">Redirecting to transactions...</p>
+<div class="has-text-centered redirect-page">
+	<p style="color: var(--color-muted)">Redirecting to transactions...</p>
 </div>
+
+<style>
+	.redirect-page {
+		padding: 2rem 0;
+	}
+</style>

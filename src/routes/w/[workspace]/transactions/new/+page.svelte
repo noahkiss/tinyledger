@@ -98,10 +98,8 @@
 
 	// Derived for UI
 	let typeLabel = $derived(transactionType === 'income' ? 'Income' : 'Expense');
-	let submitButtonColor = $derived(
-		transactionType === 'income'
-			? 'bg-green-600 hover:bg-green-700 active:bg-green-800'
-			: 'bg-red-600 hover:bg-red-700 active:bg-red-800'
+	let submitButtonClass = $derived(
+		transactionType === 'income' ? 'is-success' : 'is-danger'
 	);
 </script>
 
@@ -109,29 +107,29 @@
 	<title>New {typeLabel} - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-6">
+<div class="new-transaction-page">
 	<!-- Header -->
-	<div class="flex items-center gap-4">
+	<div class="is-flex is-align-items-center mb-5" style="gap: 1rem;">
 		<a
 			href="/w/{data.workspaceId}/transactions"
-			class="rounded-lg p-2 text-muted hover:bg-surface"
+			class="back-button"
 			aria-label="Back to transactions"
 		>
 			<iconify-icon icon="solar:alt-arrow-left-linear" width="20" height="20"></iconify-icon>
 		</a>
-		<h2 class="text-2xl font-semibold text-fg">New {typeLabel} Transaction</h2>
+		<h2 class="title is-4 mb-0">New {typeLabel} Transaction</h2>
 	</div>
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="rounded-lg bg-error/10 p-4 text-error">
-			<p class="font-medium">Error</p>
-			<p class="mt-1 text-sm">{form.error}</p>
+		<div class="notification is-danger is-light mb-5">
+			<p class="has-text-weight-medium">Error</p>
+			<p class="mt-1 is-size-7">{form.error}</p>
 		</div>
 	{/if}
 
 	<!-- Form -->
-	<form method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
+	<form method="POST" use:enhance class="form-fields" enctype="multipart/form-data">
 		<!-- Hidden field for transaction type -->
 		<input type="hidden" name="type" value={transactionType} />
 		<!-- Hidden field for recurring template ID (when confirming a recurring instance) -->
@@ -140,15 +138,15 @@
 		{/if}
 
 		<!-- Amount -->
-		<div>
-			<label for="amount" class="block text-sm font-medium text-fg">Amount</label>
-			<div class="mt-1">
-				<CurrencyInput bind:value={amountCents} name="amount" id="amount" required class="w-full" />
+		<div class="field">
+			<label for="amount" class="label">Amount</label>
+			<div class="control">
+				<CurrencyInput bind:value={amountCents} name="amount" id="amount" required />
 			</div>
 			{#if suggestedAmount !== null}
-				<p class="mt-1 text-xs text-muted">
+				<p class="help">
 					Last amount: ${(suggestedAmount / 100).toFixed(2)}
-					<button type="button" class="ml-1 text-primary hover:underline" onclick={useSuggestedAmount}>
+					<button type="button" class="suggested-amount-btn" onclick={useSuggestedAmount}>
 						Use this
 					</button>
 				</p>
@@ -156,19 +154,19 @@
 		</div>
 
 		<!-- Date -->
-		<div>
-			<label for="date" class="block text-sm font-medium text-fg">Date</label>
-			<div class="mt-1">
-				<DateInput bind:value={dateValue} name="date" id="date" required class="w-full" />
+		<div class="field">
+			<label for="date" class="label">Date</label>
+			<div class="control">
+				<DateInput bind:value={dateValue} name="date" id="date" required />
 			</div>
 		</div>
 
 		<!-- Payee with autocomplete -->
-		<div>
-			<label for="payee" class="block text-sm font-medium text-fg">
+		<div class="field">
+			<label for="payee" class="label">
 				{transactionType === 'income' ? 'Received from' : 'Paid to'}
 			</label>
-			<div class="mt-1">
+			<div class="control">
 				<PayeeAutocomplete
 					payees={data.payeeHistory}
 					bind:value={payee}
@@ -179,38 +177,38 @@
 		</div>
 
 		<!-- Description -->
-		<div>
-			<label for="description" class="block text-sm font-medium text-fg">
+		<div class="field">
+			<label for="description" class="label">
 				Description
-				<span class="font-normal text-muted">(optional)</span>
+				<span class="has-text-weight-normal has-text-grey">(optional)</span>
 			</label>
-			<div class="mt-1">
+			<div class="control">
 				<textarea
 					id="description"
 					name="description"
 					bind:value={description}
 					rows="2"
-					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="textarea"
 					placeholder="Add any notes about this transaction..."
 				></textarea>
 			</div>
 		</div>
 
 		<!-- Payment Method -->
-		<div>
-			<label class="block text-sm font-medium text-fg">Payment Method</label>
-			<div class="mt-1">
+		<div class="field">
+			<label class="label">Payment Method</label>
+			<div class="control">
 				<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
 			</div>
 		</div>
 
 		<!-- Tags -->
-		<div>
-			<label class="block text-sm font-medium text-fg">
+		<div class="field">
+			<label class="label">
 				Tags
-				<span class="font-normal text-muted">(optional)</span>
+				<span class="has-text-weight-normal has-text-grey">(optional)</span>
 			</label>
-			<div class="mt-1">
+			<div class="control">
 				<TagSelector
 					{availableTags}
 					bind:allocations={tagAllocations}
@@ -222,24 +220,62 @@
 		</div>
 
 		<!-- Receipt Attachment -->
-		<div>
-			<label class="block text-sm font-medium text-fg">
+		<div class="field">
+			<label class="label">
 				Receipt
-				<span class="font-normal text-muted">(optional)</span>
+				<span class="has-text-weight-normal has-text-grey">(optional)</span>
 			</label>
-			<div class="mt-1">
+			<div class="control">
 				<AttachmentUpload name="attachment" />
 			</div>
 		</div>
 
 		<!-- Submit -->
-		<div class="pt-4">
-			<button
-				type="submit"
-				class="w-full rounded-xl px-6 py-4 text-lg font-semibold text-white shadow-sm {submitButtonColor}"
-			>
-				Create {typeLabel}
-			</button>
+		<div class="field pt-4">
+			<div class="control">
+				<button
+					type="submit"
+					class="button is-large is-fullwidth has-text-weight-semibold {submitButtonClass}"
+				>
+					Create {typeLabel}
+				</button>
+			</div>
 		</div>
 	</form>
 </div>
+
+<style>
+	.new-transaction-page {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.back-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		color: var(--color-muted);
+	}
+	.back-button:hover {
+		background-color: var(--color-surface);
+	}
+	.form-fields {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.suggested-amount-btn {
+		background: none;
+		border: none;
+		color: var(--color-primary);
+		cursor: pointer;
+		padding: 0;
+		margin-left: 0.25rem;
+		font-size: inherit;
+	}
+	.suggested-amount-btn:hover {
+		text-decoration: underline;
+	}
+</style>

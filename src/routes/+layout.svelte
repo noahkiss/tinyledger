@@ -15,7 +15,7 @@
 {@render children()}
 
 <!-- Footer with Penny scene -->
-<footer class="mt-5" data-component="penny-footer">
+<footer data-component="penny-footer">
 	<!-- Daytime image (light mode) -->
 	<img
 		src="/brand/footer-daytime-mobile.webp"
@@ -32,3 +32,9 @@
 		style="max-width: 42rem; width: 100%;"
 	/>
 </footer>
+
+<style>
+	footer[data-component="penny-footer"] {
+		margin-top: 1.25rem;
+	}
+</style>

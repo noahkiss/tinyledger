@@ -43,12 +43,12 @@
 	}
 </script>
 
-<div class="min-h-screen bg-bg" data-component="app-shell">
+<div class="app-shell" data-component="app-shell">
 	<!-- Header -->
-	<header class="border-b border-border bg-card" data-component="header">
-		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
+	<header class="app-header" data-component="header">
+		<div class="container header-inner">
 			<!-- Workspace selector (integrated with logo/name) -->
-			<div class="flex items-center gap-3">
+			<div class="header-left">
 				<WorkspaceSelector
 					currentWorkspaceId={data.workspaceId}
 					workspaces={data.allWorkspaces}
@@ -67,11 +67,11 @@
 			</div>
 
 			<!-- Settings cog -->
-			<div class="flex items-center gap-1">
+			<div class="header-right">
 				<ThemeToggle />
 				<a
 					href="/w/{data.workspaceId}/settings"
-					class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+					class="icon-button"
 					title="Settings"
 					data-component="settings-button"
 				>
@@ -81,29 +81,102 @@
 		</div>
 
 		<!-- Navigation (desktop only - mobile uses bottom tab bar) -->
-		<nav class="mx-auto hidden max-w-4xl px-4 md:block" data-component="nav-tabs">
-			<ul class="flex gap-1 text-sm">
-				{#each navTabs as tab}
-					<li>
-						<a
-							href="/w/{data.workspaceId}/{tab.href}"
-							class="inline-block rounded-t-lg border-b-2 px-4 py-2 {isActiveTab(tab.href)
-								? 'border-primary text-primary font-medium'
-								: 'border-transparent text-muted hover:border-border hover:text-fg'}"
-						>
-							{tab.label}
-						</a>
-					</li>
-				{/each}
-			</ul>
+		<nav class="container is-hidden-mobile" data-component="nav-tabs">
+			<div class="tabs nav-tabs">
+				<ul>
+					{#each navTabs as tab}
+						<li class={isActiveTab(tab.href) ? 'is-active' : ''}>
+							<a href="/w/{data.workspaceId}/{tab.href}">
+								{tab.label}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
 		</nav>
 	</header>
 
 	<!-- Main content -->
-	<main class="mx-auto max-w-4xl px-4 py-6" data-component="main-content">
+	<main class="container main-content" data-component="main-content">
 		{@render children()}
 	</main>
 
 	<!-- Bottom Tab Bar (mobile only) -->
 	<BottomTabBar workspaceId={data.workspaceId} workspaceType={data.settings.type} />
 </div>
+
+<style>
+	.app-shell {
+		min-height: 100vh;
+		background-color: var(--color-background);
+	}
+
+	.app-header {
+		border-bottom: 1px solid var(--color-border);
+		background-color: var(--color-card-bg);
+	}
+
+	.header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.icon-button {
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		color: var(--color-muted);
+		transition: background-color 0.15s, color 0.15s;
+	}
+
+	.icon-button:hover {
+		background-color: var(--color-surface);
+		color: var(--color-foreground);
+	}
+
+	/* Desktop nav tabs */
+	.nav-tabs {
+		margin-bottom: 0;
+	}
+
+	.nav-tabs :global(ul) {
+		border-bottom: none;
+	}
+
+	.nav-tabs :global(li a) {
+		border-bottom-width: 2px;
+		color: var(--color-muted);
+		font-size: 0.875rem;
+		padding: 0.5rem 1rem;
+	}
+
+	.nav-tabs :global(li a:hover) {
+		border-bottom-color: var(--color-border);
+		color: var(--color-foreground);
+	}
+
+	.nav-tabs :global(li.is-active a) {
+		border-bottom-color: var(--color-primary);
+		color: var(--color-primary);
+		font-weight: 500;
+	}
+
+	.main-content {
+		padding-top: 1.5rem;
+		padding-bottom: 1.5rem;
+	}
+</style>

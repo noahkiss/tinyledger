@@ -37,7 +37,7 @@
 	// Close dropdown when clicking outside
 	function handleClickOutside(event: MouseEvent) {
 		const target = event.target as Element;
-		if (!target.closest('.workspace-selector')) {
+		if (!target.closest('[data-component="workspace-selector"]')) {
 			isOpen = false;
 		}
 	}
@@ -50,64 +50,116 @@
 	});
 </script>
 
-<div class="workspace-selector relative" data-component="workspace-selector">
+<div class="dropdown" class:is-active={isOpen} data-component="workspace-selector">
 	<!-- Trigger: Logo + Name + Dropdown indicator -->
-	<button
-		type="button"
-		onclick={toggleDropdown}
-		class="flex cursor-pointer items-center gap-3 rounded-lg border border-border px-2 py-1.5 hover:bg-surface transition-colors"
-	>
-		<WorkspaceLogo
-			workspaceId={currentWorkspaceId}
-			{logoFilename}
-			name={currentName}
-			size="md"
-		/>
-		<div class="text-left">
-			<div class="flex items-center gap-1.5">
-				<h1 class="font-semibold text-fg">{currentName}</h1>
-				<iconify-icon
-					icon="solar:alt-arrow-down-linear"
-					class="text-muted transition-transform {isOpen ? 'rotate-180' : ''}"
-					width="16"
-					height="16"
-				></iconify-icon>
-			</div>
-			<p class="text-xs text-muted">
-				{currentType === 'sole_prop' ? 'Sole Proprietor' : 'Volunteer Organization'}
-			</p>
-		</div>
-	</button>
-
-	{#if isOpen}
-		<div
-			class="absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-border bg-card py-1 shadow-lg"
+	<div class="dropdown-trigger">
+		<button
+			type="button"
+			onclick={toggleDropdown}
+			class="button ws-trigger"
+			aria-haspopup="true"
+			aria-controls="ws-dropdown-menu"
 		>
+			<WorkspaceLogo
+				workspaceId={currentWorkspaceId}
+				{logoFilename}
+				name={currentName}
+				size="md"
+			/>
+			<div class="ws-trigger-text">
+				<div class="ws-trigger-name">
+					<h1>{currentName}</h1>
+					<span class="icon is-small" style="color: var(--color-muted)">
+						<iconify-icon
+							icon="solar:alt-arrow-down-linear"
+							class="chevron-icon {isOpen ? 'is-rotated' : ''}"
+							width="16"
+							height="16"
+						></iconify-icon>
+					</span>
+				</div>
+				<p class="ws-trigger-type" style="color: var(--color-muted)">
+					{currentType === 'sole_prop' ? 'Sole Proprietor' : 'Volunteer Organization'}
+				</p>
+			</div>
+		</button>
+	</div>
+
+	<div class="dropdown-menu" id="ws-dropdown-menu" role="menu">
+		<div class="dropdown-content">
 			{#each workspaces as workspace}
-				<button
-					type="button"
-					onclick={() => handleSelect(workspace.id)}
-					class="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm hover:bg-surface {workspace.id ===
-					currentWorkspaceId
-						? 'bg-primary/10 text-primary'
-						: 'text-fg'}"
+				<a
+					href="#!"
+					class="dropdown-item {workspace.id === currentWorkspaceId ? 'is-active' : ''}"
+					role="menuitem"
+					onclick={(e) => { e.preventDefault(); handleSelect(workspace.id); }}
 				>
-					<span class="flex-1 truncate">{workspace.name}</span>
+					<span class="ws-item-name">{workspace.name}</span>
 					{#if workspace.id === currentWorkspaceId}
-						<iconify-icon icon="solar:check-circle-bold" class="text-primary" width="16" height="16"></iconify-icon>
+						<span class="icon is-small" style="color: var(--color-primary)">
+							<iconify-icon icon="solar:check-circle-bold" width="16" height="16"></iconify-icon>
+						</span>
 					{/if}
-				</button>
+				</a>
 			{/each}
 
-			<div class="my-1 border-t border-card-border"></div>
+			<hr class="dropdown-divider" />
 
-			<a
-				href="/"
-				class="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-fg hover:bg-surface"
-			>
-				<iconify-icon icon="solar:add-circle-linear" width="16" height="16"></iconify-icon>
+			<a href="/" class="dropdown-item">
+				<span class="icon is-small" style="margin-right: 0.5rem">
+					<iconify-icon icon="solar:add-circle-linear" width="16" height="16"></iconify-icon>
+				</span>
 				<span>Create New Workspace</span>
 			</a>
 		</div>
-	{/if}
+	</div>
 </div>
+
+<style>
+	.ws-trigger {
+		height: auto;
+		padding: 0.375rem 0.5rem;
+		border-color: var(--color-border);
+		background: transparent;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		white-space: normal;
+	}
+	.ws-trigger:hover {
+		background-color: var(--color-surface);
+	}
+	.ws-trigger-text {
+		text-align: left;
+	}
+	.ws-trigger-name {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+	.ws-trigger-name h1 {
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--color-foreground);
+	}
+	.ws-trigger-type {
+		font-size: 0.75rem;
+	}
+	.chevron-icon {
+		transition: transform 0.2s;
+	}
+	.chevron-icon.is-rotated {
+		transform: rotate(180deg);
+	}
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+		font-size: 0.875rem;
+	}
+	.ws-item-name {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+</style>
