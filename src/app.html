@@ -9,9 +9,7 @@
 				const stored = localStorage.getItem('theme');
 				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				const isDark = stored === 'dark' || (stored !== 'light' && prefersDark);
-				if (isDark) {
-					document.documentElement.classList.add('dark');
-				}
+				document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 				// Update theme-color meta for mobile browsers
 				const meta = document.querySelector('.theme-color-meta');
 				if (meta) meta.content = isDark ? '#1e1e2e' : '#1e66f5';

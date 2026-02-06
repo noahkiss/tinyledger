@@ -1,0 +1,72 @@
+// ==========================================================================
+// App Color Tokens
+// Maps semantic color names to CSS custom properties.
+// Components use these tokens (e.g., var(--color-primary)) so the palette
+// can be swapped without touching component code.
+//
+// Bulma's own variables (--bulma-*) handle component internals.
+// These tokens handle app-specific styling not covered by Bulma.
+// ==========================================================================
+
+@use "palette" as p;
+
+:root {
+  // --- Base ---
+  --color-background: var(--bulma-scheme-main);
+  --color-foreground: var(--bulma-text);
+  --color-muted: #{p.$app-muted};
+  --color-surface: #{p.$app-surface};
+  --color-surface-alt: #{p.$app-surface-alt};
+  --color-overlay: #{p.$app-overlay};
+  --color-border: var(--bulma-border);
+
+  // --- Semantic (mapped from Bulma) ---
+  --color-primary: var(--bulma-primary);
+  --color-primary-hover: var(--bulma-primary-dark);
+  --color-primary-muted: var(--bulma-primary-light);
+  --color-success: var(--bulma-success);
+  --color-success-hover: var(--bulma-success-dark);
+  --color-success-muted: var(--bulma-success-light);
+  --color-warning: var(--bulma-warning);
+  --color-warning-hover: var(--bulma-warning-dark);
+  --color-warning-muted: var(--bulma-warning-light);
+  --color-error: var(--bulma-danger);
+  --color-error-hover: var(--bulma-danger-dark);
+  --color-error-muted: var(--bulma-danger-light);
+
+  // --- App-specific ---
+  --color-accent: #{p.$app-accent};
+  --color-subtle: var(--bulma-info);
+
+  // --- Component tokens ---
+  --color-input-bg: #{p.$app-input-bg};
+  --color-input-border: var(--bulma-input-border-color, var(--bulma-border));
+  --color-input-focus: var(--bulma-primary);
+  --color-card-bg: #{p.$app-card-bg};
+  --color-card-border: var(--bulma-border-weak);
+}
+
+// Dark mode overrides for app-specific tokens
+// (Bulma handles its own --bulma-* variables automatically)
+[data-theme="dark"],
+.theme-dark {
+  --color-muted: #{p.$app-muted-dark};
+  --color-surface: #{p.$app-surface-dark};
+  --color-surface-alt: #{p.$app-surface-alt-dark};
+  --color-overlay: #{p.$app-overlay-dark};
+  --color-accent: #{p.$app-accent-dark};
+  --color-input-bg: #{p.$app-input-bg-dark};
+  --color-card-bg: #{p.$app-card-bg-dark};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.theme-light) {
+    --color-muted: #{p.$app-muted-dark};
+    --color-surface: #{p.$app-surface-dark};
+    --color-surface-alt: #{p.$app-surface-alt-dark};
+    --color-overlay: #{p.$app-overlay-dark};
+    --color-accent: #{p.$app-accent-dark};
+    --color-input-bg: #{p.$app-input-bg-dark};
+    --color-card-bg: #{p.$app-card-bg-dark};
+  }
+}

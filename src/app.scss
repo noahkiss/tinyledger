@@ -1,0 +1,90 @@
+// ==========================================================================
+// TinyLedger - Main Stylesheet
+// ==========================================================================
+
+// 1. Palette (must come before Bulma)
+@use "styles/palette" as p;
+
+// 2. Bulma with palette overrides
+@use "bulma/sass" with (
+  $primary: p.$primary,
+  $link: p.$link,
+  $info: p.$info,
+  $success: p.$success,
+  $warning: p.$warning,
+  $danger: p.$danger,
+  $scheme-main: p.$scheme-main,
+  $text: p.$text,
+  $text-strong: p.$text-strong,
+  $family-primary: p.$family-primary,
+  $input-shadow: none,
+  $control-border-width: 1px
+);
+
+// 3. App color tokens (bridges Bulma vars to app semantic tokens)
+@use "styles/colors";
+
+// ==========================================================================
+// App-specific styles (things Bulma doesn't provide)
+// ==========================================================================
+
+// Tabular numbers for financial data
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-currency],
+.currency {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+// Prose content: constrain line length for readability
+.prose-content {
+  max-width: 65ch;
+}
+
+// Dark-mode conditional visibility (used by footer images)
+[data-theme="dark"] .light-only,
+.theme-dark .light-only { display: none; }
+[data-theme="dark"] .dark-only,
+.theme-dark .dark-only { display: block; }
+.dark-only { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.theme-light) {
+    .light-only { display: none; }
+    .dark-only { display: block; }
+  }
+}
+
+// ==========================================================================
+// Base Overrides
+// ==========================================================================
+
+html {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-size: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Respect reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

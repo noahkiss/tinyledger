@@ -1,9 +1,15 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit()],
+	plugins: [sveltekit()],
+	css: {
+		preprocessorOptions: {
+			scss: {
+				loadPaths: ['node_modules', 'src']
+			}
+		}
+	},
 	server: {
 		host: true,
 		fs: {

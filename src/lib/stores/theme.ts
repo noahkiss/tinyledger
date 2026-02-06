@@ -15,17 +15,13 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 /**
- * Apply theme class to document and update meta theme-color.
+ * Apply theme to document via data-theme attribute (Bulma convention).
  */
 function applyTheme(theme: ResolvedTheme) {
 	if (!browser) return;
 
 	const root = document.documentElement;
-	if (theme === 'dark') {
-		root.classList.add('dark');
-	} else {
-		root.classList.remove('dark');
-	}
+	root.setAttribute('data-theme', theme);
 
 	// Update theme-color meta for mobile browsers
 	const meta = document.querySelector('meta.theme-color-meta');

@@ -1,0 +1,44 @@
+// ==========================================================================
+// Color Palette
+// Swap this file to change the app's color scheme.
+// All colors must be HSL values for Bulma's palette generation.
+// ==========================================================================
+
+// --- Catppuccin Latte (Light) / Mocha (Dark) ---
+
+// Semantic colors (Bulma maps these to full shade palettes)
+$primary:   hsl(220, 91%, 54%);  // Blue
+$link:      hsl(220, 91%, 54%);
+$info:      hsl(183, 74%, 35%);  // Teal
+$success:   hsl(109, 58%, 40%);  // Green
+$warning:   hsl(36, 77%, 49%);   // Yellow/Peach
+$danger:    hsl(347, 87%, 44%);  // Red
+
+// Scheme colors (page background, text)
+$scheme-main: hsl(220, 23%, 95%);       // Latte Base
+$text:        hsl(234, 16%, 35%);        // Latte Text
+$text-strong: hsl(234, 16%, 25%);        // Latte Subtext
+
+// Typography
+$family-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+// --- App-specific tokens (not part of Bulma's system) ---
+// These get exposed as CSS custom properties for use in components
+
+// Light mode
+$app-accent:       #ea76cb;  // Catppuccin Pink
+$app-muted:        #9ca0b0;  // Catppuccin Overlay1
+$app-surface:      #e6e9ef;  // Catppuccin Surface0
+$app-surface-alt:  #dce0e8;  // Catppuccin Mantle
+$app-overlay:      #ccd0da;  // Catppuccin Surface1
+$app-input-bg:     #ffffff;
+$app-card-bg:      #ffffff;
+
+// Dark mode
+$app-accent-dark:       #f5c2e7;
+$app-muted-dark:        #a6adc8;
+$app-surface-dark:      #313244;
+$app-surface-alt-dark:  #45475a;
+$app-overlay-dark:      #585b70;
+$app-input-bg-dark:     #313244;
+$app-card-bg-dark:      #313244;
