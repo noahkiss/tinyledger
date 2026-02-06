@@ -12,61 +12,104 @@
 
 :root {
   // --- Base ---
-  --color-background: var(--bulma-scheme-main);
-  --color-foreground: var(--bulma-text);
+  --color-background: #eff1f5;
+  --color-foreground: #4c4f69;
   --color-muted: #{p.$app-muted};
   --color-surface: #{p.$app-surface};
   --color-surface-alt: #{p.$app-surface-alt};
   --color-overlay: #{p.$app-overlay};
-  --color-border: var(--bulma-border);
+  --color-border: #bcc0cc;
 
-  // --- Semantic (mapped from Bulma) ---
-  --color-primary: var(--bulma-primary);
-  --color-primary-hover: var(--bulma-primary-dark);
-  --color-primary-muted: var(--bulma-primary-light);
-  --color-success: var(--bulma-success);
-  --color-success-hover: var(--bulma-success-dark);
-  --color-success-muted: var(--bulma-success-light);
-  --color-warning: var(--bulma-warning);
-  --color-warning-hover: var(--bulma-warning-dark);
-  --color-warning-muted: var(--bulma-warning-light);
-  --color-error: var(--bulma-danger);
-  --color-error-hover: var(--bulma-danger-dark);
-  --color-error-muted: var(--bulma-danger-light);
+  // --- Semantic (exact Catppuccin Latte values) ---
+  --color-primary: #1e66f5;
+  --color-primary-hover: #1858d8;
+  --color-primary-muted: #7287fd;
+  --color-success: #40a02b;
+  --color-success-hover: #389424;
+  --color-success-muted: #a6d189;
+  --color-warning: #df8e1d;
+  --color-warning-hover: #c87f1a;
+  --color-warning-muted: #f9e2af;
+  --color-error: #d20f39;
+  --color-error-hover: #bd0d33;
+  --color-error-muted: #f38ba8;
 
   // --- App-specific ---
   --color-accent: #{p.$app-accent};
-  --color-subtle: var(--bulma-info);
+  --color-subtle: #179299;
 
   // --- Component tokens ---
   --color-input-bg: #{p.$app-input-bg};
-  --color-input-border: var(--bulma-input-border-color, var(--bulma-border));
-  --color-input-focus: var(--bulma-primary);
+  --color-input-border: #bcc0cc;
+  --color-input-focus: #1e66f5;
   --color-card-bg: #{p.$app-card-bg};
-  --color-card-border: var(--bulma-border-weak);
+  --color-card-border: #ccd0da;
 }
 
-// Dark mode overrides for app-specific tokens
-// (Bulma handles its own --bulma-* variables automatically)
+// Dark mode overrides — exact Catppuccin Mocha values (matching main branch)
 [data-theme="dark"],
 .theme-dark {
+  --color-background: #1e1e2e;
+  --color-foreground: #cdd6f4;
   --color-muted: #{p.$app-muted-dark};
   --color-surface: #{p.$app-surface-dark};
   --color-surface-alt: #{p.$app-surface-alt-dark};
   --color-overlay: #{p.$app-overlay-dark};
+  --color-border: #6c7086;
+
+  --color-primary: #60a5fa;
+  --color-primary-hover: #3b82f6;
+  --color-primary-muted: #74a8f7;
+  --color-success: #22c55e;
+  --color-success-hover: #16a34a;
+  --color-success-muted: #4ade80;
+  --color-warning: #f9e2af;
+  --color-warning-hover: #fff0c5;
+  --color-warning-muted: #edd49c;
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
+  --color-error-muted: #f87171;
+
   --color-accent: #{p.$app-accent-dark};
+  --color-subtle: #94e2d5;
+
   --color-input-bg: #{p.$app-input-bg-dark};
+  --color-input-border: #6c7086;
+  --color-input-focus: #89b4fa;
   --color-card-bg: #{p.$app-card-bg-dark};
+  --color-card-border: #45475a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not(.theme-light) {
+    --color-background: #1e1e2e;
+    --color-foreground: #cdd6f4;
     --color-muted: #{p.$app-muted-dark};
     --color-surface: #{p.$app-surface-dark};
     --color-surface-alt: #{p.$app-surface-alt-dark};
     --color-overlay: #{p.$app-overlay-dark};
+    --color-border: #6c7086;
+
+    --color-primary: #60a5fa;
+    --color-primary-hover: #3b82f6;
+    --color-primary-muted: #74a8f7;
+    --color-success: #22c55e;
+    --color-success-hover: #16a34a;
+    --color-success-muted: #4ade80;
+    --color-warning: #f9e2af;
+    --color-warning-hover: #fff0c5;
+    --color-warning-muted: #edd49c;
+    --color-error: #ef4444;
+    --color-error-hover: #dc2626;
+    --color-error-muted: #f87171;
+
     --color-accent: #{p.$app-accent-dark};
+    --color-subtle: #94e2d5;
+
     --color-input-bg: #{p.$app-input-bg-dark};
+    --color-input-border: #6c7086;
+    --color-input-focus: #89b4fa;
     --color-card-bg: #{p.$app-card-bg-dark};
+    --color-card-border: #45475a;
   }
 }

@@ -25,6 +25,77 @@
 @use "styles/colors";
 
 // ==========================================================================
+// Bulma Overrides — Shadows & Surfaces
+// Bulma's defaults are too heavy: 0.5em blur glow + white shadow in dark mode.
+// Match the subtle shadow-sm style from our previous Tailwind setup.
+// ==========================================================================
+
+:root {
+  // Subtle shadow matching Tailwind's shadow-sm
+  --bulma-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  // Per-component shadow tuning
+  --bulma-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  --bulma-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  --bulma-card-header-shadow: 0 1px 0 0 var(--bulma-border-weak);
+  --bulma-panel-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  --bulma-dropdown-content-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+
+  // Fix washed-out surface differentiation (Bulma generates 96-98% from our 95%)
+  --bulma-scheme-main-bis-l: 92%;
+  --bulma-scheme-main-ter-l: 89%;
+}
+
+// Dark mode: use dark shadows (Bulma defaults to white glow!)
+[data-theme="dark"] {
+  --bulma-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --bulma-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --bulma-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --bulma-card-header-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  --bulma-panel-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --bulma-dropdown-content-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
+
+  // Override Bulma's dark scheme to match Catppuccin Mocha
+  --bulma-scheme-main: #1e1e2e;
+  --bulma-scheme-main-bis: #181825;
+  --bulma-scheme-main-ter: #11111b;
+  --bulma-text: #cdd6f4;
+  --bulma-text-strong: #cdd6f4;
+  --bulma-text-weak: #a6adc8;
+  --bulma-border: #6c7086;
+  --bulma-border-weak: #45475a;
+
+  // Fix shadow color channels (prevent white glow)
+  --bulma-shadow-h: 0;
+  --bulma-shadow-s: 0%;
+  --bulma-shadow-l: 0%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.theme-light) {
+    --bulma-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --bulma-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.03);
+    --bulma-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.03);
+    --bulma-card-header-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    --bulma-panel-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --bulma-dropdown-content-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
+
+    --bulma-scheme-main: #1e1e2e;
+    --bulma-scheme-main-bis: #181825;
+    --bulma-scheme-main-ter: #11111b;
+    --bulma-text: #cdd6f4;
+    --bulma-text-strong: #cdd6f4;
+    --bulma-text-weak: #a6adc8;
+    --bulma-border: #6c7086;
+    --bulma-border-weak: #45475a;
+
+    --bulma-shadow-h: 0;
+    --bulma-shadow-s: 0%;
+    --bulma-shadow-l: 0%;
+  }
+}
+
+// ==========================================================================
 // App-specific styles (things Bulma doesn't provide)
 // ==========================================================================
 
