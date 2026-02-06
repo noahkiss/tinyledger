@@ -10,15 +10,23 @@ RUN npm ci
 
 COPY . .
 RUN npm run build
-RUN npm prune --production
+
+# Production dependencies (separate stage avoids slow npm prune)
+FROM node:22-slim AS deps
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
+COPY package*.json ./
+RUN npm ci --omit=dev
 
 # Runtime stage
 FROM node:22-slim
 WORKDIR /app
 
-# Copy built app and production dependencies (node user is UID 1000:1000)
+# Copy built app and production-only dependencies
 COPY --from=builder --chown=node:node /app/build build/
-COPY --from=builder --chown=node:node /app/node_modules node_modules/
+COPY --from=deps --chown=node:node /app/node_modules node_modules/
 COPY --from=builder --chown=node:node /app/package.json .
 
 # Create data directories
