@@ -134,13 +134,13 @@
 	<title>Recurring Transactions - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-6">
+<div>
 	<!-- Header -->
-	<div class="flex items-center justify-between">
-		<h2 class="text-2xl font-semibold text-fg">Recurring Transactions</h2>
+	<div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+		<h2 class="title is-4 mb-0">Recurring Transactions</h2>
 		<button
 			type="button"
-			class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+			class="button is-primary"
 			onclick={() => {
 				resetForm();
 				showCreateForm = !showCreateForm;
@@ -152,23 +152,23 @@
 
 	<!-- Error/Success messages -->
 	{#if form?.error}
-		<div class="rounded-lg bg-red-50 p-4 text-red-700">
-			<p class="font-medium">Error</p>
-			<p class="mt-1 text-sm">{form.error}</p>
+		<div class="notification is-danger is-light mb-4">
+			<p class="has-text-weight-medium">Error</p>
+			<p class="is-size-7 mt-1">{form.error}</p>
 		</div>
 	{/if}
 
 	{#if form?.success}
-		<div class="rounded-lg bg-green-50 p-4 text-green-700">
-			<p class="font-medium">Success</p>
-			<p class="mt-1 text-sm">Recurring template saved.</p>
+		<div class="notification is-success is-light mb-4">
+			<p class="has-text-weight-medium">Success</p>
+			<p class="is-size-7 mt-1">Recurring template saved.</p>
 		</div>
 	{/if}
 
 	<!-- Create/Edit Form -->
 	{#if showCreateForm}
-		<div class="rounded-lg border border-border bg-card p-6">
-			<h3 class="mb-4 text-lg font-medium text-fg">
+		<div class="box mb-5">
+			<h3 class="title is-5 mb-4">
 				{editingTemplate ? 'Edit Recurring Template' : 'Create Recurring Template'}
 			</h3>
 
@@ -183,32 +183,25 @@
 						}
 					};
 				}}
-				class="space-y-6"
 			>
 				{#if editingTemplate}
 					<input type="hidden" name="templateId" value={editingTemplate.id} />
 				{/if}
 
 				<!-- Type Selection -->
-				<div>
-					<label class="block text-sm font-medium text-fg">Type</label>
-					<div class="mt-2 flex gap-2">
+				<div class="field">
+					<label class="label">Type</label>
+					<div class="buttons">
 						<button
 							type="button"
-							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
-							'income'
-								? 'bg-green-600 text-white'
-								: 'bg-surface text-fg hover:bg-surface-alt'}"
+							class="button {transactionType === 'income' ? 'is-success' : ''}"
 							onclick={() => (transactionType = 'income')}
 						>
 							Income
 						</button>
 						<button
 							type="button"
-							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
-							'expense'
-								? 'bg-red-600 text-white'
-								: 'bg-surface text-fg hover:bg-surface-alt'}"
+							class="button {transactionType === 'expense' ? 'is-danger' : ''}"
 							onclick={() => (transactionType = 'expense')}
 						>
 							Expense
@@ -218,19 +211,19 @@
 				</div>
 
 				<!-- Amount -->
-				<div>
-					<label for="amount" class="block text-sm font-medium text-fg">Amount</label>
-					<div class="mt-1">
+				<div class="field">
+					<label for="amount" class="label">Amount</label>
+					<div class="control">
 						<CurrencyInput bind:value={amountCents} name="amount" id="amount" required class="w-full" />
 					</div>
 				</div>
 
 				<!-- Payee -->
-				<div>
-					<label for="payee" class="block text-sm font-medium text-fg">
+				<div class="field">
+					<label for="payee" class="label">
 						{transactionType === 'income' ? 'Received from' : 'Paid to'}
 					</label>
-					<div class="mt-1">
+					<div class="control">
 						<input
 							type="text"
 							id="payee"
@@ -238,44 +231,44 @@
 							bind:value={payee}
 							required
 							placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Rent'}
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="input"
 						/>
 					</div>
 				</div>
 
 				<!-- Description -->
-				<div>
-					<label for="description" class="block text-sm font-medium text-fg">
+				<div class="field">
+					<label for="description" class="label">
 						Description
-						<span class="font-normal text-muted">(optional)</span>
+						<span class="has-text-weight-normal has-text-grey">(optional)</span>
 					</label>
-					<div class="mt-1">
+					<div class="control">
 						<textarea
 							id="description"
 							name="description"
 							bind:value={description}
 							rows="2"
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="textarea"
 							placeholder="Add any notes..."
 						></textarea>
 					</div>
 				</div>
 
 				<!-- Payment Method -->
-				<div>
-					<label class="block text-sm font-medium text-fg">Payment Method</label>
-					<div class="mt-1">
+				<div class="field">
+					<label class="label">Payment Method</label>
+					<div class="control">
 						<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
 					</div>
 				</div>
 
 				<!-- Tags -->
-				<div>
-					<label class="block text-sm font-medium text-fg">
+				<div class="field">
+					<label class="label">
 						Tags
-						<span class="font-normal text-muted">(optional)</span>
+						<span class="has-text-weight-normal has-text-grey">(optional)</span>
 					</label>
-					<div class="mt-1">
+					<div class="control">
 						<TagSelector
 							{availableTags}
 							bind:allocations={tagAllocations}
@@ -286,105 +279,122 @@
 				</div>
 
 				<!-- Pattern Selection -->
-				<div class="rounded-lg border border-border bg-surface p-4">
-					<label for="frequency" class="block text-sm font-medium text-fg">Recurrence Pattern</label>
-					<div class="mt-2">
-						<select
-							id="frequency"
-							name="frequency"
-							bind:value={frequency}
-							class="rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-						>
-							<option value="daily">Daily</option>
-							<option value="weekly">Weekly</option>
-							<option value="biweekly">Every 2 weeks</option>
-							<option value="monthly">Monthly</option>
-							<option value="quarterly">Quarterly (every 3 months)</option>
-							<option value="yearly">Yearly</option>
-							<option value="custom">Custom interval...</option>
-						</select>
+				<div class="box" style="background: var(--color-surface);">
+					<div class="field">
+						<label for="frequency" class="label">Recurrence Pattern</label>
+						<div class="control">
+							<div class="select">
+								<select
+									id="frequency"
+									name="frequency"
+									bind:value={frequency}
+								>
+									<option value="daily">Daily</option>
+									<option value="weekly">Weekly</option>
+									<option value="biweekly">Every 2 weeks</option>
+									<option value="monthly">Monthly</option>
+									<option value="quarterly">Quarterly (every 3 months)</option>
+									<option value="yearly">Yearly</option>
+									<option value="custom">Custom interval...</option>
+								</select>
+							</div>
+						</div>
 					</div>
 
 					{#if frequency === 'custom'}
-						<div class="mt-3 flex items-center gap-2">
-							<span class="text-sm text-muted">Every</span>
-							<input
-								type="number"
-								name="interval"
-								bind:value={interval}
-								min="1"
-								max="365"
-								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-							/>
-							<select
-								name="customUnit"
-								bind:value={customUnit}
-								class="rounded-lg border border-input-border bg-input px-3 py-1 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-							>
-								<option value="day">day(s)</option>
-								<option value="week">week(s)</option>
-								<option value="month">month(s)</option>
-							</select>
+						<div class="is-flex is-align-items-center mt-3" style="gap: 0.5rem;">
+							<span class="is-size-7 has-text-grey">Every</span>
+							<div class="control" style="width: 4rem;">
+								<input
+									type="number"
+									name="interval"
+									bind:value={interval}
+									min="1"
+									max="365"
+									class="input is-small has-text-centered"
+								/>
+							</div>
+							<div class="select is-small">
+								<select
+									name="customUnit"
+									bind:value={customUnit}
+								>
+									<option value="day">day(s)</option>
+									<option value="week">week(s)</option>
+									<option value="month">month(s)</option>
+								</select>
+							</div>
 						</div>
 					{/if}
 				</div>
 
 				<!-- Date Range -->
-				<div class="grid gap-4 sm:grid-cols-2">
-					<div>
-						<label for="startDate" class="block text-sm font-medium text-fg">Start Date</label>
-						<input
-							type="date"
-							id="startDate"
-							name="startDate"
-							bind:value={startDate}
-							required
-							class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-						/>
+				<div class="columns mt-4">
+					<div class="column">
+						<div class="field">
+							<label for="startDate" class="label">Start Date</label>
+							<div class="control">
+								<input
+									type="date"
+									id="startDate"
+									name="startDate"
+									bind:value={startDate}
+									required
+									class="input"
+								/>
+							</div>
+						</div>
 					</div>
 
-					<div>
-						<div class="flex items-center gap-2">
-							<input
-								type="checkbox"
-								id="hasEndDate"
-								name="hasEndDate"
-								bind:checked={hasEndDate}
-								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
-							/>
-							<label for="hasEndDate" class="text-sm font-medium text-fg">Set end date</label>
+					<div class="column">
+						<div class="field">
+							<label class="checkbox">
+								<input
+									type="checkbox"
+									id="hasEndDate"
+									name="hasEndDate"
+									bind:checked={hasEndDate}
+								/>
+								Set end date
+							</label>
+							{#if hasEndDate}
+								<div class="control mt-2">
+									<input
+										type="date"
+										id="endDate"
+										name="endDate"
+										bind:value={endDate}
+										min={startDate}
+										class="input"
+									/>
+								</div>
+							{/if}
 						</div>
-						{#if hasEndDate}
-							<input
-								type="date"
-								id="endDate"
-								name="endDate"
-								bind:value={endDate}
-								min={startDate}
-								class="mt-2 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-							/>
-						{/if}
 					</div>
 				</div>
 
 				<!-- Submit -->
-				<div class="flex gap-3 pt-4">
-					<button
-						type="button"
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
-						onclick={() => {
-							showCreateForm = false;
-							resetForm();
-						}}
-					>
-						Cancel
-					</button>
-					<button
-						type="submit"
-						class="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-hover"
-					>
-						{editingTemplate ? 'Update Template' : 'Create Recurring'}
-					</button>
+				<div class="field is-grouped mt-4">
+					<div class="control">
+						<button
+							type="button"
+							class="button"
+							onclick={() => {
+								showCreateForm = false;
+								resetForm();
+							}}
+						>
+							Cancel
+						</button>
+					</div>
+					<div class="control">
+						<button
+							type="submit"
+							class="button is-primary"
+						>
+							{editingTemplate ? 'Update Template' : 'Create Recurring'}
+						</button>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -392,54 +402,51 @@
 
 	<!-- Active Templates -->
 	{#if activeTemplates.length > 0}
-		<div class="space-y-3">
-			<h3 class="text-lg font-medium text-fg">Active Recurring ({activeTemplates.length})</h3>
+		<div class="mb-5">
+			<h3 class="title is-5 mb-4">Active Recurring ({activeTemplates.length})</h3>
 			{#each activeTemplates as template (template.id)}
-				<div class="rounded-lg border border-border bg-card p-4">
-					<div class="flex items-start justify-between">
-						<div class="flex items-start gap-3">
+				<div class="box mb-3">
+					<div class="is-flex is-justify-content-space-between" style="align-items: flex-start;">
+						<div class="is-flex" style="align-items: flex-start; gap: 0.75rem;">
 							<!-- Type indicator -->
 							<div
-								class="mt-1 flex h-8 w-8 items-center justify-center rounded-full {template.type ===
-								'income'
-									? 'bg-green-100'
-									: 'bg-red-100'}"
+								class="type-icon {template.type === 'income' ? 'is-income' : 'is-expense'}"
 							>
 								{#if template.type === 'income'}
-									<iconify-icon icon="solar:add-circle-bold" class="text-green-600" width="16" height="16"></iconify-icon>
+									<iconify-icon icon="solar:add-circle-bold" width="16" height="16"></iconify-icon>
 								{:else}
-									<iconify-icon icon="solar:minus-circle-bold" class="text-red-600" width="16" height="16"></iconify-icon>
+									<iconify-icon icon="solar:minus-circle-bold" width="16" height="16"></iconify-icon>
 								{/if}
 							</div>
 
 							<div>
-								<div class="flex items-center gap-2">
-									<span class="font-medium text-fg">{template.payee}</span>
-									<span class="text-lg font-semibold {template.type === 'income' ? 'text-green-600' : 'text-red-600'}">
+								<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+									<span class="has-text-weight-medium">{template.payee}</span>
+									<span class="title is-6 mb-0 {template.type === 'income' ? 'has-text-success' : 'has-text-danger'}">
 										{template.type === 'income' ? '+' : '-'}{formatCurrency(template.amountCents)}
 									</span>
 								</div>
-								<div class="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
+								<div class="is-size-7 has-text-grey mt-1 is-flex is-flex-wrap-wrap is-align-items-center" style="gap: 0.5rem;">
 									<span>{template.patternDescription}</span>
-									<span class="text-muted">|</span>
+									<span class="has-text-grey">|</span>
 									<span>Started {formatDate(template.startDate)}</span>
 									{#if template.endDate}
-										<span class="text-muted">|</span>
+										<span class="has-text-grey">|</span>
 										<span>Ends {formatDate(template.endDate)}</span>
 									{/if}
 								</div>
 								{#if template.nextOccurrence}
-									<div class="mt-1 text-sm text-primary">
+									<div class="is-size-7 has-text-primary mt-1">
 										Next: {formatDate(template.nextOccurrence)}
 									</div>
 								{/if}
 								{#if template.tags.length > 0}
-									<div class="mt-2 flex flex-wrap gap-1">
+									<div class="tags mt-2">
 										{#each template.tags as tag}
-											<span class="rounded-full bg-surface px-2 py-0.5 text-xs text-muted">
+											<span class="tag is-small is-light">
 												{tag.tagName}
 												{#if tag.percentage < 100}
-													<span class="text-muted">({tag.percentage}%)</span>
+													<span class="has-text-grey ml-1">({tag.percentage}%)</span>
 												{/if}
 											</span>
 										{/each}
@@ -449,33 +456,39 @@
 						</div>
 
 						<!-- Actions -->
-						<div class="flex items-center gap-1">
+						<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
 							<button
 								type="button"
-								class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+								class="button is-ghost is-small"
 								onclick={() => editTemplate(template)}
 								title="Edit"
 							>
-								<iconify-icon icon="solar:pen-bold" width="16" height="16"></iconify-icon>
+								<span class="icon">
+									<iconify-icon icon="solar:pen-bold" width="16" height="16"></iconify-icon>
+								</span>
 							</button>
-							<form method="POST" action="?/deactivate" use:enhance class="inline">
+							<form method="POST" action="?/deactivate" use:enhance class="is-inline">
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-yellow-50 hover:text-yellow-600"
+									class="button is-ghost is-small"
 									title="Deactivate"
 								>
-									<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
+									<span class="icon has-text-warning">
+										<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
+									</span>
 								</button>
 							</form>
-							<form method="POST" action="?/delete" use:enhance class="inline">
+							<form method="POST" action="?/delete" use:enhance class="is-inline">
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
+									class="button is-ghost is-small"
 									title="Delete"
 								>
-									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
+									<span class="icon has-text-danger">
+										<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
+									</span>
 								</button>
 							</form>
 						</div>
@@ -484,15 +497,15 @@
 			{/each}
 		</div>
 	{:else if !showCreateForm}
-		<div class="rounded-lg border border-border bg-card p-8 text-center">
-			<iconify-icon icon="solar:restart-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
-			<p class="mt-4 text-muted">No recurring transactions set up</p>
-			<p class="mt-1 text-sm text-muted">
+		<div class="box has-text-centered p-6">
+			<iconify-icon icon="solar:restart-bold" class="has-text-grey" width="48" height="48"></iconify-icon>
+			<p class="has-text-grey mt-4">No recurring transactions set up</p>
+			<p class="is-size-7 has-text-grey mt-1">
 				Create a recurring template for expenses like rent, subscriptions, or regular client payments.
 			</p>
 			<button
 				type="button"
-				class="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+				class="button is-primary mt-4"
 				onclick={() => {
 					resetForm();
 					showCreateForm = true;
@@ -505,42 +518,46 @@
 
 	<!-- Inactive Templates -->
 	{#if inactiveTemplates.length > 0}
-		<div class="mt-8 space-y-3">
-			<h3 class="text-lg font-medium text-muted">Inactive ({inactiveTemplates.length})</h3>
+		<div class="mt-5">
+			<h3 class="title is-5 has-text-grey mb-4">Inactive ({inactiveTemplates.length})</h3>
 			{#each inactiveTemplates as template (template.id)}
-				<div class="rounded-lg border border-border bg-surface p-4 opacity-60">
-					<div class="flex items-start justify-between">
+				<div class="box mb-3" style="opacity: 0.6; background: var(--color-surface);">
+					<div class="is-flex is-justify-content-space-between" style="align-items: flex-start;">
 						<div>
-							<div class="flex items-center gap-2">
-								<span class="font-medium text-muted">{template.payee}</span>
-								<span class="text-muted">
+							<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+								<span class="has-text-weight-medium has-text-grey">{template.payee}</span>
+								<span class="has-text-grey">
 									{template.type === 'income' ? '+' : '-'}{formatCurrency(template.amountCents)}
 								</span>
-								<span class="rounded bg-surface-alt px-1.5 py-0.5 text-xs text-muted">Inactive</span>
+								<span class="tag is-small is-light">Inactive</span>
 							</div>
-							<div class="mt-1 text-sm text-muted">
+							<div class="is-size-7 has-text-grey mt-1">
 								{template.patternDescription}
 							</div>
 						</div>
-						<div class="flex items-center gap-1">
-							<form method="POST" action="?/activate" use:enhance class="inline">
+						<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
+							<form method="POST" action="?/activate" use:enhance class="is-inline">
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-green-50 hover:text-green-600"
+									class="button is-ghost is-small"
 									title="Reactivate"
 								>
-									<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
+									<span class="icon has-text-success">
+										<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
+									</span>
 								</button>
 							</form>
-							<form method="POST" action="?/delete" use:enhance class="inline">
+							<form method="POST" action="?/delete" use:enhance class="is-inline">
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
+									class="button is-ghost is-small"
 									title="Delete"
 								>
-									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
+									<span class="icon has-text-danger">
+										<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
+									</span>
 								</button>
 							</form>
 						</div>
@@ -550,3 +567,24 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.type-icon {
+		margin-top: 0.125rem;
+		display: flex;
+		width: 2rem;
+		height: 2rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+	.type-icon.is-income {
+		background-color: var(--color-success-muted, #f0fdf4);
+		color: var(--color-success);
+	}
+	.type-icon.is-expense {
+		background-color: var(--color-error-muted, #fef2f2);
+		color: var(--color-error);
+	}
+</style>

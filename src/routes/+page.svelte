@@ -23,21 +23,21 @@
 	<title>TinyLedger - Simple Bookkeeping</title>
 </svelte:head>
 
-<main class="min-h-screen bg-bg px-4 py-8">
-	<div class="mx-auto max-w-lg">
+<section class="section">
+	<div class="container" style="max-width: 32rem;">
 		<!-- Header -->
-		<header class="mb-8 text-center">
-			<h1 class="text-3xl font-bold text-fg">TinyLedger</h1>
-			<p class="mt-2 text-muted">Simple bookkeeping for small businesses</p>
+		<header class="has-text-centered mb-5">
+			<h1 class="title is-3">TinyLedger</h1>
+			<p class="subtitle is-6 has-text-grey">Simple bookkeeping for small businesses</p>
 		</header>
 
 		<!-- Quick resume if last workspace exists -->
 		{#if lastWorkspace}
-			<div class="mb-6 rounded-lg border border-primary/30 bg-primary/10 p-4">
-				<p class="text-sm text-primary">Continue where you left off</p>
+			<div class="notification is-info is-light mb-5">
+				<p class="is-size-7 has-text-info">Continue where you left off</p>
 				<a
 					href="/w/{lastWorkspace.id}/transactions"
-					class="mt-2 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:opacity-90"
+					class="button is-primary is-small mt-2"
 				>
 					Continue to {lastWorkspace.name}
 				</a>
@@ -46,27 +46,25 @@
 
 		<!-- Existing workspaces -->
 		{#if data.workspaces.length > 0}
-			<section class="mb-8">
-				<h2 class="mb-3 text-lg font-semibold text-fg">Your Workspaces</h2>
-				<ul class="space-y-2">
+			<section class="mb-5">
+				<h2 class="title is-5">Your Workspaces</h2>
+				<div class="workspace-list">
 					{#each data.workspaces as workspace}
-						<li>
-							<a
-								href="/w/{workspace.id}/transactions"
-								class="block rounded-lg border border-card-border bg-card p-4 hover:border-primary/50 hover:bg-primary/5 active:bg-primary/10"
-							>
-								<span class="font-medium text-fg">{workspace.name}</span>
-								<span class="ml-2 text-sm text-muted">/{workspace.id}/</span>
-							</a>
-						</li>
+						<a
+							href="/w/{workspace.id}/transactions"
+							class="box mb-3 workspace-link"
+						>
+							<span class="has-text-weight-medium">{workspace.name}</span>
+							<span class="ml-2 is-size-7 has-text-grey">/{workspace.id}/</span>
+						</a>
 					{/each}
-				</ul>
+				</div>
 			</section>
 		{/if}
 
 		<!-- Create new workspace form -->
 		<section>
-			<h2 class="mb-3 text-lg font-semibold text-fg">
+			<h2 class="title is-5">
 				{data.workspaces.length > 0 ? 'Create Another Workspace' : 'Get Started'}
 			</h2>
 
@@ -74,49 +72,66 @@
 				method="POST"
 				action="?/create"
 				use:enhance
-				class="space-y-4 rounded-lg border border-card-border bg-card p-6"
+				class="box"
 			>
 				{#if form?.error}
-					<div class="rounded-lg bg-error/10 p-3 text-sm text-error">
-						{form.error}
+					<div class="notification is-danger is-light">
+						<p class="is-size-7">{form.error}</p>
 					</div>
 				{/if}
 
-				<div>
-					<label for="name" class="block text-sm font-medium text-fg"> Workspace Name </label>
-					<input
-						type="text"
-						id="name"
-						name="name"
-						value={form?.name ?? ''}
-						required
-						placeholder="My Business"
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
-					/>
+				<div class="field">
+					<label for="name" class="label">Workspace Name</label>
+					<div class="control">
+						<input
+							type="text"
+							id="name"
+							name="name"
+							value={form?.name ?? ''}
+							required
+							placeholder="My Business"
+							class="input"
+						/>
+					</div>
 				</div>
 
-				<div>
-					<label for="type" class="block text-sm font-medium text-fg"> Workspace Type </label>
-					<select
-						id="type"
-						name="type"
-						required
-						class="mt-1 block h-[50px] w-full rounded-lg border border-input-border bg-input px-4 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
-					>
-						<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
-						<option value="volunteer_org" selected={form?.type === 'volunteer_org'}
-							>Volunteer Organization</option
+				<div class="field">
+					<label for="type" class="label">Workspace Type</label>
+					<div class="control">
+						<div class="select is-fullwidth">
+							<select
+								id="type"
+								name="type"
+								required
+							>
+								<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
+								<option value="volunteer_org" selected={form?.type === 'volunteer_org'}>Volunteer Organization</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="field">
+					<div class="control">
+						<button
+							type="submit"
+							class="button is-primary is-fullwidth"
 						>
-					</select>
+							Create Workspace
+						</button>
+					</div>
 				</div>
-
-				<button
-					type="submit"
-					class="w-full rounded-lg bg-primary px-4 py-3 font-medium text-white hover:bg-primary-hover active:opacity-90"
-				>
-					Create Workspace
-				</button>
 			</form>
 		</section>
 	</div>
-</main>
+</section>
+
+<style>
+	.workspace-link {
+		display: block;
+		transition: border-color 0.15s ease;
+	}
+	.workspace-link:hover {
+		border-color: var(--color-primary);
+	}
+</style>

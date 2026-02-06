@@ -77,18 +77,20 @@
 	}
 </script>
 
-<div>
-	<input
-		type="date"
-		{id}
-		{name}
-		{required}
-		{value}
-		oninput={handleInput}
-		onblur={handleBlur}
-		class="rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary {className}"
-	/>
+<div class="field">
+	<div class="control">
+		<input
+			type="date"
+			{id}
+			{name}
+			{required}
+			{value}
+			oninput={handleInput}
+			onblur={handleBlur}
+			class="input {className}"
+		/>
+	</div>
 	{#if showFutureWarning}
-		<p class="mt-1 text-sm text-amber-600">Warning: This date is more than 1 year in the future</p>
+		<p class="help is-warning">Warning: This date is more than 1 year in the future</p>
 	{/if}
 </div>

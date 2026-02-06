@@ -80,6 +80,6 @@
 	});
 </script>
 
-<div class="h-8 w-24 {className}">
+<div class="{className}" style="height: 2rem; width: 6rem;">
 	<canvas bind:this={canvas}></canvas>
 </div>

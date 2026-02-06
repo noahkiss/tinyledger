@@ -122,29 +122,29 @@
 		{name}
 		accept="image/jpeg,image/png,image/webp,image/gif"
 		onchange={handleFileChange}
-		class="hidden"
+		class="is-hidden"
 	/>
 
 	{#if displayUrl}
 		<!-- Preview mode -->
-		<div class="relative inline-block">
-			<img
-				src={displayUrl}
-				alt="Attachment preview"
-				class="max-h-48 rounded-lg shadow-sm"
-			/>
+		<div class="preview-container">
+			<figure class="image">
+				<img
+					src={displayUrl}
+					alt="Attachment preview"
+					class="preview-image"
+				/>
+			</figure>
 			<!-- Remove/clear button -->
 			<button
 				type="button"
 				onclick={handleClear}
-				class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-surface-alt text-white hover:bg-overlay"
+				class="delete remove-button"
 				aria-label="Remove attachment"
-			>
-				<iconify-icon icon="solar:close-circle-bold" width="16" height="16"></iconify-icon>
-			</button>
+			></button>
 		</div>
 		{#if displayFilename}
-			<p class="mt-2 text-sm text-muted truncate max-w-xs">{displayFilename}</p>
+			<p class="is-size-7 mt-2 filename" style="color: var(--color-muted)">{displayFilename}</p>
 		{/if}
 	{:else}
 		<!-- Upload zone -->
@@ -154,13 +154,54 @@
 			ondragover={handleDragOver}
 			ondragleave={handleDragLeave}
 			ondrop={handleDrop}
-			class="flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors
-				{dragOver ? 'border-primary bg-primary/10' : 'border-input-border hover:border-overlay'}"
+			class="upload-zone"
+			class:is-dragover={dragOver}
 		>
-			<!-- Plus icon -->
-			<iconify-icon icon="solar:cloud-upload-linear" class="text-muted" width="40" height="40"></iconify-icon>
-			<p class="mt-2 text-sm text-muted">Click or drag to upload receipt</p>
-			<p class="mt-1 text-xs text-muted">JPEG, PNG, WebP, GIF up to 10MB</p>
+			<iconify-icon icon="solar:cloud-upload-linear" width="40" height="40" style="color: var(--color-muted)"></iconify-icon>
+			<p class="is-size-7 mt-2" style="color: var(--color-muted)">Click or drag to upload receipt</p>
+			<p class="is-size-7 mt-1" style="color: var(--color-muted)">JPEG, PNG, WebP, GIF up to 10MB</p>
 		</button>
 	{/if}
 </div>
+
+<style>
+	.preview-container {
+		position: relative;
+		display: inline-block;
+	}
+	.preview-image {
+		max-height: 12rem;
+		border-radius: var(--bulma-radius);
+	}
+	.remove-button {
+		position: absolute;
+		top: -0.5rem;
+		right: -0.5rem;
+	}
+	.filename {
+		max-width: 20rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.upload-zone {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 1.5rem;
+		border: 2px dashed var(--color-input-border);
+		border-radius: var(--bulma-radius);
+		background: transparent;
+		cursor: pointer;
+		transition: border-color 0.2s, background-color 0.2s;
+	}
+	.upload-zone:hover {
+		border-color: var(--color-overlay);
+	}
+	.upload-zone.is-dragover {
+		border-color: var(--color-primary);
+		background-color: var(--color-primary-muted);
+	}
+</style>

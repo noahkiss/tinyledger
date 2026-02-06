@@ -17,9 +17,22 @@
 </script>
 
 {#if !online}
-	<div
-		class="fixed top-0 left-0 right-0 z-50 bg-yellow-100 text-yellow-800 px-4 py-2 text-center text-sm font-medium"
-	>
+	<div class="notification is-warning offline-banner">
 		You're offline - connect to continue
 	</div>
 {/if}
+
+<style>
+	.offline-banner {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 50;
+		border-radius: 0;
+		padding: 0.5rem 1rem;
+		text-align: center;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+</style>

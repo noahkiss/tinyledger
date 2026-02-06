@@ -130,25 +130,28 @@
 	}
 </script>
 
-<div class="space-y-3">
+<div>
 	{#each allocations as allocation, i (i)}
-		<div class="flex items-center gap-2">
-			<select
-				name="tag_{i}"
-				value={allocation.tagId}
-				onchange={(e) => updateTag(i, parseInt(e.currentTarget.value))}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-			>
-				{#if availableTags.length === 0}
-					<option value="0" disabled>No tags available</option>
-				{:else}
-					{#each availableTags as tag}
-						<option value={tag.id}>{tag.name}</option>
-					{/each}
-				{/if}
-			</select>
+		<div class="field is-grouped mb-3">
+			<div class="control is-expanded">
+				<div class="select is-fullwidth">
+					<select
+						name="tag_{i}"
+						value={allocation.tagId}
+						onchange={(e) => updateTag(i, parseInt(e.currentTarget.value))}
+					>
+						{#if availableTags.length === 0}
+							<option value="0" disabled>No tags available</option>
+						{:else}
+							{#each availableTags as tag}
+								<option value={tag.id}>{tag.name}</option>
+							{/each}
+						{/if}
+					</select>
+				</div>
+			</div>
 
-			<div class="flex items-center gap-1">
+			<div class="control percentage-control">
 				<input
 					type="number"
 					name="percentage_{i}"
@@ -156,70 +159,114 @@
 					min="0"
 					max="100"
 					oninput={(e) => updatePercentage(i, parseInt(e.currentTarget.value) || 0)}
-					class="w-20 rounded-lg border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="input percentage-input"
 				/>
-				<span class="text-muted">%</span>
+			</div>
+			<div class="control">
+				<span class="percent-symbol">%</span>
 			</div>
 
-			<button
-				type="button"
-				onclick={() => removeTag(i)}
-				class="rounded p-1 text-red-600 hover:bg-red-50"
-				aria-label="Remove tag"
-			>
-				<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
-			</button>
+			<div class="control">
+				<button
+					type="button"
+					onclick={() => removeTag(i)}
+					class="button is-ghost remove-btn"
+					aria-label="Remove tag"
+				>
+					<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
+				</button>
+			</div>
 		</div>
 	{/each}
 
-	<div class="flex items-center justify-between">
-		<button type="button" onclick={addTag} class="text-sm text-primary hover:text-primary">
+	<div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+		<button type="button" onclick={addTag} class="button is-ghost is-small add-tag-btn">
 			+ Add Tag
 		</button>
 
 		{#if allocations.length > 0}
-			<div class="text-sm" class:text-green-600={isValid} class:text-red-600={!isValid}>
+			<span class="is-size-7 {isValid ? 'has-text-success' : 'has-text-danger'}">
 				Total: {totalPercentage}%
 				{#if !isValid && remainingPercentage > 0}
 					<button
 						type="button"
 						onclick={distributeRemaining}
-						class="ml-2 text-primary hover:underline"
+						class="button is-ghost is-small distribute-btn"
 					>
 						Add {remainingPercentage}% to last
 					</button>
 				{/if}
-			</div>
+			</span>
 		{/if}
 	</div>
 
 	{#if allocations.length > 0 && !isValid}
-		<p class="text-sm text-red-600">Tag percentages must sum to exactly 100%</p>
+		<p class="help is-danger">Tag percentages must sum to exactly 100%</p>
 	{/if}
 
 	<!-- Inline tag creation section -->
 	{#if !locked && onCreateTag}
-		<div class="mt-3 flex gap-2 border-t border-border pt-3">
-			<input
-				type="text"
-				bind:value={newTagName}
-				placeholder="Create new tag..."
-				onkeydown={handleCreateKeydown}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-			/>
-			<button
-				type="button"
-				onclick={handleCreateTag}
-				disabled={isCreating || !newTagName.trim()}
-				class="rounded-lg bg-primary px-3 py-2 text-sm text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				{isCreating ? '...' : 'Create'}
-			</button>
+		<div class="field is-grouped create-section">
+			<div class="control is-expanded">
+				<input
+					type="text"
+					bind:value={newTagName}
+					placeholder="Create new tag..."
+					onkeydown={handleCreateKeydown}
+					class="input is-small"
+				/>
+			</div>
+			<div class="control">
+				<button
+					type="button"
+					onclick={handleCreateTag}
+					disabled={isCreating || !newTagName.trim()}
+					class="button is-primary is-small"
+				>
+					{isCreating ? '...' : 'Create'}
+				</button>
+			</div>
 		</div>
 		{#if createError}
-			<p class="mt-1 text-sm text-red-600">{createError}</p>
+			<p class="help is-danger mt-1">{createError}</p>
 		{/if}
 	{:else if locked}
-		<p class="mt-2 text-xs text-muted">Tag creation is locked. Manage tags in settings.</p>
+		<p class="help mt-2" style="color: var(--color-muted)">Tag creation is locked. Manage tags in settings.</p>
 	{/if}
 </div>
+
+<style>
+	.percentage-control {
+		width: 5rem;
+	}
+	.percentage-input {
+		text-align: center;
+	}
+	.percent-symbol {
+		line-height: 2.5em;
+		color: var(--color-muted);
+	}
+	.remove-btn {
+		color: var(--bulma-danger);
+		text-decoration: none;
+	}
+	.remove-btn:hover {
+		background: var(--color-error-muted);
+	}
+	.add-tag-btn {
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	.distribute-btn {
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	.distribute-btn:hover {
+		text-decoration: underline;
+	}
+	.create-section {
+		margin-top: 0.75rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--color-border);
+	}
+</style>

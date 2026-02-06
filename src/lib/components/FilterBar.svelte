@@ -196,6 +196,9 @@
 	// Handle click outside for search
 	function handleSearchClickOutside(event: MouseEvent) {
 		const target = event.target as Element;
+		// Ignore clicks on elements no longer in the DOM (e.g. the button that was
+		// replaced by the input when searchExpanded became true)
+		if (!document.contains(target)) return;
 		if (!target.closest('[data-search-container]') && !payeeInput) {
 			searchExpanded = false;
 		}
@@ -209,258 +212,371 @@
 	});
 </script>
 
-<div class="flex flex-col gap-3 py-3" data-component="filter-bar">
+<div class="py-3" data-component="filter-bar">
 	<!-- Filter bar (unified container) -->
-	<div class="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2">
-		<!-- Type segmented buttons -->
-		<div class="flex rounded-lg border border-border bg-card">
-			<button
-				type="button"
-				class="cursor-pointer px-3 py-2 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
-					{currentFilters.type === '' ? 'bg-primary text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('')}
-			>
-				All
-			</button>
-			<button
-				type="button"
-				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors
-					{currentFilters.type === 'income' ? 'bg-success text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('income')}
-			>
-				Income
-			</button>
-			<button
-				type="button"
-				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors last:rounded-r-lg
-					{currentFilters.type === 'expense' ? 'bg-error text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('expense')}
-			>
-				Expense
-			</button>
-		</div>
-
-		<!-- Divider -->
-		<div class="h-5 w-px bg-border"></div>
-
-		<!-- Collapsible Search -->
-		<div data-search-container>
-			{#if searchExpanded || payeeInput}
-				<div class="relative">
-					<iconify-icon
-						icon="solar:magnifer-linear"
-						class="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
-						width="16"
-						height="16"
-					></iconify-icon>
-					<input
-						bind:this={searchInputEl}
-						type="text"
-						placeholder="Search payee..."
-						value={payeeInput}
-						oninput={handlePayeeInput}
-						onblur={handleSearchBlur}
-						class="w-full rounded-lg border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
-					/>
-				</div>
-			{:else}
+	<div class="box filter-container">
+		<div class="is-flex is-flex-wrap-wrap is-align-items-center filter-row">
+			<!-- Type segmented buttons -->
+			<div class="buttons has-addons mb-0">
 				<button
 					type="button"
-					onclick={expandSearch}
-					class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm text-muted hover:bg-surface hover:text-fg"
+					class="button is-small"
+					class:is-primary={currentFilters.type === ''}
+					class:is-selected={currentFilters.type === ''}
+					onclick={() => handleTypeChange('')}
 				>
-					<iconify-icon icon="solar:magnifer-linear" width="16" height="16"></iconify-icon>
-					<span class="hidden sm:inline">Search</span>
+					All
+				</button>
+				<button
+					type="button"
+					class="button is-small"
+					class:is-success={currentFilters.type === 'income'}
+					class:is-selected={currentFilters.type === 'income'}
+					onclick={() => handleTypeChange('income')}
+				>
+					Income
+				</button>
+				<button
+					type="button"
+					class="button is-small"
+					class:is-danger={currentFilters.type === 'expense'}
+					class:is-selected={currentFilters.type === 'expense'}
+					onclick={() => handleTypeChange('expense')}
+				>
+					Expense
+				</button>
+			</div>
+
+			<!-- Divider -->
+			<span class="filter-divider"></span>
+
+			<!-- Collapsible Search -->
+			<div data-search-container>
+				{#if searchExpanded || payeeInput}
+					<div class="control has-icons-left">
+						<input
+							bind:this={searchInputEl}
+							type="text"
+							placeholder="Search payee..."
+							value={payeeInput}
+							oninput={handlePayeeInput}
+							onblur={handleSearchBlur}
+							class="input is-small"
+						/>
+						<span class="icon is-small is-left">
+							<iconify-icon icon="solar:magnifer-linear" width="16" height="16"></iconify-icon>
+						</span>
+					</div>
+				{:else}
+					<button
+						type="button"
+						onclick={expandSearch}
+						class="button is-small is-ghost filter-pill"
+					>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:magnifer-linear" width="16" height="16"></iconify-icon>
+						</span>
+						<span class="is-hidden-mobile">Search</span>
+					</button>
+				{/if}
+			</div>
+
+			<!-- Divider -->
+			<span class="filter-divider"></span>
+
+			<!-- Tags dropdown -->
+			<div class="dropdown" class:is-active={showTagDropdown}>
+				<div class="dropdown-trigger">
+					<button
+						type="button"
+						class="button is-small filter-pill"
+						class:is-active-filter={currentFilters.tags.length > 0}
+						onclick={() => (showTagDropdown = !showTagDropdown)}
+						aria-haspopup="true"
+					>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:tag-bold" width="16" height="16"></iconify-icon>
+						</span>
+						<span class="is-hidden-mobile">{getSelectedTagNames()}</span>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
+						</span>
+					</button>
+				</div>
+
+				{#if showTagDropdown}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div class="dropdown-backdrop" onclick={() => (showTagDropdown = false)}></div>
+					<div class="dropdown-menu" role="menu">
+						<div class="dropdown-content">
+							{#if availableTags.length === 0}
+								<div class="dropdown-item is-size-7 muted-text">No tags available</div>
+							{:else}
+								{#each availableTags as tag}
+									<label class="dropdown-item is-flex is-align-items-center">
+										<input
+											type="checkbox"
+											checked={currentFilters.tags.includes(tag.id)}
+											onchange={() => handleTagToggle(tag.id)}
+											class="mr-2"
+										/>
+										<span class="is-size-7">{tag.name}</span>
+									</label>
+								{/each}
+							{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Divider -->
+			<span class="filter-divider"></span>
+
+			<!-- Date range -->
+			<div class="dropdown" class:is-active={showDateDropdown}>
+				<div class="dropdown-trigger">
+					<button
+						type="button"
+						class="button is-small filter-pill"
+						class:is-active-filter={!!hasDateFilter}
+						onclick={() => (showDateDropdown = !showDateDropdown)}
+						aria-haspopup="true"
+					>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:calendar-bold" width="16" height="16"></iconify-icon>
+						</span>
+						<span class="is-hidden-mobile">{getDateRangeDisplay()}</span>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
+						</span>
+					</button>
+				</div>
+
+				{#if showDateDropdown}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div class="dropdown-backdrop" onclick={() => (showDateDropdown = false)}></div>
+					<div class="dropdown-menu" role="menu">
+						<div class="dropdown-content p-3">
+							<div class="field">
+								<label class="label is-small">From</label>
+								<div class="control">
+									<input
+										type="date"
+										value={currentFilters.from || fyStart}
+										onchange={handleFromChange}
+										class="input is-small"
+									/>
+								</div>
+							</div>
+							<div class="field">
+								<label class="label is-small">To</label>
+								<div class="control">
+									<input
+										type="date"
+										value={currentFilters.to || fyEnd}
+										onchange={handleToChange}
+										class="input is-small"
+									/>
+								</div>
+							</div>
+							{#if hasDateFilter}
+								<button
+									type="button"
+									onclick={clearDateFilter}
+									class="button is-small is-fullwidth is-ghost mt-1"
+								>
+									<span class="icon is-small">
+										<iconify-icon icon="solar:close-circle-linear" width="14" height="14"></iconify-icon>
+									</span>
+									<span>Clear dates</span>
+								</button>
+							{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Divider -->
+			<span class="filter-divider"></span>
+
+			<!-- Payment method dropdown -->
+			<div class="dropdown" class:is-active={showMethodDropdown}>
+				<div class="dropdown-trigger">
+					<button
+						type="button"
+						class="button is-small filter-pill"
+						class:is-active-filter={!!currentFilters.method}
+						onclick={() => (showMethodDropdown = !showMethodDropdown)}
+						aria-haspopup="true"
+					>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:card-bold" width="16" height="16"></iconify-icon>
+						</span>
+						<span class="is-hidden-mobile">{getSelectedMethodName()}</span>
+						<span class="icon is-small">
+							<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
+						</span>
+					</button>
+				</div>
+
+				{#if showMethodDropdown}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div class="dropdown-backdrop" onclick={() => (showMethodDropdown = false)}></div>
+					<div class="dropdown-menu" role="menu">
+						<div class="dropdown-content">
+							<button
+								type="button"
+								class="dropdown-item is-flex is-align-items-center"
+								class:is-active={!currentFilters.method}
+								onclick={() => handleMethodToggle('')}
+							>
+								{#if !currentFilters.method}
+									<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="mr-2 primary-icon"></iconify-icon>
+								{:else}
+									<span class="icon-spacer mr-2"></span>
+								{/if}
+								All Methods
+							</button>
+							{#each paymentMethods as method}
+								<button
+									type="button"
+									class="dropdown-item is-flex is-align-items-center"
+									class:is-active={currentFilters.method === method.value}
+									onclick={() => handleMethodToggle(method.value)}
+								>
+									{#if currentFilters.method === method.value}
+										<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="mr-2 primary-icon"></iconify-icon>
+									{:else}
+										<span class="icon-spacer mr-2"></span>
+									{/if}
+									{method.label}
+								</button>
+							{/each}
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Divider -->
+			<span class="filter-divider"></span>
+
+			<!-- Sort toggle -->
+			<button
+				type="button"
+				onclick={handleSortToggle}
+				class="button is-small is-ghost filter-pill"
+				title={currentFilters.sort === 'asc' ? 'Oldest first (click for newest first)' : 'Newest first (click for oldest first)'}
+			>
+				{#if currentFilters.sort === 'asc'}
+					<span class="icon is-small">
+						<iconify-icon icon="solar:sort-from-top-to-bottom-linear" width="16" height="16"></iconify-icon>
+					</span>
+				{:else}
+					<span class="icon is-small">
+						<iconify-icon icon="solar:sort-from-bottom-to-top-linear" width="16" height="16"></iconify-icon>
+					</span>
+				{/if}
+			</button>
+
+			<!-- Spacer -->
+			<div class="is-flex-grow-1"></div>
+
+			<!-- Filter count -->
+			<span class="is-size-7 muted-text filter-count">
+				{filteredCount === totalCount
+					? `${totalCount} transactions`
+					: `${filteredCount} of ${totalCount}`}
+			</span>
+
+			<!-- Clear filters -->
+			{#if hasActiveFilters}
+				<button
+					type="button"
+					onclick={clearAllFilters}
+					class="button is-small is-ghost filter-pill"
+				>
+					<span class="icon is-small">
+						<iconify-icon icon="solar:close-circle-linear" width="16" height="16"></iconify-icon>
+					</span>
+					<span class="is-hidden-mobile">Clear</span>
 				</button>
 			{/if}
 		</div>
-
-		<!-- Divider -->
-		<div class="h-5 w-px bg-border"></div>
-		<!-- Tags dropdown -->
-		<div class="relative">
-			<button
-				type="button"
-				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
-					{currentFilters.tags.length > 0 ? 'bg-primary/10 text-primary' : 'text-muted'}"
-				onclick={() => (showTagDropdown = !showTagDropdown)}
-			>
-				<iconify-icon icon="solar:tag-bold" width="16" height="16"></iconify-icon>
-				<span class="hidden sm:inline">{getSelectedTagNames()}</span>
-				<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
-			</button>
-
-			{#if showTagDropdown}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="fixed inset-0 z-10" onclick={() => (showTagDropdown = false)}></div>
-				<div
-					class="absolute left-0 top-full z-20 mt-1 max-h-64 w-48 overflow-auto rounded-lg border border-border bg-card shadow-lg"
-				>
-					{#if availableTags.length === 0}
-						<div class="px-3 py-2 text-sm text-muted">No tags available</div>
-					{:else}
-						{#each availableTags as tag}
-							<label class="flex cursor-pointer items-center gap-2 px-3 py-2 hover:bg-surface">
-								<input
-									type="checkbox"
-									checked={currentFilters.tags.includes(tag.id)}
-									onchange={() => handleTagToggle(tag.id)}
-									class="rounded border-border text-primary focus:ring-primary"
-								/>
-								<span class="text-sm text-fg">{tag.name}</span>
-							</label>
-						{/each}
-					{/if}
-				</div>
-			{/if}
-		</div>
-
-		<!-- Divider -->
-		<div class="h-5 w-px bg-border"></div>
-
-		<!-- Date range pill -->
-		<div class="relative">
-			<button
-				type="button"
-				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
-					{hasDateFilter ? 'bg-primary/10 text-primary' : 'text-muted'}"
-				onclick={() => (showDateDropdown = !showDateDropdown)}
-			>
-				<iconify-icon icon="solar:calendar-bold" width="16" height="16"></iconify-icon>
-				<span class="hidden sm:inline">{getDateRangeDisplay()}</span>
-				<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
-			</button>
-
-			{#if showDateDropdown}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="fixed inset-0 z-10" onclick={() => (showDateDropdown = false)}></div>
-				<div
-					class="absolute left-0 top-full z-20 mt-1 rounded-lg border border-border bg-card p-3 shadow-lg"
-				>
-					<div class="flex flex-col gap-2">
-						<label class="text-xs font-medium text-muted">From</label>
-						<input
-							type="date"
-							value={currentFilters.from || fyStart}
-							onchange={handleFromChange}
-							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
-						/>
-						<label class="text-xs font-medium text-muted">To</label>
-						<input
-							type="date"
-							value={currentFilters.to || fyEnd}
-							onchange={handleToChange}
-							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
-						/>
-						{#if hasDateFilter}
-							<button
-								type="button"
-								onclick={clearDateFilter}
-								class="mt-1 flex cursor-pointer items-center justify-center gap-1 rounded-md bg-surface px-2 py-1.5 text-xs text-muted hover:text-fg"
-							>
-								<iconify-icon icon="solar:close-circle-linear" width="14" height="14"></iconify-icon>
-								Clear dates
-							</button>
-						{/if}
-					</div>
-				</div>
-			{/if}
-		</div>
-
-		<!-- Divider -->
-		<div class="h-5 w-px bg-border"></div>
-
-		<!-- Payment method dropdown -->
-		<div class="relative">
-			<button
-				type="button"
-				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
-					{currentFilters.method ? 'bg-primary/10 text-primary' : 'text-muted'}"
-				onclick={() => (showMethodDropdown = !showMethodDropdown)}
-			>
-				<iconify-icon icon="solar:card-bold" width="16" height="16"></iconify-icon>
-				<span class="hidden sm:inline">{getSelectedMethodName()}</span>
-				<iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
-			</button>
-
-			{#if showMethodDropdown}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="fixed inset-0 z-10" onclick={() => (showMethodDropdown = false)}></div>
-				<div
-					class="absolute left-0 top-full z-20 mt-1 w-36 overflow-auto rounded-lg border border-border bg-card shadow-lg"
-				>
-					<button
-						type="button"
-						class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
-							{!currentFilters.method ? 'text-primary' : 'text-fg'}"
-						onclick={() => handleMethodToggle('')}
-					>
-						{#if !currentFilters.method}
-							<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="text-primary"></iconify-icon>
-						{:else}
-							<span class="w-3.5"></span>
-						{/if}
-						All Methods
-					</button>
-					{#each paymentMethods as method}
-						<button
-							type="button"
-							class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
-								{currentFilters.method === method.value ? 'text-primary' : 'text-fg'}"
-							onclick={() => handleMethodToggle(method.value)}
-						>
-							{#if currentFilters.method === method.value}
-								<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="text-primary"></iconify-icon>
-							{:else}
-								<span class="w-3.5"></span>
-							{/if}
-							{method.label}
-						</button>
-					{/each}
-				</div>
-			{/if}
-		</div>
-
-		<!-- Divider -->
-		<div class="h-5 w-px bg-border"></div>
-
-		<!-- Sort toggle -->
-		<button
-			type="button"
-			onclick={handleSortToggle}
-			class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors hover:bg-surface hover:text-fg"
-			title={currentFilters.sort === 'asc' ? 'Oldest first (click for newest first)' : 'Newest first (click for oldest first)'}
-		>
-			{#if currentFilters.sort === 'asc'}
-				<iconify-icon icon="solar:sort-from-top-to-bottom-linear" width="16" height="16"></iconify-icon>
-			{:else}
-				<iconify-icon icon="solar:sort-from-bottom-to-top-linear" width="16" height="16"></iconify-icon>
-			{/if}
-		</button>
-
-		<!-- Spacer to push count and clear to the right -->
-		<div class="flex-1"></div>
-
-		<!-- Filter count -->
-		<div class="text-sm text-muted whitespace-nowrap">
-			{filteredCount === totalCount
-				? `${totalCount} transactions`
-				: `${filteredCount} of ${totalCount}`}
-		</div>
-
-		<!-- Clear filters -->
-		{#if hasActiveFilters}
-			<button
-				type="button"
-				onclick={clearAllFilters}
-				class="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1.5 text-sm text-muted hover:bg-surface hover:text-fg"
-			>
-				<iconify-icon icon="solar:close-circle-linear" width="16" height="16"></iconify-icon>
-				<span class="hidden sm:inline">Clear</span>
-			</button>
-		{/if}
 	</div>
 </div>
+
+<style>
+	.filter-container {
+		padding: 0.5rem;
+	}
+
+	.filter-row {
+		gap: 0.5rem;
+	}
+
+	.filter-divider {
+		display: inline-block;
+		width: 1px;
+		height: 1.25rem;
+		background-color: var(--color-border);
+	}
+
+	.filter-pill {
+		color: var(--color-muted);
+		border: none;
+	}
+
+	.filter-pill:hover {
+		background-color: var(--color-surface);
+		color: var(--color-foreground);
+	}
+
+	.is-active-filter {
+		background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+		color: var(--color-primary);
+	}
+
+	.muted-text {
+		color: var(--color-muted);
+	}
+
+	.filter-count {
+		white-space: nowrap;
+	}
+
+	.dropdown-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 10;
+	}
+
+	.dropdown-menu {
+		z-index: 20;
+	}
+
+	.dropdown-content {
+		max-height: 16rem;
+		overflow-y: auto;
+	}
+
+	.icon-spacer {
+		display: inline-block;
+		width: 0.875rem;
+	}
+
+	.primary-icon {
+		color: var(--color-primary);
+	}
+
+	/* Override Bulma's dropdown-item to work as buttons */
+	:global(.dropdown-item) {
+		cursor: pointer;
+	}
+
+	.buttons.has-addons .button {
+		margin-bottom: 0;
+	}
+</style>

@@ -29,41 +29,46 @@
 	}
 </script>
 
-<div class="space-y-3">
-	<div class="flex gap-2">
+<div class="field">
+	<div class="buttons has-addons mb-3">
 		{#each options as option}
-			<label class="flex-1 cursor-pointer">
-				<input
-					type="radio"
-					{name}
-					value={option.value}
-					checked={value === option.value}
-					onchange={() => selectMethod(option.value)}
-					class="sr-only"
-				/>
-				<span
-					class="block rounded-lg px-4 py-2 text-center transition-colors
-					{value === option.value
-						? 'bg-primary text-white'
-						: 'bg-surface text-fg hover:bg-surface-alt'}"
-				>
-					{option.label}
-				</span>
-			</label>
+			<button
+				type="button"
+				class="button {value === option.value ? 'is-primary is-selected' : ''}"
+				onclick={() => selectMethod(option.value)}
+			>
+				{option.label}
+			</button>
+			<input
+				type="radio"
+				{name}
+				value={option.value}
+				checked={value === option.value}
+				onchange={() => selectMethod(option.value)}
+				class="is-hidden"
+			/>
 		{/each}
 	</div>
 
 	{#if showCheckNumber}
-		<div class="flex items-center gap-2">
-			<label for="checkNumber" class="text-sm font-medium text-fg">Check #</label>
-			<input
-				type="text"
-				id="checkNumber"
-				name="checkNumber"
-				bind:value={checkNumber}
-				placeholder="Enter check number"
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-			/>
+		<div class="field is-horizontal">
+			<div class="field-label is-small">
+				<label for="checkNumber" class="label">Check #</label>
+			</div>
+			<div class="field-body">
+				<div class="field">
+					<div class="control">
+						<input
+							type="text"
+							id="checkNumber"
+							name="checkNumber"
+							bind:value={checkNumber}
+							placeholder="Enter check number"
+							class="input is-small"
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
 	{/if}
 </div>

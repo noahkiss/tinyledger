@@ -35,11 +35,11 @@
 	<title>Reports - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-6">
+<div>
 	<!-- Header with FY picker, granularity toggle, and export button -->
-	<header class="flex flex-wrap items-center justify-between gap-4">
-		<h1 class="text-2xl font-bold text-fg">Reports</h1>
-		<div class="flex items-center gap-2">
+	<header class="is-flex is-flex-wrap-wrap is-align-items-center is-justify-content-space-between mb-5" style="gap: 1rem;">
+		<h1 class="title is-4 mb-0">Reports</h1>
+		<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
 			<FiscalYearPicker
 				fiscalYear={data.fiscalYear}
 				availableYears={data.availableFiscalYears}
@@ -50,16 +50,18 @@
 				href="/w/{data.workspaceId}/export/tax-report?fy={data.fiscalYear}"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+				class="button is-small"
 			>
-				<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
-				Export PDF
+				<span class="icon">
+					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
+				</span>
+				<span>Export PDF</span>
 			</a>
 		</div>
 	</header>
 
 	<!-- Summary Cards -->
-	<section class="space-y-4">
+	<section class="mb-5">
 		<!-- Hero Card: Net Income with Sparkline -->
 		<SummaryCard label="Net Income" value={data.totals.net} percentChange={netChange} variant="hero">
 			{#if data.netIncomeTrend.length > 1}
@@ -68,47 +70,53 @@
 		</SummaryCard>
 
 		<!-- Supporting Cards: Income, Expenses, Tax Set-Aside -->
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-			<SummaryCard
-				label="YTD Income"
-				value={data.totals.income}
-				percentChange={incomeChange}
-				valuePrefix="+"
-			/>
-			<SummaryCard
-				label="YTD Expenses"
-				value={data.totals.expense}
-				percentChange={expenseChange}
-				valuePrefix="-"
-			/>
-			<SummaryCard label="Tax Set-Aside" value={data.totals.taxSetAside} percentChange={taxChange}>
-				{#if !data.totals.taxConfigured}
-					<a href="/w/{data.workspaceId}/settings" class="text-xs text-muted hover:text-primary">
-						Estimated at {(data.totals.taxRateUsed * 100).toFixed(0)}% - configure taxes for accuracy
-					</a>
-				{:else}
-					<p class="text-xs text-muted">
-						Based on your configured rates ({(data.totals.taxRateUsed * 100).toFixed(1)}% effective)
-					</p>
-				{/if}
-			</SummaryCard>
+		<div class="columns is-mobile mt-4">
+			<div class="column">
+				<SummaryCard
+					label="YTD Income"
+					value={data.totals.income}
+					percentChange={incomeChange}
+					valuePrefix="+"
+				/>
+			</div>
+			<div class="column">
+				<SummaryCard
+					label="YTD Expenses"
+					value={data.totals.expense}
+					percentChange={expenseChange}
+					valuePrefix="-"
+				/>
+			</div>
+			<div class="column">
+				<SummaryCard label="Tax Set-Aside" value={data.totals.taxSetAside} percentChange={taxChange}>
+					{#if !data.totals.taxConfigured}
+						<a href="/w/{data.workspaceId}/settings" class="is-size-7 has-text-grey">
+							Estimated at {(data.totals.taxRateUsed * 100).toFixed(0)}% - configure taxes for accuracy
+						</a>
+					{:else}
+						<p class="is-size-7 has-text-grey">
+							Based on your configured rates ({(data.totals.taxRateUsed * 100).toFixed(1)}% effective)
+						</p>
+					{/if}
+				</SummaryCard>
+			</div>
 		</div>
 	</section>
 
 	<!-- Financial Overview Charts -->
-	<section class="space-y-6 mt-8">
-		<div class="flex flex-wrap items-center justify-between gap-2">
-			<h2 class="text-lg font-semibold text-fg">Financial Overview</h2>
+	<section class="mt-5">
+		<div class="is-flex is-flex-wrap-wrap is-align-items-center is-justify-content-space-between mb-4" style="gap: 0.5rem;">
+			<h2 class="title is-5 mb-0">Financial Overview</h2>
 			{#if data.currentPeriodPartial && data.asOfDate}
-				<p class="text-sm text-muted italic">
+				<p class="is-size-7 has-text-grey is-italic">
 					Current {data.granularity === 'monthly' ? 'month' : 'quarter'} shows data as of {formatAsOfDate(data.asOfDate)}
 				</p>
 			{/if}
 		</div>
 
 		<!-- Net Income Over Time -->
-		<div class="rounded-xl border border-border bg-card p-4">
-			<h3 class="text-sm font-medium text-fg mb-4">Net Income Over Time</h3>
+		<div class="box mb-5">
+			<h3 class="is-size-6 has-text-weight-medium mb-4">Net Income Over Time</h3>
 			<NetIncomeChart
 				data={data.periodData.map((p) => ({ period: p.period, net: p.net }))}
 				workspaceId={data.workspaceId}
@@ -117,8 +125,8 @@
 		</div>
 
 		<!-- Income vs Expense -->
-		<div class="rounded-xl border border-border bg-card p-4">
-			<h3 class="text-sm font-medium text-fg mb-4">
+		<div class="box mb-5">
+			<h3 class="is-size-6 has-text-weight-medium mb-4">
 				Income vs Expense by {data.granularity === 'monthly' ? 'Month' : 'Quarter'}
 			</h3>
 			<IncomeVsExpense
@@ -129,8 +137,8 @@
 		</div>
 
 		<!-- Spending by Category -->
-		<div class="rounded-xl border border-border bg-card p-4">
-			<h3 class="text-sm font-medium text-fg mb-4">Spending by Category</h3>
+		<div class="box mb-5">
+			<h3 class="is-size-6 has-text-weight-medium mb-4">Spending by Category</h3>
 			<SpendingBreakdown
 				data={data.spendingByTag}
 				workspaceId={data.workspaceId}
@@ -140,11 +148,11 @@
 	</section>
 
 	<!-- Period info -->
-	<footer class="text-sm text-muted">
+	<footer class="is-size-7 has-text-grey">
 		<p>
 			Showing data for {formatFiscalYear(data.fiscalYear, data.fiscalYearStartMonth)}
 			{#if data.previousPeriod.income > 0 || data.previousPeriod.expense > 0}
-				<span class="text-muted">
+				<span class="has-text-grey">
 					| Compared to {formatFiscalYear(data.fiscalYear - 1, data.fiscalYearStartMonth)}
 				</span>
 			{/if}

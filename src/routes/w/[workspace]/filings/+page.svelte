@@ -36,75 +36,96 @@
 	<title>Filings - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-6">
+<div>
 	<!-- Header with fiscal year picker -->
-	<div class="flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-fg">Filings</h1>
+	<div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+		<h1 class="title is-4 mb-0">Filings</h1>
 
-		<select
-			class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-			value={data.fiscalYear}
-			onchange={handleFYChange}
-		>
-			{#each data.availableFiscalYears as fy}
-				<option value={fy}>FY {fy}</option>
-			{/each}
-		</select>
+		<div class="select is-small">
+			<select
+				value={data.fiscalYear}
+				onchange={handleFYChange}
+			>
+				{#each data.availableFiscalYears as fy}
+					<option value={fy}>FY {fy}</option>
+				{/each}
+			</select>
+		</div>
 	</div>
 
 	<!-- Info banner -->
-	<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
-		<p class="text-sm text-primary">
+	<div class="notification is-info is-light mb-4">
+		<p class="is-size-7">
 			Track your compliance filings. Past-due filings appear at the top.
 			{#if summary.pastDue > 0}
-				<span class="font-medium text-red-700">You have {summary.pastDue} past-due filing{summary.pastDue === 1 ? '' : 's'}.</span>
+				<span class="has-text-weight-medium has-text-danger">You have {summary.pastDue} past-due filing{summary.pastDue === 1 ? '' : 's'}.</span>
 			{/if}
 		</p>
 	</div>
 
 	<!-- Status summary -->
-	<div class="flex gap-4 text-sm">
+	<div class="is-flex is-size-7 mb-5" style="gap: 1rem;">
 		{#if summary.pastDue > 0}
-			<div class="flex items-center gap-1">
-				<span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-				<span class="text-muted">{summary.pastDue} past due</span>
+			<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
+				<span class="status-dot is-danger"></span>
+				<span class="has-text-grey">{summary.pastDue} past due</span>
 			</div>
 		{/if}
 		{#if summary.upcoming > 0}
-			<div class="flex items-center gap-1">
-				<span class="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
-				<span class="text-muted">{summary.upcoming} upcoming</span>
+			<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
+				<span class="status-dot is-warning"></span>
+				<span class="has-text-grey">{summary.upcoming} upcoming</span>
 			</div>
 		{/if}
-		<div class="flex items-center gap-1">
-			<span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-			<span class="text-muted">{summary.complete} complete</span>
+		<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
+			<span class="status-dot is-success"></span>
+			<span class="has-text-grey">{summary.complete} complete</span>
 		</div>
-		<div class="text-muted">
+		<div class="has-text-grey">
 			{summary.total} total
 		</div>
 	</div>
 
 	{#if data.filings.length === 0}
 		<!-- Empty state -->
-		<div class="rounded-xl border border-border bg-card p-8 text-center">
-			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
-			<h3 class="mt-4 text-lg font-medium text-fg">No filings found</h3>
-			<p class="mt-1 text-sm text-muted">
+		<div class="box has-text-centered p-6">
+			<iconify-icon icon="solar:document-text-bold" class="has-text-grey" width="48" height="48"></iconify-icon>
+			<h3 class="title is-5 mt-4">No filings found</h3>
+			<p class="is-size-7 has-text-grey mt-1">
 				No compliance filings are configured for this workspace type.
 			</p>
 		</div>
 	{:else}
 		<!-- Grid of FilingCards -->
-		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="columns is-multiline">
 			{#each data.filings as filing (filing.id)}
-				<FilingCard
-					{filing}
-					fiscalYear={data.fiscalYear}
-					showMarkCompleteForm={openFormId === filing.id}
-					onToggleForm={() => toggleForm(filing.id)}
-				/>
+				<div class="column is-one-third-desktop is-half-tablet">
+					<FilingCard
+						{filing}
+						fiscalYear={data.fiscalYear}
+						showMarkCompleteForm={openFormId === filing.id}
+						onToggleForm={() => toggleForm(filing.id)}
+					/>
+				</div>
 			{/each}
 		</div>
 	{/if}
 </div>
+
+<style>
+	.status-dot {
+		display: inline-block;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+	}
+	.status-dot.is-danger {
+		background-color: var(--bulma-danger);
+	}
+	.status-dot.is-warning {
+		background-color: var(--bulma-warning);
+	}
+	.status-dot.is-success {
+		background-color: var(--bulma-success);
+	}
+</style>

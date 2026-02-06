@@ -89,49 +89,70 @@
 	}
 </script>
 
-<div class="relative">
-	<input
-		type="text"
-		bind:this={inputRef}
-		bind:value
-		name="payee"
-		required
-		{placeholder}
-		onfocus={handleFocus}
-		onblur={handleBlur}
-		onkeydown={handleKeydown}
-		autocomplete="off"
-		class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-	/>
+<div class="dropdown autocomplete-dropdown" class:is-active={showDropdown && filteredPayees.length > 0}>
+	<div class="dropdown-trigger autocomplete-trigger">
+		<div class="control">
+			<input
+				type="text"
+				bind:this={inputRef}
+				bind:value
+				name="payee"
+				required
+				{placeholder}
+				onfocus={handleFocus}
+				onblur={handleBlur}
+				onkeydown={handleKeydown}
+				autocomplete="off"
+				class="input"
+			/>
+		</div>
+	</div>
 
 	{#if showDropdown && filteredPayees.length > 0}
-		<ul
-			class="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-lg border border-border bg-card shadow-lg"
-		>
-			{#each filteredPayees as payee, i (payee.payee)}
-				<li>
-					<button
-						type="button"
-						class="w-full px-3 py-2 text-left hover:bg-surface"
-						class:bg-surface={i === highlightedIndex}
+		<div class="dropdown-menu" role="menu">
+			<div class="dropdown-content">
+				{#each filteredPayees as payee, i (payee.payee)}
+					<a
+						href="#!"
+						class="dropdown-item"
+						class:is-active={i === highlightedIndex}
+						role="menuitem"
 						onmousedown={() => handleSelect(payee)}
 					>
-						<div class="font-medium text-fg">{payee.payee}</div>
-						<div class="flex items-center gap-2 text-sm text-muted">
+						<p class="has-text-weight-medium">{payee.payee}</p>
+						<p class="payee-meta is-size-7">
 							<span>Used {payee.count} time{payee.count === 1 ? '' : 's'}</span>
-							<span class="text-muted">|</span>
+							<span class="separator">|</span>
 							<span>Last: {formatAmount(payee.lastAmount)}</span>
-							<span
-								class="inline-block rounded-full px-2 py-0.5 text-xs {payee.lastType === 'income'
-									? 'bg-green-100 text-green-700'
-									: 'bg-red-100 text-red-700'}"
-							>
+							<span class="tag is-rounded ml-2 {payee.lastType === 'income' ? 'is-success is-light' : 'is-danger is-light'}">
 								{payee.lastType}
 							</span>
-						</div>
-					</button>
-				</li>
-			{/each}
-		</ul>
+						</p>
+					</a>
+				{/each}
+			</div>
+		</div>
 	{/if}
 </div>
+
+<style>
+	.autocomplete-dropdown {
+		display: block;
+		width: 100%;
+	}
+	.autocomplete-trigger {
+		width: 100%;
+	}
+	.autocomplete-dropdown :global(.dropdown-menu) {
+		width: 100%;
+	}
+	.payee-meta {
+		color: var(--color-muted);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.separator {
+		color: var(--color-muted);
+	}
+</style>

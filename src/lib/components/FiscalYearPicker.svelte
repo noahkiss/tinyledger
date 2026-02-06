@@ -57,43 +57,63 @@
 	}
 </script>
 
-<div class="relative" data-component="fiscal-year-picker">
+<div class="dropdown" class:is-active={isOpen} data-component="fiscal-year-picker">
 	<!-- Trigger button -->
-	<button
-		type="button"
-		onclick={toggleDropdown}
-		class="flex cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface transition-colors"
-	>
-		<iconify-icon icon="solar:calendar-bold" width="16" height="16" class="text-muted"></iconify-icon>
-		<span>{formatYear(fiscalYear)}</span>
-		<iconify-icon
-			icon="solar:alt-arrow-down-linear"
-			class="text-muted transition-transform {isOpen ? 'rotate-180' : ''}"
-			width="14"
-			height="14"
-		></iconify-icon>
-	</button>
-
-	{#if isOpen}
-		<div
-			class="absolute left-0 top-full z-50 mt-1 min-w-full rounded-lg border border-border bg-card py-1 shadow-lg"
+	<div class="dropdown-trigger">
+		<button
+			type="button"
+			onclick={toggleDropdown}
+			class="button is-small"
+			aria-haspopup="true"
+			aria-controls="fy-dropdown-menu"
 		>
+			<span class="icon is-small" style="color: var(--color-muted)">
+				<iconify-icon icon="solar:calendar-bold" width="16" height="16"></iconify-icon>
+			</span>
+			<span>{formatYear(fiscalYear)}</span>
+			<span class="icon is-small" style="color: var(--color-muted)">
+				<iconify-icon
+					icon="solar:alt-arrow-down-linear"
+					class="chevron-icon {isOpen ? 'is-rotated' : ''}"
+					width="14"
+					height="14"
+				></iconify-icon>
+			</span>
+		</button>
+	</div>
+
+	<div class="dropdown-menu" id="fy-dropdown-menu" role="menu">
+		<div class="dropdown-content">
 			{#each availableYears as year}
-				<button
-					type="button"
-					onclick={() => handleSelect(year)}
-					class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm hover:bg-surface {year === fiscalYear
-						? 'text-primary'
-						: 'text-fg'}"
+				<a
+					href="#!"
+					class="dropdown-item {year === fiscalYear ? 'is-active' : ''}"
+					role="menuitem"
+					onclick={(e) => { e.preventDefault(); handleSelect(year); }}
 				>
 					{#if year === fiscalYear}
-						<iconify-icon icon="solar:check-circle-bold" class="text-primary" width="14" height="14"></iconify-icon>
+						<span class="icon is-small mr-2" style="color: var(--color-primary)">
+							<iconify-icon icon="solar:check-circle-bold" width="14" height="14"></iconify-icon>
+						</span>
 					{:else}
-						<span class="w-3.5"></span>
+						<span class="icon is-small mr-2"></span>
 					{/if}
 					<span>{formatYear(year)}</span>
-				</button>
+				</a>
 			{/each}
 		</div>
-	{/if}
+	</div>
 </div>
+
+<style>
+	.dropdown-item {
+		display: flex;
+		align-items: center;
+	}
+	.chevron-icon.is-rotated {
+		transform: rotate(180deg);
+	}
+	.chevron-icon {
+		transition: transform 0.2s;
+	}
+</style>

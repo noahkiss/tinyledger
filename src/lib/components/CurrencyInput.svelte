@@ -68,21 +68,30 @@
 	}
 </script>
 
-<div class="relative">
-	<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted">$</span>
-	<input
-		type="text"
-		inputmode="decimal"
-		{id}
-		{name}
-		{required}
-		value={displayValue}
-		oninput={handleInput}
-		onblur={handleBlur}
-		onfocus={handleFocus}
-		class="rounded-lg border border-input-border bg-input px-3 py-2 pl-7 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary {className}"
-		placeholder="0.00"
-	/>
+<div class="field">
+	<div class="control has-icons-left">
+		<input
+			type="text"
+			inputmode="decimal"
+			{id}
+			{name}
+			{required}
+			value={displayValue}
+			oninput={handleInput}
+			onblur={handleBlur}
+			onfocus={handleFocus}
+			class="input {className}"
+			placeholder="0.00"
+		/>
+		<span class="icon is-small is-left dollar-sign">$</span>
+	</div>
 	<!-- Hidden input for form submission with cents value -->
 	<input type="hidden" name="{name}_cents" value={value} />
 </div>
+
+<style>
+	.dollar-sign {
+		color: var(--color-muted);
+		pointer-events: none;
+	}
+</style>

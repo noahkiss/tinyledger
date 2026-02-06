@@ -42,7 +42,7 @@
 <button
 	type="button"
 	onclick={() => (showForm = true)}
-	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:bg-primary/90 active:scale-95"
+	class="button is-primary is-rounded fab-button"
 	aria-label="Add transaction"
 	data-component="quick-entry-fab"
 >
@@ -53,7 +53,7 @@
 {#if showForm}
 	<!-- Backdrop -->
 	<div
-		class="fixed inset-0 z-40 bg-black/50"
+		class="fab-backdrop"
 		onclick={handleBackdropClick}
 		onkeydown={(e) => e.key === 'Escape' && (showForm = false)}
 		role="button"
@@ -62,7 +62,7 @@
 	>
 		<!-- Form sheet -->
 		<div
-			class="fixed inset-x-0 bottom-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-2xl bg-card p-6 shadow-xl md:inset-auto md:bottom-24 md:right-6 md:w-96 md:rounded-2xl"
+			class="box fab-form-sheet"
 			role="dialog"
 			aria-modal="true"
 			aria-label="Quick entry form"
@@ -76,3 +76,48 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	.fab-button {
+		position: fixed;
+		bottom: 1.5rem;
+		right: 1.5rem;
+		z-index: 30;
+		width: 3.5rem;
+		height: 3.5rem;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+		transition: transform 0.15s ease;
+	}
+
+	.fab-button:active {
+		transform: scale(0.95);
+	}
+
+	.fab-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 40;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	.fab-form-sheet {
+		position: fixed;
+		inset-inline: 0;
+		bottom: 0;
+		z-index: 50;
+		max-height: 90vh;
+		overflow-y: auto;
+		border-radius: 1rem 1rem 0 0;
+		padding: 1.5rem;
+	}
+
+	@media (min-width: 769px) {
+		.fab-form-sheet {
+			inset: auto;
+			bottom: 6rem;
+			right: 1.5rem;
+			width: 24rem;
+			border-radius: 1rem;
+		}
+	}
+</style>

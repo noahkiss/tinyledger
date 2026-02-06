@@ -27,62 +27,88 @@
 			: null
 	);
 
-	// Determine percent change styling
-	const percentClass = $derived(
+	// Determine percent change tag color
+	const percentTagClass = $derived(
 		percentChange === null
-			? 'text-muted bg-surface'
+			? 'muted-tag'
 			: percentChange >= 0
-				? 'text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-900/50'
-				: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50'
+				? 'is-success is-light'
+				: 'is-danger is-light'
 	);
 </script>
 
 {#if variant === 'hero'}
 	<!-- Hero card: larger, more prominent -->
-	<div
-		class="rounded-xl border border-card-border bg-gradient-to-br from-card to-surface p-6 shadow-sm"
-	>
-		<div class="flex items-start justify-between">
-			<div>
-				<span class="text-sm font-medium text-muted">{label}</span>
-				<div class="mt-2 flex items-baseline gap-2">
-					<span class="text-3xl font-bold {value >= 0 ? 'text-fg' : 'text-red-600 dark:text-red-400'}">
-						{valuePrefix}{formatCurrency(value)}
-					</span>
-					{#if percentDisplay}
-						<span class="rounded-full px-2 py-0.5 text-xs font-medium {percentClass}">
-							{percentDisplay}
+	<div class="card hero-card">
+		<div class="card-content">
+			<div class="is-flex is-justify-content-space-between is-align-items-start">
+				<div>
+					<p class="is-size-7 has-text-weight-medium label-text">{label}</p>
+					<div class="is-flex is-align-items-baseline mt-2">
+						<span class="is-size-3 has-text-weight-bold" class:value-negative={value < 0}>
+							{valuePrefix}{formatCurrency(value)}
 						</span>
-					{/if}
+						{#if percentDisplay}
+							<span class="tag is-rounded ml-3 {percentTagClass}">
+								{percentDisplay}
+							</span>
+						{/if}
+					</div>
 				</div>
+				{#if children}
+					<div class="is-flex-shrink-0">
+						{@render children()}
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+{:else}
+	<!-- Default card: compact supporting card -->
+	<div class="card">
+		<div class="card-content">
+			<div class="is-flex is-align-items-center is-justify-content-space-between">
+				<span class="is-size-7 has-text-weight-medium label-text">{label}</span>
+				{#if percentDisplay}
+					<span class="tag is-rounded {percentTagClass}">
+						{percentDisplay}
+					</span>
+				{/if}
+			</div>
+			<div class="mt-2">
+				<span class="is-size-5 has-text-weight-semibold">
+					{valuePrefix}{formatCurrency(value)}
+				</span>
 			</div>
 			{#if children}
-				<div class="flex-shrink-0">
+				<div class="mt-2">
 					{@render children()}
 				</div>
 			{/if}
 		</div>
 	</div>
-{:else}
-	<!-- Default card: compact supporting card -->
-	<div class="rounded-xl border border-card-border bg-card p-4 shadow-sm">
-		<div class="flex items-center justify-between">
-			<span class="text-sm font-medium text-muted">{label}</span>
-			{#if percentDisplay}
-				<span class="rounded-full px-2 py-0.5 text-xs font-medium {percentClass}">
-					{percentDisplay}
-				</span>
-			{/if}
-		</div>
-		<div class="mt-2">
-			<span class="text-xl font-semibold text-fg">
-				{valuePrefix}{formatCurrency(value)}
-			</span>
-		</div>
-		{#if children}
-			<div class="mt-2">
-				{@render children()}
-			</div>
-		{/if}
-	</div>
 {/if}
+
+<style>
+	.card {
+		border: 1px solid var(--color-card-border);
+		border-radius: 0.75rem;
+	}
+
+	.hero-card {
+		background: linear-gradient(135deg, var(--color-card-bg), var(--color-surface));
+	}
+
+	.label-text {
+		color: var(--color-muted);
+	}
+
+	.value-negative {
+		color: var(--color-error);
+	}
+
+	.muted-tag {
+		background-color: var(--color-surface);
+		color: var(--color-muted);
+	}
+</style>

@@ -13,31 +13,63 @@
 	});
 
 	// Dot color based on transaction types for the day
-	let dotColorClass = $derived(() => {
+	let dotColor = $derived(() => {
 		switch (dayType) {
 			case 'income':
-				return 'bg-green-500';
+				return 'var(--color-success)';
 			case 'expense':
-				return 'bg-red-500';
+				return 'var(--color-error)';
 			case 'mixed':
-				return 'bg-primary';
+				return 'var(--color-primary)';
 			case 'tax':
-				return 'bg-yellow-500';
+				return 'var(--color-warning)';
 			case 'pending':
-				return 'bg-overlay';
+				return 'var(--color-overlay)';
 			default:
-				return 'bg-overlay';
+				return 'var(--color-overlay)';
 		}
 	});
 </script>
 
-<div class="absolute -left-3 flex items-center" data-component="timeline-date-marker">
+<div class="date-marker" data-component="timeline-date-marker">
 	<!-- Circle marker on the timeline -->
-	<span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-border bg-card">
-		<span class="h-2 w-2 rounded-full {dotColorClass()}"></span>
+	<span class="marker-circle">
+		<span class="marker-dot" style="background-color: {dotColor()}"></span>
 	</span>
 </div>
 
-<time datetime={date} class="mb-2 block text-sm font-medium text-muted">
+<time datetime={date} class="is-size-7 has-text-weight-medium date-label mb-2">
 	{formattedDate()}
 </time>
+
+<style>
+	.date-marker {
+		position: absolute;
+		left: -0.75rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.marker-circle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-border);
+		background-color: var(--color-card-bg);
+	}
+
+	.marker-dot {
+		display: block;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+	}
+
+	.date-label {
+		display: block;
+		color: var(--color-muted);
+	}
+</style>

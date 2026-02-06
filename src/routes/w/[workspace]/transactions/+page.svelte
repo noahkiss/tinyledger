@@ -59,7 +59,6 @@
 
 	// Group transactions by date and merge with quarterly payments and pending instances
 	let timelineGroups = $derived(() => {
-		// Create groups map that can hold transactions, quarterly marker, and pending instances
 		const groups = new Map<
 			string,
 			{
@@ -69,7 +68,6 @@
 			}
 		>();
 
-		// Add transactions to groups
 		for (const txn of data.transactions) {
 			const existing = groups.get(txn.date);
 			if (existing) {
@@ -79,7 +77,6 @@
 			}
 		}
 
-		// Add quarterly payments to groups (or create new date entries)
 		const qpByDate = quarterlyPaymentsByDate();
 		for (const [dueDate, qp] of qpByDate) {
 			const existing = groups.get(dueDate);
@@ -90,7 +87,6 @@
 			}
 		}
 
-		// Add pending instances to groups
 		const piByDate = pendingByDate();
 		for (const [date, instances] of piByDate) {
 			const existing = groups.get(date);
@@ -101,25 +97,20 @@
 			}
 		}
 
-		// Convert to array sorted by date (respecting user sort preference)
 		const entries = Array.from(groups.entries());
 		if (data.currentFilters.sort === 'asc') {
-			// Oldest first (chronological)
 			return entries.sort((a, b) => a[0].localeCompare(b[0]));
 		} else {
-			// Newest first
 			return entries.sort((a, b) => b[0].localeCompare(a[0]));
 		}
 	});
 
-	// Check if timeline has any content (transactions, quarterly markers, or pending)
 	let hasTimelineContent = $derived(
 		data.transactions.length > 0 ||
 			data.quarterlyPayments.length > 0 ||
 			data.pendingInstances.length > 0
 	);
 
-	// Check if any filters are active (for empty state messaging)
 	let hasActiveFilters = $derived(
 		data.currentFilters.payee ||
 			data.currentFilters.tags.length > 0 ||
@@ -129,18 +120,13 @@
 			data.currentFilters.method
 	);
 
-	// Determine day type for timeline markers (income, expense, mixed, tax, pending)
 	function getDayType(
 		txns: Transaction[],
 		hasQuarterlyPayment: boolean,
 		pendingInstances: PendingInstance[]
 	): 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' | 'pending' {
-		// If only quarterly payment marker (no transactions), show tax type
 		if (txns.length === 0 && pendingInstances.length === 0 && hasQuarterlyPayment) return 'tax';
-
-		// If only pending instances (no real transactions), show pending type
 		if (txns.length === 0 && pendingInstances.length > 0 && !hasQuarterlyPayment) return 'pending';
-
 		const hasIncome = txns.some((t) => t.type === 'income');
 		const hasExpense = txns.some((t) => t.type === 'expense');
 		if (hasIncome && hasExpense) return 'mixed';
@@ -154,66 +140,69 @@
 	<title>Transactions - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-4">
+<div>
 	<!-- Income / Expense buttons -->
-	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
-		<a
-			href="/w/{data.workspaceId}/transactions/new?type=income"
-			class="flex items-center justify-center gap-2 rounded-xl bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
-			data-component="add-income-button"
-		>
-			<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
-			Income
-		</a>
-		<a
-			href="/w/{data.workspaceId}/transactions/new?type=expense"
-			class="flex items-center justify-center gap-2 rounded-xl bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
-			data-component="add-expense-button"
-		>
-			<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
-			Expense
-		</a>
+	<div class="columns is-mobile mb-4" data-component="transaction-actions">
+		<div class="column">
+			<a
+				href="/w/{data.workspaceId}/transactions/new?type=income"
+				class="button is-success is-fullwidth is-medium add-btn"
+				data-component="add-income-button"
+			>
+				<span class="icon">
+					<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
+				</span>
+				<span>Income</span>
+			</a>
+		</div>
+		<div class="column">
+			<a
+				href="/w/{data.workspaceId}/transactions/new?type=expense"
+				class="button is-danger is-fullwidth is-medium add-btn"
+				data-component="add-expense-button"
+			>
+				<span class="icon">
+					<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
+				</span>
+				<span>Expense</span>
+			</a>
+		</div>
 	</div>
 
 	<!-- Sticky summary header -->
-	<header
-		class="sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
-		data-component="summary-header"
-	>
-		<!-- Mobile layout: icon-based compact view -->
-		<div class="flex items-center justify-center gap-2 text-sm md:hidden">
-			<span class="flex items-center gap-1 font-semibold text-success">
+	<header class="box mb-4 summary-header" data-component="summary-header">
+		<!-- Mobile layout -->
+		<div class="is-flex is-align-items-center is-justify-content-center is-hidden-tablet" style="gap: 0.5rem;">
+			<span class="is-flex is-align-items-center has-text-weight-semibold has-text-success" style="gap: 0.25rem;">
 				<iconify-icon icon="solar:add-circle-bold" width="16" height="16"></iconify-icon>
 				<span class="tabular-nums">{formatCurrency(data.totals.income)}</span>
 			</span>
-			<span class="text-muted">/</span>
-			<span class="flex items-center gap-1 font-semibold text-error">
+			<span class="has-text-grey">/</span>
+			<span class="is-flex is-align-items-center has-text-weight-semibold has-text-danger" style="gap: 0.25rem;">
 				<iconify-icon icon="solar:minus-circle-bold" width="16" height="16"></iconify-icon>
 				<span class="tabular-nums">{formatCurrency(data.totals.expense)}</span>
 			</span>
-			<span class="text-muted">=</span>
-			<span class="font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}">
+			<span class="has-text-grey">=</span>
+			<span class="has-text-weight-bold tabular-nums {data.totals.net >= 0 ? 'has-text-success' : 'has-text-danger'}">
 				{formatCurrency(data.totals.net)}
 			</span>
 		</div>
 
-		<!-- Desktop layout: labels with income/expense left, net right -->
-		<div class="hidden items-center justify-between text-sm md:flex">
-			<div class="flex items-center gap-4">
+		<!-- Desktop layout -->
+		<div class="is-hidden-mobile is-flex is-align-items-center is-justify-content-space-between is-size-7">
+			<div class="is-flex is-align-items-center" style="gap: 1rem;">
 				<div>
-					<span class="text-muted">Income</span>
-					<span class="ml-1 font-semibold text-success tabular-nums">+{formatCurrency(data.totals.income)}</span>
+					<span class="has-text-grey">Income</span>
+					<span class="ml-1 has-text-weight-semibold has-text-success tabular-nums">+{formatCurrency(data.totals.income)}</span>
 				</div>
 				<div>
-					<span class="text-muted">Expense</span>
-					<span class="ml-1 font-semibold text-error tabular-nums">-{formatCurrency(data.totals.expense)}</span>
+					<span class="has-text-grey">Expense</span>
+					<span class="ml-1 has-text-weight-semibold has-text-danger tabular-nums">-{formatCurrency(data.totals.expense)}</span>
 				</div>
 			</div>
-			<div class="border-l border-border pl-4">
-				<span class="text-muted">Net</span>
-				<span
-					class="ml-1 font-bold tabular-nums {data.totals.net >= 0 ? 'text-success' : 'text-error'}"
-				>
+			<div class="net-divider pl-4">
+				<span class="has-text-grey">Net</span>
+				<span class="ml-1 has-text-weight-bold tabular-nums {data.totals.net >= 0 ? 'has-text-success' : 'has-text-danger'}">
 					{data.totals.net >= 0 ? '+' : ''}{formatCurrency(data.totals.net)}
 				</span>
 			</div>
@@ -232,28 +221,27 @@
 
 	<!-- Timeline -->
 	{#if !hasTimelineContent}
-		<div class="rounded-lg border border-card-border bg-card p-8 text-center" data-component="empty-state" data-state="empty">
-			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
+		<div class="box has-text-centered" data-component="empty-state" data-state="empty">
+			<iconify-icon icon="solar:document-text-bold" class="has-text-grey" width="48" height="48"></iconify-icon>
 			{#if hasActiveFilters}
-				<p class="mt-4 text-fg">No transactions match your filters</p>
-				<p class="mt-1 text-sm text-muted">Try adjusting or clearing your filters.</p>
+				<p class="mt-4">No transactions match your filters</p>
+				<p class="mt-1 is-size-7 has-text-grey">Try adjusting or clearing your filters.</p>
 			{:else}
-				<p class="mt-4 text-fg">
+				<p class="mt-4">
 					No transactions in {formatFiscalYear(data.fiscalYear, data.fiscalYearStartMonth)}
 				</p>
-				<p class="mt-1 text-sm text-muted">
+				<p class="mt-1 is-size-7 has-text-grey">
 					Tap Income or Expense above to add your first transaction.
 				</p>
 			{/if}
 		</div>
 	{:else}
-		<div class="relative ms-3" data-component="transaction-timeline">
-			<ol class="relative border-s-2 border-border">
+		<div class="timeline-container" data-component="transaction-timeline">
+			<ol class="timeline-line">
 				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
-					<li class="mb-6 ms-6" data-date={date}>
+					<li class="timeline-item" data-date={date}>
 						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment, pendingInstances)} />
-						<div class="space-y-2" data-component="timeline-items">
-							<!-- Quarterly payment marker appears first (more prominent) -->
+						<div class="timeline-items" data-component="timeline-items">
 							{#if quarterlyPayment}
 								<QuarterlyPaymentMarker
 									quarter={quarterlyPayment.quarter}
@@ -272,70 +260,44 @@
 									workspaceId={data.workspaceId}
 								/>
 							{/if}
-							<!-- Regular transactions -->
 							{#each txns as txn (txn.id)}
 								<TimelineEntry transaction={txn} workspaceId={data.workspaceId} />
 							{/each}
-							<!-- Pending recurring instances -->
 							{#each pendingInstances as pending (pending.templatePublicId + pending.date)}
-								<div
-									class="rounded-lg border-2 border-dashed border-border bg-surface/50 p-3"
-									data-component="pending-instance"
-								>
-									<div class="flex items-start justify-between">
-										<div class="flex items-start gap-3">
-											<!-- Type indicator (muted) -->
-											<div
-												class="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full {pending.type ===
-												'income'
-													? 'bg-success/10'
-													: 'bg-error/10'}"
-											>
+								<div class="pending-instance" data-component="pending-instance">
+									<div class="is-flex is-justify-content-space-between" style="align-items: flex-start;">
+										<div class="is-flex" style="align-items: flex-start; gap: 0.75rem;">
+											<div class="pending-type-icon {pending.type === 'income' ? 'is-income' : 'is-expense'}">
 												{#if pending.type === 'income'}
-													<iconify-icon icon="solar:add-circle-bold" class="text-success/60" width="12" height="12"></iconify-icon>
+													<iconify-icon icon="solar:add-circle-bold" width="12" height="12"></iconify-icon>
 												{:else}
-													<iconify-icon icon="solar:minus-circle-bold" class="text-error/60" width="12" height="12"></iconify-icon>
+													<iconify-icon icon="solar:minus-circle-bold" width="12" height="12"></iconify-icon>
 												{/if}
 											</div>
-
 											<div>
-												<div class="flex items-center gap-2">
-													<span class="font-medium text-muted">{pending.payee}</span>
-													<span
-														class="text-sm {pending.type === 'income'
-															? 'text-success'
-															: 'text-error'}"
-													>
-														{pending.type === 'income' ? '+' : '-'}{formatCurrency(
-															pending.amountCents
-														)}
+												<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+													<span class="has-text-weight-medium has-text-grey">{pending.payee}</span>
+													<span class="is-size-7 {pending.type === 'income' ? 'has-text-success' : 'has-text-danger'}">
+														{pending.type === 'income' ? '+' : '-'}{formatCurrency(pending.amountCents)}
 													</span>
-													<span
-														class="rounded-full bg-surface-alt px-1.5 py-0.5 text-xs text-muted"
-														>Pending</span
-													>
+													<span class="tag is-light is-small">Pending</span>
 												</div>
-												<div class="mt-0.5 text-xs text-muted">
+												<div class="is-size-7 has-text-grey mt-1">
 													{pending.patternDescription}
 												</div>
 											</div>
 										</div>
-
-										<!-- Actions -->
-										<div class="flex items-center gap-1">
+										<div class="is-flex is-align-items-center" style="gap: 0.25rem;">
 											<a
 												href="/w/{data.workspaceId}/transactions/new?type={pending.type}&from_recurring={pending.templatePublicId}&date={pending.date}"
-												class="rounded-lg bg-primary/10 px-2 py-1 text-xs font-medium text-primary hover:bg-primary/20"
+												class="button is-primary is-light is-small"
 											>
 												Confirm
 											</a>
-											<form method="POST" action="?/skip" use:enhance class="inline">
+											<form method="POST" action="?/skip" use:enhance class="is-inline">
 												<input type="hidden" name="templateId" value={pending.templateId} />
 												<input type="hidden" name="date" value={pending.date} />
-												<button
-													type="submit"
-													class="rounded-lg px-2 py-1 text-xs text-muted hover:bg-surface-alt"
-												>
+												<button type="submit" class="button is-ghost is-small">
 													Skip
 												</button>
 											</form>
@@ -347,9 +309,78 @@
 					</li>
 				{/each}
 			</ol>
-			<!-- Timeline end marker -->
-			<div class="absolute -bottom-2 -left-1.5 flex h-3 w-3 items-center justify-center rounded-full border-2 border-border bg-card"></div>
+			<div class="timeline-end-marker"></div>
 		</div>
 	{/if}
 </div>
 
+<style>
+	.add-btn {
+		font-weight: 600;
+	}
+	.summary-header {
+		position: sticky;
+		top: 0.75rem;
+		z-index: 10;
+		padding: 0.75rem 1rem;
+		backdrop-filter: blur(8px);
+		background-color: var(--color-card-bg, rgba(255,255,255,0.95));
+	}
+	.net-divider {
+		border-left: 1px solid var(--color-border);
+	}
+	.timeline-container {
+		position: relative;
+		margin-left: 0.75rem;
+	}
+	.timeline-line {
+		position: relative;
+		border-left: 2px solid var(--color-border);
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.timeline-item {
+		margin-bottom: 1.5rem;
+		margin-left: 1.5rem;
+	}
+	.timeline-items {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.timeline-end-marker {
+		position: absolute;
+		bottom: -0.5rem;
+		left: -0.375rem;
+		width: 0.75rem;
+		height: 0.75rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-border);
+		background-color: var(--color-card-bg);
+	}
+	.pending-instance {
+		border-radius: 0.5rem;
+		border: 2px dashed var(--color-border);
+		background-color: var(--color-surface);
+		padding: 0.75rem;
+		opacity: 0.85;
+	}
+	.pending-type-icon {
+		margin-top: 0.125rem;
+		display: flex;
+		width: 1.5rem;
+		height: 1.5rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+	}
+	.pending-type-icon.is-income {
+		background-color: var(--color-success-muted);
+		color: var(--color-success);
+	}
+	.pending-type-icon.is-expense {
+		background-color: var(--color-error-muted);
+		color: var(--color-error);
+	}
+</style>

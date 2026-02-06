@@ -147,103 +147,105 @@
 	<title>Import Transactions - TinyLedger</title>
 </svelte:head>
 
-<div class="mx-auto max-w-4xl">
-	<h2 class="mb-6 text-xl font-semibold text-fg">Import Transactions</h2>
+<div style="max-width: 56rem; margin: 0 auto;">
+	<h2 class="title is-4 mb-5">Import Transactions</h2>
 
 	<!-- Progress Steps -->
-	<div class="mb-8">
-		<nav class="flex items-center justify-center gap-4">
-			{#each [
-				{ id: 'upload', label: '1. Upload', icon: 'solar:upload-bold' },
-				{ id: 'mapping', label: '2. Map Columns', icon: 'solar:clipboard-list-bold' },
-				{ id: 'preview', label: '3. Preview', icon: 'solar:eye-bold' },
-				{ id: 'results', label: '4. Results', icon: 'solar:check-circle-bold' }
-			] as s}
-				{@const isActive = step === s.id}
-				{@const isPast = ['upload', 'mapping', 'preview', 'results'].indexOf(step) > ['upload', 'mapping', 'preview', 'results'].indexOf(s.id)}
-				<div class="flex items-center gap-2">
-					<div
-						class="flex h-8 w-8 items-center justify-center rounded-full {isActive
-							? 'bg-primary text-white'
-							: isPast
-								? 'bg-green-500 text-white'
-								: 'bg-surface-alt text-muted'}"
-					>
-						<iconify-icon icon={s.icon} width="16" height="16"></iconify-icon>
-					</div>
-					<span class="text-sm font-medium {isActive ? 'text-primary' : isPast ? 'text-green-600' : 'text-muted'}">
-						{s.label}
-					</span>
+	<nav class="is-flex is-align-items-center is-justify-content-center mb-5" style="gap: 1rem;" aria-label="Import progress">
+		{#each [
+			{ id: 'upload', label: '1. Upload', icon: 'solar:upload-bold' },
+			{ id: 'mapping', label: '2. Map Columns', icon: 'solar:clipboard-list-bold' },
+			{ id: 'preview', label: '3. Preview', icon: 'solar:eye-bold' },
+			{ id: 'results', label: '4. Results', icon: 'solar:check-circle-bold' }
+		] as s}
+			{@const isActive = step === s.id}
+			{@const isPast = ['upload', 'mapping', 'preview', 'results'].indexOf(step) > ['upload', 'mapping', 'preview', 'results'].indexOf(s.id)}
+			<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+				<div
+					class="step-circle {isActive ? 'is-active' : isPast ? 'is-complete' : ''}"
+				>
+					<iconify-icon icon={s.icon} width="16" height="16"></iconify-icon>
 				</div>
-				{#if s.id !== 'results'}
-					<div class="h-px w-8 bg-border"></div>
-				{/if}
-			{/each}
-		</nav>
-	</div>
+				<span class="is-size-7 has-text-weight-medium {isActive ? 'has-text-primary' : isPast ? 'has-text-success' : 'has-text-grey'}">
+					{s.label}
+				</span>
+			</div>
+			{#if s.id !== 'results'}
+				<div class="step-connector"></div>
+			{/if}
+		{/each}
+	</nav>
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
+		<div class="notification is-danger is-light mb-4">
 			{form.error}
 		</div>
 	{/if}
 
 	<!-- Step 1: Upload -->
 	{#if step === 'upload'}
-		<div class="rounded-lg border border-border bg-card p-6">
-			<h3 class="mb-4 text-lg font-medium text-fg">Upload CSV File</h3>
-			<p class="mb-6 text-sm text-muted">
+		<div class="box">
+			<h3 class="title is-5 mb-4">Upload CSV File</h3>
+			<p class="has-text-grey is-size-7 mb-5">
 				Upload a CSV file containing your transaction data. The file should have headers in the first row.
 			</p>
 
 			<form method="POST" action="?/preview" enctype="multipart/form-data" use:enhance>
-				<div class="mb-6">
-					<label for="file" class="block text-sm font-medium text-fg mb-2">
-						Select CSV File
-					</label>
-					<input
-						type="file"
-						id="file"
-						name="file"
-						accept=".csv,text/csv"
-						required
-						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
-					/>
-					<p class="mt-2 text-xs text-muted">Maximum file size: 5MB</p>
+				<div class="field mb-5">
+					<label for="file" class="label">Select CSV File</label>
+					<div class="file has-name is-primary is-light">
+						<label class="file-label">
+							<input
+								class="file-input"
+								type="file"
+								id="file"
+								name="file"
+								accept=".csv,text/csv"
+								required
+							/>
+							<span class="file-cta">
+								<span class="file-icon">
+									<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
+								</span>
+								<span class="file-label">Choose a file...</span>
+							</span>
+						</label>
+					</div>
+					<p class="help">Maximum file size: 5MB</p>
 				</div>
 
-				<div class="flex justify-end">
+				<div class="is-flex is-justify-content-flex-end">
 					<button
 						type="submit"
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+						class="button is-primary"
 					>
-						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
-						Upload & Preview
+						<span class="icon">
+							<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
+						</span>
+						<span>Upload & Preview</span>
 					</button>
 				</div>
 			</form>
 
 			<!-- Format Help -->
-			<div class="mt-8 rounded-lg border border-card-border bg-surface p-4">
-				<h4 class="text-sm font-medium text-fg mb-2">Expected CSV Format</h4>
-				<p class="text-xs text-muted mb-3">
+			<div class="box mt-5" style="background: var(--color-surface);">
+				<h4 class="is-size-7 has-text-weight-medium mb-2">Expected CSV Format</h4>
+				<p class="is-size-7 has-text-grey mb-3">
 					Your CSV should have headers for Date, Type (income/expense), Payee, and Amount.
 					Optional columns: Description, Tags (comma-separated), Payment Method, Check Number.
 				</p>
-				<div class="text-xs font-mono bg-card p-3 rounded border border-border overflow-x-auto">
-					<pre>Date,Type,Payee,Amount,Description,Tags
+				<pre class="p-3 is-size-7" style="background: var(--color-card-bg); border-radius: 0.375rem; overflow-x: auto;">Date,Type,Payee,Amount,Description,Tags
 2026-01-15,expense,Office Depot,125.50,Printer paper and ink,Office Supplies
 2026-01-16,income,Client ABC,1500.00,Website development,Consulting</pre>
-				</div>
 			</div>
 		</div>
 	{/if}
 
 	<!-- Step 2: Column Mapping -->
 	{#if step === 'mapping' && previewData}
-		<div class="rounded-lg border border-border bg-card p-6">
-			<h3 class="mb-4 text-lg font-medium text-fg">Map Columns</h3>
-			<p class="mb-6 text-sm text-muted">
+		<div class="box">
+			<h3 class="title is-5 mb-4">Map Columns</h3>
+			<p class="has-text-grey is-size-7 mb-5">
 				Map your CSV columns to transaction fields. We've auto-detected some mappings based on column names.
 			</p>
 
@@ -251,193 +253,207 @@
 				<input type="hidden" name="csvText" value={csvText} />
 				<input type="hidden" name="mapping" value={JSON.stringify(mapping)} />
 
-				<div class="grid gap-4 sm:grid-cols-2">
+				<div class="columns is-multiline">
 					<!-- Date -->
-					<div>
-						<label for="map-date" class="block text-sm font-medium text-fg">
-							Date <span class="text-red-500">*</span>
-						</label>
-						<select
-							id="map-date"
-							bind:value={mapping.date}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-date" class="label">
+								Date <span class="has-text-danger">*</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-date" bind:value={mapping.date} required>
+										<option value="">Select column...</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Type -->
-					<div>
-						<label for="map-type" class="block text-sm font-medium text-fg">
-							Type (income/expense) <span class="text-red-500">*</span>
-						</label>
-						<select
-							id="map-type"
-							bind:value={mapping.type}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-type" class="label">
+								Type (income/expense) <span class="has-text-danger">*</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-type" bind:value={mapping.type} required>
+										<option value="">Select column...</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Payee -->
-					<div>
-						<label for="map-payee" class="block text-sm font-medium text-fg">
-							Payee <span class="text-red-500">*</span>
-						</label>
-						<select
-							id="map-payee"
-							bind:value={mapping.payee}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-payee" class="label">
+								Payee <span class="has-text-danger">*</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-payee" bind:value={mapping.payee} required>
+										<option value="">Select column...</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Amount -->
-					<div>
-						<label for="map-amount" class="block text-sm font-medium text-fg">
-							Amount <span class="text-red-500">*</span>
-						</label>
-						<select
-							id="map-amount"
-							bind:value={mapping.amount}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-amount" class="label">
+								Amount <span class="has-text-danger">*</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-amount" bind:value={mapping.amount} required>
+										<option value="">Select column...</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Description (optional) -->
-					<div>
-						<label for="map-description" class="block text-sm font-medium text-fg">
-							Description <span class="text-muted">(optional)</span>
-						</label>
-						<select
-							id="map-description"
-							bind:value={mapping.description}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-description" class="label">
+								Description <span class="has-text-grey">(optional)</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-description" bind:value={mapping.description}>
+										<option value="">None</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Tags (optional) -->
-					<div>
-						<label for="map-tags" class="block text-sm font-medium text-fg">
-							Tags <span class="text-muted">(optional)</span>
-						</label>
-						<select
-							id="map-tags"
-							bind:value={mapping.tags}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-tags" class="label">
+								Tags <span class="has-text-grey">(optional)</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-tags" bind:value={mapping.tags}>
+										<option value="">None</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Payment Method (optional) -->
-					<div>
-						<label for="map-payment" class="block text-sm font-medium text-fg">
-							Payment Method <span class="text-muted">(optional)</span>
-						</label>
-						<select
-							id="map-payment"
-							bind:value={mapping.paymentMethod}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None (default: card)</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-payment" class="label">
+								Payment Method <span class="has-text-grey">(optional)</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-payment" bind:value={mapping.paymentMethod}>
+										<option value="">None (default: card)</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<!-- Check Number (optional) -->
-					<div>
-						<label for="map-check" class="block text-sm font-medium text-fg">
-							Check Number <span class="text-muted">(optional)</span>
-						</label>
-						<select
-							id="map-check"
-							bind:value={mapping.checkNumber}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+					<div class="column is-half">
+						<div class="field">
+							<label for="map-check" class="label">
+								Check Number <span class="has-text-grey">(optional)</span>
+							</label>
+							<div class="control">
+								<div class="select is-fullwidth">
+									<select id="map-check" bind:value={mapping.checkNumber}>
+										<option value="">None</option>
+										{#each previewData.headers as header}
+											<option value={header}>{header}</option>
+										{/each}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<!-- Preview of mapped data -->
-				<div class="mt-6">
-					<h4 class="text-sm font-medium text-fg mb-2">Sample Data Preview</h4>
-					<div class="overflow-x-auto rounded-lg border border-border">
-						<table class="min-w-full divide-y divide-border text-sm">
-							<thead class="bg-surface">
+				<div class="mt-5">
+					<h4 class="is-size-7 has-text-weight-medium mb-2">Sample Data Preview</h4>
+					<div class="table-container">
+						<table class="table is-narrow is-fullwidth is-striped is-size-7">
+							<thead>
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Row</th>
+									<th>Row</th>
 									{#each previewData.headers as header}
-										<th class="px-3 py-2 text-left text-xs font-medium text-muted">{header}</th>
+										<th>{header}</th>
 									{/each}
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-border bg-card">
+							<tbody>
 								{#each previewData.preview.slice(0, 5) as row}
 									<tr>
-										<td class="px-3 py-2 text-muted">{row.rowNumber}</td>
+										<td class="has-text-grey">{row.rowNumber}</td>
 										{#each previewData.headers as header}
-											<td class="px-3 py-2 text-fg">{row.data[header] || '-'}</td>
+											<td>{row.data[header] || '-'}</td>
 										{/each}
 									</tr>
 								{/each}
 							</tbody>
 						</table>
 					</div>
-					<p class="mt-2 text-xs text-muted">
+					<p class="is-size-7 has-text-grey mt-2">
 						Showing {Math.min(5, previewData.preview.length)} of {previewData.totalRows} rows
 					</p>
 				</div>
 
-				<div class="mt-6 flex justify-between">
+				<div class="is-flex is-justify-content-space-between mt-5">
 					<button
 						type="button"
 						onclick={reset}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="button"
 					>
 						Start Over
 					</button>
 					<button
 						type="submit"
 						disabled={!requiredMappingsSet}
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="button is-primary"
 					>
-						Validate & Preview
-						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+						<span>Validate & Preview</span>
+						<span class="icon">
+							<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+						</span>
 					</button>
 				</div>
 			</form>
@@ -446,95 +462,96 @@
 
 	<!-- Step 3: Preview & Validation -->
 	{#if step === 'preview' && validationResult}
-		<div class="rounded-lg border border-border bg-card p-6">
-			<h3 class="mb-4 text-lg font-medium text-fg">Validation Results</h3>
+		<div class="box">
+			<h3 class="title is-5 mb-4">Validation Results</h3>
 
 			<!-- Summary Stats -->
-			<div class="mb-6 grid grid-cols-3 gap-4">
-				<div class="rounded-lg bg-surface p-4">
-					<div class="text-2xl font-bold text-fg">{validationResult.valid.length + validationResult.invalid.length}</div>
-					<div class="text-sm text-muted">Total Rows</div>
+			<div class="columns is-mobile mb-5">
+				<div class="column">
+					<div class="box has-text-centered" style="background: var(--color-surface);">
+						<div class="title is-4 mb-1">{validationResult.valid.length + validationResult.invalid.length}</div>
+						<div class="is-size-7 has-text-grey">Total Rows</div>
+					</div>
 				</div>
-				<div class="rounded-lg bg-green-50 p-4">
-					<div class="text-2xl font-bold text-green-700">{validationResult.valid.length}</div>
-					<div class="text-sm text-green-600">Valid</div>
+				<div class="column">
+					<div class="box has-text-centered valid-stat">
+						<div class="title is-4 mb-1 has-text-success">{validationResult.valid.length}</div>
+						<div class="is-size-7 has-text-success">Valid</div>
+					</div>
 				</div>
-				<div class="rounded-lg {validationResult.invalid.length > 0 ? 'bg-red-50' : 'bg-surface'} p-4">
-					<div class="text-2xl font-bold {validationResult.invalid.length > 0 ? 'text-red-700' : 'text-muted'}">{validationResult.invalid.length}</div>
-					<div class="text-sm {validationResult.invalid.length > 0 ? 'text-red-600' : 'text-muted'}">Invalid (will skip)</div>
+				<div class="column">
+					<div class="box has-text-centered {validationResult.invalid.length > 0 ? 'invalid-stat' : ''}" style="background: var(--color-surface);">
+						<div class="title is-4 mb-1 {validationResult.invalid.length > 0 ? 'has-text-danger' : 'has-text-grey'}">{validationResult.invalid.length}</div>
+						<div class="is-size-7 {validationResult.invalid.length > 0 ? 'has-text-danger' : 'has-text-grey'}">Invalid (will skip)</div>
+					</div>
 				</div>
 			</div>
 
 			<!-- Unknown Tags Handling -->
 			{#if validationResult.unknownTags.length > 0}
-				<div class="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
-					<h4 class="text-sm font-medium text-amber-800 mb-3">
+				<div class="notification is-warning is-light mb-5">
+					<h4 class="is-size-7 has-text-weight-medium mb-3">
 						Unknown Tags Found ({validationResult.unknownTags.length})
 					</h4>
-					<p class="text-sm text-amber-700 mb-4">
+					<p class="is-size-7 mb-4">
 						These tags don't exist in your workspace. Choose to create them or map to existing tags.
 					</p>
 
-					<div class="space-y-3">
-						{#each validationResult.unknownTags as tag}
-							<div class="flex items-center gap-4 rounded-lg bg-card p-3 border border-amber-100">
-								<span class="font-medium text-fg min-w-24">{tag}</span>
-								<div class="flex items-center gap-2">
-									<label class="inline-flex items-center">
-										<input
-											type="radio"
-											name="tag-{tag}"
-											value="create"
-											bind:group={tagActions[tag]}
-											class="h-4 w-4 text-primary border-input-border"
-										/>
-										<span class="ml-2 text-sm text-fg">Create new</span>
-									</label>
-									<label class="inline-flex items-center ml-4">
-										<input
-											type="radio"
-											name="tag-{tag}"
-											value="map"
-											bind:group={tagActions[tag]}
-											class="h-4 w-4 text-primary border-input-border"
-										/>
-										<span class="ml-2 text-sm text-fg">Map to:</span>
-									</label>
-									{#if tagActions[tag] === 'map'}
-										<select
-											bind:value={tagMappings[tag]}
-											class="ml-2 rounded-lg border border-input-border bg-input px-2 py-1 text-sm text-fg"
-										>
+					{#each validationResult.unknownTags as tag}
+						<div class="box is-flex is-align-items-center p-3 mb-2" style="gap: 1rem;">
+							<span class="has-text-weight-medium" style="min-width: 6rem;">{tag}</span>
+							<div class="is-flex is-align-items-center" style="gap: 0.5rem;">
+								<label class="radio is-flex is-align-items-center" style="gap: 0.25rem;">
+									<input
+										type="radio"
+										name="tag-{tag}"
+										value="create"
+										bind:group={tagActions[tag]}
+									/>
+									<span class="is-size-7">Create new</span>
+								</label>
+								<label class="radio is-flex is-align-items-center ml-3" style="gap: 0.25rem;">
+									<input
+										type="radio"
+										name="tag-{tag}"
+										value="map"
+										bind:group={tagActions[tag]}
+									/>
+									<span class="is-size-7">Map to:</span>
+								</label>
+								{#if tagActions[tag] === 'map'}
+									<div class="select is-small ml-2">
+										<select bind:value={tagMappings[tag]}>
 											<option value="">Select...</option>
 											{#each data.tags as existingTag}
 												<option value={existingTag}>{existingTag}</option>
 											{/each}
 										</select>
-									{/if}
-								</div>
+									</div>
+								{/if}
 							</div>
-						{/each}
-					</div>
+						</div>
+					{/each}
 				</div>
 			{/if}
 
 			<!-- Invalid Rows -->
 			{#if validationResult.invalid.length > 0}
-				<div class="mb-6">
-					<h4 class="text-sm font-medium text-fg mb-2">Invalid Rows (will be skipped)</h4>
-					<div class="max-h-48 overflow-y-auto rounded-lg border border-red-200">
-						<table class="min-w-full divide-y divide-red-100 text-sm">
-							<thead class="bg-red-50 sticky top-0">
+				<div class="mb-5">
+					<h4 class="is-size-7 has-text-weight-medium mb-2">Invalid Rows (will be skipped)</h4>
+					<div class="table-container" style="max-height: 12rem; overflow-y: auto;">
+						<table class="table is-narrow is-fullwidth is-size-7">
+							<thead>
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-red-700">Row</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-red-700">Errors</th>
+									<th class="has-text-danger">Row</th>
+									<th class="has-text-danger">Errors</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-red-100 bg-card">
+							<tbody>
 								{#each validationResult.invalid as row}
 									<tr>
-										<td class="px-3 py-2 text-red-600">{row.rowNumber}</td>
-										<td class="px-3 py-2 text-red-600">{row.errors.join('; ')}</td>
+										<td class="has-text-danger">{row.rowNumber}</td>
+										<td class="has-text-danger">{row.errors.join('; ')}</td>
 									</tr>
 								{/each}
 							</tbody>
@@ -545,40 +562,40 @@
 
 			<!-- Valid Rows Preview -->
 			{#if validationResult.valid.length > 0}
-				<div class="mb-6">
-					<h4 class="text-sm font-medium text-fg mb-2">Valid Transactions Preview</h4>
-					<div class="overflow-x-auto rounded-lg border border-border">
-						<table class="min-w-full divide-y divide-border text-sm">
-							<thead class="bg-surface">
+				<div class="mb-5">
+					<h4 class="is-size-7 has-text-weight-medium mb-2">Valid Transactions Preview</h4>
+					<div class="table-container">
+						<table class="table is-narrow is-fullwidth is-striped is-size-7">
+							<thead>
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Date</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Type</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Payee</th>
-									<th class="px-3 py-2 text-right text-xs font-medium text-muted">Amount</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-muted">Tags</th>
+									<th>Date</th>
+									<th>Type</th>
+									<th>Payee</th>
+									<th class="has-text-right">Amount</th>
+									<th>Tags</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-border bg-card">
+							<tbody>
 								{#each validationResult.valid.slice(0, 10) as tx}
 									<tr>
-										<td class="px-3 py-2 text-fg">{tx.date}</td>
-										<td class="px-3 py-2">
-											<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium {tx.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+										<td>{tx.date}</td>
+										<td>
+											<span class="tag is-small {tx.type === 'income' ? 'is-success is-light' : 'is-danger is-light'}">
 												{tx.type}
 											</span>
 										</td>
-										<td class="px-3 py-2 text-fg">{tx.payee}</td>
-										<td class="px-3 py-2 text-right text-fg">
+										<td>{tx.payee}</td>
+										<td class="has-text-right tabular-nums">
 											${(tx.amountCents / 100).toFixed(2)}
 										</td>
-										<td class="px-3 py-2 text-muted">{tx.tags.join(', ') || '-'}</td>
+										<td class="has-text-grey">{tx.tags.join(', ') || '-'}</td>
 									</tr>
 								{/each}
 							</tbody>
 						</table>
 					</div>
 					{#if validationResult.valid.length > 10}
-						<p class="mt-2 text-xs text-muted">
+						<p class="is-size-7 has-text-grey mt-2">
 							Showing 10 of {validationResult.valid.length} valid transactions
 						</p>
 					{/if}
@@ -592,21 +609,23 @@
 				<input type="hidden" name="createTags" value={JSON.stringify(getTagsToCreate())} />
 				<input type="hidden" name="tagMappings" value={JSON.stringify(getTagMappingsForImport())} />
 
-				<div class="flex justify-between">
+				<div class="is-flex is-justify-content-space-between">
 					<button
 						type="button"
 						onclick={() => (step = 'mapping')}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="button"
 					>
 						Back to Mapping
 					</button>
 					<button
 						type="submit"
 						disabled={validationResult.valid.length === 0 || !allTagsResolved()}
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="button is-primary"
 					>
-						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
-						Import {validationResult.valid.length} Transactions
+						<span class="icon">
+							<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
+						</span>
+						<span>Import {validationResult.valid.length} Transactions</span>
 					</button>
 				</div>
 			</form>
@@ -615,48 +634,52 @@
 
 	<!-- Step 4: Results -->
 	{#if step === 'results' && importResult}
-		<div class="rounded-lg border border-border bg-card p-6">
-			<div class="text-center mb-6">
-				<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
-					<iconify-icon icon="solar:check-circle-bold" class="text-green-600" width="32" height="32"></iconify-icon>
+		<div class="box">
+			<div class="has-text-centered mb-5">
+				<div class="result-icon mb-4">
+					<iconify-icon icon="solar:check-circle-bold" class="has-text-success" width="32" height="32"></iconify-icon>
 				</div>
-				<h3 class="text-xl font-semibold text-fg">Import Complete</h3>
-				<p class="mt-2 text-muted">
+				<h3 class="title is-4">Import Complete</h3>
+				<p class="has-text-grey mt-2">
 					Successfully imported {importResult.imported} transaction{importResult.imported !== 1 ? 's' : ''}.
 				</p>
 			</div>
 
 			<!-- Summary -->
-			<div class="mb-6 grid grid-cols-2 gap-4">
-				<div class="rounded-lg bg-green-50 p-4 text-center">
-					<div class="text-3xl font-bold text-green-700">{importResult.imported}</div>
-					<div class="text-sm text-green-600">Imported</div>
+			<div class="columns is-mobile mb-5">
+				<div class="column">
+					<div class="box has-text-centered valid-stat">
+						<div class="title is-3 mb-1 has-text-success">{importResult.imported}</div>
+						<div class="is-size-7 has-text-success">Imported</div>
+					</div>
 				</div>
-				<div class="rounded-lg {importResult.skipped > 0 ? 'bg-amber-50' : 'bg-surface'} p-4 text-center">
-					<div class="text-3xl font-bold {importResult.skipped > 0 ? 'text-amber-700' : 'text-muted'}">{importResult.skipped}</div>
-					<div class="text-sm {importResult.skipped > 0 ? 'text-amber-600' : 'text-muted'}">Skipped</div>
+				<div class="column">
+					<div class="box has-text-centered {importResult.skipped > 0 ? 'skipped-stat' : ''}" style="background: var(--color-surface);">
+						<div class="title is-3 mb-1 {importResult.skipped > 0 ? 'has-text-warning' : 'has-text-grey'}">{importResult.skipped}</div>
+						<div class="is-size-7 {importResult.skipped > 0 ? 'has-text-warning' : 'has-text-grey'}">Skipped</div>
+					</div>
 				</div>
 			</div>
 
 			<!-- Skipped Rows Details -->
 			{#if importResult.skippedRows.length > 0}
-				<details class="mb-6 rounded-lg border border-amber-200">
-					<summary class="cursor-pointer bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+				<details class="mb-5">
+					<summary class="notification is-warning is-light is-size-7 has-text-weight-medium is-clickable">
 						View skipped rows ({importResult.skippedRows.length})
 					</summary>
-					<div class="max-h-48 overflow-y-auto p-4">
-						<table class="min-w-full text-sm">
+					<div class="table-container mt-2" style="max-height: 12rem; overflow-y: auto;">
+						<table class="table is-narrow is-fullwidth is-size-7">
 							<thead>
 								<tr>
-									<th class="px-2 py-1 text-left font-medium text-fg">Row</th>
-									<th class="px-2 py-1 text-left font-medium text-fg">Errors</th>
+									<th>Row</th>
+									<th>Errors</th>
 								</tr>
 							</thead>
 							<tbody>
 								{#each importResult.skippedRows as row}
 									<tr>
-										<td class="px-2 py-1 text-muted">{row.rowNumber}</td>
-										<td class="px-2 py-1 text-red-600">{row.errors.join('; ')}</td>
+										<td class="has-text-grey">{row.rowNumber}</td>
+										<td class="has-text-danger">{row.errors.join('; ')}</td>
 									</tr>
 								{/each}
 							</tbody>
@@ -666,22 +689,68 @@
 			{/if}
 
 			<!-- Actions -->
-			<div class="flex justify-center gap-4">
+			<div class="buttons is-centered">
 				<button
 					type="button"
 					onclick={reset}
-					class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+					class="button"
 				>
 					Import Another
 				</button>
 				<a
 					href="../transactions"
-					class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+					class="button is-primary"
 				>
-					View Transactions
-					<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+					<span>View Transactions</span>
+					<span class="icon">
+						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
+					</span>
 				</a>
 			</div>
 		</div>
 	{/if}
 </div>
+
+<style>
+	.step-circle {
+		display: flex;
+		width: 2rem;
+		height: 2rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: var(--color-surface-alt);
+		color: var(--color-muted);
+	}
+	.step-circle.is-active {
+		background-color: var(--bulma-primary, var(--color-primary));
+		color: white;
+	}
+	.step-circle.is-complete {
+		background-color: var(--bulma-success, var(--color-success));
+		color: white;
+	}
+	.step-connector {
+		width: 2rem;
+		height: 1px;
+		background-color: var(--color-border);
+	}
+	.result-icon {
+		display: inline-flex;
+		width: 4rem;
+		height: 4rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: var(--color-success-muted, #f0fdf4);
+	}
+	.valid-stat {
+		background-color: var(--color-success-muted, #f0fdf4) !important;
+	}
+	.invalid-stat {
+		background-color: var(--color-error-muted, #fef2f2) !important;
+	}
+	.skipped-stat {
+		background-color: var(--color-warning-muted, #fffbeb) !important;
+	}
+</style>

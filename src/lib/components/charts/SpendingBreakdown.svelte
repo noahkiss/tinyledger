@@ -107,7 +107,7 @@
 </script>
 
 {#if data.length === 0}
-	<div class="flex h-48 items-center justify-center text-muted">No expense data</div>
+	<div class="is-flex is-align-items-center is-justify-content-center has-text-grey" style="height: 12rem;">No expense data</div>
 {:else}
 	<div style="height: {chartHeight}px">
 		<canvas bind:this={canvas}></canvas>

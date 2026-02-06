@@ -111,33 +111,37 @@
 	}
 </script>
 
-<div class="space-y-4">
+<div>
 	<!-- Header -->
-	<div class="flex items-center justify-between">
-		<h3 class="text-lg font-semibold text-fg">Quick Entry</h3>
+	<div class="is-flex is-align-items-center is-justify-content-space-between mb-4">
+		<h3 class="is-size-5 has-text-weight-semibold">Quick Entry</h3>
 		<button
 			type="button"
 			onclick={onClose}
-			class="rounded-lg p-2 text-muted hover:bg-surface"
+			class="button is-ghost close-btn"
 			aria-label="Close"
 		>
-			<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
+			<span class="icon">
+				<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
+			</span>
 		</button>
 	</div>
 
 	<!-- Success indicator -->
 	{#if showSuccess}
-		<div
-			class="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 text-green-700 transition-opacity"
-		>
-			<iconify-icon icon="solar:check-circle-bold" width="20" height="20"></iconify-icon>
-			<span class="text-sm font-medium">Transaction added!</span>
+		<div class="notification is-success is-light mb-4">
+			<div class="is-flex is-align-items-center">
+				<span class="icon mr-2">
+					<iconify-icon icon="solar:check-circle-bold" width="20" height="20"></iconify-icon>
+				</span>
+				<span class="is-size-7 has-text-weight-medium">Transaction added!</span>
+			</div>
 		</div>
 	{/if}
 
 	<!-- Error display -->
 	{#if errorMessage}
-		<div class="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
+		<div class="notification is-danger is-light is-size-7 mb-4">
 			{errorMessage}
 		</div>
 	{/if}
@@ -152,45 +156,42 @@
 				handleSubmitResult(result);
 			};
 		}}
-		class="space-y-4"
 	>
 		<!-- Type toggle -->
-		<div>
+		<div class="field">
 			<button
 				type="button"
 				onclick={() => (type = type === 'income' ? 'expense' : 'income')}
-				class="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-lg font-semibold text-white transition-colors"
-				class:bg-green-600={type === 'income'}
-				class:hover:bg-green-700={type === 'income'}
-				class:bg-red-600={type === 'expense'}
-				class:hover:bg-red-700={type === 'expense'}
+				class="button is-fullwidth is-medium type-toggle"
+				class:is-income={type === 'income'}
+				class:is-expense={type === 'expense'}
 			>
-				<span class="text-2xl">{type === 'income' ? '+' : '-'}</span>
-				<span>{type === 'income' ? 'Income' : 'Expense'}</span>
+				<span class="is-size-4">{type === 'income' ? '+' : '-'}</span>
+				<span class="ml-2">{type === 'income' ? 'Income' : 'Expense'}</span>
 			</button>
 			<input type="hidden" name="type" value={type} />
 		</div>
 
 		<!-- Amount -->
-		<div>
-			<label for="quick-amount" class="block text-sm font-medium text-fg">Amount</label>
-			<div class="mt-1">
+		<div class="field">
+			<label for="quick-amount" class="label is-small">Amount</label>
+			<div class="control">
 				<CurrencyInput
 					bind:value={amountCents}
 					name="amount"
 					id="quick-amount"
 					required
-					class="w-full"
+					class="is-fullwidth"
 				/>
 			</div>
 		</div>
 
 		<!-- Payee with simple autocomplete -->
-		<div class="relative">
-			<label for="quick-payee" class="block text-sm font-medium text-fg">
+		<div class="field">
+			<label for="quick-payee" class="label is-small">
 				{type === 'income' ? 'Received from' : 'Paid to'}
 			</label>
-			<div class="relative mt-1">
+			<div class="control payee-container">
 				<input
 					type="text"
 					id="quick-payee"
@@ -201,56 +202,55 @@
 					onblur={handlePayeeBlur}
 					autocomplete="off"
 					placeholder={type === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
-					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="input"
 				/>
 
 				{#if showPayeeDropdown && filteredPayees.length > 0}
-					<ul
-						class="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-border bg-card shadow-lg"
-					>
+					<div class="payee-dropdown">
 						{#each filteredPayees as p (p.payee)}
-							<li>
-								<button
-									type="button"
-									class="w-full px-3 py-2 text-left hover:bg-surface"
-									onmousedown={() => handlePayeeSelect(p)}
-								>
-									<div class="font-medium text-fg">{p.payee}</div>
-									<div class="text-xs text-muted">
-										{p.count}x | ${(p.lastAmount / 100).toFixed(2)}
-									</div>
-								</button>
-							</li>
+							<button
+								type="button"
+								class="payee-option"
+								onmousedown={() => handlePayeeSelect(p)}
+							>
+								<div class="has-text-weight-medium">{p.payee}</div>
+								<div class="is-size-7 muted-text">
+									{p.count}x | ${(p.lastAmount / 100).toFixed(2)}
+								</div>
+							</button>
 						{/each}
-					</ul>
+					</div>
 				{/if}
 			</div>
 		</div>
 
 		<!-- Date -->
-		<div>
-			<label for="quick-date" class="block text-sm font-medium text-fg">Date</label>
-			<div class="mt-1">
-				<DateInput bind:value={dateValue} name="date" id="quick-date" required class="w-full" />
+		<div class="field">
+			<label for="quick-date" class="label is-small">Date</label>
+			<div class="control">
+				<DateInput bind:value={dateValue} name="date" id="quick-date" required class="is-fullwidth" />
 			</div>
 		</div>
 
 		<!-- Tag (simplified - single tag only) -->
 		{#if availableTags.length > 0}
-			<div>
-				<label for="quick-tag" class="block text-sm font-medium text-fg">
-					Tag <span class="font-normal text-muted">(optional)</span>
+			<div class="field">
+				<label for="quick-tag" class="label is-small">
+					Tag <span class="has-text-weight-normal muted-text">(optional)</span>
 				</label>
-				<select
-					id="quick-tag"
-					bind:value={selectedTagId}
-					class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-				>
-					<option value={null}>No tag</option>
-					{#each availableTags as tag (tag.id)}
-						<option value={tag.id}>{tag.name}</option>
-					{/each}
-				</select>
+				<div class="control">
+					<div class="select is-fullwidth">
+						<select
+							id="quick-tag"
+							bind:value={selectedTagId}
+						>
+							<option value={null}>No tag</option>
+							{#each availableTags as tag (tag.id)}
+								<option value={tag.id}>{tag.name}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
 				{#if selectedTagId !== null}
 					<input type="hidden" name="tag_0" value={selectedTagId} />
 					<input type="hidden" name="percentage_0" value="100" />
@@ -259,38 +259,136 @@
 		{/if}
 
 		<!-- Description -->
-		<div>
-			<label for="quick-description" class="block text-sm font-medium text-fg">
-				Note <span class="font-normal text-muted">(optional)</span>
+		<div class="field">
+			<label for="quick-description" class="label is-small">
+				Note <span class="has-text-weight-normal muted-text">(optional)</span>
 			</label>
-			<input
-				type="text"
-				id="quick-description"
-				name="description"
-				bind:value={description}
-				placeholder="Brief note..."
-				class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
-			/>
+			<div class="control">
+				<input
+					type="text"
+					id="quick-description"
+					name="description"
+					bind:value={description}
+					placeholder="Brief note..."
+					class="input"
+				/>
+			</div>
 		</div>
 
 		<!-- Hidden defaults -->
 		<input type="hidden" name="paymentMethod" value="card" />
 
 		<!-- Submit -->
-		<button
-			type="submit"
-			disabled={isSubmitting}
-			class="w-full rounded-xl px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-			class:bg-green-600={type === 'income'}
-			class:hover:bg-green-700={type === 'income'}
-			class:bg-red-600={type === 'expense'}
-			class:hover:bg-red-700={type === 'expense'}
-		>
-			{#if isSubmitting}
-				Adding...
-			{:else}
-				Add {type === 'income' ? 'Income' : 'Expense'}
-			{/if}
-		</button>
+		<div class="field mt-5">
+			<button
+				type="submit"
+				disabled={isSubmitting}
+				class="button is-medium is-fullwidth has-text-weight-semibold submit-btn"
+				class:is-income={type === 'income'}
+				class:is-expense={type === 'expense'}
+			>
+				{#if isSubmitting}
+					Adding...
+				{:else}
+					Add {type === 'income' ? 'Income' : 'Expense'}
+				{/if}
+			</button>
+		</div>
 	</form>
 </div>
+
+<style>
+	.close-btn {
+		color: var(--color-muted);
+		border: none;
+	}
+
+	.close-btn:hover {
+		background-color: var(--color-surface);
+	}
+
+	.type-toggle {
+		font-weight: 600;
+		color: white;
+		border: none;
+		border-radius: 0.75rem;
+	}
+
+	.type-toggle.is-income {
+		background-color: var(--color-success);
+	}
+
+	.type-toggle.is-income:hover {
+		background-color: var(--color-success-hover);
+	}
+
+	.type-toggle.is-expense {
+		background-color: var(--color-error);
+	}
+
+	.type-toggle.is-expense:hover {
+		background-color: var(--color-error-hover);
+	}
+
+	.submit-btn {
+		color: white;
+		border: none;
+		border-radius: 0.75rem;
+	}
+
+	.submit-btn.is-income {
+		background-color: var(--color-success);
+	}
+
+	.submit-btn.is-income:hover {
+		background-color: var(--color-success-hover);
+	}
+
+	.submit-btn.is-expense {
+		background-color: var(--color-error);
+	}
+
+	.submit-btn.is-expense:hover {
+		background-color: var(--color-error-hover);
+	}
+
+	.submit-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.muted-text {
+		color: var(--color-muted);
+	}
+
+	.payee-container {
+		position: relative;
+	}
+
+	.payee-dropdown {
+		position: absolute;
+		z-index: 10;
+		margin-top: 0.25rem;
+		width: 100%;
+		max-height: 12rem;
+		overflow-y: auto;
+		border-radius: 0.5rem;
+		border: 1px solid var(--color-border);
+		background-color: var(--color-card-bg);
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+	}
+
+	.payee-option {
+		display: block;
+		width: 100%;
+		padding: 0.5rem 0.75rem;
+		text-align: left;
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+
+	.payee-option:hover {
+		background-color: var(--color-surface);
+	}
+</style>
