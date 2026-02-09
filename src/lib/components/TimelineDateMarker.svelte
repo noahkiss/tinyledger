@@ -2,7 +2,7 @@
 	let { date, dayType = 'neutral' }: { date: string; dayType?: 'income' | 'expense' | 'mixed' | 'neutral' | 'tax' | 'pending' } = $props();
 
 	// Format date as "Thursday, January 30, 2026"
-	let formattedDate = $derived(() => {
+	let formattedDate = $derived.by(() => {
 		const d = new Date(date + 'T00:00:00'); // Ensure local timezone
 		return new Intl.DateTimeFormat('en-US', {
 			weekday: 'long',
@@ -13,7 +13,7 @@
 	});
 
 	// Dot color based on transaction types for the day
-	let dotColorClass = $derived(() => {
+	let dotColorClass = $derived.by(() => {
 		switch (dayType) {
 			case 'income':
 				return 'bg-success';
@@ -34,10 +34,10 @@
 <div class="absolute -left-3 flex items-center" data-component="timeline-date-marker">
 	<!-- Circle marker on the timeline -->
 	<span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-border bg-card">
-		<span class="h-2 w-2 rounded-full {dotColorClass()}"></span>
+		<span class="h-2 w-2 rounded-full {dotColorClass}"></span>
 	</span>
 </div>
 
 <time datetime={date} class="mb-2 block text-sm font-medium text-muted">
-	{formattedDate()}
+	{formattedDate}
 </time>

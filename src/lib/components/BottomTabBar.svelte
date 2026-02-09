@@ -36,7 +36,7 @@
 	];
 
 	// Build nav tabs based on workspace type
-	const navTabs = $derived(() => {
+	const navTabs = $derived.by(() => {
 		const tabs = [...baseNavTabs];
 		if (workspaceType === 'sole_prop') {
 			tabs.push({
@@ -70,8 +70,8 @@
 	}
 
 	// Split tabs into left and right groups (for center add button)
-	const leftTabs = $derived(() => navTabs().slice(0, 2));
-	const rightTabs = $derived(() => navTabs().slice(2));
+	const leftTabs = $derived(navTabs.slice(0, 2));
+	const rightTabs = $derived(navTabs.slice(2));
 
 	function handleBackdropClick(e: MouseEvent) {
 		if (e.target === e.currentTarget) {
@@ -97,7 +97,7 @@
 >
 	<div class="grid grid-cols-5 items-center">
 		<!-- Left tabs -->
-		{#each leftTabs() as tab}
+		{#each leftTabs as tab}
 			{@const active = isActiveTab(tab.href)}
 			<a
 				href="/w/{workspaceId}/{tab.href}"
@@ -130,7 +130,7 @@
 		</button>
 
 		<!-- Right tabs -->
-		{#each rightTabs() as tab}
+		{#each rightTabs as tab}
 			{@const active = isActiveTab(tab.href)}
 			<a
 				href="/w/{workspaceId}/{tab.href}"

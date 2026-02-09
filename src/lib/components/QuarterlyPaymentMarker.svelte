@@ -41,7 +41,7 @@
 	let paidTotal = $derived((paidFederalCents ?? 0) + (paidStateCents ?? 0));
 
 	// Border and background colors based on status
-	let borderClass = $derived(() => {
+	let borderClass = $derived.by(() => {
 		if (isPaid) return 'border-success/30 bg-success/10';
 		if (isSkipped) return 'border-overlay bg-surface-alt';
 		if (isPastDue) return 'border-error/30 bg-error/10';
@@ -50,7 +50,7 @@
 	});
 
 	// Status badge
-	let statusBadge = $derived(() => {
+	let statusBadge = $derived.by(() => {
 		if (isPaid) return { text: 'Paid', class: 'bg-success/10 text-success' };
 		if (isSkipped) return { text: 'Skipped', class: 'bg-surface-alt text-muted' };
 		if (isPastDue) return { text: 'Past Due', class: 'bg-error/10 text-error' };
@@ -61,7 +61,7 @@
 
 <a
 	href="/w/{workspaceId}/taxes"
-	class="block rounded-lg border-2 border-dashed p-3 transition-colors hover:border-overlay {borderClass()}"
+	class="block rounded-lg border-2 border-dashed p-3 transition-colors hover:border-overlay {borderClass}"
 	data-component="quarterly-payment-marker"
 	data-quarter={quarter}
 >
@@ -75,9 +75,9 @@
 			<!-- Top row: Quarter label + status badge -->
 			<div class="flex items-center gap-2">
 				<span class="text-sm font-medium text-fg">Q{quarter} Estimated Tax</span>
-				{#if statusBadge()}
-					<span class="rounded px-1.5 py-0.5 text-xs font-medium {statusBadge()?.class}">
-						{statusBadge()?.text}
+				{#if statusBadge}
+					<span class="rounded px-1.5 py-0.5 text-xs font-medium {statusBadge?.class}">
+						{statusBadge?.text}
 					</span>
 				{/if}
 			</div>

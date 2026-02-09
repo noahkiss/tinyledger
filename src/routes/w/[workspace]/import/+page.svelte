@@ -139,7 +139,7 @@
 	);
 
 	// Check if all unknown tags have actions resolved
-	const allTagsResolved = $derived(() => {
+	const allTagsResolved = $derived.by(() => {
 		if (!validationResult?.unknownTags.length) return true;
 		for (const tag of validationResult.unknownTags) {
 			if (tagActions[tag] === 'map' && !tagMappings[tag]) return false;
@@ -626,7 +626,7 @@
 					</button>
 					<button
 						type="submit"
-						disabled={validationResult.valid.length === 0 || !allTagsResolved() || isImporting}
+						disabled={validationResult.valid.length === 0 || !allTagsResolved || isImporting}
 						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>

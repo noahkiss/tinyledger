@@ -35,7 +35,7 @@
 	type PendingInstance = (typeof data.pendingInstances)[number];
 
 	// Create a map of quarterly payments by due date
-	let quarterlyPaymentsByDate = $derived(() => {
+	let quarterlyPaymentsByDate = $derived.by(() => {
 		const map = new Map<string, QuarterlyMarker>();
 		for (const qp of data.quarterlyPayments) {
 			map.set(qp.dueDate, qp);
@@ -44,7 +44,7 @@
 	});
 
 	// Create a map of pending instances by date
-	let pendingByDate = $derived(() => {
+	let pendingByDate = $derived.by(() => {
 		const map = new Map<string, PendingInstance[]>();
 		for (const pi of data.pendingInstances) {
 			const existing = map.get(pi.date);
@@ -58,7 +58,7 @@
 	});
 
 	// Group transactions by date and merge with quarterly payments and pending instances
-	let timelineGroups = $derived(() => {
+	let timelineGroups = $derived.by(() => {
 		// Create groups map that can hold transactions, quarterly marker, and pending instances
 		const groups = new Map<
 			string,
@@ -80,7 +80,7 @@
 		}
 
 		// Add quarterly payments to groups (or create new date entries)
-		const qpByDate = quarterlyPaymentsByDate();
+		const qpByDate = quarterlyPaymentsByDate;
 		for (const [dueDate, qp] of qpByDate) {
 			const existing = groups.get(dueDate);
 			if (existing) {
@@ -91,7 +91,7 @@
 		}
 
 		// Add pending instances to groups
-		const piByDate = pendingByDate();
+		const piByDate = pendingByDate;
 		for (const [date, instances] of piByDate) {
 			const existing = groups.get(date);
 			if (existing) {
@@ -249,7 +249,7 @@
 	{:else}
 		<div class="relative ms-3" data-component="transaction-timeline">
 			<ol class="relative border-s-2 border-border">
-				{#each timelineGroups() as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
+				{#each timelineGroups as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
 					<li class="mb-6 ms-6" data-date={date}>
 						<TimelineDateMarker {date} dayType={getDayType(txns, !!quarterlyPayment, pendingInstances)} />
 						<div class="space-y-2" data-component="timeline-items">

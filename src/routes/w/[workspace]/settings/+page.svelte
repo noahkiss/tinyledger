@@ -68,23 +68,23 @@
 	);
 
 	// Get current state rate for display/placeholder
-	const currentStateRate = $derived(() => {
+	const currentStateRate = $derived.by(() => {
 		const stateData = getStateRate(selectedState);
 		return stateData ? stateData.rate : 0;
 	});
 
-	const currentStateRateLabel = $derived(() => {
+	const currentStateRateLabel = $derived.by(() => {
 		const stateData = getStateRate(selectedState);
 		return stateData ? stateData.rateLabel : '0%';
 	});
 
 	// Get forms for selected state
-	const taxForms = $derived(() => getFormsForState(selectedState));
-	const federalForms = $derived(() => taxForms().filter((f) => !f.applicableStates));
-	const stateForms = $derived(() => taxForms().filter((f) => f.applicableStates?.length));
+	const taxForms = $derived.by(() => getFormsForState(selectedState));
+	const federalForms = $derived(taxForms.filter((f) => !f.applicableStates));
+	const stateForms = $derived(taxForms.filter((f) => f.applicableStates?.length));
 
 	// Warnings for unusual rate values
-	const stateRateWarning = $derived(() => {
+	const stateRateWarning = $derived.by(() => {
 		if (!useCustomStateRate || !stateRateOverrideInput) return null;
 		const rate = parseFloat(stateRateOverrideInput);
 		if (isNaN(rate)) return null;
@@ -94,7 +94,7 @@
 		return null;
 	});
 
-	const localEitWarning = $derived(() => {
+	const localEitWarning = $derived.by(() => {
 		if (!localEitRateInput) return null;
 		const rate = parseFloat(localEitRateInput);
 		if (isNaN(rate)) return null;
@@ -461,7 +461,7 @@
 								Use custom state rate
 							</label>
 							<span class="text-xs text-muted">
-								(Default: {currentStateRateLabel()})
+								(Default: {currentStateRateLabel})
 							</span>
 						</div>
 
@@ -475,12 +475,12 @@
 									id="stateRateOverride"
 									name="stateRateOverride"
 									bind:value={stateRateOverrideInput}
-									placeholder={(currentStateRate() * 100).toFixed(2)}
+									placeholder={(currentStateRate * 100).toFixed(2)}
 									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
 								/>
-								{#if stateRateWarning()}
+								{#if stateRateWarning}
 									<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
-										{stateRateWarning()}
+										{stateRateWarning}
 									</div>
 								{/if}
 							</div>
@@ -513,9 +513,9 @@
 								</a>
 							{/if}
 						</p>
-						{#if localEitWarning()}
+						{#if localEitWarning}
 							<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
-								{localEitWarning()}
+								{localEitWarning}
 							</div>
 						{/if}
 					</div>
@@ -555,7 +555,7 @@
 								<div>
 									<h4 class="text-sm font-medium text-fg">Federal Forms</h4>
 									<div class="mt-2 space-y-3">
-										{#each federalForms() as form}
+										{#each federalForms as form}
 											<div class="text-sm">
 												<div class="flex items-start justify-between">
 													<div>
@@ -583,11 +583,11 @@
 								</div>
 
 								<!-- State Forms (if any) -->
-								{#if stateForms().length > 0}
+								{#if stateForms.length > 0}
 									<div class="mt-4 border-t border-border pt-4">
 										<h4 class="text-sm font-medium text-fg">State Forms ({selectedState})</h4>
 										<div class="mt-2 space-y-3">
-											{#each stateForms() as form}
+											{#each stateForms as form}
 												<div class="text-sm">
 													<div class="flex items-start justify-between">
 														<div>
