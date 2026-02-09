@@ -128,7 +128,7 @@
 	<!-- Success indicator -->
 	{#if showSuccess}
 		<div
-			class="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2 text-green-700 transition-opacity"
+			class="flex items-center gap-2 rounded-lg bg-success/10 px-4 py-2 text-success transition-opacity"
 		>
 			<iconify-icon icon="solar:check-circle-bold" width="20" height="20"></iconify-icon>
 			<span class="text-sm font-medium">Transaction added!</span>
@@ -137,7 +137,7 @@
 
 	<!-- Error display -->
 	{#if errorMessage}
-		<div class="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
+		<div class="rounded-lg bg-error/10 px-4 py-2 text-sm text-error">
 			{errorMessage}
 		</div>
 	{/if}
@@ -160,10 +160,10 @@
 				type="button"
 				onclick={() => (type = type === 'income' ? 'expense' : 'income')}
 				class="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-lg font-semibold text-white transition-colors"
-				class:bg-green-600={type === 'income'}
-				class:hover:bg-green-700={type === 'income'}
-				class:bg-red-600={type === 'expense'}
-				class:hover:bg-red-700={type === 'expense'}
+				class:bg-success={type === 'income'}
+				class:hover:bg-success-hover={type === 'income'}
+				class:bg-error={type === 'expense'}
+				class:hover:bg-error-hover={type === 'expense'}
 			>
 				<span class="text-2xl">{type === 'income' ? '+' : '-'}</span>
 				<span>{type === 'income' ? 'Income' : 'Expense'}</span>
@@ -281,10 +281,10 @@
 			type="submit"
 			disabled={isSubmitting}
 			class="w-full rounded-xl px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-			class:bg-green-600={type === 'income'}
-			class:hover:bg-green-700={type === 'income'}
-			class:bg-red-600={type === 'expense'}
-			class:hover:bg-red-700={type === 'expense'}
+			class:bg-success={type === 'income'}
+			class:hover:bg-success-hover={type === 'income'}
+			class:bg-error={type === 'expense'}
+			class:hover:bg-error-hover={type === 'expense'}
 		>
 			{#if isSubmitting}
 				Adding...

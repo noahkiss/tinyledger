@@ -123,8 +123,8 @@
 							<span>Last: {formatAmount(payee.lastAmount)}</span>
 							<span
 								class="inline-block rounded-full px-2 py-0.5 text-xs {payee.lastType === 'income'
-									? 'bg-green-100 text-green-700'
-									: 'bg-red-100 text-red-700'}"
+									? 'bg-success/10 text-success'
+									: 'bg-error/10 text-error'}"
 							>
 								{payee.lastType}
 							</span>

@@ -16,13 +16,13 @@
 	let dotColorClass = $derived(() => {
 		switch (dayType) {
 			case 'income':
-				return 'bg-green-500';
+				return 'bg-success';
 			case 'expense':
-				return 'bg-red-500';
+				return 'bg-error';
 			case 'mixed':
 				return 'bg-primary';
 			case 'tax':
-				return 'bg-yellow-500';
+				return 'bg-warning';
 			case 'pending':
 				return 'bg-overlay';
 			default:

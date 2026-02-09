@@ -164,7 +164,7 @@
 			<button
 				type="button"
 				onclick={() => removeTag(i)}
-				class="rounded p-1 text-red-600 hover:bg-red-50"
+				class="rounded p-1 text-error hover:bg-error/10"
 				aria-label="Remove tag"
 			>
 				<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
@@ -178,7 +178,7 @@
 		</button>
 
 		{#if allocations.length > 0}
-			<div class="text-sm" class:text-green-600={isValid} class:text-red-600={!isValid}>
+			<div class="text-sm" class:text-success={isValid} class:text-error={!isValid}>
 				Total: {totalPercentage}%
 				{#if !isValid && remainingPercentage > 0}
 					<button
@@ -194,7 +194,7 @@
 	</div>
 
 	{#if allocations.length > 0 && !isValid}
-		<p class="text-sm text-red-600">Tag percentages must sum to exactly 100%</p>
+		<p class="text-sm text-error">Tag percentages must sum to exactly 100%</p>
 	{/if}
 
 	<!-- Inline tag creation section -->
@@ -217,7 +217,7 @@
 			</button>
 		</div>
 		{#if createError}
-			<p class="mt-1 text-sm text-red-600">{createError}</p>
+			<p class="mt-1 text-sm text-error">{createError}</p>
 		{/if}
 	{:else if locked}
 		<p class="mt-2 text-xs text-muted">Tag creation is locked. Manage tags in settings.</p>

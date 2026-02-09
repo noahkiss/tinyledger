@@ -32,8 +32,8 @@
 		percentChange === null
 			? 'text-muted bg-surface'
 			: percentChange >= 0
-				? 'text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-900/50'
-				: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50'
+				? 'text-success bg-success/10'
+				: 'text-error bg-error/10'
 	);
 </script>
 
@@ -46,7 +46,7 @@
 			<div>
 				<span class="text-sm font-medium text-muted">{label}</span>
 				<div class="mt-2 flex items-baseline gap-2">
-					<span class="text-3xl font-bold {value >= 0 ? 'text-fg' : 'text-red-600 dark:text-red-400'}">
+					<span class="text-3xl font-bold {value >= 0 ? 'text-fg' : 'text-error'}">
 						{valuePrefix}{formatCurrency(value)}
 					</span>
 					{#if percentDisplay}

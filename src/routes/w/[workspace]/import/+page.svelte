@@ -166,12 +166,12 @@
 						class="flex h-8 w-8 items-center justify-center rounded-full {isActive
 							? 'bg-primary text-white'
 							: isPast
-								? 'bg-green-500 text-white'
+								? 'bg-success text-white'
 								: 'bg-surface-alt text-muted'}"
 					>
 						<iconify-icon icon={s.icon} width="16" height="16"></iconify-icon>
 					</div>
-					<span class="text-sm font-medium {isActive ? 'text-primary' : isPast ? 'text-green-600' : 'text-muted'}">
+					<span class="text-sm font-medium {isActive ? 'text-primary' : isPast ? 'text-success' : 'text-muted'}">
 						{s.label}
 					</span>
 				</div>
@@ -183,7 +183,7 @@
 	</div>
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
+		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error">
 			{form.error}
 		</div>
 	{/if}
@@ -255,7 +255,7 @@
 					<!-- Date -->
 					<div>
 						<label for="map-date" class="block text-sm font-medium text-fg">
-							Date <span class="text-red-500">*</span>
+							Date <span class="text-error">*</span>
 						</label>
 						<select
 							id="map-date"
@@ -273,7 +273,7 @@
 					<!-- Type -->
 					<div>
 						<label for="map-type" class="block text-sm font-medium text-fg">
-							Type (income/expense) <span class="text-red-500">*</span>
+							Type (income/expense) <span class="text-error">*</span>
 						</label>
 						<select
 							id="map-type"
@@ -291,7 +291,7 @@
 					<!-- Payee -->
 					<div>
 						<label for="map-payee" class="block text-sm font-medium text-fg">
-							Payee <span class="text-red-500">*</span>
+							Payee <span class="text-error">*</span>
 						</label>
 						<select
 							id="map-payee"
@@ -309,7 +309,7 @@
 					<!-- Amount -->
 					<div>
 						<label for="map-amount" class="block text-sm font-medium text-fg">
-							Amount <span class="text-red-500">*</span>
+							Amount <span class="text-error">*</span>
 						</label>
 						<select
 							id="map-amount"
@@ -455,29 +455,29 @@
 					<div class="text-2xl font-bold text-fg">{validationResult.valid.length + validationResult.invalid.length}</div>
 					<div class="text-sm text-muted">Total Rows</div>
 				</div>
-				<div class="rounded-lg bg-green-50 p-4">
-					<div class="text-2xl font-bold text-green-700">{validationResult.valid.length}</div>
-					<div class="text-sm text-green-600">Valid</div>
+				<div class="rounded-lg bg-success/10 p-4">
+					<div class="text-2xl font-bold text-success">{validationResult.valid.length}</div>
+					<div class="text-sm text-success">Valid</div>
 				</div>
-				<div class="rounded-lg {validationResult.invalid.length > 0 ? 'bg-red-50' : 'bg-surface'} p-4">
-					<div class="text-2xl font-bold {validationResult.invalid.length > 0 ? 'text-red-700' : 'text-muted'}">{validationResult.invalid.length}</div>
-					<div class="text-sm {validationResult.invalid.length > 0 ? 'text-red-600' : 'text-muted'}">Invalid (will skip)</div>
+				<div class="rounded-lg {validationResult.invalid.length > 0 ? 'bg-error/10' : 'bg-surface'} p-4">
+					<div class="text-2xl font-bold {validationResult.invalid.length > 0 ? 'text-error' : 'text-muted'}">{validationResult.invalid.length}</div>
+					<div class="text-sm {validationResult.invalid.length > 0 ? 'text-error' : 'text-muted'}">Invalid (will skip)</div>
 				</div>
 			</div>
 
 			<!-- Unknown Tags Handling -->
 			{#if validationResult.unknownTags.length > 0}
-				<div class="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
-					<h4 class="text-sm font-medium text-amber-800 mb-3">
+				<div class="mb-6 rounded-lg border border-warning/30 bg-warning/10 p-4">
+					<h4 class="text-sm font-medium text-warning mb-3">
 						Unknown Tags Found ({validationResult.unknownTags.length})
 					</h4>
-					<p class="text-sm text-amber-700 mb-4">
+					<p class="text-sm text-warning mb-4">
 						These tags don't exist in your workspace. Choose to create them or map to existing tags.
 					</p>
 
 					<div class="space-y-3">
 						{#each validationResult.unknownTags as tag}
-							<div class="flex items-center gap-4 rounded-lg bg-card p-3 border border-amber-100">
+							<div class="flex items-center gap-4 rounded-lg bg-card p-3 border border-warning/30">
 								<span class="font-medium text-fg min-w-24">{tag}</span>
 								<div class="flex items-center gap-2">
 									<label class="inline-flex items-center">
@@ -522,19 +522,19 @@
 			{#if validationResult.invalid.length > 0}
 				<div class="mb-6">
 					<h4 class="text-sm font-medium text-fg mb-2">Invalid Rows (will be skipped)</h4>
-					<div class="max-h-48 overflow-y-auto rounded-lg border border-red-200">
-						<table class="min-w-full divide-y divide-red-100 text-sm">
-							<thead class="bg-red-50 sticky top-0">
+					<div class="max-h-48 overflow-y-auto rounded-lg border border-error/30">
+						<table class="min-w-full divide-y divide-error/20 text-sm">
+							<thead class="bg-error/10 sticky top-0">
 								<tr>
-									<th class="px-3 py-2 text-left text-xs font-medium text-red-700">Row</th>
-									<th class="px-3 py-2 text-left text-xs font-medium text-red-700">Errors</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-error">Row</th>
+									<th class="px-3 py-2 text-left text-xs font-medium text-error">Errors</th>
 								</tr>
 							</thead>
-							<tbody class="divide-y divide-red-100 bg-card">
+							<tbody class="divide-y divide-error/20 bg-card">
 								{#each validationResult.invalid as row}
 									<tr>
-										<td class="px-3 py-2 text-red-600">{row.rowNumber}</td>
-										<td class="px-3 py-2 text-red-600">{row.errors.join('; ')}</td>
+										<td class="px-3 py-2 text-error">{row.rowNumber}</td>
+										<td class="px-3 py-2 text-error">{row.errors.join('; ')}</td>
 									</tr>
 								{/each}
 							</tbody>
@@ -563,7 +563,7 @@
 									<tr>
 										<td class="px-3 py-2 text-fg">{tx.date}</td>
 										<td class="px-3 py-2">
-											<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium {tx.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+											<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium {tx.type === 'income' ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}">
 												{tx.type}
 											</span>
 										</td>
@@ -617,8 +617,8 @@
 	{#if step === 'results' && importResult}
 		<div class="rounded-lg border border-border bg-card p-6">
 			<div class="text-center mb-6">
-				<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-4">
-					<iconify-icon icon="solar:check-circle-bold" class="text-green-600" width="32" height="32"></iconify-icon>
+				<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success/10 mb-4">
+					<iconify-icon icon="solar:check-circle-bold" class="text-success" width="32" height="32"></iconify-icon>
 				</div>
 				<h3 class="text-xl font-semibold text-fg">Import Complete</h3>
 				<p class="mt-2 text-muted">
@@ -628,20 +628,20 @@
 
 			<!-- Summary -->
 			<div class="mb-6 grid grid-cols-2 gap-4">
-				<div class="rounded-lg bg-green-50 p-4 text-center">
-					<div class="text-3xl font-bold text-green-700">{importResult.imported}</div>
-					<div class="text-sm text-green-600">Imported</div>
+				<div class="rounded-lg bg-success/10 p-4 text-center">
+					<div class="text-3xl font-bold text-success">{importResult.imported}</div>
+					<div class="text-sm text-success">Imported</div>
 				</div>
-				<div class="rounded-lg {importResult.skipped > 0 ? 'bg-amber-50' : 'bg-surface'} p-4 text-center">
-					<div class="text-3xl font-bold {importResult.skipped > 0 ? 'text-amber-700' : 'text-muted'}">{importResult.skipped}</div>
-					<div class="text-sm {importResult.skipped > 0 ? 'text-amber-600' : 'text-muted'}">Skipped</div>
+				<div class="rounded-lg {importResult.skipped > 0 ? 'bg-warning/10' : 'bg-surface'} p-4 text-center">
+					<div class="text-3xl font-bold {importResult.skipped > 0 ? 'text-warning' : 'text-muted'}">{importResult.skipped}</div>
+					<div class="text-sm {importResult.skipped > 0 ? 'text-warning' : 'text-muted'}">Skipped</div>
 				</div>
 			</div>
 
 			<!-- Skipped Rows Details -->
 			{#if importResult.skippedRows.length > 0}
-				<details class="mb-6 rounded-lg border border-amber-200">
-					<summary class="cursor-pointer bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+				<details class="mb-6 rounded-lg border border-warning/30">
+					<summary class="cursor-pointer bg-warning/10 px-4 py-3 text-sm font-medium text-warning">
 						View skipped rows ({importResult.skippedRows.length})
 					</summary>
 					<div class="max-h-48 overflow-y-auto p-4">
@@ -656,7 +656,7 @@
 								{#each importResult.skippedRows as row}
 									<tr>
 										<td class="px-2 py-1 text-muted">{row.rowNumber}</td>
-										<td class="px-2 py-1 text-red-600">{row.errors.join('; ')}</td>
+										<td class="px-2 py-1 text-error">{row.errors.join('; ')}</td>
 									</tr>
 								{/each}
 							</tbody>

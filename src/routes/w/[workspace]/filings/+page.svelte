@@ -57,7 +57,7 @@
 		<p class="text-sm text-primary">
 			Track your compliance filings. Past-due filings appear at the top.
 			{#if summary.pastDue > 0}
-				<span class="font-medium text-red-700">You have {summary.pastDue} past-due filing{summary.pastDue === 1 ? '' : 's'}.</span>
+				<span class="font-medium text-error">You have {summary.pastDue} past-due filing{summary.pastDue === 1 ? '' : 's'}.</span>
 			{/if}
 		</p>
 	</div>
@@ -66,18 +66,18 @@
 	<div class="flex gap-4 text-sm">
 		{#if summary.pastDue > 0}
 			<div class="flex items-center gap-1">
-				<span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
+				<span class="inline-block h-2 w-2 rounded-full bg-error"></span>
 				<span class="text-muted">{summary.pastDue} past due</span>
 			</div>
 		{/if}
 		{#if summary.upcoming > 0}
 			<div class="flex items-center gap-1">
-				<span class="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
+				<span class="inline-block h-2 w-2 rounded-full bg-warning"></span>
 				<span class="text-muted">{summary.upcoming} upcoming</span>
 			</div>
 		{/if}
 		<div class="flex items-center gap-1">
-			<span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
+			<span class="inline-block h-2 w-2 rounded-full bg-success"></span>
 			<span class="text-muted">{summary.complete} complete</span>
 		</div>
 		<div class="text-muted">

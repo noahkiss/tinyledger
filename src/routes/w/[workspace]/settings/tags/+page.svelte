@@ -77,23 +77,23 @@
 	{/if}
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
+		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error">
 			{form.error}
 		</div>
 	{/if}
 
 	{#if form?.success && form?.renamed}
-		<div class="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800">Tag renamed successfully!</div>
+		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">Tag renamed successfully!</div>
 	{/if}
 
 	{#if form?.success && form?.merged}
-		<div class="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800">
+		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">
 			Merged "{form.merged.from}" into "{form.merged.to}" successfully!
 		</div>
 	{/if}
 
 	{#if form?.success && form?.deleted}
-		<div class="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-800">Tag deleted successfully!</div>
+		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">Tag deleted successfully!</div>
 	{/if}
 
 	<!-- Tags list -->
@@ -120,7 +120,7 @@
 					<button
 						type="button"
 						onclick={() => openMergeDialog(tag.id)}
-						class="rounded-lg bg-orange-100 px-3 py-1.5 text-sm font-medium text-orange-700 hover:bg-orange-200"
+						class="rounded-lg bg-warning/10 px-3 py-1.5 text-sm font-medium text-warning hover:bg-warning/20"
 					>
 						Merge
 					</button>
@@ -130,7 +130,7 @@
 							<input type="hidden" name="id" value={tag.id} />
 							<button
 								type="submit"
-								class="rounded-lg bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-200"
+								class="rounded-lg bg-error/10 px-3 py-1.5 text-sm font-medium text-error hover:bg-error/20"
 							>
 								Delete
 							</button>
@@ -265,7 +265,7 @@
 					</select>
 				</div>
 
-				<div class="mb-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-800">
+				<div class="mb-4 rounded-lg bg-warning/10 p-3 text-sm text-warning">
 					Warning: This action cannot be undone. The source tag will be permanently deleted.
 				</div>
 
@@ -280,7 +280,7 @@
 					<button
 						type="submit"
 						disabled={!mergeTargetId}
-						class="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700 disabled:opacity-50"
+						class="rounded-lg bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover disabled:opacity-50"
 					>
 						Merge
 					</button>

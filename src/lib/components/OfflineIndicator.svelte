@@ -18,7 +18,8 @@
 
 {#if !online}
 	<div
-		class="fixed top-0 left-0 right-0 z-50 bg-yellow-100 text-yellow-800 px-4 py-2 text-center text-sm font-medium"
+		class="fixed top-0 left-0 right-0 z-50 bg-warning/10 text-warning px-4 py-2 text-center text-sm font-medium"
+		role="alert"
 	>
 		You're offline - connect to continue
 	</div>

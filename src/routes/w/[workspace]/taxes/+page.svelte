@@ -28,20 +28,20 @@
 	<div class="space-y-6">
 		<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
-		<div class="rounded-xl border border-yellow-200 bg-yellow-50 p-6">
+		<div class="rounded-xl border border-warning/30 bg-warning/10 p-6">
 			<div class="flex items-start gap-4">
 				<div class="flex-shrink-0">
-					<iconify-icon icon="solar:danger-triangle-bold" class="text-yellow-600" width="32" height="32"></iconify-icon>
+					<iconify-icon icon="solar:danger-triangle-bold" class="text-warning" width="32" height="32"></iconify-icon>
 				</div>
 				<div class="flex-1">
-					<h2 class="text-lg font-semibold text-yellow-800">Tax Configuration Required</h2>
-					<p class="mt-1 text-yellow-700">
+					<h2 class="text-lg font-semibold text-warning">Tax Configuration Required</h2>
+					<p class="mt-1 text-warning">
 						To see tax estimates, you need to configure your tax settings first. This includes
 						selecting your state and federal tax bracket.
 					</p>
 					<a
 						href="/w/{data.workspaceId}/settings"
-						class="mt-4 inline-flex items-center gap-2 rounded-lg bg-yellow-600 px-4 py-2 text-sm font-medium text-white hover:bg-yellow-700 transition-colors"
+						class="mt-4 inline-flex items-center gap-2 rounded-lg bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover transition-colors"
 					>
 						<iconify-icon icon="solar:settings-bold" width="16" height="16"></iconify-icon>
 						Configure Tax Settings

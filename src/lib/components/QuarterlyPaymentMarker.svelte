@@ -42,19 +42,19 @@
 
 	// Border and background colors based on status
 	let borderClass = $derived(() => {
-		if (isPaid) return 'border-green-400 bg-green-50 dark:bg-green-950/30';
+		if (isPaid) return 'border-success/30 bg-success/10';
 		if (isSkipped) return 'border-overlay bg-surface-alt';
-		if (isPastDue) return 'border-red-400 bg-red-50 dark:bg-red-950/30';
-		if (isUpcoming) return 'border-yellow-400 bg-yellow-50 dark:bg-yellow-950/30';
+		if (isPastDue) return 'border-error/30 bg-error/10';
+		if (isUpcoming) return 'border-warning/30 bg-warning/10';
 		return 'border-input-border bg-surface';
 	});
 
 	// Status badge
 	let statusBadge = $derived(() => {
-		if (isPaid) return { text: 'Paid', class: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' };
+		if (isPaid) return { text: 'Paid', class: 'bg-success/10 text-success' };
 		if (isSkipped) return { text: 'Skipped', class: 'bg-surface-alt text-muted' };
-		if (isPastDue) return { text: 'Past Due', class: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' };
-		if (isUpcoming) return { text: 'Upcoming', class: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300' };
+		if (isPastDue) return { text: 'Past Due', class: 'bg-error/10 text-error' };
+		if (isUpcoming) return { text: 'Upcoming', class: 'bg-warning/10 text-warning' };
 		return null;
 	});
 </script>
@@ -90,7 +90,7 @@
 			<!-- Third row: Amounts -->
 			<div class="mt-1">
 				{#if isPaid}
-					<div class="flex items-center gap-1 text-sm text-green-700 dark:text-green-400">
+					<div class="flex items-center gap-1 text-sm text-success">
 						<iconify-icon icon="solar:check-circle-bold" width="14" height="14"></iconify-icon>
 						<span>
 							Federal {formatCurrency(paidFederalCents ?? 0)} | State {formatCurrency(paidStateCents ?? 0)} | Total {formatCurrency(paidTotal)}

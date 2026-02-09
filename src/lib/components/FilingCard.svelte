@@ -32,9 +32,9 @@
 
 	// Get status colors based on filing state
 	function getStatusClass(): string {
-		if (filing.isComplete) return 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/30';
-		if (filing.isPastDue) return 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/30';
-		if (filing.isUpcoming) return 'border-yellow-300 bg-yellow-50 dark:border-yellow-700 dark:bg-yellow-900/30';
+		if (filing.isComplete) return 'border-success/30 bg-success/10';
+		if (filing.isPastDue) return 'border-error/30 bg-error/10';
+		if (filing.isUpcoming) return 'border-warning/30 bg-warning/10';
 		return 'border-border bg-card';
 	}
 
@@ -58,15 +58,15 @@
 		</div>
 		<div class="ml-2 flex-shrink-0">
 			{#if filing.isComplete}
-				<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
+				<span class="inline-flex items-center rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
 					Complete
 				</span>
 			{:else if filing.isPastDue}
-				<span class="inline-flex items-center rounded-full bg-red-100 dark:bg-red-900/50 px-2 py-0.5 text-xs font-medium text-red-800 dark:text-red-300">
+				<span class="inline-flex items-center rounded-full bg-error/10 px-2 py-0.5 text-xs font-medium text-error">
 					Past Due
 				</span>
 			{:else if filing.isUpcoming}
-				<span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/50 px-2 py-0.5 text-xs font-medium text-yellow-800 dark:text-yellow-300">
+				<span class="inline-flex items-center rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">
 					Upcoming
 				</span>
 			{/if}
@@ -167,7 +167,7 @@
 				<div class="flex gap-2">
 					<button
 						type="submit"
-						class="flex-1 rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700"
+						class="flex-1 rounded-md bg-success px-3 py-1.5 text-sm font-medium text-white hover:bg-success-hover"
 					>
 						Mark Complete
 					</button>

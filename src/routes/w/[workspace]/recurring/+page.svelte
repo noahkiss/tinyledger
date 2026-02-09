@@ -152,14 +152,14 @@
 
 	<!-- Error/Success messages -->
 	{#if form?.error}
-		<div class="rounded-lg bg-red-50 p-4 text-red-700">
+		<div class="rounded-lg bg-error/10 p-4 text-error">
 			<p class="font-medium">Error</p>
 			<p class="mt-1 text-sm">{form.error}</p>
 		</div>
 	{/if}
 
 	{#if form?.success}
-		<div class="rounded-lg bg-green-50 p-4 text-green-700">
+		<div class="rounded-lg bg-success/10 p-4 text-success">
 			<p class="font-medium">Success</p>
 			<p class="mt-1 text-sm">Recurring template saved.</p>
 		</div>
@@ -197,7 +197,7 @@
 							type="button"
 							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'income'
-								? 'bg-green-600 text-white'
+								? 'bg-success text-white'
 								: 'bg-surface text-fg hover:bg-surface-alt'}"
 							onclick={() => (transactionType = 'income')}
 						>
@@ -207,7 +207,7 @@
 							type="button"
 							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'expense'
-								? 'bg-red-600 text-white'
+								? 'bg-error text-white'
 								: 'bg-surface text-fg hover:bg-surface-alt'}"
 							onclick={() => (transactionType = 'expense')}
 						>
@@ -402,20 +402,20 @@
 							<div
 								class="mt-1 flex h-8 w-8 items-center justify-center rounded-full {template.type ===
 								'income'
-									? 'bg-green-100'
-									: 'bg-red-100'}"
+									? 'bg-success/10'
+									: 'bg-error/10'}"
 							>
 								{#if template.type === 'income'}
-									<iconify-icon icon="solar:add-circle-bold" class="text-green-600" width="16" height="16"></iconify-icon>
+									<iconify-icon icon="solar:add-circle-bold" class="text-success" width="16" height="16"></iconify-icon>
 								{:else}
-									<iconify-icon icon="solar:minus-circle-bold" class="text-red-600" width="16" height="16"></iconify-icon>
+									<iconify-icon icon="solar:minus-circle-bold" class="text-error" width="16" height="16"></iconify-icon>
 								{/if}
 							</div>
 
 							<div>
 								<div class="flex items-center gap-2">
 									<span class="font-medium text-fg">{template.payee}</span>
-									<span class="text-lg font-semibold {template.type === 'income' ? 'text-green-600' : 'text-red-600'}">
+									<span class="text-lg font-semibold {template.type === 'income' ? 'text-success' : 'text-error'}">
 										{template.type === 'income' ? '+' : '-'}{formatCurrency(template.amountCents)}
 									</span>
 								</div>
@@ -462,7 +462,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-yellow-50 hover:text-yellow-600"
+									class="rounded-lg p-2 text-muted hover:bg-warning/10 hover:text-warning"
 									title="Deactivate"
 								>
 									<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
@@ -472,7 +472,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
+									class="rounded-lg p-2 text-muted hover:bg-error/10 hover:text-error"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
@@ -527,7 +527,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-green-50 hover:text-green-600"
+									class="rounded-lg p-2 text-muted hover:bg-success/10 hover:text-success"
 									title="Reactivate"
 								>
 									<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
@@ -537,7 +537,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-red-50 hover:text-red-600"
+									class="rounded-lg p-2 text-muted hover:bg-error/10 hover:text-error"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>

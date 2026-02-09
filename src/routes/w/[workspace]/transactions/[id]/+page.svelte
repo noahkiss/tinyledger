@@ -427,7 +427,7 @@
 									e.preventDefault();
 								}
 							}}
-							class="rounded-lg bg-amber-500 px-4 py-2 text-white hover:bg-amber-600"
+							class="rounded-lg bg-warning px-4 py-2 text-white hover:bg-warning-hover"
 						>
 							Void Transaction
 						</button>
@@ -436,7 +436,7 @@
 					<form method="POST" action="?/unvoid" use:enhance>
 						<button
 							type="submit"
-							class="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+							class="rounded-lg bg-success px-4 py-2 text-white hover:bg-success-hover"
 						>
 							Restore Transaction
 						</button>
@@ -449,7 +449,7 @@
 									e.preventDefault();
 								}
 							}}
-							class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+							class="rounded-lg bg-error px-4 py-2 text-white hover:bg-error-hover"
 						>
 							Permanently Delete
 						</button>

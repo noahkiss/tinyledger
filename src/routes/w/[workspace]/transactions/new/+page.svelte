@@ -100,8 +100,8 @@
 	let typeLabel = $derived(transactionType === 'income' ? 'Income' : 'Expense');
 	let submitButtonColor = $derived(
 		transactionType === 'income'
-			? 'bg-green-600 hover:bg-green-700 active:bg-green-800'
-			: 'bg-red-600 hover:bg-red-700 active:bg-red-800'
+			? 'bg-success hover:bg-success-hover active:bg-success-hover'
+			: 'bg-error hover:bg-error-hover active:bg-error-hover'
 	);
 </script>
 

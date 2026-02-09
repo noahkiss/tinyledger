@@ -181,19 +181,19 @@
 		class="space-y-6 rounded-lg border border-border bg-card p-6"
 	>
 		{#if form?.error}
-			<div class="rounded-lg bg-red-50 p-3 text-sm text-red-800">
+			<div class="rounded-lg bg-error/10 p-3 text-sm text-error">
 				{form.error}
 			</div>
 		{/if}
 
 		{#if form?.success}
-			<div class="rounded-lg bg-green-50 p-3 text-sm text-green-800">Settings saved successfully!</div>
+			<div class="rounded-lg bg-success/10 p-3 text-sm text-success">Settings saved successfully!</div>
 		{/if}
 
 		{#if form?.warnings && form.warnings.length > 0}
-			<div class="rounded-lg bg-yellow-50 border border-yellow-200 p-3">
-				<p class="text-sm font-medium text-yellow-800">Settings saved with warnings:</p>
-				<ul class="mt-1 text-sm text-yellow-700 list-disc list-inside">
+			<div class="rounded-lg bg-warning/10 border border-warning/30 p-3">
+				<p class="text-sm font-medium text-warning">Settings saved with warnings:</p>
+				<ul class="mt-1 text-sm text-warning list-disc list-inside">
 					{#each form.warnings as warning}
 						<li>{warning}</li>
 					{/each}
@@ -478,7 +478,7 @@
 									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
 								/>
 								{#if stateRateWarning()}
-									<div class="mt-2 rounded-lg bg-yellow-50 border border-yellow-200 p-2 text-sm text-yellow-800">
+									<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
 										{stateRateWarning()}
 									</div>
 								{/if}
@@ -513,7 +513,7 @@
 							{/if}
 						</p>
 						{#if localEitWarning()}
-							<div class="mt-2 rounded-lg bg-yellow-50 border border-yellow-200 p-2 text-sm text-yellow-800">
+							<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
 								{localEitWarning()}
 							</div>
 						{/if}
