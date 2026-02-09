@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { LayoutData } from './$types';
-	import { page } from '$app/stores';
+	import { page, navigating } from '$app/stores';
 	import WorkspaceSelector from '$lib/components/WorkspaceSelector.svelte';
 	import BottomTabBar from '$lib/components/BottomTabBar.svelte';
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
@@ -44,6 +44,13 @@
 </script>
 
 <div class="min-h-screen bg-bg" data-component="app-shell">
+	<!-- Navigation progress bar -->
+	{#if $navigating}
+		<div class="fixed top-0 left-0 right-0 z-50 h-0.5 bg-surface-alt">
+			<div class="nav-progress-bar h-full bg-primary"></div>
+		</div>
+	{/if}
+
 	<!-- Header -->
 	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">

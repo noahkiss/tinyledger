@@ -21,6 +21,11 @@
 	// Results
 	let importResult = $state<{ imported: number; skipped: number; skippedRows: Array<{ rowNumber: number; errors: string[] }> } | null>(null);
 
+	// Loading states for form submissions
+	let isUploading = $state(false);
+	let isValidating = $state(false);
+	let isImporting = $state(false);
+
 	// Auto-suggest column mappings based on header names
 	function autoSuggestMapping(headers: string[]) {
 		const newMapping: ColumnMapping = {};
@@ -196,7 +201,13 @@
 				Upload a CSV file containing your transaction data. The file should have headers in the first row.
 			</p>
 
-			<form method="POST" action="?/preview" enctype="multipart/form-data" use:enhance>
+			<form method="POST" action="?/preview" enctype="multipart/form-data" use:enhance={() => {
+				isUploading = true;
+				return async ({ update }) => {
+					isUploading = false;
+					await update();
+				};
+			}}>
 				<div class="mb-6">
 					<label for="file" class="block text-sm font-medium text-fg mb-2">
 						Select CSV File
@@ -215,10 +226,11 @@
 				<div class="flex justify-end">
 					<button
 						type="submit"
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+						disabled={isUploading}
+						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
-						Upload & Preview
+						{isUploading ? 'Processing...' : 'Upload & Preview'}
 					</button>
 				</div>
 			</form>
@@ -247,7 +259,13 @@
 				Map your CSV columns to transaction fields. We've auto-detected some mappings based on column names.
 			</p>
 
-			<form method="POST" action="?/validate" use:enhance>
+			<form method="POST" action="?/validate" use:enhance={() => {
+				isValidating = true;
+				return async ({ update }) => {
+					isValidating = false;
+					await update();
+				};
+			}}>
 				<input type="hidden" name="csvText" value={csvText} />
 				<input type="hidden" name="mapping" value={JSON.stringify(mapping)} />
 
@@ -433,10 +451,10 @@
 					</button>
 					<button
 						type="submit"
-						disabled={!requiredMappingsSet}
+						disabled={!requiredMappingsSet || isValidating}
 						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						Validate & Preview
+						{isValidating ? 'Validating...' : 'Validate & Preview'}
 						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
 					</button>
 				</div>
@@ -586,7 +604,13 @@
 			{/if}
 
 			<!-- Import Form -->
-			<form method="POST" action="?/import" use:enhance>
+			<form method="POST" action="?/import" use:enhance={() => {
+				isImporting = true;
+				return async ({ update }) => {
+					isImporting = false;
+					await update();
+				};
+			}}>
 				<input type="hidden" name="csvText" value={csvText} />
 				<input type="hidden" name="mapping" value={JSON.stringify(mapping)} />
 				<input type="hidden" name="createTags" value={JSON.stringify(getTagsToCreate())} />
@@ -602,11 +626,11 @@
 					</button>
 					<button
 						type="submit"
-						disabled={validationResult.valid.length === 0 || !allTagsResolved()}
+						disabled={validationResult.valid.length === 0 || !allTagsResolved() || isImporting}
 						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
-						Import {validationResult.valid.length} Transactions
+						{isImporting ? 'Importing...' : `Import ${validationResult.valid.length} Transactions`}
 					</button>
 				</div>
 			</form>

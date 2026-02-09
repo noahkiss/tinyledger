@@ -55,6 +55,7 @@
 	let useCustomStateRate = $state(data.settings.stateRateOverride !== null);
 	let showFederalBracketHelp = $state(false);
 	let showTaxForms = $state(false);
+	let isSaving = $state(false);
 
 	// Rate input values (display format: "3.07")
 	let stateRateOverrideInput = $state(
@@ -168,11 +169,11 @@
 		action="?/save"
 		enctype="multipart/form-data"
 		use:enhance={() => {
+			isSaving = true;
 			return async ({ result, update }) => {
+				isSaving = false;
 				if (result.type === 'success') {
-					// Invalidate data to refresh settings (including new logo filename)
 					await invalidateAll();
-					// Clear logo preview since we now have the server version
 					logoPreviewUrl = null;
 				}
 				await update();
@@ -633,9 +634,10 @@
 			</a>
 			<button
 				type="submit"
-				class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:bg-primary/80"
+				disabled={isSaving}
+				class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed"
 			>
-				Save Settings
+				{isSaving ? 'Saving...' : 'Save Settings'}
 			</button>
 		</div>
 	</form>
