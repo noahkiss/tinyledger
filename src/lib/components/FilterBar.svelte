@@ -284,6 +284,9 @@
 				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
 					{currentFilters.tags.length > 0 ? 'bg-primary/10 text-primary' : 'text-muted'}"
 				onclick={() => (showTagDropdown = !showTagDropdown)}
+				aria-expanded={showTagDropdown}
+				aria-haspopup="true"
+				aria-label="Tags: {getSelectedTagNames()}"
 			>
 				<iconify-icon icon="solar:tag-bold" width="16" height="16"></iconify-icon>
 				<span class="hidden sm:inline">{getSelectedTagNames()}</span>
@@ -296,6 +299,8 @@
 				<div class="fixed inset-0 z-10" onclick={() => (showTagDropdown = false)}></div>
 				<div
 					class="absolute left-0 top-full z-20 mt-1 max-h-64 w-48 overflow-auto rounded-lg border border-border bg-card shadow-lg"
+					role="group"
+					aria-label="Filter by tags"
 				>
 					{#if availableTags.length === 0}
 						<div class="px-3 py-2 text-sm text-muted">No tags available</div>
@@ -326,6 +331,9 @@
 				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
 					{hasDateFilter ? 'bg-primary/10 text-primary' : 'text-muted'}"
 				onclick={() => (showDateDropdown = !showDateDropdown)}
+				aria-expanded={showDateDropdown}
+				aria-haspopup="true"
+				aria-label="Date range: {getDateRangeDisplay()}"
 			>
 				<iconify-icon icon="solar:calendar-bold" width="16" height="16"></iconify-icon>
 				<span class="hidden sm:inline">{getDateRangeDisplay()}</span>
@@ -338,6 +346,8 @@
 				<div class="fixed inset-0 z-10" onclick={() => (showDateDropdown = false)}></div>
 				<div
 					class="absolute left-0 top-full z-20 mt-1 rounded-lg border border-border bg-card p-3 shadow-lg"
+					role="group"
+					aria-label="Filter by date range"
 				>
 					<div class="flex flex-col gap-2">
 						<label class="text-xs font-medium text-muted">From</label>
@@ -379,6 +389,9 @@
 				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
 					{currentFilters.method ? 'bg-primary/10 text-primary' : 'text-muted'}"
 				onclick={() => (showMethodDropdown = !showMethodDropdown)}
+				aria-expanded={showMethodDropdown}
+				aria-haspopup="true"
+				aria-label="Payment method: {getSelectedMethodName()}"
 			>
 				<iconify-icon icon="solar:card-bold" width="16" height="16"></iconify-icon>
 				<span class="hidden sm:inline">{getSelectedMethodName()}</span>
@@ -391,9 +404,11 @@
 				<div class="fixed inset-0 z-10" onclick={() => (showMethodDropdown = false)}></div>
 				<div
 					class="absolute left-0 top-full z-20 mt-1 w-36 overflow-auto rounded-lg border border-border bg-card shadow-lg"
+					role="menu"
 				>
 					<button
 						type="button"
+						role="menuitem"
 						class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
 							{!currentFilters.method ? 'text-primary' : 'text-fg'}"
 						onclick={() => handleMethodToggle('')}
@@ -408,6 +423,7 @@
 					{#each paymentMethods as method}
 						<button
 							type="button"
+							role="menuitem"
 							class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
 								{currentFilters.method === method.value ? 'text-primary' : 'text-fg'}"
 							onclick={() => handleMethodToggle(method.value)}
@@ -433,6 +449,8 @@
 			onclick={handleSortToggle}
 			class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm text-muted transition-colors hover:bg-surface hover:text-fg"
 			title={currentFilters.sort === 'asc' ? 'Oldest first (click for newest first)' : 'Newest first (click for oldest first)'}
+			aria-label={currentFilters.sort === 'asc' ? 'Sort: oldest first' : 'Sort: newest first'}
+			aria-pressed={currentFilters.sort === 'desc'}
 		>
 			{#if currentFilters.sort === 'asc'}
 				<iconify-icon icon="solar:sort-from-top-to-bottom-linear" width="16" height="16"></iconify-icon>
@@ -457,6 +475,7 @@
 				type="button"
 				onclick={clearAllFilters}
 				class="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1.5 text-sm text-muted hover:bg-surface hover:text-fg"
+				aria-label="Clear all filters"
 			>
 				<iconify-icon icon="solar:close-circle-linear" width="16" height="16"></iconify-icon>
 				<span class="hidden sm:inline">Clear</span>

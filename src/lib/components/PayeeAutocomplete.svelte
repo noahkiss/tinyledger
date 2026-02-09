@@ -101,15 +101,26 @@
 		onblur={handleBlur}
 		onkeydown={handleKeydown}
 		autocomplete="off"
+		role="combobox"
+		aria-autocomplete="list"
+		aria-expanded={showDropdown && filteredPayees.length > 0}
+		aria-controls="payee-listbox"
+		aria-activedescendant={showDropdown && filteredPayees.length > 0 ? `payee-option-${highlightedIndex}` : undefined}
 		class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
 	/>
 
 	{#if showDropdown && filteredPayees.length > 0}
 		<ul
 			class="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-lg border border-border bg-card shadow-lg"
+			role="listbox"
+			id="payee-listbox"
 		>
 			{#each filteredPayees as payee, i (payee.payee)}
-				<li>
+				<li
+					id="payee-option-{i}"
+					role="option"
+					aria-selected={i === highlightedIndex}
+				>
 					<button
 						type="button"
 						class="w-full px-3 py-2 text-left hover:bg-surface"

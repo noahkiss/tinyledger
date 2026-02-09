@@ -93,6 +93,7 @@
 	class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card md:hidden"
 	style="padding-bottom: env(safe-area-inset-bottom, 0px);"
 	data-component="bottom-tab-bar"
+	aria-label="Main navigation"
 >
 	<div class="grid grid-cols-5 items-center">
 		<!-- Left tabs -->
@@ -101,6 +102,7 @@
 			<a
 				href="/w/{workspaceId}/{tab.href}"
 				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
+				aria-current={active ? 'page' : undefined}
 			>
 				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
 				></iconify-icon>
@@ -133,6 +135,7 @@
 			<a
 				href="/w/{workspaceId}/{tab.href}"
 				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
+				aria-current={active ? 'page' : undefined}
 			>
 				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
 				></iconify-icon>
@@ -148,9 +151,9 @@
 		class="fixed inset-0 z-30 bg-black/30 md:hidden"
 		onclick={handleBackdropClick}
 		onkeydown={(e) => e.key === 'Escape' && (showAddMenu = false)}
-		role="button"
+		role="dialog"
+		aria-label="Add transaction"
 		tabindex="-1"
-		aria-label="Close menu"
 	>
 		<!-- Add menu -->
 		<div
