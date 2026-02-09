@@ -188,7 +188,7 @@
 	</div>
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error">
+		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error" role="alert">
 			{form.error}
 		</div>
 	{/if}

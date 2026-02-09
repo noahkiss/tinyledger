@@ -182,13 +182,13 @@
 		class="space-y-6 rounded-lg border border-border bg-card p-6"
 	>
 		{#if form?.error}
-			<div class="rounded-lg bg-error/10 p-3 text-sm text-error">
+			<div class="rounded-lg bg-error/10 p-3 text-sm text-error" role="alert">
 				{form.error}
 			</div>
 		{/if}
 
 		{#if form?.success}
-			<div class="rounded-lg bg-success/10 p-3 text-sm text-success">Settings saved successfully!</div>
+			<div class="rounded-lg bg-success/10 p-3 text-sm text-success" role="status" aria-live="polite">Settings saved successfully!</div>
 		{/if}
 
 		{#if form?.warnings && form.warnings.length > 0}

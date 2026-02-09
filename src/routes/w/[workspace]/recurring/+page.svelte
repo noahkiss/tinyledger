@@ -152,14 +152,14 @@
 
 	<!-- Error/Success messages -->
 	{#if form?.error}
-		<div class="rounded-lg bg-error/10 p-4 text-error">
+		<div class="rounded-lg bg-error/10 p-4 text-error" role="alert">
 			<p class="font-medium">Error</p>
 			<p class="mt-1 text-sm">{form.error}</p>
 		</div>
 	{/if}
 
 	{#if form?.success}
-		<div class="rounded-lg bg-success/10 p-4 text-success">
+		<div class="rounded-lg bg-success/10 p-4 text-success" role="status" aria-live="polite">
 			<p class="font-medium">Success</p>
 			<p class="mt-1 text-sm">Recurring template saved.</p>
 		</div>

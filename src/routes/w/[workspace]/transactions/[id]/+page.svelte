@@ -166,14 +166,14 @@
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-error/10 border border-error/30 p-4 text-error">
+		<div class="mb-4 rounded-lg bg-error/10 border border-error/30 p-4 text-error" role="alert">
 			{form.error}
 		</div>
 	{/if}
 
 	<!-- Success display -->
 	{#if form?.success}
-		<div class="mb-4 rounded-lg bg-success/10 border border-success/30 p-4 text-success">
+		<div class="mb-4 rounded-lg bg-success/10 border border-success/30 p-4 text-success" role="status" aria-live="polite">
 			{#if form.action === 'voided'}
 				Transaction has been voided.
 			{:else if form.action === 'unvoided'}

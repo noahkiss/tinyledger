@@ -129,6 +129,8 @@
 	{#if showSuccess}
 		<div
 			class="flex items-center gap-2 rounded-lg bg-success/10 px-4 py-2 text-success transition-opacity"
+			role="status"
+			aria-live="polite"
 		>
 			<iconify-icon icon="solar:check-circle-bold" width="20" height="20"></iconify-icon>
 			<span class="text-sm font-medium">Transaction added!</span>
@@ -137,7 +139,7 @@
 
 	<!-- Error display -->
 	{#if errorMessage}
-		<div class="rounded-lg bg-error/10 px-4 py-2 text-sm text-error">
+		<div class="rounded-lg bg-error/10 px-4 py-2 text-sm text-error" role="alert">
 			{errorMessage}
 		</div>
 	{/if}
