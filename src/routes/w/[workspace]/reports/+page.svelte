@@ -43,7 +43,6 @@
 			<FiscalYearPicker
 				fiscalYear={data.fiscalYear}
 				availableYears={data.availableFiscalYears}
-				startMonth={data.fiscalYearStartMonth}
 			/>
 			<GranularityToggle granularity={data.granularity} />
 			<a

@@ -55,7 +55,7 @@
 	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
 			<!-- Workspace selector (integrated with logo/name) -->
-			<div class="flex items-center gap-3">
+			<div class="flex items-stretch gap-3">
 				<WorkspaceSelector
 					currentWorkspaceId={data.workspaceId}
 					workspaces={data.allWorkspaces}
@@ -68,8 +68,6 @@
 				<FiscalYearPicker
 					fiscalYear={data.fiscalYear}
 					availableYears={data.availableFiscalYears}
-					startMonth={data.fiscalYearStartMonth}
-					compact
 				/>
 			</div>
 

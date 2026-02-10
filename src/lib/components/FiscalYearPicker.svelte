@@ -1,18 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { formatFiscalYear } from '$lib/utils/fiscal-year';
 
 	let {
 		fiscalYear,
-		availableYears,
-		startMonth = 1,
-		compact = false
+		availableYears
 	}: {
 		fiscalYear: number;
 		availableYears: number[];
-		startMonth?: number;
-		compact?: boolean;
 	} = $props();
 
 	let isOpen = $state(false);
@@ -48,13 +43,6 @@
 		}
 	});
 
-	// Compact format always shows just "FY YYYY"
-	function formatYear(year: number): string {
-		if (compact) {
-			return `FY ${year}`;
-		}
-		return formatFiscalYear(year, startMonth);
-	}
 </script>
 
 <div class="relative" data-component="fiscal-year-picker">
@@ -62,16 +50,21 @@
 	<button
 		type="button"
 		onclick={toggleDropdown}
-		class="flex cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface transition-colors"
+		class="flex h-full cursor-pointer items-center gap-2 rounded-lg border border-border px-2 py-1.5 text-fg hover:bg-surface transition-colors"
 	>
-		<iconify-icon icon="solar:calendar-bold" width="16" height="16" class="text-muted"></iconify-icon>
-		<span>{formatYear(fiscalYear)}</span>
-		<iconify-icon
-			icon="solar:alt-arrow-down-linear"
-			class="text-muted transition-transform {isOpen ? 'rotate-180' : ''}"
-			width="14"
-			height="14"
-		></iconify-icon>
+		<iconify-icon icon="solar:calendar-bold" width="20" height="20" class="text-muted"></iconify-icon>
+		<div class="text-left">
+			<div class="flex items-center gap-1">
+				<span class="text-xs font-medium text-muted">FY</span>
+				<iconify-icon
+					icon="solar:alt-arrow-down-linear"
+					class="text-muted transition-transform {isOpen ? 'rotate-180' : ''}"
+					width="12"
+					height="12"
+				></iconify-icon>
+			</div>
+			<div class="font-semibold leading-tight">{fiscalYear}</div>
+		</div>
 	</button>
 
 	{#if isOpen}
@@ -91,7 +84,7 @@
 					{:else}
 						<span class="w-3.5"></span>
 					{/if}
-					<span>{formatYear(year)}</span>
+					<span>{year}</span>
 				</button>
 			{/each}
 		</div>
