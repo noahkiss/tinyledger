@@ -11,6 +11,8 @@
 				const isDark = stored === 'dark' || (stored !== 'light' && prefersDark);
 				if (isDark) {
 					document.documentElement.classList.add('dark');
+				} else if (stored === 'light') {
+					document.documentElement.classList.add('light');
 				}
 				// Update theme-color meta for mobile browsers
 				const meta = document.querySelector('.theme-color-meta');
