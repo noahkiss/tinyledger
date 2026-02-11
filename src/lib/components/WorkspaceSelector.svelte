@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 	import type { WorkspaceEntry } from '$lib/server/workspace/registry';
+	import { clickOutside } from '$lib/actions/clickOutside';
 	import WorkspaceLogo from './WorkspaceLogo.svelte';
 
 	interface Props {
@@ -33,24 +34,9 @@
 	function toggleDropdown() {
 		isOpen = !isOpen;
 	}
-
-	// Close dropdown when clicking outside
-	function handleClickOutside(event: MouseEvent) {
-		const target = event.target as Element;
-		if (!target.closest('.workspace-selector')) {
-			isOpen = false;
-		}
-	}
-
-	$effect(() => {
-		if (isOpen) {
-			document.addEventListener('click', handleClickOutside);
-			return () => document.removeEventListener('click', handleClickOutside);
-		}
-	});
 </script>
 
-<div class="workspace-selector relative" data-component="workspace-selector">
+<div class="workspace-selector relative" data-component="workspace-selector" use:clickOutside={() => { isOpen = false; }}>
 	<!-- Trigger: Logo + Name + Dropdown indicator -->
 	<button
 		type="button"

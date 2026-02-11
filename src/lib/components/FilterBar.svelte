@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Tag } from '$lib/server/db/schema';
+	import { clickOutside } from '$lib/actions/clickOutside';
 
 	let {
 		currentFilters,
@@ -193,20 +194,11 @@
 		}
 	}
 
-	// Handle click outside for search
-	function handleSearchClickOutside(event: MouseEvent) {
-		const target = event.target as Element;
-		if (!target.closest('[data-search-container]') && !payeeInput) {
+	function handleSearchClickOutside() {
+		if (!payeeInput) {
 			searchExpanded = false;
 		}
 	}
-
-	$effect(() => {
-		if (searchExpanded) {
-			document.addEventListener('click', handleSearchClickOutside);
-			return () => document.removeEventListener('click', handleSearchClickOutside);
-		}
-	});
 </script>
 
 <div class="flex flex-col gap-3 py-3" data-component="filter-bar">
@@ -244,7 +236,7 @@
 		<div class="h-5 w-px bg-border"></div>
 
 		<!-- Collapsible Search -->
-		<div data-search-container>
+		<div data-search-container use:clickOutside={handleSearchClickOutside}>
 			{#if searchExpanded || payeeInput}
 				<div class="relative">
 					<iconify-icon
@@ -260,7 +252,7 @@
 						value={payeeInput}
 						oninput={handlePayeeInput}
 						onblur={handleSearchBlur}
-						class="w-full rounded-lg border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
+						class="w-full rounded-lg border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 			{:else}
@@ -355,14 +347,14 @@
 							type="date"
 							value={currentFilters.from || fyStart}
 							onchange={handleFromChange}
-							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
+							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 						<label class="text-xs font-medium text-muted">To</label>
 						<input
 							type="date"
 							value={currentFilters.to || fyEnd}
 							onchange={handleToChange}
-							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-input-focus"
+							class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 						{#if hasDateFilter}
 							<button

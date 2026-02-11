@@ -203,7 +203,7 @@
 					onblur={handlePayeeBlur}
 					autocomplete="off"
 					placeholder={type === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
-					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 
 				{#if showPayeeDropdown && filteredPayees.length > 0}
@@ -246,7 +246,7 @@
 				<select
 					id="quick-tag"
 					bind:value={selectedTagId}
-					class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				>
 					<option value={null}>No tag</option>
 					{#each availableTags as tag (tag.id)}
@@ -271,7 +271,7 @@
 				name="description"
 				bind:value={description}
 				placeholder="Brief note..."
-				class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+				class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 

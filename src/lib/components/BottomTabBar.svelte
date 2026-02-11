@@ -118,7 +118,7 @@
 			aria-label="Add transaction"
 		>
 			<div
-				class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md -mt-4"
+				class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md -translate-y-4"
 			>
 				<iconify-icon
 					icon="solar:add-circle-bold"
@@ -157,8 +157,8 @@
 	>
 		<!-- Add menu -->
 		<div
-			class="fixed bottom-24 left-1/2 z-40 flex -translate-x-1/2 gap-4"
-			style="padding-bottom: env(safe-area-inset-bottom, 0px);"
+			class="fixed left-1/2 z-40 flex -translate-x-1/2 gap-4"
+			style="bottom: calc(5rem + env(safe-area-inset-bottom, 0px) + 1rem);"
 		>
 			<a
 				href="/w/{workspaceId}/transactions/new?type=income"

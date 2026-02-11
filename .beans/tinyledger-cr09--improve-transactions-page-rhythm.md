@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr09
 title: Improve transactions page visual rhythm
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:10:01Z
 ---
 
 The transactions page uses uniform `space-y-4` gaps between all sections (action buttons, summary header, filter bar, timeline). Everything is the same width and density — no breathing room. The filter bar is the densest element but gets the same spacing as the airy action buttons.

@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr06
 title: Extract shared click-outside Svelte action
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:06:42Z
 ---
 
 Click-outside handling is repeated 3+ times with slight variations:

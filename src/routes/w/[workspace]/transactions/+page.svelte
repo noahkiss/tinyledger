@@ -154,7 +154,7 @@
 	<title>Transactions - TinyLedger</title>
 </svelte:head>
 
-<div class="space-y-4">
+<div>
 	<!-- Income / Expense buttons -->
 	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
 		<a
@@ -177,7 +177,7 @@
 
 	<!-- Sticky summary header -->
 	<header
-		class="sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
+		class="mt-4 sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
 		data-component="summary-header"
 	>
 		<!-- Mobile layout: icon-based compact view -->
@@ -220,7 +220,7 @@
 		</div>
 	</header>
 
-	<!-- Filter bar -->
+	<!-- Filter bar (tight to summary — related controls) -->
 	<FilterBar
 		currentFilters={data.currentFilters}
 		availableTags={data.tags}
@@ -230,9 +230,9 @@
 		fyEnd={data.fyEnd}
 	/>
 
-	<!-- Timeline -->
+	<!-- Timeline (extra breathing room to separate controls from content) -->
 	{#if !hasTimelineContent}
-		<div class="rounded-lg border border-card-border bg-card p-8 text-center" data-component="empty-state" data-state="empty">
+		<div class="mt-6 rounded-lg border border-card-border bg-card p-8 text-center" data-component="empty-state" data-state="empty">
 			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
 			{#if hasActiveFilters}
 				<p class="mt-4 text-fg">No transactions match your filters</p>
@@ -247,7 +247,7 @@
 			{/if}
 		</div>
 	{:else}
-		<div class="relative ms-3" data-component="transaction-timeline">
+		<div class="mt-6 relative ms-3" data-component="transaction-timeline">
 			<ol class="relative border-s-2 border-border">
 				{#each timelineGroups as [date, { transactions: txns, quarterlyPayment, pendingInstances }] (date)}
 					<li class="mb-6 ms-6" data-date={date}>

@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr04
 title: Remove h-[50px] hack on workspace type select
-status: pending
+status: completed
 type: bug
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:02:39Z
 ---
 
 Home page (+page.svelte line 104) workspace type select uses `h-[50px]` — an arbitrary pixel value that breaks the spacing grid. This was added to match the adjacent text input height.

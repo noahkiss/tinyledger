@@ -91,7 +91,7 @@
 						value={form?.name ?? ''}
 						required
 						placeholder="My Business"
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -101,7 +101,7 @@
 						id="type"
 						name="type"
 						required
-						class="mt-1 block h-[50px] w-full rounded-lg border border-input-border bg-input px-4 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-input-focus/50"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					>
 						<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
 						<option value="volunteer_org" selected={form?.type === 'volunteer_org'}

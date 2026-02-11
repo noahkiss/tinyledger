@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr10
 title: Improve reports page chart visual hierarchy
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:10:01Z
 ---
 
 Three chart containers on the reports page are identical: same rounded-xl, same border, same padding, same size stacked vertically. This creates a flat, monotone layout where no chart feels more important than another.

@@ -244,7 +244,7 @@
 					name="name"
 					value={data.settings.name}
 					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 
@@ -254,7 +254,7 @@
 					id="type"
 					name="type"
 					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				>
 					<option value="sole_prop" selected={data.settings.type === 'sole_prop'}
 						>Sole Proprietor</option
@@ -275,7 +275,7 @@
 				name="businessName"
 				value={data.settings.businessName ?? ''}
 				placeholder="Legal business name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 
@@ -286,7 +286,7 @@
 				name="address"
 				rows="2"
 				placeholder="Street address, city, state, ZIP"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				>{data.settings.address ?? ''}</textarea
 			>
 		</div>
@@ -300,7 +300,7 @@
 					name="phone"
 					value={data.settings.phone ?? ''}
 					placeholder="(555) 555-5555"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 
@@ -314,7 +314,7 @@
 					min="1800"
 					max={new Date().getFullYear()}
 					placeholder="2020"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 		</div>
@@ -329,7 +329,7 @@
 				name="responsibleParty"
 				value={data.settings.responsibleParty ?? ''}
 				placeholder="Owner/manager name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 
@@ -345,7 +345,7 @@
 			<select
 				id="fiscalYearStartMonth"
 				name="fiscalYearStartMonth"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
+				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
 			>
 				{#each months as month}
 					<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
@@ -371,7 +371,7 @@
 							id="state"
 							name="state"
 							bind:value={selectedState}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
 						>
 							{#each STATE_TAX_RATES as state}
 								<option value={state.code}>
@@ -392,7 +392,7 @@
 							</label>
 							<button
 								type="button"
-								class="text-xs text-primary hover:text-primary"
+								class="text-xs text-primary hover:text-primary-hover"
 								onclick={() => (showFederalBracketHelp = !showFederalBracketHelp)}
 							>
 								{showFederalBracketHelp ? 'Hide help' : 'How to choose?'}
@@ -401,7 +401,7 @@
 						<select
 							id="federalBracketRate"
 							name="federalBracketRate"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-auto"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
 						>
 							<option value="">Select your bracket...</option>
 							{#each FEDERAL_BRACKETS_2026 as bracket}
@@ -476,7 +476,7 @@
 									name="stateRateOverride"
 									bind:value={stateRateOverrideInput}
 									placeholder={(currentStateRate * 100).toFixed(2)}
-									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
+									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
 								/>
 								{#if stateRateWarning}
 									<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
@@ -498,7 +498,7 @@
 							name="localEitRate"
 							bind:value={localEitRateInput}
 							placeholder="e.g., 1.0"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary sm:w-32"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
 						/>
 						<p class="mt-1 text-xs text-muted">
 							Municipal earned income tax rate, if applicable.
@@ -507,7 +507,7 @@
 									href="https://apps.dced.pa.gov/munstats-public/ReportInformation2.aspx?report=EitWithCollector_Dyn_Excel&type=R"
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-primary hover:text-primary underline"
+									class="text-primary hover:text-primary-hover underline"
 								>
 									Find your PA local rate
 								</a>
@@ -528,7 +528,7 @@
 							name="taxNotes"
 							rows="2"
 							placeholder="Notes for your reference (e.g., CPA contact info, reminders)"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							>{data.settings.taxNotes ?? ''}</textarea
 						>
 					</div>
@@ -563,7 +563,7 @@
 															href={form.irsLink}
 															target="_blank"
 															rel="noopener noreferrer"
-															class="font-medium text-primary hover:text-primary underline"
+															class="font-medium text-primary hover:text-primary-hover underline"
 														>
 															{form.name}
 														</a>
@@ -595,7 +595,7 @@
 																href={form.stateLink}
 																target="_blank"
 																rel="noopener noreferrer"
-																class="font-medium text-primary hover:text-primary underline"
+																class="font-medium text-primary hover:text-primary-hover underline"
 															>
 																{form.name}
 															</a>
@@ -642,40 +642,35 @@
 		</div>
 	</form>
 
-	<!-- Tags Management Link -->
-	<div class="mt-6 rounded-lg border border-border bg-card p-6">
-		<h3 class="text-lg font-medium text-fg">Tags & Categories</h3>
-		<p class="mt-1 text-sm text-muted">
-			Manage expense categories, rename or merge tags, and control tag creation.
-		</p>
+	<!-- Related settings links (grouped as subsections) -->
+	<div class="mt-6 grid gap-4 sm:grid-cols-2">
 		<a
 			href="/w/{data.workspaceId}/settings/tags"
-			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
+			class="group rounded-lg border border-card-border bg-card p-4 hover:border-primary/30 hover:bg-primary/5 transition-colors"
 		>
-			Manage Tags
-			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
+			<div class="flex items-center justify-between">
+				<h3 class="font-medium text-fg">Tags & Categories</h3>
+				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted group-hover:text-primary transition-colors" width="16" height="16"></iconify-icon>
+			</div>
+			<p class="mt-1 text-sm text-muted">Manage expense categories, rename or merge tags.</p>
 		</a>
-	</div>
 
-	<!-- Recurring Transactions Link -->
-	<div class="mt-6 rounded-lg border border-border bg-card p-6">
-		<h3 class="text-lg font-medium text-fg">Recurring Transactions</h3>
-		<p class="mt-1 text-sm text-muted">
-			Set up recurring templates for predictable income and expenses like rent, subscriptions, or regular client payments.
-		</p>
 		<a
 			href="/w/{data.workspaceId}/recurring"
-			class="mt-4 inline-flex items-center rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
+			class="group rounded-lg border border-card-border bg-card p-4 hover:border-primary/30 hover:bg-primary/5 transition-colors"
 		>
-			Manage Recurring
-			<iconify-icon icon="solar:alt-arrow-right-linear" class="ml-2" width="16" height="16"></iconify-icon>
+			<div class="flex items-center justify-between">
+				<h3 class="font-medium text-fg">Recurring Transactions</h3>
+				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted group-hover:text-primary transition-colors" width="16" height="16"></iconify-icon>
+			</div>
+			<p class="mt-1 text-sm text-muted">Templates for predictable income and expenses.</p>
 		</a>
 	</div>
 
-	<!-- Data Import & Export Section -->
-	<section class="mt-6 rounded-xl border border-border bg-card p-6">
-		<h2 class="text-lg font-semibold text-fg mb-4">Data Import & Export</h2>
-		<p class="text-sm text-muted mb-4">
+	<!-- Data Import & Export Section (secondary) -->
+	<section class="mt-6 rounded-lg border border-card-border bg-card p-5">
+		<h3 class="text-base font-medium text-fg mb-3">Data Import & Export</h3>
+		<p class="text-sm text-muted mb-3">
 			Import historical data or export for backup and migration.
 		</p>
 
@@ -733,10 +728,10 @@
 		</div>
 	</section>
 
-	<!-- App Installation -->
-	<section class="mt-6 rounded-xl border border-border bg-card p-6">
-		<h2 class="text-lg font-semibold text-fg mb-4">App Installation</h2>
-		<p class="text-sm text-muted mb-4">
+	<!-- App Installation (secondary) -->
+	<section class="mt-6 rounded-lg border border-card-border bg-card p-5">
+		<h3 class="text-base font-medium text-fg mb-3">App Installation</h3>
+		<p class="text-sm text-muted mb-3">
 			Install Ledger to your device's home screen for quick access and a native app experience.
 		</p>
 

@@ -15,7 +15,7 @@
 <select
 	value={granularity}
 	onchange={handleChange}
-	class="rounded-lg border border-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+	class="rounded-lg border border-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 >
 	<option value="monthly">Monthly</option>
 	<option value="quarterly">Quarterly</option>

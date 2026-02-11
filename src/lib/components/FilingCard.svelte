@@ -86,7 +86,7 @@
 				href={filing.instructionsUrl}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="text-xs text-primary hover:text-primary hover:underline"
+				class="text-xs text-primary hover:text-primary-hover hover:underline"
 			>
 				Instructions
 			</a>

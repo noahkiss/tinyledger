@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr05
 title: Unify input padding across forms
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:07:24Z
 ---
 
 Two input padding patterns exist without a clear reason:

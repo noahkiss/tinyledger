@@ -146,7 +146,7 @@
 
 <div class="mx-auto max-w-2xl p-6">
 	<!-- Back link -->
-	<a href="/w/{workspace}/transactions" class="mb-4 inline-flex items-center text-primary hover:text-primary">
+	<a href="/w/{workspace}/transactions" class="mb-4 inline-flex items-center text-primary hover:text-primary-hover">
 		<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 		Back to Transactions
 	</a>
@@ -245,7 +245,7 @@
 							name="description"
 							bind:value={editDescription}
 							rows="2"
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						></textarea>
 					</div>
 
@@ -294,7 +294,7 @@
 					<button
 						type="submit"
 						disabled={!tagsValid}
-						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Save Changes
 					</button>
@@ -317,7 +317,7 @@
 					</div>
 					<a
 						href="/w/{workspace}/transactions/{data.transaction.publicId}/history"
-						class="text-sm text-primary hover:text-primary"
+						class="text-sm text-primary hover:text-primary-hover"
 					>
 						View History
 					</a>
@@ -386,13 +386,13 @@
 									href={data.attachment.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-primary hover:text-primary"
+									class="text-primary hover:text-primary-hover"
 								>
 									View full size
 								</a>
 								<a
 									href="{data.attachment.downloadUrl}&exportName={encodeURIComponent(getExportFilename())}"
-									class="text-primary hover:text-primary"
+									class="text-primary hover:text-primary-hover"
 								>
 									Download
 								</a>
@@ -415,7 +415,7 @@
 				{#if !isVoided}
 					<button
 						onclick={enterEditMode}
-						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary/90"
+						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-hover"
 					>
 						Edit
 					</button>

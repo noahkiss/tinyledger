@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr01
 title: Fix dead hover states on primary-colored links
-status: pending
+status: completed
 type: bug
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:02:22Z
 ---
 
 Multiple links use `hover:text-primary` on elements already colored `text-primary`, making the hover state invisible. These are effectively broken interactive cues.

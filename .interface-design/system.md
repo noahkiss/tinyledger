@@ -28,7 +28,9 @@ All colors via CSS custom properties. No raw hex values in components.
 | --color-input-border | #bcc0cc | #6c7086 |
 | --color-input-focus | #1e66f5 | #89b4fa |
 
-Opacity variants: `/10` (backgrounds), `/30` (borders), `/50` (focus rings), `/90` (hovers).
+Opacity variants: `/10` (backgrounds), `/30` (borders), `/50` (focus rings).
+
+Hover tokens: Always use `-hover` token variants (e.g., `hover:bg-primary-hover`, `hover:text-primary-hover`), never opacity hacks like `/90`.
 
 ## Typography
 - System font stack (no explicit family)
@@ -46,7 +48,7 @@ Borders-first system with selective shadows.
 - Dropdowns: `shadow-lg`
 - Modals: `shadow-xl`
 - All cards have `border border-card-border`
-- Focus: `focus:ring-1 focus:ring-primary` or `focus:ring-2 focus:ring-primary/50`
+- Focus: `focus:ring-2 focus:ring-primary/50` (standardized everywhere)
 
 ## Border Radius
 - Small elements: `rounded` (6px)
@@ -80,9 +82,12 @@ Radius: `rounded-lg` or `rounded-xl`. Active: `active:opacity-90` or `active:sca
 ### Inputs
 - Border: `border border-input-border`
 - Background: `bg-input`
-- Padding: `px-3 py-2`
 - Radius: `rounded-lg`
-- Focus: `focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary`
+- Focus: `focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50`
+- Padding variants:
+  - **Standard** (`px-4 py-3`): Standalone form pages with direct HTML inputs (settings, create workspace)
+  - **Compact** (`px-3 py-2`): Forms using shared components (CurrencyInput, DateInput, etc.) and inline contexts
+  - **Toolbar** (`px-2 py-1.5`): Filter bar and toolbar controls
 
 ### Navigation
 - Desktop tabs: `rounded-t-lg border-b-2 px-4 py-2`

@@ -76,7 +76,7 @@
 		{#if data.transaction.isDeleted}
 			<a
 				href="/w/{workspace}/transactions"
-				class="inline-flex items-center text-primary hover:text-primary"
+				class="inline-flex items-center text-primary hover:text-primary-hover"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transactions
@@ -84,7 +84,7 @@
 		{:else}
 			<a
 				href="/w/{workspace}/transactions/{data.transaction.publicId}"
-				class="inline-flex items-center text-primary hover:text-primary"
+				class="inline-flex items-center text-primary hover:text-primary-hover"
 			>
 				<iconify-icon icon="solar:alt-arrow-left-linear" class="mr-1" width="20" height="20"></iconify-icon>
 				Back to Transaction

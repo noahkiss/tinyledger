@@ -137,7 +137,7 @@
 				name="tag_{i}"
 				value={allocation.tagId}
 				onchange={(e) => updateTag(i, parseInt(e.currentTarget.value))}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			>
 				{#if availableTags.length === 0}
 					<option value="0" disabled>No tags available</option>
@@ -156,7 +156,7 @@
 					min="0"
 					max="100"
 					oninput={(e) => updatePercentage(i, parseInt(e.currentTarget.value) || 0)}
-					class="w-20 rounded-lg border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+					class="w-20 rounded-lg border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 				<span class="text-muted">%</span>
 			</div>
@@ -173,7 +173,7 @@
 	{/each}
 
 	<div class="flex items-center justify-between">
-		<button type="button" onclick={addTag} class="text-sm text-primary hover:text-primary">
+		<button type="button" onclick={addTag} class="text-sm text-primary hover:text-primary-hover">
 			+ Add Tag
 		</button>
 
@@ -205,7 +205,7 @@
 				bind:value={newTagName}
 				placeholder="Create new tag..."
 				onkeydown={handleCreateKeydown}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 			<button
 				type="button"

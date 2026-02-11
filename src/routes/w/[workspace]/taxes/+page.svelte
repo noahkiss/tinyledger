@@ -58,7 +58,7 @@
 			<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
 			<select
-				class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+				class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				value={data.fiscalYear}
 				onchange={handleFYChange}
 			>

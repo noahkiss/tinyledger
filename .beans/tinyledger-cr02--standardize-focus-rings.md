@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr02
 title: Standardize focus ring treatment across all inputs
-status: pending
+status: completed
 type: bug
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:04:30Z
 ---
 
 Three different focus ring patterns are used for form inputs:

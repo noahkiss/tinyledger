@@ -62,7 +62,7 @@
 				name="checkNumber"
 				bind:value={checkNumber}
 				placeholder="Enter check number"
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 	{/if}

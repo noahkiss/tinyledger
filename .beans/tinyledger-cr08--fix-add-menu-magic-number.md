@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr08
 title: Replace bottom-24 magic number in add menu positioning
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:06:42Z
 ---
 
 BottomTabBar.svelte line 160: the add transaction menu uses `fixed bottom-24` which hardcodes the tab bar height. If the bar height changes (safe-area-inset, tab count, font scaling), the menu position breaks silently.

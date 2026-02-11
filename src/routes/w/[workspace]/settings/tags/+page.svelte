@@ -186,7 +186,7 @@
 						name="newName"
 						bind:value={renameValue}
 						required
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -256,7 +256,7 @@
 						name="targetId"
 						bind:value={mergeTargetId}
 						required
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary"
+						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					>
 						<option value="">Select target tag...</option>
 						{#each data.tags.filter((t) => t.id !== mergeSourceId) as tag}

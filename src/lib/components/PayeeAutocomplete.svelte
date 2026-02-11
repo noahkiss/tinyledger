@@ -106,7 +106,7 @@
 		aria-expanded={showDropdown && filteredPayees.length > 0}
 		aria-controls="payee-listbox"
 		aria-activedescendant={showDropdown && filteredPayees.length > 0 ? `payee-option-${highlightedIndex}` : undefined}
-		class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+		class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 	/>
 
 	{#if showDropdown && filteredPayees.length > 0}

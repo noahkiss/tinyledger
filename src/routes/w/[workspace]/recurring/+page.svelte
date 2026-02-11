@@ -238,7 +238,7 @@
 							bind:value={payee}
 							required
 							placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Rent'}
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 					</div>
 				</div>
@@ -255,7 +255,7 @@
 							name="description"
 							bind:value={description}
 							rows="2"
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							placeholder="Add any notes..."
 						></textarea>
 					</div>
@@ -293,7 +293,7 @@
 							id="frequency"
 							name="frequency"
 							bind:value={frequency}
-							class="rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						>
 							<option value="daily">Daily</option>
 							<option value="weekly">Weekly</option>
@@ -314,12 +314,12 @@
 								bind:value={interval}
 								min="1"
 								max="365"
-								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							<select
 								name="customUnit"
 								bind:value={customUnit}
-								class="rounded-lg border border-input-border bg-input px-3 py-1 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+								class="rounded-lg border border-input-border bg-input px-3 py-1 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							>
 								<option value="day">day(s)</option>
 								<option value="week">week(s)</option>
@@ -339,7 +339,7 @@
 							name="startDate"
 							bind:value={startDate}
 							required
-							class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+							class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 					</div>
 
@@ -361,7 +361,7 @@
 								name="endDate"
 								bind:value={endDate}
 								min={startDate}
-								class="mt-2 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-1 focus:ring-primary"
+								class="mt-2 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 						{/if}
 					</div>

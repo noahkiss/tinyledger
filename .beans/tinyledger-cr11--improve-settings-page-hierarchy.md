@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr11
 title: Improve settings page section hierarchy
-status: pending
+status: completed
 type: enhancement
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:10:01Z
 ---
 
 Settings page has six peer-level card sections all with equal visual weight: Appearance, main settings form, Tags link, Recurring link, Import/Export, and App Installation. The most important settings (name, type) compete visually with installation instructions.

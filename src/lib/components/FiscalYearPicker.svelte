@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { clickOutside } from '$lib/actions/clickOutside';
 
 	let {
 		fiscalYear,
@@ -27,25 +28,9 @@
 	function toggleDropdown() {
 		isOpen = !isOpen;
 	}
-
-	// Close dropdown when clicking outside
-	function handleClickOutside(event: MouseEvent) {
-		const target = event.target as Element;
-		if (!target.closest('[data-component="fiscal-year-picker"]')) {
-			isOpen = false;
-		}
-	}
-
-	$effect(() => {
-		if (isOpen) {
-			document.addEventListener('click', handleClickOutside);
-			return () => document.removeEventListener('click', handleClickOutside);
-		}
-	});
-
 </script>
 
-<div class="relative" data-component="fiscal-year-picker">
+<div class="relative" data-component="fiscal-year-picker" use:clickOutside={() => { isOpen = false; }}>
 	<!-- Trigger button -->
 	<button
 		type="button"

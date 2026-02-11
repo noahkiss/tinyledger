@@ -42,7 +42,7 @@
 <button
 	type="button"
 	onclick={() => (showForm = true)}
-	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:bg-primary/90 active:scale-95"
+	class="fixed bottom-6 right-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform hover:bg-primary-hover active:scale-95"
 	aria-label="Add transaction"
 	data-component="quick-entry-fab"
 >

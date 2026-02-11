@@ -49,7 +49,7 @@
 				href="/w/{data.workspaceId}/export/tax-report?fy={data.fiscalYear}"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+				class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/50"
 			>
 				<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
 				Export PDF
@@ -95,9 +95,9 @@
 	</section>
 
 	<!-- Financial Overview Charts -->
-	<section class="space-y-6 mt-8">
-		<div class="flex flex-wrap items-center justify-between gap-2">
-			<h2 class="text-lg font-semibold text-fg">Financial Overview</h2>
+	<section class="mt-8">
+		<div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+			<h2 class="text-xl font-bold text-fg">Financial Overview</h2>
 			{#if data.currentPeriodPartial && data.asOfDate}
 				<p class="text-sm text-muted italic">
 					Current {data.granularity === 'monthly' ? 'month' : 'quarter'} shows data as of {formatAsOfDate(data.asOfDate)}
@@ -105,8 +105,8 @@
 			{/if}
 		</div>
 
-		<!-- Net Income Over Time -->
-		<div class="rounded-xl border border-border bg-card p-4">
+		<!-- Net Income Over Time (primary chart — full width, larger) -->
+		<div class="rounded-xl border border-border bg-card p-6">
 			<h3 class="text-sm font-medium text-fg mb-4">Net Income Over Time</h3>
 			<NetIncomeChart
 				data={data.periodData.map((p) => ({ period: p.period, net: p.net }))}
@@ -115,26 +115,29 @@
 			/>
 		</div>
 
-		<!-- Income vs Expense -->
-		<div class="rounded-xl border border-border bg-card p-4">
-			<h3 class="text-sm font-medium text-fg mb-4">
-				Income vs Expense by {data.granularity === 'monthly' ? 'Month' : 'Quarter'}
-			</h3>
-			<IncomeVsExpense
-				data={data.periodData}
-				workspaceId={data.workspaceId}
-				fiscalYear={data.fiscalYear}
-			/>
-		</div>
+		<!-- Secondary charts in grid -->
+		<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+			<!-- Income vs Expense -->
+			<div class="rounded-xl border border-border bg-card p-4">
+				<h3 class="text-sm font-medium text-fg mb-4">
+					Income vs Expense by {data.granularity === 'monthly' ? 'Month' : 'Quarter'}
+				</h3>
+				<IncomeVsExpense
+					data={data.periodData}
+					workspaceId={data.workspaceId}
+					fiscalYear={data.fiscalYear}
+				/>
+			</div>
 
-		<!-- Spending by Category -->
-		<div class="rounded-xl border border-border bg-card p-4">
-			<h3 class="text-sm font-medium text-fg mb-4">Spending by Category</h3>
-			<SpendingBreakdown
-				data={data.spendingByTag}
-				workspaceId={data.workspaceId}
-				fiscalYear={data.fiscalYear}
-			/>
+			<!-- Spending by Category -->
+			<div class="rounded-xl border border-border bg-card p-4">
+				<h3 class="text-sm font-medium text-fg mb-4">Spending by Category</h3>
+				<SpendingBreakdown
+					data={data.spendingByTag}
+					workspaceId={data.workspaceId}
+					fiscalYear={data.fiscalYear}
+				/>
+			</div>
 		</div>
 	</section>
 

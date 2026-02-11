@@ -1,10 +1,11 @@
 ---
 # tinyledger-cr03
 title: Standardize primary button hover to use theme token
-status: pending
+status: completed
 type: bug
+priority: normal
 created_at: 2026-02-11T20:30:00Z
-updated_at: 2026-02-11T20:30:00Z
+updated_at: 2026-02-11T22:02:39Z
 ---
 
 Primary buttons use two different hover implementations:
