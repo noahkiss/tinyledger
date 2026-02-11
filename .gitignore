@@ -25,3 +25,12 @@ vite.config.ts.timestamp-*
 # Data directory (runtime data)
 /data
 nanobanana-output/
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Local review/test files
+*.local.md
+dark-mode-test.png
+final-dark.png
+light-mode-test.png
