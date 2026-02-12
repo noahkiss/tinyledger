@@ -44,7 +44,7 @@
 				href="/w/{data.workspaceId}/export/tax-report?fy={data.fiscalYear}"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/50"
 			>
 				<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
 				Export PDF

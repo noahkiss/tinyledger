@@ -41,6 +41,8 @@
 		}
 		return pathname.startsWith(`${basePath}/${tabHref}`);
 	}
+
+	const isSettingsActive = $derived($page.url.pathname.startsWith(`/w/${data.workspaceId}/settings`));
 </script>
 
 <div class="min-h-screen bg-bg" data-component="app-shell">
@@ -71,23 +73,12 @@
 				/>
 			</div>
 
-			<!-- Settings cog -->
-			<div class="flex items-center gap-1">
-				<ThemeToggle />
-				<a
-					href="/w/{data.workspaceId}/settings"
-					class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
-					title="Settings"
-					data-component="settings-button"
-				>
-					<iconify-icon icon="solar:settings-bold" width="20" height="20"></iconify-icon>
-				</a>
-			</div>
+			<ThemeToggle />
 		</div>
 
 		<!-- Navigation (desktop only - mobile uses bottom tab bar) -->
 		<nav class="mx-auto hidden max-w-4xl px-4 md:block" data-component="nav-tabs">
-			<ul class="flex gap-1 text-sm">
+			<ul class="flex items-center gap-1 text-sm">
 				{#each navTabs as tab}
 					<li>
 						<a
@@ -100,6 +91,17 @@
 						</a>
 					</li>
 				{/each}
+				<li class="ml-auto">
+					<a
+						href="/w/{data.workspaceId}/settings"
+						class="inline-flex items-center rounded-t-lg border-b-2 px-3 py-2 {isSettingsActive
+							? 'border-primary text-primary'
+							: 'border-transparent text-muted hover:border-border hover:text-fg'}"
+						title="Settings"
+					>
+						<iconify-icon icon={isSettingsActive ? 'solar:settings-bold' : 'solar:settings-linear'} width="18" height="18"></iconify-icon>
+					</a>
+				</li>
 			</ul>
 		</nav>
 	</header>

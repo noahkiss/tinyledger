@@ -19,7 +19,6 @@
 	// State for the add menu
 	let showAddMenu = $state(false);
 
-	// Navigation tabs (Settings handled by header cog)
 	const baseNavTabs: NavTab[] = [
 		{
 			href: 'transactions',
@@ -52,6 +51,12 @@
 			icon: 'solar:archive-linear',
 			iconActive: 'solar:archive-bold'
 		});
+		tabs.push({
+			href: 'settings',
+			label: 'Settings',
+			icon: 'solar:settings-linear',
+			iconActive: 'solar:settings-bold'
+		});
 		return tabs;
 	});
 
@@ -70,8 +75,10 @@
 	}
 
 	// Split tabs into left and right groups (for center add button)
-	const leftTabs = $derived(navTabs.slice(0, 2));
-	const rightTabs = $derived(navTabs.slice(2));
+	const midpoint = $derived(Math.ceil(navTabs.length / 2));
+	const leftTabs = $derived(navTabs.slice(0, midpoint));
+	const rightTabs = $derived(navTabs.slice(midpoint));
+	const gridCols = $derived(navTabs.length + 1); // +1 for add button
 
 	function handleBackdropClick(e: MouseEvent) {
 		if (e.target === e.currentTarget) {
@@ -95,7 +102,7 @@
 	data-component="bottom-tab-bar"
 	aria-label="Main navigation"
 >
-	<div class="grid grid-cols-5 items-center">
+	<div class="grid items-center" style="grid-template-columns: repeat({gridCols}, minmax(0, 1fr))">
 		<!-- Left tabs -->
 		{#each leftTabs as tab}
 			{@const active = isActiveTab(tab.href)}
