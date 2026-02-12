@@ -106,7 +106,7 @@
 		</div>
 
 		<!-- Net Income Over Time (primary chart — full width, larger) -->
-		<div class="rounded-xl border border-border bg-card p-6">
+		<div class="rounded-lg border border-border bg-card p-6">
 			<h3 class="text-sm font-medium text-fg mb-4">Net Income Over Time</h3>
 			<NetIncomeChart
 				data={data.periodData.map((p) => ({ period: p.period, net: p.net }))}
@@ -118,7 +118,7 @@
 		<!-- Secondary charts in grid -->
 		<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
 			<!-- Income vs Expense -->
-			<div class="rounded-xl border border-border bg-card p-4">
+			<div class="rounded-lg border border-border bg-card p-4">
 				<h3 class="text-sm font-medium text-fg mb-4">
 					Income vs Expense by {data.granularity === 'monthly' ? 'Month' : 'Quarter'}
 				</h3>
@@ -130,7 +130,7 @@
 			</div>
 
 			<!-- Spending by Category -->
-			<div class="rounded-xl border border-border bg-card p-4">
+			<div class="rounded-lg border border-border bg-card p-4">
 				<h3 class="text-sm font-medium text-fg mb-4">Spending by Category</h3>
 				<SpendingBreakdown
 					data={data.spendingByTag}

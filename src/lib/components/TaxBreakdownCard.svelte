@@ -20,7 +20,7 @@
 	let isExpanded = $state(expanded);
 </script>
 
-<div class="rounded-xl border border-card-border bg-card overflow-hidden">
+<div class="rounded-lg border border-card-border bg-card overflow-hidden">
 	{#if variant === 'summary'}
 		<!-- Summary variant: not clickable, no chevron -->
 		<div class="flex items-center justify-between p-4">

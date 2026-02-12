@@ -87,7 +87,7 @@
 
 	{#if data.filings.length === 0}
 		<!-- Empty state -->
-		<div class="rounded-xl border border-border bg-card p-8 text-center">
+		<div class="rounded-lg border border-border bg-card p-8 text-center">
 			<iconify-icon icon="solar:document-text-bold" class="mx-auto text-muted" width="48" height="48"></iconify-icon>
 			<h3 class="mt-4 text-lg font-medium text-fg">No filings found</h3>
 			<p class="mt-1 text-sm text-muted">

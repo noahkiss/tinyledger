@@ -159,7 +159,7 @@
 	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=income"
-			class="flex items-center justify-center gap-2 rounded-xl bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
+			class="flex items-center justify-center gap-2 rounded-lg bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
 			data-component="add-income-button"
 		>
 			<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
@@ -167,7 +167,7 @@
 		</a>
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=expense"
-			class="flex items-center justify-center gap-2 rounded-xl bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
+			class="flex items-center justify-center gap-2 rounded-lg bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
 			data-component="add-expense-button"
 		>
 			<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
@@ -177,7 +177,7 @@
 
 	<!-- Sticky summary header -->
 	<header
-		class="mt-4 sticky top-3 z-10 rounded-xl border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
+		class="mt-4 sticky top-3 z-10 rounded-lg border border-card-border bg-card/95 px-4 py-3 shadow-sm backdrop-blur"
 		data-component="summary-header"
 	>
 		<!-- Mobile layout: icon-based compact view -->

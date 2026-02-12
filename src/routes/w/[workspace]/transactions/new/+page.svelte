@@ -236,7 +236,7 @@
 		<div class="pt-4">
 			<button
 				type="submit"
-				class="w-full rounded-xl px-6 py-4 text-lg font-semibold text-white shadow-sm {submitButtonColor}"
+				class="w-full rounded-lg px-6 py-4 text-lg font-semibold text-white shadow-sm {submitButtonColor}"
 			>
 				Create {typeLabel}
 			</button>

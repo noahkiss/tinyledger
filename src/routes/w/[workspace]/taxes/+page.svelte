@@ -28,7 +28,7 @@
 	<div class="space-y-6">
 		<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
-		<div class="rounded-xl border border-warning/30 bg-warning/10 p-6">
+		<div class="rounded-lg border border-warning/30 bg-warning/10 p-6">
 			<div class="flex items-start gap-4">
 				<div class="flex-shrink-0">
 					<iconify-icon icon="solar:danger-triangle-bold" class="text-warning" width="32" height="32"></iconify-icon>

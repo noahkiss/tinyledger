@@ -40,7 +40,7 @@
 {#if variant === 'hero'}
 	<!-- Hero card: larger, more prominent -->
 	<div
-		class="rounded-xl border border-card-border bg-gradient-to-br from-card to-surface p-6 shadow-sm"
+		class="rounded-lg border border-card-border bg-gradient-to-br from-card to-surface p-6 shadow-sm"
 	>
 		<div class="flex items-start justify-between">
 			<div>
@@ -65,7 +65,7 @@
 	</div>
 {:else}
 	<!-- Default card: compact supporting card -->
-	<div class="rounded-xl border border-card-border bg-card p-4 shadow-sm">
+	<div class="rounded-lg border border-card-border bg-card p-4 shadow-sm">
 		<div class="flex items-center justify-between">
 			<span class="text-sm font-medium text-muted">{label}</span>
 			{#if percentDisplay}

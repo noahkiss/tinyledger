@@ -49,7 +49,7 @@
 	}
 </script>
 
-<div class="rounded-xl border p-4 {getStatusClass()}" data-filing-id={filing.id}>
+<div class="rounded-lg border p-4 {getStatusClass()}" data-filing-id={filing.id}>
 	<!-- Header: name + status badge -->
 	<div class="flex items-start justify-between mb-2">
 		<div class="flex-1 min-w-0">

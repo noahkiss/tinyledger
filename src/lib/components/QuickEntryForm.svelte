@@ -161,7 +161,7 @@
 			<button
 				type="button"
 				onclick={() => (type = type === 'income' ? 'expense' : 'income')}
-				class="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-lg font-semibold text-white transition-colors"
+				class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-lg font-semibold text-white transition-colors"
 				class:bg-success={type === 'income'}
 				class:hover:bg-success-hover={type === 'income'}
 				class:bg-error={type === 'expense'}
@@ -282,7 +282,7 @@
 		<button
 			type="submit"
 			disabled={isSubmitting}
-			class="w-full rounded-xl px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+			class="w-full rounded-lg px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			class:bg-success={type === 'income'}
 			class:hover:bg-success-hover={type === 'income'}
 			class:bg-error={type === 'expense'}
