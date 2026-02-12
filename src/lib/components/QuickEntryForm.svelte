@@ -3,6 +3,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import CurrencyInput from './CurrencyInput.svelte';
 	import DateInput from './DateInput.svelte';
+	import Select from './Select.svelte';
 	import type { Tag } from '$lib/server/db/schema';
 
 	type PayeeHistory = {
@@ -243,16 +244,18 @@
 				<label for="quick-tag" class="block text-sm font-medium text-fg">
 					Tag <span class="font-normal text-muted">(optional)</span>
 				</label>
-				<select
-					id="quick-tag"
-					bind:value={selectedTagId}
-					class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-				>
-					<option value={null}>No tag</option>
-					{#each availableTags as tag (tag.id)}
-						<option value={tag.id}>{tag.name}</option>
-					{/each}
-				</select>
+				<div class="mt-1">
+					<Select
+						id="quick-tag"
+						value={selectedTagId ?? ''}
+						onchange={(val) => { selectedTagId = val === '' ? null : Number(val); }}
+						options={[
+							{ value: '', label: 'No tag' },
+							...availableTags.map((t) => ({ value: t.id, label: t.name }))
+						]}
+						size="sm"
+					/>
+				</div>
 				{#if selectedTagId !== null}
 					<input type="hidden" name="tag_0" value={selectedTagId} />
 					<input type="hidden" name="percentage_0" value="100" />

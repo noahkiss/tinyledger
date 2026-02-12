@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
+	import Select from '$lib/components/Select.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -251,18 +252,19 @@
 
 				<div class="mb-4">
 					<label for="targetId" class="block text-sm font-medium text-fg">Merge Into</label>
-					<select
-						id="targetId"
-						name="targetId"
-						bind:value={mergeTargetId}
-						required
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-					>
-						<option value="">Select target tag...</option>
-						{#each data.tags.filter((t) => t.id !== mergeSourceId) as tag}
-							<option value={tag.id}>{tag.name} ({tag.usageCount} transactions)</option>
-						{/each}
-					</select>
+					<div class="mt-1">
+						<Select
+							id="targetId"
+							name="targetId"
+							value={mergeTargetId ?? ''}
+							onchange={(val) => { mergeTargetId = val === '' ? null : Number(val); }}
+							placeholder="Select target tag..."
+							options={data.tags
+								.filter((t) => t.id !== mergeSourceId)
+								.map((t) => ({ value: t.id, label: `${t.name} (${t.usageCount} transactions)` }))}
+							required
+						/>
+					</div>
 				</div>
 
 				<div class="mb-4 rounded-lg bg-warning/10 p-3 text-sm text-warning">

@@ -2,7 +2,6 @@
 	import type { PageData } from './$types';
 	import { formatFiscalYear } from '$lib/utils/fiscal-year';
 	import { calculatePercentChange } from '$lib/utils/reports';
-	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
 	import GranularityToggle from '$lib/components/GranularityToggle.svelte';
 	import SummaryCard from '$lib/components/SummaryCard.svelte';
 	import Sparkline from '$lib/components/charts/Sparkline.svelte';
@@ -40,10 +39,6 @@
 	<header class="flex flex-wrap items-center justify-between gap-4">
 		<h1 class="text-2xl font-bold text-fg">Reports</h1>
 		<div class="flex items-center gap-2">
-			<FiscalYearPicker
-				fiscalYear={data.fiscalYear}
-				availableYears={data.availableFiscalYears}
-			/>
 			<GranularityToggle granularity={data.granularity} />
 			<a
 				href="/w/{data.workspaceId}/export/tax-report?fy={data.fiscalYear}"

@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 	import type { CSVPreviewResult, ColumnMapping, ValidationResult } from '$lib/server/import/csv-parser';
+	import Select from '$lib/components/Select.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -275,17 +276,16 @@
 						<label for="map-date" class="block text-sm font-medium text-fg">
 							Date <span class="text-error">*</span>
 						</label>
-						<select
-							id="map-date"
-							bind:value={mapping.date}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-date"
+								bind:value={mapping.date}
+								placeholder="Select column..."
+								options={previewData.headers.map((h) => ({ value: h, label: h }))}
+								required
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Type -->
@@ -293,17 +293,16 @@
 						<label for="map-type" class="block text-sm font-medium text-fg">
 							Type (income/expense) <span class="text-error">*</span>
 						</label>
-						<select
-							id="map-type"
-							bind:value={mapping.type}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-type"
+								bind:value={mapping.type}
+								placeholder="Select column..."
+								options={previewData.headers.map((h) => ({ value: h, label: h }))}
+								required
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Payee -->
@@ -311,17 +310,16 @@
 						<label for="map-payee" class="block text-sm font-medium text-fg">
 							Payee <span class="text-error">*</span>
 						</label>
-						<select
-							id="map-payee"
-							bind:value={mapping.payee}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-payee"
+								bind:value={mapping.payee}
+								placeholder="Select column..."
+								options={previewData.headers.map((h) => ({ value: h, label: h }))}
+								required
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Amount -->
@@ -329,17 +327,16 @@
 						<label for="map-amount" class="block text-sm font-medium text-fg">
 							Amount <span class="text-error">*</span>
 						</label>
-						<select
-							id="map-amount"
-							bind:value={mapping.amount}
-							required
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">Select column...</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-amount"
+								bind:value={mapping.amount}
+								placeholder="Select column..."
+								options={previewData.headers.map((h) => ({ value: h, label: h }))}
+								required
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Description (optional) -->
@@ -347,16 +344,17 @@
 						<label for="map-description" class="block text-sm font-medium text-fg">
 							Description <span class="text-muted">(optional)</span>
 						</label>
-						<select
-							id="map-description"
-							bind:value={mapping.description}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-description"
+								bind:value={mapping.description}
+								options={[
+									{ value: '', label: 'None' },
+									...previewData.headers.map((h) => ({ value: h, label: h }))
+								]}
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Tags (optional) -->
@@ -364,16 +362,17 @@
 						<label for="map-tags" class="block text-sm font-medium text-fg">
 							Tags <span class="text-muted">(optional)</span>
 						</label>
-						<select
-							id="map-tags"
-							bind:value={mapping.tags}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-tags"
+								bind:value={mapping.tags}
+								options={[
+									{ value: '', label: 'None' },
+									...previewData.headers.map((h) => ({ value: h, label: h }))
+								]}
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Payment Method (optional) -->
@@ -381,16 +380,17 @@
 						<label for="map-payment" class="block text-sm font-medium text-fg">
 							Payment Method <span class="text-muted">(optional)</span>
 						</label>
-						<select
-							id="map-payment"
-							bind:value={mapping.paymentMethod}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None (default: card)</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-payment"
+								bind:value={mapping.paymentMethod}
+								options={[
+									{ value: '', label: 'None (default: card)' },
+									...previewData.headers.map((h) => ({ value: h, label: h }))
+								]}
+								size="sm"
+							/>
+						</div>
 					</div>
 
 					<!-- Check Number (optional) -->
@@ -398,16 +398,17 @@
 						<label for="map-check" class="block text-sm font-medium text-fg">
 							Check Number <span class="text-muted">(optional)</span>
 						</label>
-						<select
-							id="map-check"
-							bind:value={mapping.checkNumber}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-3 py-2 text-sm text-fg focus:border-input-focus focus:ring-primary"
-						>
-							<option value="">None</option>
-							{#each previewData.headers as header}
-								<option value={header}>{header}</option>
-							{/each}
-						</select>
+						<div class="mt-1">
+							<Select
+								id="map-check"
+								bind:value={mapping.checkNumber}
+								options={[
+									{ value: '', label: 'None' },
+									...previewData.headers.map((h) => ({ value: h, label: h }))
+								]}
+								size="sm"
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -519,15 +520,14 @@
 										<span class="ml-2 text-sm text-fg">Map to:</span>
 									</label>
 									{#if tagActions[tag] === 'map'}
-										<select
-											bind:value={tagMappings[tag]}
-											class="ml-2 rounded-lg border border-input-border bg-input px-2 py-1 text-sm text-fg"
-										>
-											<option value="">Select...</option>
-											{#each data.tags as existingTag}
-												<option value={existingTag}>{existingTag}</option>
-											{/each}
-										</select>
+										<div class="ml-2 inline-block min-w-32">
+											<Select
+												bind:value={tagMappings[tag]}
+												placeholder="Select..."
+												options={data.tags.map((t) => ({ value: t, label: t }))}
+												size="sm"
+											/>
+										</div>
 									{/if}
 								</div>
 							</div>

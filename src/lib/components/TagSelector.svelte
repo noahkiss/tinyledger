@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Tag } from '$lib/server/db/schema';
+	import Select from '$lib/components/Select.svelte';
 
 	type TagAllocation = {
 		tagId: number;
@@ -133,20 +134,16 @@
 <div class="space-y-3">
 	{#each allocations as allocation, i (i)}
 		<div class="flex items-center gap-2">
-			<select
-				name="tag_{i}"
-				value={allocation.tagId}
-				onchange={(e) => updateTag(i, parseInt(e.currentTarget.value))}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-			>
-				{#if availableTags.length === 0}
-					<option value="0" disabled>No tags available</option>
-				{:else}
-					{#each availableTags as tag}
-						<option value={tag.id}>{tag.name}</option>
-					{/each}
-				{/if}
-			</select>
+			<div class="flex-1">
+				<Select
+					value={allocation.tagId}
+					options={availableTags.length === 0
+						? [{ value: 0, label: 'No tags available' }]
+						: availableTags.map((t) => ({ value: t.id, label: t.name }))}
+					onchange={(val) => updateTag(i, Number(val))}
+					size="sm"
+				/>
+			</div>
 
 			<div class="flex items-center gap-1">
 				<input

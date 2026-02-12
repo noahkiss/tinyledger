@@ -4,6 +4,7 @@
 	import CurrencyInput from '$lib/components/CurrencyInput.svelte';
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
+	import Select from '$lib/components/Select.svelte';
 	import { formatCurrency } from '$lib/utils/currency';
 	import type { Tag } from '$lib/server/db/schema';
 
@@ -289,20 +290,21 @@
 				<div class="rounded-lg border border-border bg-surface p-4">
 					<label for="frequency" class="block text-sm font-medium text-fg">Recurrence Pattern</label>
 					<div class="mt-2">
-						<select
+						<Select
 							id="frequency"
 							name="frequency"
 							bind:value={frequency}
-							class="rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-						>
-							<option value="daily">Daily</option>
-							<option value="weekly">Weekly</option>
-							<option value="biweekly">Every 2 weeks</option>
-							<option value="monthly">Monthly</option>
-							<option value="quarterly">Quarterly (every 3 months)</option>
-							<option value="yearly">Yearly</option>
-							<option value="custom">Custom interval...</option>
-						</select>
+							options={[
+								{ value: 'daily', label: 'Daily' },
+								{ value: 'weekly', label: 'Weekly' },
+								{ value: 'biweekly', label: 'Every 2 weeks' },
+								{ value: 'monthly', label: 'Monthly' },
+								{ value: 'quarterly', label: 'Quarterly (every 3 months)' },
+								{ value: 'yearly', label: 'Yearly' },
+								{ value: 'custom', label: 'Custom interval...' }
+							]}
+							size="sm"
+						/>
 					</div>
 
 					{#if frequency === 'custom'}
@@ -316,15 +318,16 @@
 								max="365"
 								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
-							<select
+							<Select
 								name="customUnit"
 								bind:value={customUnit}
-								class="rounded-lg border border-input-border bg-input px-3 py-1 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-							>
-								<option value="day">day(s)</option>
-								<option value="week">week(s)</option>
-								<option value="month">month(s)</option>
-							</select>
+								options={[
+									{ value: 'day', label: 'day(s)' },
+									{ value: 'week', label: 'week(s)' },
+									{ value: 'month', label: 'month(s)' }
+								]}
+								size="sm"
+							/>
 						</div>
 					{/if}
 				</div>

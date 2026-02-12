@@ -1,17 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
 	import TaxBreakdownCard from '$lib/components/TaxBreakdownCard.svelte';
 	import { formatCurrency } from '$lib/utils/currency';
 
 	let { data }: { data: PageData } = $props();
-
-	// Fiscal year picker handler
-	function handleFYChange(event: Event) {
-		const select = event.target as HTMLSelectElement;
-		const fy = select.value;
-		goto(`/w/${data.workspaceId}/taxes?fy=${fy}`, { replaceState: true, noScroll: true });
-	}
 
 	// Helper to format rate as percentage
 	function formatRate(rate: number): string {
@@ -53,20 +45,7 @@
 {:else}
 	<!-- Main taxes view when configured -->
 	<div class="space-y-6">
-		<!-- Header with fiscal year picker -->
-		<div class="flex items-center justify-between">
-			<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
-
-			<select
-				class="rounded-lg border border-input-border bg-input px-3 py-2 text-sm font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-				value={data.fiscalYear}
-				onchange={handleFYChange}
-			>
-				{#each data.availableFiscalYears as fy}
-					<option value={fy}>FY {fy}</option>
-				{/each}
-			</select>
-		</div>
+		<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
 		<!-- Disclaimer banner -->
 		<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">

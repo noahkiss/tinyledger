@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
+	import Select from '$lib/components/Select.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -97,17 +98,18 @@
 
 				<div>
 					<label for="type" class="block text-sm font-medium text-fg"> Workspace Type </label>
-					<select
-						id="type"
-						name="type"
-						required
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-					>
-						<option value="sole_prop" selected={form?.type === 'sole_prop'}>Sole Proprietor</option>
-						<option value="volunteer_org" selected={form?.type === 'volunteer_org'}
-							>Volunteer Organization</option
-						>
-					</select>
+					<div class="mt-1">
+						<Select
+							id="type"
+							name="type"
+							value={form?.type ?? 'sole_prop'}
+							options={[
+								{ value: 'sole_prop', label: 'Sole Proprietor' },
+								{ value: 'volunteer_org', label: 'Volunteer Organization' }
+							]}
+							required
+						/>
+					</div>
 				</div>
 
 				<button

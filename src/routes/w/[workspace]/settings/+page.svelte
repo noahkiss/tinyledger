@@ -7,6 +7,7 @@
 	import { STATE_TAX_RATES, getStateRate } from '$lib/data/state-tax-rates';
 	import { getFormsForState } from '$lib/data/tax-forms';
 	import { themePreference, type ThemePreference } from '$lib/stores/theme';
+	import Select from '$lib/components/Select.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -250,19 +251,18 @@
 
 			<div>
 				<label for="type" class="block text-sm font-medium text-fg">Workspace Type</label>
-				<select
-					id="type"
-					name="type"
-					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-				>
-					<option value="sole_prop" selected={data.settings.type === 'sole_prop'}
-						>Sole Proprietor</option
-					>
-					<option value="volunteer_org" selected={data.settings.type === 'volunteer_org'}
-						>Volunteer Organization</option
-					>
-				</select>
+				<div class="mt-1">
+					<Select
+						id="type"
+						name="type"
+						value={data.settings.type}
+						options={[
+							{ value: 'sole_prop', label: 'Sole Proprietor' },
+							{ value: 'volunteer_org', label: 'Volunteer Organization' }
+						]}
+						required
+					/>
+				</div>
 			</div>
 		</div>
 
@@ -342,17 +342,14 @@
 				Fiscal year runs from the selected month through the following year. Most businesses use
 				calendar year (January).
 			</p>
-			<select
-				id="fiscalYearStartMonth"
-				name="fiscalYearStartMonth"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
-			>
-				{#each months as month}
-					<option value={month.value} selected={data.settings.fiscalYearStartMonth === month.value}>
-						{month.label}
-					</option>
-				{/each}
-			</select>
+			<div class="mt-1 sm:w-auto">
+				<Select
+					id="fiscalYearStartMonth"
+					name="fiscalYearStartMonth"
+					value={data.settings.fiscalYearStartMonth}
+					options={months.map((m) => ({ value: m.value, label: m.label }))}
+				/>
+			</div>
 		</div>
 
 		<!-- Tax Configuration (only for sole_prop) -->
@@ -367,18 +364,14 @@
 					<!-- State Selection -->
 					<div>
 						<label for="state" class="block text-sm font-medium text-fg">State</label>
-						<select
-							id="state"
-							name="state"
-							bind:value={selectedState}
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
-						>
-							{#each STATE_TAX_RATES as state}
-								<option value={state.code}>
-									{state.name} ({state.rateLabel})
-								</option>
-							{/each}
-						</select>
+						<div class="mt-1 sm:w-auto">
+							<Select
+								id="state"
+								name="state"
+								bind:value={selectedState}
+								options={STATE_TAX_RATES.map((s) => ({ value: s.code, label: `${s.name} (${s.rateLabel})` }))}
+							/>
+						</div>
 						<p class="mt-1 text-xs text-muted">
 							Select your state for default tax rate. Only flat-rate states are listed.
 						</p>
@@ -398,21 +391,20 @@
 								{showFederalBracketHelp ? 'Hide help' : 'How to choose?'}
 							</button>
 						</div>
-						<select
-							id="federalBracketRate"
-							name="federalBracketRate"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
-						>
-							<option value="">Select your bracket...</option>
-							{#each FEDERAL_BRACKETS_2026 as bracket}
-								<option
-									value={Math.round(bracket.rate * 100)}
-									selected={data.settings.federalBracketRate === Math.round(bracket.rate * 100)}
-								>
-									{bracket.label}
-								</option>
-							{/each}
-						</select>
+						<div class="mt-1 sm:w-auto">
+							<Select
+								id="federalBracketRate"
+								name="federalBracketRate"
+								value={data.settings.federalBracketRate ?? ''}
+								options={[
+									{ value: '', label: 'Select your bracket...' },
+									...FEDERAL_BRACKETS_2026.map((b) => ({
+										value: Math.round(b.rate * 100),
+										label: b.label
+									}))
+								]}
+							/>
+						</div>
 
 						{#if showFederalBracketHelp}
 							<div class="mt-3 rounded-lg border border-card-border bg-surface p-4 text-sm">
