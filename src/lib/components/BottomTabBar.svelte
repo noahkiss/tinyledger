@@ -16,9 +16,6 @@
 		workspaceType: 'sole_prop' | 'volunteer_org';
 	} = $props();
 
-	// State for the add menu
-	let showAddMenu = $state(false);
-
 	const baseNavTabs: NavTab[] = [
 		{
 			href: 'transactions',
@@ -73,27 +70,7 @@
 		}
 		return pathname.startsWith(`${basePath}/${tabHref}`);
 	}
-
-	// Split tabs into left and right groups (for center add button)
-	const midpoint = $derived(Math.ceil(navTabs.length / 2));
-	const leftTabs = $derived(navTabs.slice(0, midpoint));
-	const rightTabs = $derived(navTabs.slice(midpoint));
-	const gridCols = $derived(navTabs.length + 1); // +1 for add button
-
-	function handleBackdropClick(e: MouseEvent) {
-		if (e.target === e.currentTarget) {
-			showAddMenu = false;
-		}
-	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape' && showAddMenu) {
-			showAddMenu = false;
-		}
-	}
 </script>
-
-<svelte:window onkeydown={handleKeydown} />
 
 <!-- Bottom Tab Bar (mobile only) -->
 <nav
@@ -102,90 +79,21 @@
 	data-component="bottom-tab-bar"
 	aria-label="Main navigation"
 >
-	<div class="grid items-center" style="grid-template-columns: repeat({gridCols}, minmax(0, 1fr))">
-		<!-- Left tabs -->
-		{#each leftTabs as tab}
+	<div class="flex items-center justify-around">
+		{#each navTabs as tab}
 			{@const active = isActiveTab(tab.href)}
 			<a
 				href="/w/{workspaceId}/{tab.href}"
-				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
+				class="flex min-w-0 flex-1 flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
 				aria-current={active ? 'page' : undefined}
 			>
-				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
+				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="22" height="22"
 				></iconify-icon>
-				<span class="mt-0.5 text-xs">{tab.label}</span>
-			</a>
-		{/each}
-
-		<!-- Center Add button -->
-		<button
-			type="button"
-			onclick={() => (showAddMenu = !showAddMenu)}
-			class="flex flex-col items-center justify-center py-2 text-primary cursor-pointer"
-			aria-label="Add transaction"
-		>
-			<div
-				class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md -translate-y-4"
-			>
-				<iconify-icon
-					icon="solar:add-circle-bold"
-					width="28"
-					height="28"
-					class="transition-transform {showAddMenu ? 'rotate-45' : ''}"
-				></iconify-icon>
-			</div>
-		</button>
-
-		<!-- Right tabs -->
-		{#each rightTabs as tab}
-			{@const active = isActiveTab(tab.href)}
-			<a
-				href="/w/{workspaceId}/{tab.href}"
-				class="flex flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
-				aria-current={active ? 'page' : undefined}
-			>
-				<iconify-icon icon={active ? tab.iconActive : tab.icon} width="24" height="24"
-				></iconify-icon>
-				<span class="mt-0.5 text-xs">{tab.label}</span>
+				<span class="mt-0.5 truncate text-[10px]">{tab.label}</span>
 			</a>
 		{/each}
 	</div>
 </nav>
 
-<!-- Add menu overlay -->
-{#if showAddMenu}
-	<div
-		class="fixed inset-0 z-30 bg-black/30 md:hidden"
-		onclick={handleBackdropClick}
-		onkeydown={(e) => e.key === 'Escape' && (showAddMenu = false)}
-		role="dialog"
-		aria-label="Add transaction"
-		tabindex="-1"
-	>
-		<!-- Add menu -->
-		<div
-			class="fixed left-1/2 z-40 flex -translate-x-1/2 gap-4"
-			style="bottom: calc(5rem + env(safe-area-inset-bottom, 0px) + 1rem);"
-		>
-			<a
-				href="/w/{workspaceId}/transactions/new?type=income"
-				class="flex h-14 items-center gap-2 rounded-full bg-success px-5 text-white shadow-lg hover:bg-success-hover active:scale-95"
-				onclick={() => (showAddMenu = false)}
-			>
-				<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
-				<span class="font-semibold">Income</span>
-			</a>
-			<a
-				href="/w/{workspaceId}/transactions/new?type=expense"
-				class="flex h-14 items-center gap-2 rounded-full bg-error px-5 text-white shadow-lg hover:bg-error-hover active:scale-95"
-				onclick={() => (showAddMenu = false)}
-			>
-				<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
-				<span class="font-semibold">Expense</span>
-			</a>
-		</div>
-	</div>
-{/if}
-
 <!-- Spacer for fixed bottom bar (mobile only) -->
-<div class="h-20 md:hidden" aria-hidden="true"></div>
+<div class="h-16 md:hidden" aria-hidden="true"></div>

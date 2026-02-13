@@ -56,8 +56,8 @@
 	<!-- Header -->
 	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-			<!-- Left: Workspace selector + Fiscal Year picker -->
-			<div class="flex items-stretch gap-3">
+			<!-- Left: Workspace selector + Fiscal Year picker (spread on mobile) -->
+			<div class="flex flex-1 items-stretch justify-between gap-3 md:flex-initial md:justify-start">
 				<WorkspaceSelector
 					currentWorkspaceId={data.workspaceId}
 					workspaces={data.allWorkspaces}
