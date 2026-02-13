@@ -4,7 +4,6 @@
 	import WorkspaceSelector from '$lib/components/WorkspaceSelector.svelte';
 	import BottomTabBar from '$lib/components/BottomTabBar.svelte';
 	import FiscalYearPicker from '$lib/components/FiscalYearPicker.svelte';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { lastWorkspace } from '$lib/stores/lastWorkspace';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
@@ -39,10 +38,11 @@
 			// Transactions is active for base path OR /transactions/*
 			return pathname === basePath || pathname === `${basePath}/` || pathname.startsWith(`${basePath}/transactions`);
 		}
+		if (tabHref === 'settings') {
+			return pathname.startsWith(`${basePath}/settings`);
+		}
 		return pathname.startsWith(`${basePath}/${tabHref}`);
 	}
-
-	const isSettingsActive = $derived($page.url.pathname.startsWith(`/w/${data.workspaceId}/settings`));
 </script>
 
 <div class="min-h-screen bg-bg" data-component="app-shell">
@@ -56,7 +56,7 @@
 	<!-- Header -->
 	<header class="border-b border-border bg-card" data-component="header">
 		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-			<!-- Workspace selector (integrated with logo/name) -->
+			<!-- Left: Workspace selector + Fiscal Year picker -->
 			<div class="flex items-stretch gap-3">
 				<WorkspaceSelector
 					currentWorkspaceId={data.workspaceId}
@@ -66,44 +66,35 @@
 					logoFilename={data.settings.logoFilename}
 				/>
 
-				<!-- Fiscal Year picker -->
 				<FiscalYearPicker
 					fiscalYear={data.fiscalYear}
 					availableYears={data.availableFiscalYears}
 				/>
 			</div>
 
-			<ThemeToggle />
-		</div>
-
-		<!-- Navigation (desktop only - mobile uses bottom tab bar) -->
-		<nav class="mx-auto hidden max-w-4xl px-4 md:block" data-component="nav-tabs">
-			<ul class="flex items-center gap-1 text-sm">
+			<!-- Right: Pill nav tabs (desktop only) -->
+			<nav class="hidden items-center gap-1 md:flex" data-component="nav-tabs">
 				{#each navTabs as tab}
-					<li>
-						<a
-							href="/w/{data.workspaceId}/{tab.href}"
-							class="inline-block rounded-t-lg border-b-2 px-4 py-2 {isActiveTab(tab.href)
-								? 'border-primary text-primary font-medium'
-								: 'border-transparent text-muted hover:border-border hover:text-fg'}"
-						>
-							{tab.label}
-						</a>
-					</li>
-				{/each}
-				<li class="ml-auto">
 					<a
-						href="/w/{data.workspaceId}/settings"
-						class="inline-flex items-center rounded-t-lg border-b-2 px-3 py-2 {isSettingsActive
-							? 'border-primary text-primary'
-							: 'border-transparent text-muted hover:border-border hover:text-fg'}"
-						title="Settings"
+						href="/w/{data.workspaceId}/{tab.href}"
+						class="inline-flex h-8 items-center rounded-lg px-3 text-sm font-medium transition-colors {isActiveTab(tab.href)
+							? 'bg-primary/10 text-primary'
+							: 'text-muted hover:bg-surface-alt hover:text-fg'}"
 					>
-						<iconify-icon icon={isSettingsActive ? 'solar:settings-bold' : 'solar:settings-linear'} width="18" height="18"></iconify-icon>
+						{tab.label}
 					</a>
-				</li>
-			</ul>
-		</nav>
+				{/each}
+				<a
+					href="/w/{data.workspaceId}/settings"
+					class="inline-flex h-8 items-center justify-center rounded-lg px-2 text-sm transition-colors {isActiveTab('settings')
+						? 'bg-primary/10 text-primary'
+						: 'text-muted hover:bg-surface-alt hover:text-fg'}"
+					title="Settings"
+				>
+					<iconify-icon icon={isActiveTab('settings') ? 'solar:settings-bold' : 'solar:settings-linear'} width="16" height="16"></iconify-icon>
+				</a>
+			</nav>
+		</div>
 	</header>
 
 	<!-- Main content -->
