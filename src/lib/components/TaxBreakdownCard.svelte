@@ -51,10 +51,10 @@
 				<dl class="space-y-2">
 					{#each items as item}
 						<div class="flex justify-between text-sm">
-							<dt class="text-muted">
+							<dt class="text-text-tertiary">
 								{item.label}
 								{#if item.formula}
-									<span class="block text-xs text-muted">{item.formula}</span>
+									<span class="block text-xs text-text-quaternary">{item.formula}</span>
 								{/if}
 							</dt>
 							<dd class="font-medium text-fg">{formatCurrency(item.amountCents)}</dd>

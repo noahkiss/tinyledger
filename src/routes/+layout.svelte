@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '@fontsource-variable/inter';
 	import '../app.css';
 	import OfflineIndicator from '$lib/components/OfflineIndicator.svelte';
 	import { initTheme } from '$lib/stores/theme';

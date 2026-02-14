@@ -94,7 +94,7 @@
 		<div class="flex flex-wrap items-center justify-between gap-2 mb-6">
 			<h2 class="text-xl font-bold text-fg">Financial Overview</h2>
 			{#if data.currentPeriodPartial && data.asOfDate}
-				<p class="text-sm text-muted italic">
+				<p class="text-sm text-text-quaternary italic">
 					Current {data.granularity === 'monthly' ? 'month' : 'quarter'} shows data as of {formatAsOfDate(data.asOfDate)}
 				</p>
 			{/if}
@@ -137,11 +137,11 @@
 	</section>
 
 	<!-- Period info -->
-	<footer class="text-sm text-muted">
+	<footer class="text-sm text-text-quaternary">
 		<p>
 			Showing data for {formatFiscalYear(data.fiscalYear, data.fiscalYearStartMonth)}
 			{#if data.previousPeriod.income > 0 || data.previousPeriod.expense > 0}
-				<span class="text-muted">
+				<span class="text-text-quaternary">
 					| Compared to {formatFiscalYear(data.fiscalYear - 1, data.fiscalYearStartMonth)}
 				</span>
 			{/if}

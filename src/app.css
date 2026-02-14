@@ -32,6 +32,12 @@
 	--color-accent: #ea76cb;
 	--color-subtle: #179299;
 
+	/* Text hierarchy */
+	--text-primary: #4c4f69;
+	--text-secondary: #5c5f77;
+	--text-tertiary: #7c7f93;
+	--text-quaternary: #9ca0b0;
+
 	/* Component-specific */
 	--color-input-bg: #ffffff;
 	--color-input-border: #bcc0cc;
@@ -66,6 +72,12 @@
 	--color-accent: #f5c2e7;
 	--color-subtle: #94e2d5;
 
+	/* Text hierarchy */
+	--text-primary: #cdd6f4;
+	--text-secondary: #bac2de;
+	--text-tertiary: #a6adc8;
+	--text-quaternary: #7f849c;
+
 	/* Component-specific */
 	--color-input-bg: #313244;
 	--color-input-border: #6c7086;
@@ -99,6 +111,11 @@
 		--color-error-muted: #f87171;
 		--color-accent: #f5c2e7;
 		--color-subtle: #94e2d5;
+
+		--text-primary: #cdd6f4;
+		--text-secondary: #bac2de;
+		--text-tertiary: #a6adc8;
+		--text-quaternary: #7f849c;
 
 		--color-input-bg: #313244;
 		--color-input-border: #6c7086;
@@ -146,6 +163,11 @@
 	--color-input: var(--color-input-bg);
 	--color-input-border: var(--color-input-border);
 	--color-input-focus: var(--color-input-focus);
+
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
+	--color-text-tertiary: var(--text-tertiary);
+	--color-text-quaternary: var(--text-quaternary);
 }
 
 /* ==========================================================================
@@ -162,6 +184,8 @@ html {
 body {
 	background-color: var(--color-background);
 	color: var(--color-foreground);
+	font-family: 'Inter Variable', system-ui, -apple-system, sans-serif;
+	font-feature-settings: "cv01";
 	min-height: 100vh;
 	/* Line height for readability (1.5-1.75 range) */
 	line-height: 1.6;

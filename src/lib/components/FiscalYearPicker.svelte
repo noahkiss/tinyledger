@@ -2,6 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { clickOutside } from '$lib/actions/clickOutside';
+	import DropdownPanel from './DropdownPanel.svelte';
+	import MenuOption from './MenuOption.svelte';
 
 	let {
 		fiscalYear,
@@ -53,25 +55,15 @@
 	</button>
 
 	{#if isOpen}
-		<div
-			class="absolute left-0 top-full z-50 mt-1 min-w-full rounded-lg border border-border bg-card py-1 shadow-lg"
-		>
+		<DropdownPanel class="min-w-full">
 			{#each availableYears as year}
-				<button
-					type="button"
+				<MenuOption
+					selected={year === fiscalYear}
 					onclick={() => handleSelect(year)}
-					class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm hover:bg-surface {year === fiscalYear
-						? 'text-primary'
-						: 'text-fg'}"
 				>
-					{#if year === fiscalYear}
-						<iconify-icon icon="solar:check-circle-bold" class="text-primary" width="14" height="14"></iconify-icon>
-					{:else}
-						<span class="w-3.5"></span>
-					{/if}
 					<span>{year}</span>
-				</button>
+				</MenuOption>
 			{/each}
-		</div>
+		</DropdownPanel>
 	{/if}
 </div>

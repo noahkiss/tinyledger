@@ -8,6 +8,7 @@
 	import { getFormsForState } from '$lib/data/tax-forms';
 	import { themePreference, type ThemePreference } from '$lib/stores/theme';
 	import Select from '$lib/components/Select.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -128,7 +129,7 @@
 	<h2 class="mb-6 text-xl font-semibold text-fg">Workspace Settings</h2>
 
 	<!-- Appearance Section -->
-	<section data-section="appearance" class="mb-6 rounded-lg border border-card-border bg-card p-6">
+	<section data-section="appearance" class="mb-6 rounded-lg bg-card p-6">
 		<h3 class="text-lg font-medium text-fg">Appearance</h3>
 		<p class="mt-1 text-sm text-muted">Choose how Ledger looks to you.</p>
 
@@ -180,7 +181,7 @@
 				await update();
 			};
 		}}
-		class="space-y-6 rounded-lg border border-border bg-card p-6"
+		class="space-y-6 rounded-lg bg-card p-6"
 	>
 		{#if form?.error}
 			<div class="rounded-md bg-error/10 p-3 text-sm text-error" role="alert">
@@ -239,13 +240,13 @@
 		<div class="grid gap-4 sm:grid-cols-2">
 			<div>
 				<label for="name" class="block text-sm font-medium text-fg">Workspace Name</label>
-				<input
+				<Input
 					type="text"
 					id="name"
 					name="name"
 					value={data.settings.name}
 					required
-					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full" inputSize="lg"
 				/>
 			</div>
 
@@ -269,13 +270,13 @@
 		<!-- Business details -->
 		<div>
 			<label for="businessName" class="block text-sm font-medium text-fg">Business Name</label>
-			<input
+			<Input
 				type="text"
 				id="businessName"
 				name="businessName"
 				value={data.settings.businessName ?? ''}
 				placeholder="Legal business name"
-				class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 block w-full placeholder-muted" inputSize="lg"
 			/>
 		</div>
 
@@ -294,19 +295,19 @@
 		<div class="grid gap-4 sm:grid-cols-2">
 			<div>
 				<label for="phone" class="block text-sm font-medium text-fg">Phone Number</label>
-				<input
+				<Input
 					type="tel"
 					id="phone"
 					name="phone"
 					value={data.settings.phone ?? ''}
 					placeholder="(555) 555-5555"
-					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full placeholder-muted" inputSize="lg"
 				/>
 			</div>
 
 			<div>
 				<label for="foundedYear" class="block text-sm font-medium text-fg">Founded Year</label>
-				<input
+				<Input
 					type="number"
 					id="foundedYear"
 					name="foundedYear"
@@ -314,7 +315,7 @@
 					min="1800"
 					max={new Date().getFullYear()}
 					placeholder="2020"
-					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full placeholder-muted" inputSize="lg"
 				/>
 			</div>
 		</div>
@@ -323,13 +324,13 @@
 			<label for="responsibleParty" class="block text-sm font-medium text-fg"
 				>Responsible Party</label
 			>
-			<input
+			<Input
 				type="text"
 				id="responsibleParty"
 				name="responsibleParty"
 				value={data.settings.responsibleParty ?? ''}
 				placeholder="Owner/manager name"
-				class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 block w-full placeholder-muted" inputSize="lg"
 			/>
 		</div>
 
@@ -462,13 +463,13 @@
 								<label for="stateRateOverride" class="block text-sm font-medium text-fg">
 									State Rate Override (%)
 								</label>
-								<input
+								<Input
 									type="text"
 									id="stateRateOverride"
 									name="stateRateOverride"
 									bind:value={stateRateOverrideInput}
 									placeholder={(currentStateRate * 100).toFixed(2)}
-									class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
+									class="mt-1 block w-full sm:w-32 placeholder-muted" inputSize="lg"
 								/>
 								{#if stateRateWarning}
 									<div class="mt-2 rounded-md bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
@@ -484,13 +485,13 @@
 						<label for="localEitRate" class="block text-sm font-medium text-fg">
 							Local Earned Income Tax Rate (%)
 						</label>
-						<input
+						<Input
 							type="text"
 							id="localEitRate"
 							name="localEitRate"
 							bind:value={localEitRateInput}
 							placeholder="e.g., 1.0"
-							class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
+							class="mt-1 block w-full sm:w-32 placeholder-muted" inputSize="lg"
 						/>
 						<p class="mt-1 text-xs text-muted">
 							Municipal earned income tax rate, if applicable.
@@ -638,7 +639,7 @@
 	<div class="mt-6 grid gap-4 sm:grid-cols-2">
 		<a
 			href="/w/{data.workspaceId}/settings/tags"
-			class="group rounded-lg border border-card-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-surface-alt"
+			class="group rounded-lg bg-card p-4 transition-colors hover:bg-surface-alt"
 		>
 			<div class="flex items-center justify-between">
 				<h3 class="font-medium text-fg">Tags & Categories</h3>
@@ -649,7 +650,7 @@
 
 		<a
 			href="/w/{data.workspaceId}/recurring"
-			class="group rounded-lg border border-card-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-surface-alt"
+			class="group rounded-lg bg-card p-4 transition-colors hover:bg-surface-alt"
 		>
 			<div class="flex items-center justify-between">
 				<h3 class="font-medium text-fg">Recurring Transactions</h3>
@@ -660,7 +661,7 @@
 	</div>
 
 	<!-- Data Import & Export Section (secondary) -->
-	<section class="mt-6 rounded-lg border border-card-border bg-card p-5">
+	<section class="mt-6 rounded-lg bg-card p-5">
 		<h3 class="text-base font-medium text-fg mb-3">Data Import & Export</h3>
 		<p class="text-sm text-muted mb-3">
 			Import historical data or export for backup and migration.
@@ -721,7 +722,7 @@
 	</section>
 
 	<!-- App Installation (secondary) -->
-	<section class="mt-6 rounded-lg border border-card-border bg-card p-5">
+	<section class="mt-6 rounded-lg bg-card p-5">
 		<h3 class="text-base font-medium text-fg mb-3">App Installation</h3>
 		<p class="text-sm text-muted mb-3">
 			Install Ledger to your device's home screen for quick access and a native app experience.

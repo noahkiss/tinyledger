@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { formatCurrency } from '$lib/utils/currency';
+	import Badge from './Badge.svelte';
 
 	interface Props {
 		label: string;
@@ -27,32 +28,24 @@
 			: null
 	);
 
-	// Determine percent change styling
-	const percentClass = $derived(
-		percentChange === null
-			? 'text-muted bg-surface'
-			: percentChange >= 0
-				? 'text-success bg-success/10'
-				: 'text-error bg-error/10'
-	);
 </script>
 
 {#if variant === 'hero'}
 	<!-- Hero card: larger, more prominent -->
 	<div
-		class="rounded-lg border border-card-border bg-gradient-to-br from-card to-surface p-6 shadow-sm"
+		class="rounded-lg border border-card-border bg-gradient-to-br from-card to-surface p-6"
 	>
 		<div class="flex items-start justify-between">
 			<div>
-				<span class="text-sm font-medium text-muted">{label}</span>
+				<span class="text-sm font-medium text-text-tertiary">{label}</span>
 				<div class="mt-2 flex items-baseline gap-2">
 					<span class="text-3xl font-bold {value >= 0 ? 'text-fg' : 'text-error'}">
 						{valuePrefix}{formatCurrency(value)}
 					</span>
 					{#if percentDisplay}
-						<span class="rounded-full px-2 py-0.5 text-xs font-medium {percentClass}">
+						<Badge variant={percentChange === null ? "muted" : percentChange >= 0 ? "success" : "error"}>
 							{percentDisplay}
-						</span>
+						</Badge>
 					{/if}
 				</div>
 			</div>
@@ -65,13 +58,13 @@
 	</div>
 {:else}
 	<!-- Default card: compact supporting card -->
-	<div class="rounded-lg border border-card-border bg-card p-4 shadow-sm">
+	<div class="rounded-lg bg-card p-4">
 		<div class="flex items-center justify-between">
-			<span class="text-sm font-medium text-muted">{label}</span>
+			<span class="text-sm font-medium text-text-tertiary">{label}</span>
 			{#if percentDisplay}
-				<span class="rounded-full px-2 py-0.5 text-xs font-medium {percentClass}">
+				<Badge variant={percentChange === null ? "muted" : percentChange >= 0 ? "success" : "error"}>
 					{percentDisplay}
-				</span>
+				</Badge>
 			{/if}
 		</div>
 		<div class="mt-2">

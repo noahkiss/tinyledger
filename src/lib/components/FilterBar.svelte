@@ -2,6 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { Tag } from '$lib/server/db/schema';
+	import DropdownPanel from './DropdownPanel.svelte';
+	import Input from './Input.svelte';
+	import MenuOption from './MenuOption.svelte';
 
 	let {
 		currentFilters,
@@ -119,6 +122,12 @@
 		updateURL('type', type);
 	}
 
+	function cycleTypeFilter() {
+		const cycle = ['', 'income', 'expense'];
+		const idx = cycle.indexOf(currentFilters.type);
+		handleTypeChange(cycle[(idx + 1) % cycle.length]);
+	}
+
 	function handleMethodToggle(method: string) {
 		if (currentFilters.method === method) {
 			updateURL('method', '');
@@ -205,38 +214,47 @@
 		if (!from && !to) return 'Date';
 		return `${formatDateCompact(from)} - ${formatDateCompact(to)}`;
 	}
+
+	// Type cycle button display config
+	const typeConfig = $derived.by(() => {
+		if (currentFilters.type === 'income') {
+			return {
+				icon: 'solar:add-circle-bold',
+				label: 'Income',
+				classes: 'bg-success/10 text-success',
+				title: 'Showing income (click for expense)'
+			};
+		}
+		if (currentFilters.type === 'expense') {
+			return {
+				icon: 'solar:minus-circle-bold',
+				label: 'Expense',
+				classes: 'bg-error/10 text-error',
+				title: 'Showing expense (click for all)'
+			};
+		}
+		return {
+			icon: 'solar:list-bold',
+			label: 'All',
+			classes: 'text-muted hover:bg-surface hover:text-fg',
+			title: 'Showing all (click for income)'
+		};
+	});
 </script>
 
 <div class="flex flex-col gap-2 py-3" data-component="filter-bar">
 	<!-- Main filter bar -->
-	<div class="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-2">
-		<!-- Type segmented buttons -->
-		<div class="flex rounded-lg border border-border bg-card">
-			<button
-				type="button"
-				class="cursor-pointer px-3 py-2 text-sm font-medium transition-colors first:rounded-l-lg last:rounded-r-lg
-					{currentFilters.type === '' ? 'bg-primary text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('')}
-			>
-				All
-			</button>
-			<button
-				type="button"
-				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors
-					{currentFilters.type === 'income' ? 'bg-success text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('income')}
-			>
-				Income
-			</button>
-			<button
-				type="button"
-				class="cursor-pointer border-l border-border px-3 py-2 text-sm font-medium transition-colors last:rounded-r-lg
-					{currentFilters.type === 'expense' ? 'bg-error text-white' : 'text-muted hover:bg-surface'}"
-				onclick={() => handleTypeChange('expense')}
-			>
-				Expense
-			</button>
-		</div>
+	<div class="flex flex-wrap items-center gap-2 py-2">
+		<!-- Type cycle toggle -->
+		<button
+			type="button"
+			onclick={cycleTypeFilter}
+			class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors {typeConfig.classes}"
+			title={typeConfig.title}
+		>
+			<iconify-icon icon={typeConfig.icon} width="16" height="16"></iconify-icon>
+			<span class="hidden sm:inline">{typeConfig.label}</span>
+		</button>
 
 		<!-- Divider -->
 		<div class="h-5 w-px bg-border"></div>
@@ -278,11 +296,7 @@
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div class="fixed inset-0 z-10" onclick={() => (showTagDropdown = false)}></div>
-					<div
-						class="absolute left-0 top-full z-20 mt-1 max-h-64 w-48 overflow-auto rounded-lg border border-border bg-card shadow-lg"
-						role="group"
-						aria-label="Filter by tags"
-					>
+					<DropdownPanel class="z-20 w-48">
 						{#if availableTags.length === 0}
 							<div class="px-3 py-2 text-sm text-muted">No tags available</div>
 						{:else}
@@ -298,7 +312,7 @@
 								</label>
 							{/each}
 						{/if}
-					</div>
+					</DropdownPanel>
 				{/if}
 			</div>
 
@@ -325,25 +339,21 @@
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div class="fixed inset-0 z-10" onclick={() => (showDateDropdown = false)}></div>
-					<div
-						class="absolute left-0 top-full z-20 mt-1 rounded-lg border border-border bg-card p-3 shadow-lg"
-						role="group"
-						aria-label="Filter by date range"
-					>
+					<DropdownPanel class="z-20 p-3 py-3">
 						<div class="flex flex-col gap-2">
 							<label class="text-xs font-medium text-muted">From</label>
-							<input
+							<Input
 								type="date"
+								inputSize="sm"
 								value={currentFilters.from || fyStart}
 								onchange={handleFromChange}
-								class="rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							<label class="text-xs font-medium text-muted">To</label>
-							<input
+							<Input
 								type="date"
+								inputSize="sm"
 								value={currentFilters.to || fyEnd}
 								onchange={handleToChange}
-								class="rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							{#if hasDateFilter}
 								<button
@@ -356,7 +366,7 @@
 								</button>
 							{/if}
 						</div>
-					</div>
+					</DropdownPanel>
 				{/if}
 			</div>
 
@@ -383,163 +393,43 @@
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div class="fixed inset-0 z-10" onclick={() => (showMethodDropdown = false)}></div>
-					<div
-						class="absolute left-0 top-full z-20 mt-1 w-36 overflow-auto rounded-lg border border-border bg-card shadow-lg"
-						role="menu"
-					>
-						<button
-							type="button"
-							role="menuitem"
-							class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
-								{!currentFilters.method ? 'text-primary' : 'text-fg'}"
+					<DropdownPanel class="z-20 w-36">
+						<MenuOption
+							selected={!currentFilters.method}
 							onclick={() => handleMethodToggle('')}
 						>
-							{#if !currentFilters.method}
-								<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="text-primary"></iconify-icon>
-							{:else}
-								<span class="w-3.5"></span>
-							{/if}
 							All Methods
-						</button>
+						</MenuOption>
 						{#each paymentMethods as method}
-							<button
-								type="button"
-								role="menuitem"
-								class="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm hover:bg-surface
-									{currentFilters.method === method.value ? 'text-primary' : 'text-fg'}"
+							<MenuOption
+								selected={currentFilters.method === method.value}
 								onclick={() => handleMethodToggle(method.value)}
 							>
-								{#if currentFilters.method === method.value}
-									<iconify-icon icon="solar:check-circle-bold" width="14" height="14" class="text-primary"></iconify-icon>
-								{:else}
-									<span class="w-3.5"></span>
-								{/if}
 								{method.label}
-							</button>
+							</MenuOption>
 						{/each}
-					</div>
+					</DropdownPanel>
 				{/if}
 			</div>
 		</div>
 
 		<!-- Mobile Filters button (hidden on desktop) -->
-		<div class="relative sm:hidden">
-			<button
-				type="button"
-				class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface
-					{hasDetailFilters ? 'bg-primary/10 text-primary' : 'text-muted'}"
-				onclick={() => (showFilterPanel = !showFilterPanel)}
-				aria-expanded={showFilterPanel}
-				aria-haspopup="true"
-				aria-label="Filters"
-			>
-				<iconify-icon icon="solar:filter-bold" width="16" height="16"></iconify-icon>
-				{#if activeDetailFilterCount > 0}
-					<span class="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
-						{activeDetailFilterCount}
-					</span>
-				{/if}
-			</button>
-
-			{#if showFilterPanel}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="fixed inset-0 z-10" onclick={() => (showFilterPanel = false)}></div>
-				<div
-					class="absolute left-0 top-full z-20 mt-1 w-64 rounded-lg border border-border bg-card p-3 shadow-lg"
-					role="group"
-					aria-label="Filter options"
-				>
-					<!-- Tags section -->
-					<div class="mb-3">
-						<div class="mb-1.5 text-xs font-medium text-muted">Tags</div>
-						<div class="max-h-32 overflow-auto">
-							{#if availableTags.length === 0}
-								<div class="text-sm text-muted">No tags available</div>
-							{:else}
-								{#each availableTags as tag}
-									<label class="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 hover:bg-surface">
-										<input
-											type="checkbox"
-											checked={currentFilters.tags.includes(tag.id)}
-											onchange={() => handleTagToggle(tag.id)}
-											class="rounded border-border text-primary focus:ring-primary"
-										/>
-										<span class="text-sm text-fg">{tag.name}</span>
-									</label>
-								{/each}
-							{/if}
-						</div>
-					</div>
-
-					<!-- Divider -->
-					<div class="mb-3 border-t border-border"></div>
-
-					<!-- Date range section -->
-					<div class="mb-3">
-						<div class="mb-1.5 text-xs font-medium text-muted">Date Range</div>
-						<div class="flex flex-col gap-2">
-							<div class="flex items-center gap-2">
-								<label class="w-10 text-xs text-muted">From</label>
-								<input
-									type="date"
-									value={currentFilters.from || fyStart}
-									onchange={handleFromChange}
-									class="flex-1 rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-								/>
-							</div>
-							<div class="flex items-center gap-2">
-								<label class="w-10 text-xs text-muted">To</label>
-								<input
-									type="date"
-									value={currentFilters.to || fyEnd}
-									onchange={handleToChange}
-									class="flex-1 rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
-								/>
-							</div>
-							{#if hasDateFilter}
-								<button
-									type="button"
-									onclick={clearDateFilter}
-									class="flex cursor-pointer items-center justify-center gap-1 rounded-md bg-surface px-2 py-1.5 text-xs text-muted hover:text-fg"
-								>
-									<iconify-icon icon="solar:close-circle-linear" width="14" height="14"></iconify-icon>
-									Clear dates
-								</button>
-							{/if}
-						</div>
-					</div>
-
-					<!-- Divider -->
-					<div class="mb-3 border-t border-border"></div>
-
-					<!-- Payment method section -->
-					<div>
-						<div class="mb-1.5 text-xs font-medium text-muted">Payment Method</div>
-						<div class="flex flex-wrap gap-1.5">
-							<button
-								type="button"
-								class="cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-colors
-									{!currentFilters.method ? 'bg-primary/10 text-primary font-medium' : 'text-fg hover:bg-surface'}"
-								onclick={() => handleMethodToggle('')}
-							>
-								All
-							</button>
-							{#each paymentMethods as method}
-								<button
-									type="button"
-									class="cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-colors
-										{currentFilters.method === method.value ? 'bg-primary/10 text-primary font-medium' : 'text-fg hover:bg-surface'}"
-									onclick={() => handleMethodToggle(method.value)}
-								>
-									{method.label}
-								</button>
-							{/each}
-						</div>
-					</div>
-				</div>
+		<button
+			type="button"
+			class="flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1.5 text-sm transition-colors hover:bg-surface sm:hidden
+				{hasDetailFilters ? 'bg-primary/10 text-primary' : 'text-muted'}"
+			onclick={() => (showFilterPanel = !showFilterPanel)}
+			aria-expanded={showFilterPanel}
+			aria-haspopup="true"
+			aria-label="Filters"
+		>
+			<iconify-icon icon="solar:filter-bold" width="16" height="16"></iconify-icon>
+			{#if activeDetailFilterCount > 0}
+				<span class="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+					{activeDetailFilterCount}
+				</span>
 			{/if}
-		</div>
+		</button>
 
 		<!-- Divider -->
 		<div class="h-5 w-px bg-border"></div>
@@ -563,8 +453,8 @@
 		<!-- Spacer -->
 		<div class="flex-1"></div>
 
-		<!-- Filter count -->
-		<div class="text-sm text-muted whitespace-nowrap">
+		<!-- Filter count (right-aligned on mobile via ml-auto) -->
+		<div class="ml-auto text-sm text-text-tertiary whitespace-nowrap">
 			{filteredCount === totalCount
 				? `${totalCount} transactions`
 				: `${filteredCount} of ${totalCount}`}
@@ -586,7 +476,7 @@
 
 	<!-- Search sub-toolbar -->
 	{#if showSearchBar}
-		<div class="rounded-lg border border-border bg-card p-2">
+		<div class="py-1">
 			<div class="relative">
 				<iconify-icon
 					icon="solar:magnifer-linear"
@@ -602,6 +492,97 @@
 					oninput={handlePayeeInput}
 					class="w-full rounded-md border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
+			</div>
+		</div>
+	{/if}
+
+	<!-- Mobile inline filter panel (below toolbar, normal flow) -->
+	{#if showFilterPanel}
+		<div class="border-t border-border py-3 sm:hidden" role="group" aria-label="Filter options">
+			<!-- Tags section -->
+			<div class="mb-3">
+				<div class="mb-1.5 text-xs font-medium text-muted">Tags</div>
+				<div class="max-h-[min(8rem,30vh)] overflow-auto">
+					{#if availableTags.length === 0}
+						<div class="text-sm text-muted">No tags available</div>
+					{:else}
+						{#each availableTags as tag}
+							<label class="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 hover:bg-surface">
+								<input
+									type="checkbox"
+									checked={currentFilters.tags.includes(tag.id)}
+									onchange={() => handleTagToggle(tag.id)}
+									class="rounded border-border text-primary focus:ring-primary"
+								/>
+								<span class="text-sm text-fg">{tag.name}</span>
+							</label>
+						{/each}
+					{/if}
+				</div>
+			</div>
+
+			<!-- Divider -->
+			<div class="mb-3 border-t border-border"></div>
+
+			<!-- Date range section -->
+			<div class="mb-3">
+				<div class="mb-1.5 text-xs font-medium text-muted">Date Range</div>
+				<div class="flex items-center gap-2">
+					<label class="w-10 text-xs text-muted">From</label>
+					<Input
+						type="date"
+						inputSize="sm"
+						value={currentFilters.from || fyStart}
+						onchange={handleFromChange}
+						class="flex-1"
+					/>
+					<label class="w-10 text-xs text-muted">To</label>
+					<Input
+						type="date"
+						inputSize="sm"
+						value={currentFilters.to || fyEnd}
+						onchange={handleToChange}
+						class="flex-1"
+					/>
+				</div>
+				{#if hasDateFilter}
+					<button
+						type="button"
+						onclick={clearDateFilter}
+						class="mt-2 flex cursor-pointer items-center justify-center gap-1 rounded-md bg-surface px-2 py-1.5 text-xs text-muted hover:text-fg"
+					>
+						<iconify-icon icon="solar:close-circle-linear" width="14" height="14"></iconify-icon>
+						Clear dates
+					</button>
+				{/if}
+			</div>
+
+			<!-- Divider -->
+			<div class="mb-3 border-t border-border"></div>
+
+			<!-- Payment method section -->
+			<div>
+				<div class="mb-1.5 text-xs font-medium text-muted">Payment Method</div>
+				<div class="flex flex-wrap gap-1.5">
+					<button
+						type="button"
+						class="cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-colors
+							{!currentFilters.method ? 'bg-primary/10 text-primary font-medium' : 'text-fg hover:bg-surface'}"
+						onclick={() => handleMethodToggle('')}
+					>
+						All
+					</button>
+					{#each paymentMethods as method}
+						<button
+							type="button"
+							class="cursor-pointer rounded-md px-2.5 py-1.5 text-sm transition-colors
+								{currentFilters.method === method.value ? 'bg-primary/10 text-primary font-medium' : 'text-fg hover:bg-surface'}"
+							onclick={() => handleMethodToggle(method.value)}
+						>
+							{method.label}
+						</button>
+					{/each}
+				</div>
 			</div>
 		</div>
 	{/if}

@@ -4,6 +4,8 @@
 	import type { WorkspaceEntry } from '$lib/server/workspace/registry';
 	import { clickOutside } from '$lib/actions/clickOutside';
 	import WorkspaceLogo from './WorkspaceLogo.svelte';
+	import DropdownPanel from './DropdownPanel.svelte';
+	import MenuOption from './MenuOption.svelte';
 
 	interface Props {
 		currentWorkspaceId: string;
@@ -66,23 +68,14 @@
 	</button>
 
 	{#if isOpen}
-		<div
-			class="absolute left-0 top-full z-50 mt-1 w-64 rounded-lg border border-border bg-card py-1 shadow-lg"
-		>
+		<DropdownPanel class="w-64">
 			{#each workspaces as workspace}
-				<button
-					type="button"
+				<MenuOption
+					selected={workspace.id === currentWorkspaceId}
 					onclick={() => handleSelect(workspace.id)}
-					class="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-left text-sm hover:bg-surface {workspace.id ===
-					currentWorkspaceId
-						? 'bg-primary/10 text-primary'
-						: 'text-fg'}"
 				>
 					<span class="flex-1 truncate">{workspace.name}</span>
-					{#if workspace.id === currentWorkspaceId}
-						<iconify-icon icon="solar:check-circle-bold" class="text-primary" width="16" height="16"></iconify-icon>
-					{/if}
-				</button>
+				</MenuOption>
 			{/each}
 
 			<div class="my-1 border-t border-card-border"></div>
@@ -94,6 +87,6 @@
 				<iconify-icon icon="solar:add-circle-linear" width="16" height="16"></iconify-icon>
 				<span>Create New Workspace</span>
 			</a>
-		</div>
+		</DropdownPanel>
 	{/if}
 </div>

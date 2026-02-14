@@ -31,13 +31,6 @@
 	});
 </script>
 
-<div class="absolute -left-3 flex items-center" data-component="timeline-date-marker">
-	<!-- Circle marker on the timeline -->
-	<span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-border bg-card">
-		<span class="h-2 w-2 rounded-full {dotColorClass}"></span>
-	</span>
-</div>
-
-<time datetime={date} class="mb-2 block text-sm font-medium text-muted">
+<time datetime={date} class="mb-2 block text-xs font-medium text-text-tertiary uppercase tracking-wide" data-component="timeline-date-marker">
 	{formattedDate}
 </time>

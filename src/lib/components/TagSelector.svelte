@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Tag } from '$lib/server/db/schema';
 	import Select from '$lib/components/Select.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	type TagAllocation = {
 		tagId: number;
@@ -146,14 +147,14 @@
 			</div>
 
 			<div class="flex items-center gap-1">
-				<input
+				<Input
 					type="number"
 					name="percentage_{i}"
 					value={allocation.percentage}
 					min="0"
 					max="100"
 					oninput={(e) => updatePercentage(i, parseInt(e.currentTarget.value) || 0)}
-					class="w-20 rounded-md border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-20 text-center"
 				/>
 				<span class="text-muted">%</span>
 			</div>
@@ -197,12 +198,12 @@
 	<!-- Inline tag creation section -->
 	{#if !locked && onCreateTag}
 		<div class="mt-3 flex gap-2 border-t border-border pt-3">
-			<input
+			<Input
 				type="text"
 				bind:value={newTagName}
 				placeholder="Create new tag..."
 				onkeydown={handleCreateKeydown}
-				class="flex-1 rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="flex-1"
 			/>
 			<button
 				type="button"

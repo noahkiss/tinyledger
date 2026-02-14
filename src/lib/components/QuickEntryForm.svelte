@@ -2,6 +2,8 @@
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import CurrencyInput from './CurrencyInput.svelte';
+	import DropdownPanel from './DropdownPanel.svelte';
+	import Input from './Input.svelte';
 	import DateInput from './DateInput.svelte';
 	import Select from './Select.svelte';
 	import type { Tag } from '$lib/server/db/schema';
@@ -194,7 +196,7 @@
 				{type === 'income' ? 'Received from' : 'Paid to'}
 			</label>
 			<div class="relative mt-1">
-				<input
+				<Input
 					type="text"
 					id="quick-payee"
 					name="payee"
@@ -204,12 +206,11 @@
 					onblur={handlePayeeBlur}
 					autocomplete="off"
 					placeholder={type === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
-					class="w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-full"
 				/>
 
 				{#if showPayeeDropdown && filteredPayees.length > 0}
-					<ul
-						class="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-border bg-card shadow-lg"
+					<DropdownPanel class="w-full"
 					>
 						{#each filteredPayees as p (p.payee)}
 							<li>
@@ -225,7 +226,7 @@
 								</button>
 							</li>
 						{/each}
-					</ul>
+					</DropdownPanel>
 				{/if}
 			</div>
 		</div>
@@ -268,13 +269,13 @@
 			<label for="quick-description" class="block text-sm font-medium text-fg">
 				Note <span class="font-normal text-muted">(optional)</span>
 			</label>
-			<input
+			<Input
 				type="text"
 				id="quick-description"
 				name="description"
 				bind:value={description}
 				placeholder="Brief note..."
-				class="mt-1 w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 w-full"
 			/>
 		</div>
 
@@ -285,7 +286,7 @@
 		<button
 			type="submit"
 			disabled={isSubmitting}
-			class="w-full rounded-md px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+			class="w-full rounded-md px-6 py-3 text-lg font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			class:bg-success={type === 'income'}
 			class:hover:bg-success-hover={type === 'income'}
 			class:bg-error={type === 'expense'}

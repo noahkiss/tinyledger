@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Badge from './Badge.svelte';
+	import Input from './Input.svelte';
 
 	interface Filing {
 		id: string;
@@ -49,32 +51,26 @@
 	}
 </script>
 
-<div class="rounded-lg border border-card-border bg-card p-4 shadow-sm {getStatusClass()}" data-filing-id={filing.id}>
+<div class="rounded-lg border border-card-border bg-card p-4 {getStatusClass()}" data-filing-id={filing.id}>
 	<!-- Header: name + status badge -->
 	<div class="flex items-start justify-between mb-2">
 		<div class="flex-1 min-w-0">
 			<h3 class="font-semibold text-fg truncate">{filing.name}</h3>
-			<p class="text-xs text-muted mt-0.5 line-clamp-2">{filing.description}</p>
+			<p class="text-xs text-text-secondary mt-0.5 line-clamp-2">{filing.description}</p>
 		</div>
 		<div class="ml-2 flex-shrink-0">
 			{#if filing.isComplete}
-				<span class="inline-flex items-center rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
-					Complete
-				</span>
+				<Badge variant="success">Complete</Badge>
 			{:else if filing.isPastDue}
-				<span class="inline-flex items-center rounded-full bg-error/10 px-2 py-0.5 text-xs font-medium text-error">
-					Past Due
-				</span>
+				<Badge variant="error">Past Due</Badge>
 			{:else if filing.isUpcoming}
-				<span class="inline-flex items-center rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">
-					Upcoming
-				</span>
+				<Badge variant="warning">Upcoming</Badge>
 			{/if}
 		</div>
 	</div>
 
 	<!-- Due date line -->
-	<p class="text-sm text-muted">Due: {filing.deadlineLabel}</p>
+	<p class="text-sm text-text-tertiary">Due: {filing.deadlineLabel}</p>
 
 	<!-- Category badge + instructions link -->
 	<div class="flex items-center gap-2 mt-2">
@@ -129,12 +125,12 @@
 					<label for="filedAt-{filing.id}" class="block text-xs font-medium text-fg">
 						Date Filed
 					</label>
-					<input
+					<Input
 						type="date"
 						id="filedAt-{filing.id}"
 						name="filedAt"
 						value={today}
-						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full"
 					/>
 				</div>
 
@@ -142,12 +138,12 @@
 					<label for="confirmationNumber-{filing.id}" class="block text-xs font-medium text-fg">
 						Confirmation Number (optional)
 					</label>
-					<input
+					<Input
 						type="text"
 						id="confirmationNumber-{filing.id}"
 						name="confirmationNumber"
 						placeholder="e.g., 1234567890"
-						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full"
 					/>
 				</div>
 
@@ -155,12 +151,12 @@
 					<label for="notes-{filing.id}" class="block text-xs font-medium text-fg">
 						Notes (optional)
 					</label>
-					<input
+					<Input
 						type="text"
 						id="notes-{filing.id}"
 						name="notes"
 						placeholder="e.g., E-filed via TurboTax"
-						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full"
 					/>
 				</div>
 

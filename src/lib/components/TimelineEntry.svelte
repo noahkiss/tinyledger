@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/currency';
+	import Badge from './Badge.svelte';
 
 	type TransactionWithTags = {
 		id: number;
@@ -38,7 +39,7 @@
 
 <a
 	href="/w/{workspaceId}/transactions/{transaction.publicId}"
-	class="block rounded-lg border border-card-border bg-card p-3 shadow-sm transition-all hover:border-border hover:shadow-md
+	class="block border-b border-border px-3 py-2.5 transition-colors hover:bg-surface
 		{transaction.voidedAt ? 'opacity-60' : ''}"
 	data-component="transaction-card"
 >
@@ -51,11 +52,7 @@
 					{transaction.payee}
 				</span>
 				{#if transaction.voidedAt}
-					<span
-						class="inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-xs font-medium text-muted"
-					>
-						Voided
-					</span>
+					<Badge variant="muted">Voided</Badge>
 				{/if}
 				{#if hasAttachment}
 					<iconify-icon
@@ -68,7 +65,7 @@
 				{/if}
 			</div>
 			{#if primaryTag}
-				<span class="mt-1 inline-block text-xs text-muted">
+				<span class="mt-1 inline-block text-xs text-text-tertiary">
 					{primaryTag.tagName}
 				</span>
 			{/if}

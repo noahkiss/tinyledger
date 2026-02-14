@@ -5,6 +5,7 @@
 	import TagSelector from '$lib/components/TagSelector.svelte';
 	import PaymentMethodSelect from '$lib/components/PaymentMethodSelect.svelte';
 	import Select from '$lib/components/Select.svelte';
+	import Input from '$lib/components/Input.svelte';
 	import { formatCurrency } from '$lib/utils/currency';
 	import type { Tag } from '$lib/server/db/schema';
 
@@ -232,14 +233,14 @@
 						{transactionType === 'income' ? 'Received from' : 'Paid to'}
 					</label>
 					<div class="mt-1">
-						<input
+						<Input
 							type="text"
 							id="payee"
 							name="payee"
 							bind:value={payee}
 							required
 							placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Rent'}
-							class="w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="w-full" inputSize="lg"
 						/>
 					</div>
 				</div>
@@ -310,13 +311,13 @@
 					{#if frequency === 'custom'}
 						<div class="mt-3 flex items-center gap-2">
 							<span class="text-sm text-muted">Every</span>
-							<input
+							<Input
 								type="number"
 								name="interval"
 								bind:value={interval}
 								min="1"
 								max="365"
-								class="w-16 rounded-md border border-input-border bg-input px-2 py-1.5 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="w-16 text-center" inputSize="sm"
 							/>
 							<Select
 								name="customUnit"
@@ -336,13 +337,13 @@
 				<div class="grid gap-4 sm:grid-cols-2">
 					<div>
 						<label for="startDate" class="block text-sm font-medium text-fg">Start Date</label>
-						<input
+						<Input
 							type="date"
 							id="startDate"
 							name="startDate"
 							bind:value={startDate}
 							required
-							class="mt-1 w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="mt-1 w-full" inputSize="lg"
 						/>
 					</div>
 
@@ -358,13 +359,13 @@
 							<label for="hasEndDate" class="text-sm font-medium text-fg">Set end date</label>
 						</div>
 						{#if hasEndDate}
-							<input
+							<Input
 								type="date"
 								id="endDate"
 								name="endDate"
 								bind:value={endDate}
 								min={startDate}
-								class="mt-2 w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="mt-2 w-full" inputSize="lg"
 							/>
 						{/if}
 					</div>

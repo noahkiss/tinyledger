@@ -186,7 +186,7 @@
 		</div>
 	{/if}
 
-	<div class="rounded-lg bg-card shadow-sm border border-border" class:opacity-75={isVoided && !editMode}>
+	<div class="rounded-lg bg-card border border-border" class:opacity-75={isVoided && !editMode}>
 		{#if editMode}
 			<!-- Edit Mode -->
 			<form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance={() => {

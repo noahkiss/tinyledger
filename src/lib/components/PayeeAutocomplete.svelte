@@ -1,6 +1,6 @@
 <script lang="ts">
 	import createFuzzySearch from '@nozbe/microfuzz';
-
+	
 	type PayeeHistory = {
 		payee: string;
 		count: number;
@@ -111,7 +111,7 @@
 
 	{#if showDropdown && filteredPayees.length > 0}
 		<ul
-			class="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-lg border border-border bg-card shadow-lg"
+			class="absolute z-10 mt-1 w-full max-h-[min(15rem,50vh)] overflow-auto rounded-lg border border-border bg-card shadow-lg"
 			role="listbox"
 			id="payee-listbox"
 		>

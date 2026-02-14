@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 	import Select from '$lib/components/Select.svelte';
+	import Input from '$lib/components/Input.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -181,13 +182,13 @@
 
 				<div class="mb-4">
 					<label for="newName" class="block text-sm font-medium text-fg">New Name</label>
-					<input
+					<Input
 						type="text"
 						id="newName"
 						name="newName"
 						bind:value={renameValue}
 						required
-						class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full" inputSize="lg"
 					/>
 				</div>
 
