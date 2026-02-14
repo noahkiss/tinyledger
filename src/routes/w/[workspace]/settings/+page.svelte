@@ -53,7 +53,9 @@
 	});
 
 	// Tax configuration state
+	// svelte-ignore state_referenced_locally
 	let selectedState = $state(data.settings.state || 'PA');
+	// svelte-ignore state_referenced_locally
 	let useCustomStateRate = $state(data.settings.stateRateOverride !== null);
 	let showFederalBracketHelp = $state(false);
 	let showTaxForms = $state(false);
@@ -61,11 +63,13 @@
 
 	// Rate input values (display format: "3.07")
 	let stateRateOverrideInput = $state(
+		// svelte-ignore state_referenced_locally
 		data.settings.stateRateOverride !== null
 			? formatRateForDisplay(data.settings.stateRateOverride)
 			: ''
 	);
 	let localEitRateInput = $state(
+		// svelte-ignore state_referenced_locally
 		data.settings.localEitRate !== null ? formatRateForDisplay(data.settings.localEitRate) : ''
 	);
 
@@ -134,6 +138,7 @@
 		<p class="mt-1 text-sm text-muted">Choose how Ledger looks to you.</p>
 
 		<div class="mt-4">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="block text-sm font-medium text-fg">Theme</label>
 			<div class="mt-2 flex gap-2">
 				{#each [

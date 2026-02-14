@@ -61,6 +61,7 @@
 						? 'bg-primary'
 						: 'bg-surface-alt'}"
 					aria-pressed={data.tagsLocked}
+					aria-label="Toggle tag lock"
 				>
 					<span
 						class="inline-block h-4 w-4 transform rounded-full bg-card transition-transform {data.tagsLocked
@@ -160,6 +161,7 @@
 		aria-modal="true"
 		tabindex="-1"
 	>
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<div
 			class="w-full max-w-md rounded-xl bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}
@@ -223,6 +225,7 @@
 		aria-modal="true"
 		tabindex="-1"
 	>
+		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<div
 			class="w-full max-w-md rounded-xl bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}

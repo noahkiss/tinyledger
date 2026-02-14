@@ -23,7 +23,7 @@
 
 	let { data, workspaceId, fiscalYear }: Props = $props();
 
-	let canvas: HTMLCanvasElement;
+	let canvas = $state<HTMLCanvasElement | undefined>();
 	let chart: Chart | null = null;
 
 	// Get last day of month helper

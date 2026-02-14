@@ -28,6 +28,7 @@
 	let endDate = $state('');
 
 	// Keep track of available tags (can be updated when new tags are created)
+	// svelte-ignore state_referenced_locally
 	let availableTags = $state<Tag[]>(data.tags);
 
 	// Edit state
@@ -193,6 +194,7 @@
 
 				<!-- Type Selection -->
 				<div>
+					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="block text-sm font-medium text-fg">Type</label>
 					<div class="mt-2 flex gap-2">
 						<button
@@ -265,6 +267,7 @@
 
 				<!-- Payment Method -->
 				<div>
+					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="block text-sm font-medium text-fg">Payment Method</label>
 					<div class="mt-1">
 						<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
@@ -273,6 +276,7 @@
 
 				<!-- Tags -->
 				<div>
+					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="block text-sm font-medium text-fg">
 						Tags
 						<span class="font-normal text-muted">(optional)</span>

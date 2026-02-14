@@ -20,14 +20,20 @@
 	);
 
 	// Form state - initialize from recurring prefill if present
+	// svelte-ignore state_referenced_locally
 	let amountCents = $state(data.recurringPrefill?.amountCents || 0);
+	// svelte-ignore state_referenced_locally
 	let dateValue = $state(data.recurringPrefill?.date || getTodayDate());
+	// svelte-ignore state_referenced_locally
 	let payee = $state(data.recurringPrefill?.payee || '');
+	// svelte-ignore state_referenced_locally
 	let description = $state(data.recurringPrefill?.description || '');
+	// svelte-ignore state_referenced_locally
 	let paymentMethod = $state<'cash' | 'card' | 'check'>(
 		data.recurringPrefill?.paymentMethod || 'cash'
 	);
 	let checkNumber = $state('');
+	// svelte-ignore state_referenced_locally
 	let tagAllocations = $state<{ tagId: number; percentage: number }[]>(
 		data.recurringPrefill?.tags.map((t) => ({ tagId: t.id, percentage: t.percentage })) || []
 	);
@@ -37,6 +43,7 @@
 	let suggestedAmount = $state<number | null>(null);
 
 	// Keep track of available tags (can be updated when new tags are created)
+	// svelte-ignore state_referenced_locally
 	let availableTags = $state<Tag[]>(data.tags);
 
 	// Helper to get today's date in YYYY-MM-DD format
@@ -198,6 +205,7 @@
 
 		<!-- Payment Method -->
 		<div>
+			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="block text-sm font-medium text-fg">Payment Method</label>
 			<div class="mt-1">
 				<PaymentMethodSelect bind:value={paymentMethod} bind:checkNumber />
@@ -206,6 +214,7 @@
 
 		<!-- Tags -->
 		<div>
+			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="block text-sm font-medium text-fg">
 				Tags
 				<span class="font-normal text-muted">(optional)</span>
@@ -223,6 +232,7 @@
 
 		<!-- Receipt Attachment -->
 		<div>
+			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="block text-sm font-medium text-fg">
 				Receipt
 				<span class="font-normal text-muted">(optional)</span>

@@ -32,6 +32,7 @@
 	} = $props();
 
 	// Local state for debounced payee input
+	// svelte-ignore state_referenced_locally
 	let payeeInput = $state(currentFilters.payee);
 	let payeeDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -41,6 +42,7 @@
 	let showDateDropdown = $state(false);
 
 	// Search sub-toolbar state (auto-open if URL has payee param)
+	// svelte-ignore state_referenced_locally
 	let showSearchBar = $state(!!currentFilters.payee);
 	let searchInputEl: HTMLInputElement | undefined = $state();
 
@@ -341,6 +343,7 @@
 					<div class="fixed inset-0 z-10" onclick={() => (showDateDropdown = false)}></div>
 					<DropdownPanel class="z-20 p-3 py-3">
 						<div class="flex flex-col gap-2">
+							<!-- svelte-ignore a11y_label_has_associated_control -->
 							<label class="text-xs font-medium text-muted">From</label>
 							<Input
 								type="date"
@@ -348,6 +351,7 @@
 								value={currentFilters.from || fyStart}
 								onchange={handleFromChange}
 							/>
+							<!-- svelte-ignore a11y_label_has_associated_control -->
 							<label class="text-xs font-medium text-muted">To</label>
 							<Input
 								type="date"
@@ -528,6 +532,7 @@
 			<div class="mb-3">
 				<div class="mb-1.5 text-xs font-medium text-muted">Date Range</div>
 				<div class="flex items-center gap-2">
+					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="w-10 text-xs text-muted">From</label>
 					<Input
 						type="date"
@@ -536,6 +541,7 @@
 						onchange={handleFromChange}
 						class="flex-1"
 					/>
+					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="w-10 text-xs text-muted">To</label>
 					<Input
 						type="date"

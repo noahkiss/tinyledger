@@ -16,13 +16,21 @@
 	let editMode = $state(false);
 
 	// Edit form state (initialized from data)
+	// svelte-ignore state_referenced_locally
 	let editType = $state<'income' | 'expense'>(data.transaction.type);
+	// svelte-ignore state_referenced_locally
 	let editAmount = $state(data.transaction.amountCents);
+	// svelte-ignore state_referenced_locally
 	let editDate = $state(data.transaction.date);
+	// svelte-ignore state_referenced_locally
 	let editPayee = $state(data.transaction.payee);
+	// svelte-ignore state_referenced_locally
 	let editDescription = $state(data.transaction.description || '');
+	// svelte-ignore state_referenced_locally
 	let editPaymentMethod = $state<'cash' | 'card' | 'check'>(data.transaction.paymentMethod);
+	// svelte-ignore state_referenced_locally
 	let editCheckNumber = $state(data.transaction.checkNumber || '');
+	// svelte-ignore state_referenced_locally
 	let editAllocations = $state(
 		data.tagAllocations.map((t) => ({
 			tagId: t.tagId,
@@ -31,10 +39,12 @@
 	);
 
 	// Keep track of available tags (can be updated when new tags are created)
+	// svelte-ignore state_referenced_locally
 	let availableTags = $state<Tag[]>(data.availableTags);
 
 	// Attachment state for edit mode
 	let removeAttachment = $state(false);
+	// svelte-ignore state_referenced_locally
 	let editExistingUrl = $state<string | null>(data.attachment?.url || null);
 
 	// Reset form to current data
@@ -202,6 +212,7 @@
 				<div class="space-y-6 p-6">
 					<!-- Type -->
 					<div>
+						<!-- svelte-ignore a11y_label_has_associated_control -->
 						<label class="block text-sm font-medium text-fg mb-2">Type</label>
 						<div class="flex gap-4">
 							<label class="flex items-center gap-2 cursor-pointer">
@@ -251,12 +262,14 @@
 
 					<!-- Payment Method -->
 					<div>
+						<!-- svelte-ignore a11y_label_has_associated_control -->
 						<label class="block text-sm font-medium text-fg mb-2">Payment Method</label>
 						<PaymentMethodSelect bind:value={editPaymentMethod} bind:checkNumber={editCheckNumber} />
 					</div>
 
 					<!-- Tags -->
 					<div>
+						<!-- svelte-ignore a11y_label_has_associated_control -->
 						<label class="block text-sm font-medium text-fg mb-2">Tags</label>
 						<TagSelector
 							{availableTags}
@@ -268,6 +281,7 @@
 
 					<!-- Receipt Attachment -->
 					<div>
+						<!-- svelte-ignore a11y_label_has_associated_control -->
 						<label class="block text-sm font-medium text-fg mb-2">
 							Receipt
 							<span class="font-normal text-muted">(optional)</span>

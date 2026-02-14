@@ -17,6 +17,7 @@
 
 	let { title, totalCents, items, expanded = false, variant = 'default' }: Props = $props();
 
+	// svelte-ignore state_referenced_locally
 	let isExpanded = $state(expanded);
 </script>
 
