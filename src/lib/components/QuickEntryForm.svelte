@@ -119,7 +119,7 @@
 		<button
 			type="button"
 			onclick={onClose}
-			class="rounded-lg p-2 text-muted hover:bg-surface"
+			class="rounded-md p-2 text-muted hover:bg-surface"
 			aria-label="Close"
 		>
 			<iconify-icon icon="solar:close-circle-linear" width="20" height="20"></iconify-icon>
@@ -129,7 +129,7 @@
 	<!-- Success indicator -->
 	{#if showSuccess}
 		<div
-			class="flex items-center gap-2 rounded-lg bg-success/10 px-4 py-2 text-success transition-opacity"
+			class="flex items-center gap-2 rounded-md bg-success/10 px-4 py-2 text-success transition-opacity"
 			role="status"
 			aria-live="polite"
 		>
@@ -140,7 +140,7 @@
 
 	<!-- Error display -->
 	{#if errorMessage}
-		<div class="rounded-lg bg-error/10 px-4 py-2 text-sm text-error" role="alert">
+		<div class="rounded-md bg-error/10 px-4 py-2 text-sm text-error" role="alert">
 			{errorMessage}
 		</div>
 	{/if}
@@ -162,7 +162,7 @@
 			<button
 				type="button"
 				onclick={() => (type = type === 'income' ? 'expense' : 'income')}
-				class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-lg font-semibold text-white transition-colors"
+				class="flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-lg font-semibold text-white transition-colors"
 				class:bg-success={type === 'income'}
 				class:hover:bg-success-hover={type === 'income'}
 				class:bg-error={type === 'expense'}
@@ -204,7 +204,7 @@
 					onblur={handlePayeeBlur}
 					autocomplete="off"
 					placeholder={type === 'income' ? 'e.g., Client Name' : 'e.g., Office Depot'}
-					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 
 				{#if showPayeeDropdown && filteredPayees.length > 0}
@@ -274,7 +274,7 @@
 				name="description"
 				bind:value={description}
 				placeholder="Brief note..."
-				class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 
@@ -285,7 +285,7 @@
 		<button
 			type="submit"
 			disabled={isSubmitting}
-			class="w-full rounded-lg px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+			class="w-full rounded-md px-6 py-3 text-lg font-semibold text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			class:bg-success={type === 'income'}
 			class:hover:bg-success-hover={type === 'income'}
 			class:bg-error={type === 'expense'}

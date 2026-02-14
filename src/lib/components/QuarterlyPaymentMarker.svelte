@@ -61,13 +61,13 @@
 
 <a
 	href="/w/{workspaceId}/taxes"
-	class="block rounded-lg border-2 border-dashed p-3 transition-colors hover:border-overlay {borderClass}"
+	class="block rounded-md border-2 border-dashed p-3 transition-colors hover:border-overlay {borderClass}"
 	data-component="quarterly-payment-marker"
 	data-quarter={quarter}
 >
 	<div class="flex items-start gap-3">
 		<!-- Calendar icon -->
-		<div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-surface text-muted">
+		<div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-surface text-muted">
 			<iconify-icon icon="solar:calendar-bold" width="16" height="16"></iconify-icon>
 		</div>
 

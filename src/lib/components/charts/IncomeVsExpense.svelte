@@ -92,6 +92,10 @@
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return;
 
+		const styles = getComputedStyle(document.documentElement);
+		const successColor = styles.getPropertyValue('--color-success').trim();
+		const errorColor = styles.getPropertyValue('--color-error').trim();
+
 		chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
@@ -100,13 +104,13 @@
 					{
 						label: 'Income',
 						data: data.map((d) => d.income),
-						backgroundColor: '#22c55e',
+						backgroundColor: successColor,
 						borderRadius: 4
 					},
 					{
 						label: 'Expense',
 						data: data.map((d) => d.expense),
-						backgroundColor: '#ef4444',
+						backgroundColor: errorColor,
 						borderRadius: 4
 					}
 				]

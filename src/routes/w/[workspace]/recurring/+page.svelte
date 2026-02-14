@@ -141,7 +141,7 @@
 		<h2 class="text-2xl font-semibold text-fg">Recurring Transactions</h2>
 		<button
 			type="button"
-			class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+			class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 			onclick={() => {
 				resetForm();
 				showCreateForm = !showCreateForm;
@@ -153,14 +153,14 @@
 
 	<!-- Error/Success messages -->
 	{#if form?.error}
-		<div class="rounded-lg bg-error/10 p-4 text-error" role="alert">
+		<div class="rounded-md bg-error/10 p-4 text-error" role="alert">
 			<p class="font-medium">Error</p>
 			<p class="mt-1 text-sm">{form.error}</p>
 		</div>
 	{/if}
 
 	{#if form?.success}
-		<div class="rounded-lg bg-success/10 p-4 text-success" role="status" aria-live="polite">
+		<div class="rounded-md bg-success/10 p-4 text-success" role="status" aria-live="polite">
 			<p class="font-medium">Success</p>
 			<p class="mt-1 text-sm">Recurring template saved.</p>
 		</div>
@@ -196,7 +196,7 @@
 					<div class="mt-2 flex gap-2">
 						<button
 							type="button"
-							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
+							class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'income'
 								? 'bg-success text-white'
 								: 'bg-surface text-fg hover:bg-surface-alt'}"
@@ -206,7 +206,7 @@
 						</button>
 						<button
 							type="button"
-							class="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors {transactionType ===
+							class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors {transactionType ===
 							'expense'
 								? 'bg-error text-white'
 								: 'bg-surface text-fg hover:bg-surface-alt'}"
@@ -239,7 +239,7 @@
 							bind:value={payee}
 							required
 							placeholder={transactionType === 'income' ? 'e.g., Client Name' : 'e.g., Rent'}
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 					</div>
 				</div>
@@ -256,7 +256,7 @@
 							name="description"
 							bind:value={description}
 							rows="2"
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							placeholder="Add any notes..."
 						></textarea>
 					</div>
@@ -316,7 +316,7 @@
 								bind:value={interval}
 								min="1"
 								max="365"
-								class="w-16 rounded-lg border border-input-border bg-input px-2 py-1 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="w-16 rounded-md border border-input-border bg-input px-2 py-1.5 text-center text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							<Select
 								name="customUnit"
@@ -342,7 +342,7 @@
 							name="startDate"
 							bind:value={startDate}
 							required
-							class="mt-1 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="mt-1 w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						/>
 					</div>
 
@@ -353,7 +353,7 @@
 								id="hasEndDate"
 								name="hasEndDate"
 								bind:checked={hasEndDate}
-								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
+								class="h-4 w-4 rounded border-input-border text-primary focus:ring-2 focus:ring-primary/50"
 							/>
 							<label for="hasEndDate" class="text-sm font-medium text-fg">Set end date</label>
 						</div>
@@ -364,7 +364,7 @@
 								name="endDate"
 								bind:value={endDate}
 								min={startDate}
-								class="mt-2 w-full rounded-lg border border-input-border bg-input px-3 py-2 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="mt-2 w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 						{/if}
 					</div>
@@ -374,7 +374,7 @@
 				<div class="flex gap-3 pt-4">
 					<button
 						type="button"
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 						onclick={() => {
 							showCreateForm = false;
 							resetForm();
@@ -384,7 +384,7 @@
 					</button>
 					<button
 						type="submit"
-						class="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+						class="rounded-md bg-primary px-6 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 					>
 						{editingTemplate ? 'Update Template' : 'Create Recurring'}
 					</button>
@@ -455,7 +455,7 @@
 						<div class="flex items-center gap-1">
 							<button
 								type="button"
-								class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+								class="rounded-md p-2 text-muted hover:bg-surface hover:text-fg"
 								onclick={() => editTemplate(template)}
 								title="Edit"
 							>
@@ -465,7 +465,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-warning/10 hover:text-warning"
+									class="rounded-md p-2 text-muted hover:bg-warning/10 hover:text-warning"
 									title="Deactivate"
 								>
 									<iconify-icon icon="solar:pause-bold" width="16" height="16"></iconify-icon>
@@ -475,7 +475,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-error/10 hover:text-error"
+									class="rounded-md p-2 text-muted hover:bg-error/10 hover:text-error"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>
@@ -495,7 +495,7 @@
 			</p>
 			<button
 				type="button"
-				class="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+				class="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				onclick={() => {
 					resetForm();
 					showCreateForm = true;
@@ -530,7 +530,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-success/10 hover:text-success"
+									class="rounded-md p-2 text-muted hover:bg-success/10 hover:text-success"
 									title="Reactivate"
 								>
 									<iconify-icon icon="solar:play-bold" width="16" height="16"></iconify-icon>
@@ -540,7 +540,7 @@
 								<input type="hidden" name="templateId" value={template.id} />
 								<button
 									type="submit"
-									class="rounded-lg p-2 text-muted hover:bg-error/10 hover:text-error"
+									class="rounded-md p-2 text-muted hover:bg-error/10 hover:text-error"
 									title="Delete"
 								>
 									<iconify-icon icon="solar:trash-bin-bold" width="16" height="16"></iconify-icon>

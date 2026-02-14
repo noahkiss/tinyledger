@@ -33,7 +33,7 @@
 					</p>
 					<a
 						href="/w/{data.workspaceId}/settings"
-						class="mt-4 inline-flex items-center gap-2 rounded-lg bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover transition-colors"
+						class="mt-4 inline-flex items-center gap-2 rounded-md bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover transition-colors"
 					>
 						<iconify-icon icon="solar:settings-bold" width="16" height="16"></iconify-icon>
 						Configure Tax Settings
@@ -48,7 +48,7 @@
 		<h1 class="text-2xl font-bold text-fg">Tax Estimates</h1>
 
 		<!-- Disclaimer banner -->
-		<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
+		<div class="rounded-md border border-primary/30 bg-primary/10 px-4 py-3">
 			<p class="text-sm text-primary">
 				<strong>Note:</strong> These estimates are for planning purposes only. Consult a tax professional
 				for actual filing.
@@ -162,7 +162,7 @@
 		</section>
 
 		<!-- Filing Tracking Link -->
-		<div class="rounded-lg border border-primary/30 bg-primary/10 p-4">
+		<div class="rounded-md border border-primary/30 bg-primary/10 p-4">
 			<div class="flex items-center justify-between">
 				<div>
 					<h3 class="font-medium text-primary">Track Your Filings</h3>
@@ -170,7 +170,7 @@
 				</div>
 				<a
 					href="/w/{data.workspaceId}/filings?fy={data.fiscalYear}"
-					class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+					class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					View Filings
 				</a>

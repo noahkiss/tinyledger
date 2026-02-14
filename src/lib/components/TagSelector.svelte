@@ -153,7 +153,7 @@
 					min="0"
 					max="100"
 					oninput={(e) => updatePercentage(i, parseInt(e.currentTarget.value) || 0)}
-					class="w-20 rounded-lg border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-20 rounded-md border border-input-border bg-input px-3 py-2 text-center focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 				<span class="text-muted">%</span>
 			</div>
@@ -202,13 +202,13 @@
 				bind:value={newTagName}
 				placeholder="Create new tag..."
 				onkeydown={handleCreateKeydown}
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="flex-1 rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 			<button
 				type="button"
 				onclick={handleCreateTag}
 				disabled={isCreating || !newTagName.trim()}
-				class="rounded-lg bg-primary px-3 py-2 text-sm text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+				class="rounded-md bg-primary px-3 py-2 text-sm text-white hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{isCreating ? '...' : 'Create'}
 			</button>

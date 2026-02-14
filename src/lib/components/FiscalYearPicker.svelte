@@ -35,7 +35,7 @@
 	<button
 		type="button"
 		onclick={toggleDropdown}
-		class="flex h-full cursor-pointer items-center gap-2 rounded-lg border border-border px-2 py-1.5 text-fg hover:bg-surface transition-colors"
+		class="flex h-full cursor-pointer items-center gap-2 rounded-md border border-border px-2 py-1.5 text-fg hover:bg-surface transition-colors"
 	>
 		<iconify-icon icon="solar:calendar-bold" width="20" height="20" class="text-muted"></iconify-icon>
 		<div class="text-left">

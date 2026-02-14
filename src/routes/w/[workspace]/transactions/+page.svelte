@@ -159,7 +159,7 @@
 	<div class="grid grid-cols-2 gap-4" data-component="transaction-actions">
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=income"
-			class="flex items-center justify-center gap-2 rounded-lg bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
+			class="flex items-center justify-center gap-2 rounded-md bg-success px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-success-hover active:opacity-90"
 			data-component="add-income-button"
 		>
 			<iconify-icon icon="solar:add-circle-bold" width="24" height="24"></iconify-icon>
@@ -167,7 +167,7 @@
 		</a>
 		<a
 			href="/w/{data.workspaceId}/transactions/new?type=expense"
-			class="flex items-center justify-center gap-2 rounded-lg bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
+			class="flex items-center justify-center gap-2 rounded-md bg-error px-6 py-4 text-lg font-semibold text-white shadow-sm hover:bg-error-hover active:opacity-90"
 			data-component="add-expense-button"
 		>
 			<iconify-icon icon="solar:minus-circle-bold" width="24" height="24"></iconify-icon>
@@ -279,7 +279,7 @@
 							<!-- Pending recurring instances -->
 							{#each pendingInstances as pending (pending.templatePublicId + pending.date)}
 								<div
-									class="rounded-lg border-2 border-dashed border-border bg-surface/50 p-3"
+									class="rounded-md border-2 border-dashed border-border bg-surface/50 p-3"
 									data-component="pending-instance"
 								>
 									<div class="flex items-start justify-between">
@@ -325,7 +325,7 @@
 										<div class="flex items-center gap-1">
 											<a
 												href="/w/{data.workspaceId}/transactions/new?type={pending.type}&from_recurring={pending.templatePublicId}&date={pending.date}"
-												class="rounded-lg bg-primary/10 px-2 py-1 text-xs font-medium text-primary hover:bg-primary/20"
+												class="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
 											>
 												Confirm
 											</a>
@@ -334,7 +334,7 @@
 												<input type="hidden" name="date" value={pending.date} />
 												<button
 													type="submit"
-													class="rounded-lg px-2 py-1 text-xs text-muted hover:bg-surface-alt"
+													class="rounded-md px-2 py-1 text-xs text-muted hover:bg-surface-alt"
 												>
 													Skip
 												</button>

@@ -56,7 +56,7 @@
 				<span class="text-sm text-fg">Lock Tags</span>
 				<button
 					type="submit"
-					class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors {data.tagsLocked
+					class="relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full transition-colors {data.tagsLocked
 						? 'bg-primary'
 						: 'bg-surface-alt'}"
 					aria-pressed={data.tagsLocked}
@@ -72,29 +72,29 @@
 	</div>
 
 	{#if data.tagsLocked}
-		<div class="mb-4 rounded-lg bg-primary/10 p-3 text-sm text-primary">
+		<div class="mb-4 rounded-md bg-primary/10 p-3 text-sm text-primary">
 			Tags are locked. New tags cannot be created during transaction entry.
 		</div>
 	{/if}
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error">
+		<div class="mb-4 rounded-md bg-error/10 p-3 text-sm text-error">
 			{form.error}
 		</div>
 	{/if}
 
 	{#if form?.success && form?.renamed}
-		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">Tag renamed successfully!</div>
+		<div class="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">Tag renamed successfully!</div>
 	{/if}
 
 	{#if form?.success && form?.merged}
-		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">
+		<div class="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">
 			Merged "{form.merged.from}" into "{form.merged.to}" successfully!
 		</div>
 	{/if}
 
 	{#if form?.success && form?.deleted}
-		<div class="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">Tag deleted successfully!</div>
+		<div class="mb-4 rounded-md bg-success/10 p-3 text-sm text-success">Tag deleted successfully!</div>
 	{/if}
 
 	<!-- Tags list -->
@@ -113,7 +113,7 @@
 					<button
 						type="button"
 						onclick={() => openRenameDialog(tag.id, tag.name)}
-						class="rounded-lg bg-surface px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface-alt"
+						class="rounded-md bg-surface px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface-alt"
 					>
 						Rename
 					</button>
@@ -121,7 +121,7 @@
 					<button
 						type="button"
 						onclick={() => openMergeDialog(tag.id)}
-						class="rounded-lg bg-warning/10 px-3 py-1.5 text-sm font-medium text-warning hover:bg-warning/20"
+						class="rounded-md bg-warning/10 px-3 py-1.5 text-sm font-medium text-warning hover:bg-warning/20"
 					>
 						Merge
 					</button>
@@ -131,7 +131,7 @@
 							<input type="hidden" name="id" value={tag.id} />
 							<button
 								type="submit"
-								class="rounded-lg bg-error/10 px-3 py-1.5 text-sm font-medium text-error hover:bg-error/20"
+								class="rounded-md bg-error/10 px-3 py-1.5 text-sm font-medium text-error hover:bg-error/20"
 							>
 								Delete
 							</button>
@@ -160,7 +160,7 @@
 		tabindex="-1"
 	>
 		<div
-			class="w-full max-w-md rounded-lg bg-card p-6 shadow-xl"
+			class="w-full max-w-md rounded-xl bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}
 			role="document"
@@ -187,7 +187,7 @@
 						name="newName"
 						bind:value={renameValue}
 						required
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -195,13 +195,13 @@
 					<button
 						type="button"
 						onclick={() => closeRenameDialog()}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+						class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 					>
 						Rename
 					</button>
@@ -223,7 +223,7 @@
 		tabindex="-1"
 	>
 		<div
-			class="w-full max-w-md rounded-lg bg-card p-6 shadow-xl"
+			class="w-full max-w-md rounded-xl bg-card p-6 shadow-xl"
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => e.stopPropagation()}
 			role="document"
@@ -267,7 +267,7 @@
 					</div>
 				</div>
 
-				<div class="mb-4 rounded-lg bg-warning/10 p-3 text-sm text-warning">
+				<div class="mb-4 rounded-md bg-warning/10 p-3 text-sm text-warning">
 					Warning: This action cannot be undone. The source tag will be permanently deleted.
 				</div>
 
@@ -275,14 +275,14 @@
 					<button
 						type="button"
 						onclick={() => closeMergeDialog()}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
 						disabled={!mergeTargetId}
-						class="rounded-lg bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover disabled:opacity-50"
+						class="rounded-md bg-warning px-4 py-2 text-sm font-medium text-white hover:bg-warning-hover disabled:opacity-50"
 					>
 						Merge
 					</button>

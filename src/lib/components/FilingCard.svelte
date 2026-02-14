@@ -49,7 +49,7 @@
 	}
 </script>
 
-<div class="rounded-lg border p-4 {getStatusClass()}" data-filing-id={filing.id}>
+<div class="rounded-lg border border-card-border bg-card p-4 shadow-sm {getStatusClass()}" data-filing-id={filing.id}>
 	<!-- Header: name + status badge -->
 	<div class="flex items-start justify-between mb-2">
 		<div class="flex-1 min-w-0">
@@ -134,7 +134,7 @@
 						id="filedAt-{filing.id}"
 						name="filedAt"
 						value={today}
-						class="mt-1 block w-full rounded-md bg-input border-input-border text-sm shadow-sm focus:border-input-focus focus:ring-primary"
+						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -147,7 +147,7 @@
 						id="confirmationNumber-{filing.id}"
 						name="confirmationNumber"
 						placeholder="e.g., 1234567890"
-						class="mt-1 block w-full rounded-md bg-input border-input-border text-sm shadow-sm focus:border-input-focus focus:ring-primary"
+						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -160,21 +160,21 @@
 						id="notes-{filing.id}"
 						name="notes"
 						placeholder="e.g., E-filed via TurboTax"
-						class="mt-1 block w-full rounded-md bg-input border-input-border text-sm shadow-sm focus:border-input-focus focus:ring-primary"
+						class="mt-1 block w-full rounded-md border border-input-border bg-input px-3 py-2 text-sm focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
 				<div class="flex gap-2">
 					<button
 						type="submit"
-						class="flex-1 rounded-md bg-success px-3 py-1.5 text-sm font-medium text-white hover:bg-success-hover"
+						class="flex-1 rounded-md bg-success px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-success-hover"
 					>
 						Mark Complete
 					</button>
 					<button
 						type="button"
 						onclick={onToggleForm}
-						class="rounded-md border border-input-border px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:bg-surface"
 					>
 						Cancel
 					</button>
@@ -184,7 +184,7 @@
 			<button
 				type="button"
 				onclick={onToggleForm}
-				class="mt-3 w-full rounded-md border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+				class="mt-3 w-full rounded-md border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg transition-colors hover:bg-surface"
 			>
 				Mark Complete
 			</button>

@@ -143,7 +143,7 @@
 					<button
 						type="button"
 						onclick={() => themePreference.set(option.value as ThemePreference)}
-						class="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors cursor-pointer {$themePreference ===
+						class="flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors cursor-pointer {$themePreference ===
 						option.value
 							? 'border-primary bg-primary/10 text-primary'
 							: 'border-border bg-surface text-fg hover:bg-surface-alt'}"
@@ -183,17 +183,17 @@
 		class="space-y-6 rounded-lg border border-border bg-card p-6"
 	>
 		{#if form?.error}
-			<div class="rounded-lg bg-error/10 p-3 text-sm text-error" role="alert">
+			<div class="rounded-md bg-error/10 p-3 text-sm text-error" role="alert">
 				{form.error}
 			</div>
 		{/if}
 
 		{#if form?.success}
-			<div class="rounded-lg bg-success/10 p-3 text-sm text-success" role="status" aria-live="polite">Settings saved successfully!</div>
+			<div class="rounded-md bg-success/10 p-3 text-sm text-success" role="status" aria-live="polite">Settings saved successfully!</div>
 		{/if}
 
 		{#if form?.warnings && form.warnings.length > 0}
-			<div class="rounded-lg bg-warning/10 border border-warning/30 p-3">
+			<div class="rounded-md bg-warning/10 border border-warning/30 p-3">
 				<p class="text-sm font-medium text-warning">Settings saved with warnings:</p>
 				<ul class="mt-1 text-sm text-warning list-disc list-inside">
 					{#each form.warnings as warning}
@@ -211,7 +211,7 @@
 					<img
 						src={logoPreviewUrl}
 						alt="Logo preview"
-						class="h-16 w-16 rounded-lg object-cover"
+						class="h-16 w-16 rounded-md object-cover"
 					/>
 				{:else}
 					<WorkspaceLogo
@@ -228,7 +228,7 @@
 						name="logo"
 						accept="image/*"
 						onchange={handleLogoChange}
-						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
+						class="block w-full text-sm text-muted file:mr-4 file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
 					/>
 					<p class="mt-1 text-xs text-muted">PNG, JPG, or GIF. Will be resized to 128x128.</p>
 				</div>
@@ -245,7 +245,7 @@
 					name="name"
 					value={data.settings.name}
 					required
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 
@@ -275,7 +275,7 @@
 				name="businessName"
 				value={data.settings.businessName ?? ''}
 				placeholder="Legal business name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 
@@ -286,7 +286,7 @@
 				name="address"
 				rows="2"
 				placeholder="Street address, city, state, ZIP"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				>{data.settings.address ?? ''}</textarea
 			>
 		</div>
@@ -300,7 +300,7 @@
 					name="phone"
 					value={data.settings.phone ?? ''}
 					placeholder="(555) 555-5555"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 
@@ -314,7 +314,7 @@
 					min="1800"
 					max={new Date().getFullYear()}
 					placeholder="2020"
-					class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 		</div>
@@ -329,7 +329,7 @@
 				name="responsibleParty"
 				value={data.settings.responsibleParty ?? ''}
 				placeholder="Owner/manager name"
-				class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 
@@ -447,7 +447,7 @@
 								type="checkbox"
 								id="useCustomStateRate"
 								bind:checked={useCustomStateRate}
-								class="h-4 w-4 rounded border-input-border text-primary focus:ring-primary"
+								class="h-4 w-4 rounded border-input-border text-primary focus:ring-2 focus:ring-primary/50"
 							/>
 							<label for="useCustomStateRate" class="text-sm font-medium text-fg">
 								Use custom state rate
@@ -468,10 +468,10 @@
 									name="stateRateOverride"
 									bind:value={stateRateOverrideInput}
 									placeholder={(currentStateRate * 100).toFixed(2)}
-									class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
+									class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
 								/>
 								{#if stateRateWarning}
-									<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
+									<div class="mt-2 rounded-md bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
 										{stateRateWarning}
 									</div>
 								{/if}
@@ -490,7 +490,7 @@
 							name="localEitRate"
 							bind:value={localEitRateInput}
 							placeholder="e.g., 1.0"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
+							class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-32"
 						/>
 						<p class="mt-1 text-xs text-muted">
 							Municipal earned income tax rate, if applicable.
@@ -506,7 +506,7 @@
 							{/if}
 						</p>
 						{#if localEitWarning}
-							<div class="mt-2 rounded-lg bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
+							<div class="mt-2 rounded-md bg-warning/10 border border-warning/30 p-2 text-sm text-warning">
 								{localEitWarning}
 							</div>
 						{/if}
@@ -520,7 +520,7 @@
 							name="taxNotes"
 							rows="2"
 							placeholder="Notes for your reference (e.g., CPA contact info, reminders)"
-							class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							>{data.settings.taxNotes ?? ''}</textarea
 						>
 					</div>
@@ -529,7 +529,7 @@
 					<div class="overflow-hidden rounded-lg border border-border">
 						<button
 							type="button"
-							class="flex w-full items-center justify-between p-4 text-left hover:bg-surface"
+							class="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-surface"
 							onclick={() => (showTaxForms = !showTaxForms)}
 						>
 							<span class="font-medium text-fg">Tax Forms & Resources</span>
@@ -620,14 +620,14 @@
 		<div class="flex justify-end gap-3 pt-4">
 			<a
 				href="/w/{data.workspaceId}/transactions"
-				class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+				class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 			>
 				Cancel
 			</a>
 			<button
 				type="submit"
 				disabled={isSaving}
-				class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed"
+				class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover active:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed"
 			>
 				{isSaving ? 'Saving...' : 'Save Settings'}
 			</button>
@@ -638,22 +638,22 @@
 	<div class="mt-6 grid gap-4 sm:grid-cols-2">
 		<a
 			href="/w/{data.workspaceId}/settings/tags"
-			class="group rounded-lg border border-card-border bg-card p-4 hover:border-primary/30 hover:bg-primary/5 transition-colors"
+			class="group rounded-lg border border-card-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-surface-alt"
 		>
 			<div class="flex items-center justify-between">
 				<h3 class="font-medium text-fg">Tags & Categories</h3>
-				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted group-hover:text-primary transition-colors" width="16" height="16"></iconify-icon>
+				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted transition-colors group-hover:text-primary" width="16" height="16"></iconify-icon>
 			</div>
 			<p class="mt-1 text-sm text-muted">Manage expense categories, rename or merge tags.</p>
 		</a>
 
 		<a
 			href="/w/{data.workspaceId}/recurring"
-			class="group rounded-lg border border-card-border bg-card p-4 hover:border-primary/30 hover:bg-primary/5 transition-colors"
+			class="group rounded-lg border border-card-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-surface-alt"
 		>
 			<div class="flex items-center justify-between">
 				<h3 class="font-medium text-fg">Recurring Transactions</h3>
-				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted group-hover:text-primary transition-colors" width="16" height="16"></iconify-icon>
+				<iconify-icon icon="solar:alt-arrow-right-linear" class="text-muted transition-colors group-hover:text-primary" width="16" height="16"></iconify-icon>
 			</div>
 			<p class="mt-1 text-sm text-muted">Templates for predictable income and expenses.</p>
 		</a>
@@ -675,7 +675,7 @@
 				</div>
 				<a
 					href="/w/{data.workspaceId}/import"
-					class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-hover"
+					class="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 					Import CSV
@@ -692,7 +692,7 @@
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/csv"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+					class="inline-flex items-center gap-1.5 rounded-md border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
 					download
 				>
 					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>
@@ -710,7 +710,7 @@
 				</div>
 				<a
 					href="/w/{data.workspaceId}/export/full"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
+					class="inline-flex items-center gap-1.5 rounded-md border border-input-border bg-card px-3 py-1.5 text-sm font-medium text-fg hover:bg-surface"
 					download
 				>
 					<iconify-icon icon="solar:download-bold" width="16" height="16"></iconify-icon>

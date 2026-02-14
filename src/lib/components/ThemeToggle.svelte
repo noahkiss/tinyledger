@@ -10,7 +10,7 @@
 <button
 	type="button"
 	onclick={toggleTheme}
-	class="rounded-lg p-2 text-muted hover:bg-surface hover:text-fg"
+	class="rounded-md p-2 text-muted hover:bg-surface hover:text-fg"
 	title="Toggle theme"
 	data-component="theme-toggle"
 >

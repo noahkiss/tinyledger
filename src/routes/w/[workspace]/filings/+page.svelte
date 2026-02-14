@@ -32,7 +32,7 @@
 	<h1 class="text-2xl font-bold text-fg">Filings</h1>
 
 	<!-- Info banner -->
-	<div class="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
+	<div class="rounded-md border border-primary/30 bg-primary/10 px-4 py-3">
 		<p class="text-sm text-primary">
 			Track your compliance filings. Past-due filings appear at the top.
 			{#if summary.pastDue > 0}

@@ -21,11 +21,6 @@
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
-	// Determine trend color: green if up (or flat), red if down
-	const trendColor = $derived(
-		data.length >= 2 && data[data.length - 1] < data[0] ? '#ef4444' : '#22c55e'
-	);
-
 	$effect(() => {
 		// Cleanup previous chart instance
 		if (chart) {
@@ -37,6 +32,13 @@
 
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return;
+
+		// Read theme-aware colors
+		const styles = getComputedStyle(document.documentElement);
+		const trendColor =
+			data.length >= 2 && data[data.length - 1] < data[0]
+				? styles.getPropertyValue('--color-error').trim()
+				: styles.getPropertyValue('--color-success').trim();
 
 		chart = new Chart(ctx, {
 			type: 'line',

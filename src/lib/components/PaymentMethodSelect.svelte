@@ -42,7 +42,7 @@
 					class="sr-only"
 				/>
 				<span
-					class="block rounded-lg px-4 py-2 text-center transition-colors
+					class="block rounded-md px-4 py-2 text-center transition-colors
 					{value === option.value
 						? 'bg-primary text-white'
 						: 'bg-surface text-fg hover:bg-surface-alt'}"
@@ -62,7 +62,7 @@
 				name="checkNumber"
 				bind:value={checkNumber}
 				placeholder="Enter check number"
-				class="flex-1 rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+				class="flex-1 rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 			/>
 		</div>
 	{/if}

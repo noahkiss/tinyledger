@@ -56,7 +56,7 @@
 	<button
 		type="button"
 		onclick={() => { isOpen = !isOpen; }}
-		class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input-border bg-input font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors {triggerClasses}"
+		class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md border border-input-border bg-input font-medium text-fg shadow-sm hover:bg-surface focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors {triggerClasses}"
 	>
 		<span class={hasValue ? 'text-fg' : 'text-muted'}>{selectedLabel}</span>
 		<iconify-icon

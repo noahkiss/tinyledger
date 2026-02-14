@@ -336,14 +336,14 @@
 								type="date"
 								value={currentFilters.from || fyStart}
 								onchange={handleFromChange}
-								class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							<label class="text-xs font-medium text-muted">To</label>
 							<input
 								type="date"
 								value={currentFilters.to || fyEnd}
 								onchange={handleToChange}
-								class="rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+								class="rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 							/>
 							{#if hasDateFilter}
 								<button
@@ -485,7 +485,7 @@
 									type="date"
 									value={currentFilters.from || fyStart}
 									onchange={handleFromChange}
-									class="flex-1 rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+									class="flex-1 rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 								/>
 							</div>
 							<div class="flex items-center gap-2">
@@ -494,7 +494,7 @@
 									type="date"
 									value={currentFilters.to || fyEnd}
 									onchange={handleToChange}
-									class="flex-1 rounded-lg border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+									class="flex-1 rounded-md border border-input-border bg-input px-2 py-1.5 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 								/>
 							</div>
 							{#if hasDateFilter}
@@ -600,7 +600,7 @@
 					placeholder="Search payee..."
 					value={payeeInput}
 					oninput={handlePayeeInput}
-					class="w-full rounded-lg border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-full rounded-md border border-input-border bg-input py-2 pl-9 pr-3 text-sm text-fg focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 				/>
 			</div>
 		</div>

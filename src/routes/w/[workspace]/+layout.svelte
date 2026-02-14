@@ -77,7 +77,7 @@
 				{#each navTabs as tab}
 					<a
 						href="/w/{data.workspaceId}/{tab.href}"
-						class="inline-flex h-8 items-center rounded-lg px-3 text-sm font-medium transition-colors {isActiveTab(tab.href)
+						class="inline-flex h-8 items-center rounded-md px-3 text-sm font-medium transition-colors {isActiveTab(tab.href)
 							? 'bg-primary/10 text-primary'
 							: 'text-muted hover:bg-surface-alt hover:text-fg'}"
 					>
@@ -86,7 +86,7 @@
 				{/each}
 				<a
 					href="/w/{data.workspaceId}/settings"
-					class="inline-flex h-8 items-center justify-center rounded-lg px-2 text-sm transition-colors {isActiveTab('settings')
+					class="inline-flex h-8 items-center justify-center rounded-md px-2 text-sm transition-colors {isActiveTab('settings')
 						? 'bg-primary/10 text-primary'
 						: 'text-muted hover:bg-surface-alt hover:text-fg'}"
 					title="Settings"

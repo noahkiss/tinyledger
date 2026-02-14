@@ -189,7 +189,7 @@
 	</div>
 
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-error/10 p-3 text-sm text-error" role="alert">
+		<div class="mb-4 rounded-md bg-error/10 p-3 text-sm text-error" role="alert">
 			{form.error}
 		</div>
 	{/if}
@@ -219,7 +219,7 @@
 						name="file"
 						accept=".csv,text/csv"
 						required
-						class="block w-full text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
+						class="block w-full text-sm text-muted file:mr-4 file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20"
 					/>
 					<p class="mt-2 text-xs text-muted">Maximum file size: 5MB</p>
 				</div>
@@ -228,7 +228,7 @@
 					<button
 						type="submit"
 						disabled={isUploading}
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						{isUploading ? 'Processing...' : 'Upload & Preview'}
@@ -446,14 +446,14 @@
 					<button
 						type="button"
 						onclick={reset}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Start Over
 					</button>
 					<button
 						type="submit"
 						disabled={!requiredMappingsSet || isValidating}
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						{isValidating ? 'Validating...' : 'Validate & Preview'}
 						<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>
@@ -620,14 +620,14 @@
 					<button
 						type="button"
 						onclick={() => (step = 'mapping')}
-						class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+						class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 					>
 						Back to Mapping
 					</button>
 					<button
 						type="submit"
 						disabled={validationResult.valid.length === 0 || !allTagsResolved || isImporting}
-						class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						<iconify-icon icon="solar:upload-bold" width="16" height="16"></iconify-icon>
 						{isImporting ? 'Importing...' : `Import ${validationResult.valid.length} Transactions`}
@@ -694,13 +694,13 @@
 				<button
 					type="button"
 					onclick={reset}
-					class="rounded-lg border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
+					class="rounded-md border border-input-border bg-card px-4 py-2 text-sm font-medium text-fg hover:bg-surface"
 				>
 					Import Another
 				</button>
 				<a
 					href="../transactions"
-					class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+					class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 				>
 					View Transactions
 					<iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16"></iconify-icon>

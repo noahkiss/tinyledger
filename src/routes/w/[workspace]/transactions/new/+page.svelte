@@ -114,7 +114,7 @@
 	<div class="flex items-center gap-4">
 		<a
 			href="/w/{data.workspaceId}/transactions"
-			class="rounded-lg p-2 text-muted hover:bg-surface"
+			class="rounded-md p-2 text-muted hover:bg-surface"
 			aria-label="Back to transactions"
 		>
 			<iconify-icon icon="solar:alt-arrow-left-linear" width="20" height="20"></iconify-icon>
@@ -124,7 +124,7 @@
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="rounded-lg bg-error/10 p-4 text-error">
+		<div class="rounded-md bg-error/10 p-4 text-error">
 			<p class="font-medium">Error</p>
 			<p class="mt-1 text-sm">{form.error}</p>
 		</div>
@@ -190,7 +190,7 @@
 					name="description"
 					bind:value={description}
 					rows="2"
-					class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+					class="w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					placeholder="Add any notes about this transaction..."
 				></textarea>
 			</div>
@@ -236,7 +236,7 @@
 		<div class="pt-4">
 			<button
 				type="submit"
-				class="w-full rounded-lg px-6 py-4 text-lg font-semibold text-white shadow-sm {submitButtonColor}"
+				class="w-full rounded-md px-6 py-4 text-lg font-semibold text-white shadow-sm {submitButtonColor}"
 			>
 				Create {typeLabel}
 			</button>

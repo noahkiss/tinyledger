@@ -32,11 +32,11 @@
 	<img
 		src={logoUrl}
 		alt="{name} logo"
-		class="rounded-lg object-cover {sizeClasses[size].split(' ').slice(0, 2).join(' ')}"
+		class="rounded-md object-cover {sizeClasses[size].split(' ').slice(0, 2).join(' ')}"
 	/>
 {:else}
 	<div
-		class="flex items-center justify-center rounded-lg bg-primary font-bold text-white {sizeClasses[
+		class="flex items-center justify-center rounded-md bg-primary font-bold text-white {sizeClasses[
 			size
 		]}"
 	>

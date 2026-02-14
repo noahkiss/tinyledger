@@ -41,7 +41,7 @@
 	<button
 		type="button"
 		onclick={toggleDropdown}
-		class="flex cursor-pointer items-center gap-3 rounded-lg border border-border px-2 py-1.5 hover:bg-surface transition-colors"
+		class="flex cursor-pointer items-center gap-3 rounded-md border border-border px-2 py-1.5 hover:bg-surface transition-colors"
 	>
 		<WorkspaceLogo
 			workspaceId={currentWorkspaceId}

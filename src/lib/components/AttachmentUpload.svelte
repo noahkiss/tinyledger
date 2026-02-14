@@ -131,7 +131,7 @@
 			<img
 				src={displayUrl}
 				alt="Attachment preview"
-				class="max-h-48 rounded-lg shadow-sm"
+				class="max-h-48 rounded-md shadow-sm"
 			/>
 			<!-- Remove/clear button -->
 			<button
@@ -154,7 +154,7 @@
 			ondragover={handleDragOver}
 			ondragleave={handleDragLeave}
 			ondrop={handleDrop}
-			class="flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors
+			class="flex w-full flex-col items-center justify-center rounded-md border-2 border-dashed p-6 transition-colors
 				{dragOver ? 'border-primary bg-primary/10' : 'border-input-border hover:border-overlay'}"
 		>
 			<!-- Plus icon -->

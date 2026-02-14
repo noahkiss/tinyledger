@@ -30,13 +30,13 @@
 	<div class="flex gap-3">
 		<a
 			href="/"
-			class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+			class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover"
 		>
 			Go home
 		</a>
 		<button
 			onclick={() => history.back()}
-			class="rounded-lg bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
+			class="rounded-md bg-surface px-4 py-2 text-sm font-medium text-fg hover:bg-surface-alt"
 		>
 			Go back
 		</button>

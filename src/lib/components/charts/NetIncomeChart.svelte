@@ -103,6 +103,9 @@
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return;
 
+		const styles = getComputedStyle(document.documentElement);
+		const primaryColor = styles.getPropertyValue('--color-primary').trim();
+
 		chart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -111,8 +114,8 @@
 					{
 						label: 'Net Income',
 						data: data.map((d) => d.net),
-						borderColor: '#3b82f6',
-						backgroundColor: 'rgba(59, 130, 246, 0.1)',
+						borderColor: primaryColor,
+						backgroundColor: primaryColor + '1a',
 						borderWidth: 2,
 						fill: true,
 						pointRadius: 4,

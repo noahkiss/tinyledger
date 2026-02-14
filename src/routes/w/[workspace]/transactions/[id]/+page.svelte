@@ -153,7 +153,7 @@
 
 	<!-- Voided banner -->
 	{#if isVoided}
-		<div class="mb-4 rounded-lg bg-warning/10 border border-warning/30 p-4">
+		<div class="mb-4 rounded-md bg-warning/10 border border-warning/30 p-4">
 			<div class="flex items-center gap-2">
 				<iconify-icon icon="solar:danger-triangle-bold" class="text-warning" width="20" height="20"></iconify-icon>
 				<div>
@@ -166,14 +166,14 @@
 
 	<!-- Error display -->
 	{#if form?.error}
-		<div class="mb-4 rounded-lg bg-error/10 border border-error/30 p-4 text-error" role="alert">
+		<div class="mb-4 rounded-md bg-error/10 border border-error/30 p-4 text-error" role="alert">
 			{form.error}
 		</div>
 	{/if}
 
 	<!-- Success display -->
 	{#if form?.success}
-		<div class="mb-4 rounded-lg bg-success/10 border border-success/30 p-4 text-success" role="status" aria-live="polite">
+		<div class="mb-4 rounded-md bg-success/10 border border-success/30 p-4 text-success" role="status" aria-live="polite">
 			{#if form.action === 'voided'}
 				Transaction has been voided.
 			{:else if form.action === 'unvoided'}
@@ -245,7 +245,7 @@
 							name="description"
 							bind:value={editDescription}
 							rows="2"
-							class="w-full rounded-lg border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+							class="w-full rounded-md border border-input-border bg-input px-3 py-2 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 						></textarea>
 					</div>
 
@@ -287,14 +287,14 @@
 					<button
 						type="button"
 						onclick={cancelEdit}
-						class="rounded-lg border border-input-border px-4 py-2 text-fg hover:bg-surface"
+						class="rounded-md border border-input-border px-4 py-2 text-fg transition-colors hover:bg-surface"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
 						disabled={!tagsValid}
-						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+						class="rounded-md bg-primary px-4 py-2 text-white hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Save Changes
 					</button>
@@ -379,7 +379,7 @@
 							<img
 								src={data.attachment.url}
 								alt="Receipt attachment"
-								class="max-h-64 rounded-lg shadow-sm"
+								class="max-h-64 rounded-md shadow-sm"
 							/>
 							<div class="mt-2 flex gap-3 text-sm">
 								<a
@@ -415,7 +415,7 @@
 				{#if !isVoided}
 					<button
 						onclick={enterEditMode}
-						class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-hover"
+						class="rounded-md bg-primary px-4 py-2 text-white transition-colors hover:bg-primary-hover"
 					>
 						Edit
 					</button>
@@ -427,7 +427,7 @@
 									e.preventDefault();
 								}
 							}}
-							class="rounded-lg bg-warning px-4 py-2 text-white hover:bg-warning-hover"
+							class="rounded-md bg-warning px-4 py-2 text-white transition-colors hover:bg-warning-hover"
 						>
 							Void Transaction
 						</button>
@@ -436,7 +436,7 @@
 					<form method="POST" action="?/unvoid" use:enhance>
 						<button
 							type="submit"
-							class="rounded-lg bg-success px-4 py-2 text-white hover:bg-success-hover"
+							class="rounded-md bg-success px-4 py-2 text-white transition-colors hover:bg-success-hover"
 						>
 							Restore Transaction
 						</button>
@@ -449,7 +449,7 @@
 									e.preventDefault();
 								}
 							}}
-							class="rounded-lg bg-error px-4 py-2 text-white hover:bg-error-hover"
+							class="rounded-md bg-error px-4 py-2 text-white transition-colors hover:bg-error-hover"
 						>
 							Permanently Delete
 						</button>

@@ -38,7 +38,7 @@
 				<p class="text-sm text-primary">Continue where you left off</p>
 				<a
 					href="/w/{lastWorkspace.id}/transactions"
-					class="mt-2 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover active:opacity-90"
+					class="mt-2 inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover active:opacity-90"
 				>
 					Continue to {lastWorkspace.name}
 				</a>
@@ -54,7 +54,7 @@
 						<li>
 							<a
 								href="/w/{workspace.id}/transactions"
-								class="block rounded-lg border border-card-border bg-card p-4 hover:border-primary/50 hover:bg-primary/5 active:bg-primary/10"
+								class="block rounded-lg border border-card-border bg-card p-4 transition-colors hover:border-primary/50 hover:bg-surface-alt"
 							>
 								<span class="font-medium text-fg">{workspace.name}</span>
 								<span class="ml-2 text-sm text-muted">/{workspace.id}/</span>
@@ -78,7 +78,7 @@
 				class="space-y-4 rounded-lg border border-card-border bg-card p-6"
 			>
 				{#if form?.error}
-					<div class="rounded-lg bg-error/10 p-3 text-sm text-error">
+					<div class="rounded-md bg-error/10 p-3 text-sm text-error">
 						{form.error}
 					</div>
 				{/if}
@@ -92,7 +92,7 @@
 						value={form?.name ?? ''}
 						required
 						placeholder="My Business"
-						class="mt-1 block w-full rounded-lg border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
+						class="mt-1 block w-full rounded-md border border-input-border bg-input px-4 py-3 text-fg placeholder-muted focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50"
 					/>
 				</div>
 
@@ -114,7 +114,7 @@
 
 				<button
 					type="submit"
-					class="w-full rounded-lg bg-primary px-4 py-3 font-medium text-white hover:bg-primary-hover active:opacity-90"
+					class="w-full rounded-md bg-primary px-4 py-3 font-medium text-white hover:bg-primary-hover active:opacity-90"
 				>
 					Create Workspace
 				</button>

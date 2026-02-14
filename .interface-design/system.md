@@ -51,10 +51,10 @@ Borders-first system with selective shadows.
 - Focus: `focus:ring-2 focus:ring-primary/50` (standardized everywhere)
 
 ## Border Radius
-- Small elements: `rounded` (6px)
-- Inputs/buttons: `rounded-lg` (8px)
-- Cards: `rounded-xl` (12px)
-- Modals/sheets: `rounded-2xl` (16px)
+Size-based, less rounded approach:
+- Default (buttons, inputs, small elements): `rounded-md` (6px)
+- Cards: `rounded-lg` (8px)
+- Modals/sheets: `rounded-xl` (12px)
 - Pills/avatars: `rounded-full`
 
 ## Components
@@ -69,20 +69,20 @@ Borders-first system with selective shadows.
 | Icon | transparent | text-muted | hover:bg-surface | p-2 |
 | Segmented | bg-card (container) | text-muted / text-white (active) | hover:bg-surface | px-3 py-2 |
 
-Radius: `rounded-lg` or `rounded-xl`. Active: `active:opacity-90` or `active:scale-95`.
+Radius: `rounded-md`. Active: `active:opacity-90` or `active:scale-95`.
 
 ### Cards
 - Border: `border border-card-border`
 - Background: `bg-card`
 - Padding: `p-4` or `p-6`
-- Radius: `rounded-xl`
+- Radius: `rounded-lg`
 - Shadow: `shadow-sm`
 - Status variants: `border-{status}/30 bg-{status}/10`
 
 ### Inputs
 - Border: `border border-input-border`
 - Background: `bg-input`
-- Radius: `rounded-lg`
+- Radius: `rounded-md`
 - Focus: `focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50`
 - Padding variants:
   - **Standard** (`px-4 py-3`): Standalone form pages with direct HTML inputs (settings, create workspace)
@@ -90,7 +90,7 @@ Radius: `rounded-lg` or `rounded-xl`. Active: `active:opacity-90` or `active:sca
   - **Toolbar** (`px-2 py-1.5`): Filter bar and toolbar controls
 
 ### Navigation
-- Desktop tabs: `rounded-t-lg border-b-2 px-4 py-2`
+- Desktop tabs: `rounded-t-md border-b-2 px-4 py-2`
 - Active: `border-primary text-primary font-medium`
 - Bottom bar (mobile): `fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card`
 

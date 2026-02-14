@@ -18,17 +18,21 @@
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
-	// Color palette for bars
-	const colorPalette = [
-		'#3b82f6', // blue
-		'#10b981', // emerald
-		'#f59e0b', // amber
-		'#ef4444', // red
-		'#8b5cf6', // violet
-		'#ec4899', // pink
-		'#06b6d4', // cyan
-		'#84cc16' // lime
-	];
+	// Color palette read from CSS vars (theme-aware)
+	function getChartPalette(): string[] {
+		const styles = getComputedStyle(document.documentElement);
+		const get = (name: string) => styles.getPropertyValue(name).trim();
+		return [
+			get('--color-primary'),
+			get('--color-success'),
+			get('--color-warning'),
+			get('--color-error'),
+			get('--color-accent'),
+			get('--color-subtle'),
+			get('--color-primary-muted'),
+			get('--color-success-muted')
+		];
+	}
 
 	// Dynamic height based on number of tags
 	const chartHeight = $derived(Math.min(Math.max(data.length * 32, 192), 384));
@@ -55,6 +59,7 @@
 		if (!ctx) return;
 
 		// Assign colors from palette, cycling if needed
+		const colorPalette = getChartPalette();
 		const barColors = data.map((_, i) => colorPalette[i % colorPalette.length]);
 
 		chart = new Chart(ctx, {

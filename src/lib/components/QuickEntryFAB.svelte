@@ -62,7 +62,7 @@
 	>
 		<!-- Form sheet -->
 		<div
-			class="fixed inset-x-0 bottom-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-2xl bg-card p-6 shadow-xl md:inset-auto md:bottom-24 md:right-6 md:w-96 md:rounded-2xl"
+			class="fixed inset-x-0 bottom-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-xl bg-card p-6 shadow-xl md:inset-auto md:bottom-24 md:right-6 md:w-96 md:rounded-xl"
 			role="dialog"
 			aria-modal="true"
 			aria-label="Quick entry form"

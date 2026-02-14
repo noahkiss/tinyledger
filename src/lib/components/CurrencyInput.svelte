@@ -80,7 +80,7 @@
 		oninput={handleInput}
 		onblur={handleBlur}
 		onfocus={handleFocus}
-		class="rounded-lg border border-input-border bg-input px-3 py-2 pl-7 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 {className}"
+		class="rounded-md border border-input-border bg-input px-3 py-2 pl-7 focus:border-input-focus focus:outline-none focus:ring-2 focus:ring-primary/50 {className}"
 		placeholder="0.00"
 	/>
 	<!-- Hidden input for form submission with cents value -->
