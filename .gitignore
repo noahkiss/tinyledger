@@ -1,5 +1,3 @@
-node_modules
-
 # Output
 .output
 .vercel
@@ -8,14 +6,7 @@ node_modules
 /.svelte-kit
 /build
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Env
-.env
-.env.*
-!.env.example
+# Env (project-specific negation)
 !.env.test
 
 # Vite
@@ -24,13 +15,8 @@ vite.config.ts.timestamp-*
 
 # Data directory (runtime data)
 /data
-nanobanana-output/
-
-# Playwright MCP artifacts
-.playwright-mcp/
 
 # Local review/test files
-*.local.md
 dark-mode-test.png
 final-dark.png
 light-mode-test.png
