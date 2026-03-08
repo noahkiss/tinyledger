@@ -187,12 +187,25 @@ export function initializeSchema(db: BetterSQLite3Database<typeof schema>): void
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			transaction_id INTEGER NOT NULL UNIQUE REFERENCES transactions(id) ON DELETE CASCADE,
 			filename TEXT NOT NULL,
-			original_filename TEXT NOT NULL,
+			original_name TEXT NOT NULL,
 			mime_type TEXT NOT NULL,
 			size_bytes INTEGER NOT NULL,
-			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+			created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
+			updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
 		)
 	`);
+
+	// Migration: Rename original_filename -> original_name and add updated_at (for existing DBs)
+	try {
+		db.run(sql`ALTER TABLE attachments RENAME COLUMN original_filename TO original_name`);
+	} catch {
+		// Column already named correctly
+	}
+	try {
+		db.run(sql`ALTER TABLE attachments ADD COLUMN updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL`);
+	} catch {
+		// Column already exists
+	}
 
 	// Create index for attachments lookup
 	db.run(sql`CREATE INDEX IF NOT EXISTS attachments_transaction_idx ON attachments(transaction_id)`);
