@@ -133,7 +133,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ locals, params, request }) => {
+	create: async ({ locals, params, request }) => {
 		const db = locals.db;
 
 		if (!db) {

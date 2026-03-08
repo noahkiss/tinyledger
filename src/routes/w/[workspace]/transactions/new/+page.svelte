@@ -138,7 +138,7 @@
 	{/if}
 
 	<!-- Form -->
-	<form method="POST" use:enhance class="space-y-6" enctype="multipart/form-data">
+	<form method="POST" action="?/create" use:enhance class="space-y-6" enctype="multipart/form-data">
 		<!-- Hidden field for transaction type -->
 		<input type="hidden" name="type" value={transactionType} />
 		<!-- Hidden field for recurring template ID (when confirming a recurring instance) -->
