@@ -111,17 +111,16 @@
 	});
 
 	// Helper functions for rate conversion
+	// Stored as percentage * 100 (e.g., 307 for 3.07%, 100 for 1%)
 	function formatRateForDisplay(rate: number): string {
-		// Convert stored rate (e.g., 30700 for 3.07%) to display format ("3.07")
-		return (rate / 10000).toFixed(2);
+		return (rate / 100).toFixed(2);
 	}
 
 	function parseRateFromInput(input: string): number | null {
-		// Convert display format ("3.07") to stored format (30700)
 		if (!input || input.trim() === '') return null;
 		const rate = parseFloat(input);
 		if (isNaN(rate)) return null;
-		return Math.round(rate * 10000);
+		return Math.round(rate * 100);
 	}
 </script>
 

@@ -79,7 +79,7 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 	// federalBracketRate: stored as percentage (e.g., 22 for 22%) -> divide by 100
 	const federalRate = (settings.federalBracketRate ?? 22) / 100;
 
-	// stateRateOverride: stored as rate * 10000 (e.g., 307 for 3.07%) -> divide by 10000
+	// stateRateOverride: stored as percentage * 100 (e.g., 307 for 3.07%) -> /10000 for decimal
 	// If null, use default state rate
 	let stateRate: number;
 	let stateName: string;
@@ -92,7 +92,7 @@ export const load: PageServerLoad = async ({ locals, url, params }) => {
 		stateName = stateData?.name ?? 'Unknown';
 	}
 
-	// localEitRate: stored as rate * 10000 (e.g., 100 for 1%) -> divide by 10000
+	// localEitRate: stored as percentage * 100 (e.g., 100 for 1%) -> /10000 for decimal
 	const localEitRate = settings.localEitRate ? settings.localEitRate / 10000 : 0;
 
 	// Calculate taxes

@@ -158,12 +158,13 @@ export const actions: Actions = {
 };
 
 /**
- * Parse rate from display format (e.g., "3.07") to storage format (30700).
+ * Parse rate from display format (e.g., "3.07") to storage format (307).
+ * Stored as percentage * 100 to preserve two decimal places as integer.
  * Returns null if input is empty or invalid.
  */
 function parseRateFromInput(input: string | undefined | null): number | null {
 	if (!input || input.trim() === '') return null;
 	const rate = parseFloat(input);
 	if (isNaN(rate) || rate < 0) return null;
-	return Math.round(rate * 10000);
+	return Math.round(rate * 100);
 }

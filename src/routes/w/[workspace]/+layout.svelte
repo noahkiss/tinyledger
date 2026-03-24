@@ -29,6 +29,12 @@
 			: [...baseNavTabs, { href: 'filings', label: 'Filings' }]
 	);
 
+	// Preserve fiscal year across tab navigation
+	let fyQuery = $derived.by(() => {
+		const fy = $page.url.searchParams.get('fy');
+		return fy ? `?fy=${fy}` : '';
+	});
+
 	// Determine active tab from current path
 	function isActiveTab(tabHref: string): boolean {
 		const pathname = $page.url.pathname;
@@ -76,7 +82,7 @@
 			<nav class="hidden items-center gap-1 md:flex" data-component="nav-tabs">
 				{#each navTabs as tab}
 					<a
-						href="/w/{data.workspaceId}/{tab.href}"
+						href="/w/{data.workspaceId}/{tab.href}{fyQuery}"
 						class="inline-flex h-8 items-center rounded-md px-3 text-sm font-medium transition-colors {isActiveTab(tab.href)
 							? 'bg-primary/10 text-primary'
 							: 'text-muted hover:bg-surface-alt hover:text-fg'}"
@@ -85,7 +91,7 @@
 					</a>
 				{/each}
 				<a
-					href="/w/{data.workspaceId}/settings"
+					href="/w/{data.workspaceId}/settings{fyQuery}"
 					class="inline-flex h-8 items-center justify-center rounded-md px-2 text-sm transition-colors {isActiveTab('settings')
 						? 'bg-primary/10 text-primary'
 						: 'text-muted hover:bg-surface-alt hover:text-fg'}"
@@ -103,5 +109,5 @@
 	</main>
 
 	<!-- Bottom Tab Bar (mobile only) -->
-	<BottomTabBar workspaceId={data.workspaceId} workspaceType={data.settings.type} />
+	<BottomTabBar workspaceId={data.workspaceId} workspaceType={data.settings.type} {fyQuery} />
 </div>

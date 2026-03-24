@@ -10,10 +10,12 @@
 
 	let {
 		workspaceId,
-		workspaceType = 'sole_prop'
+		workspaceType = 'sole_prop',
+		fyQuery = ''
 	}: {
 		workspaceId: string;
 		workspaceType: 'sole_prop' | 'volunteer_org';
+		fyQuery?: string;
 	} = $props();
 
 	const baseNavTabs: NavTab[] = [
@@ -83,7 +85,7 @@
 		{#each navTabs as tab}
 			{@const active = isActiveTab(tab.href)}
 			<a
-				href="/w/{workspaceId}/{tab.href}"
+				href="/w/{workspaceId}/{tab.href}{fyQuery}"
 				class="flex min-w-0 flex-1 flex-col items-center justify-center py-2 {active ? 'text-primary' : 'text-muted'}"
 				aria-current={active ? 'page' : undefined}
 			>

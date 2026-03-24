@@ -21,8 +21,8 @@ export const workspaceSettings = sqliteTable('workspace_settings', {
 	// Tax configuration (added in Phase 7)
 	state: text('state').default('PA'), // Two-letter state code
 	federalBracketRate: integer('federal_bracket_rate'), // Stored as percentage (e.g., 22 for 22%)
-	stateRateOverride: integer('state_rate_override'), // Rate * 10000 (e.g., 307 for 3.07%), null = use default
-	localEitRate: integer('local_eit_rate'), // Rate * 10000 (e.g., 100 for 1%)
+	stateRateOverride: integer('state_rate_override'), // Percentage * 100 (e.g., 307 for 3.07%), null = use default
+	localEitRate: integer('local_eit_rate'), // Percentage * 100 (e.g., 100 for 1%)
 	taxNotes: text('tax_notes'), // Free text for user reference
 	taxConfigured: integer('tax_configured', { mode: 'boolean' }).default(false).notNull(), // Has user configured taxes?
 	ein: text('ein'), // Employer Identification Number (format: XX-XXXXXXX)
