@@ -147,7 +147,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		};
 	});
 
-	// Calculate totals for the fiscal year (excludes voided, not affected by other filters)
+	// Total count for the full fiscal year (unfiltered, for "X of Y" display)
 	const allFYTransactions = db
 		.select({
 			type: transactions.type,
@@ -158,25 +158,33 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		.where(and(...baseConditions))
 		.all();
 
+	const totalCount = allFYTransactions.length;
+	const filteredCount = transactionsWithTags.length;
+
+	// Calculate unfiltered FY totals (needed for tax calculations)
+	let fyTotalIncome = 0;
+	let fyTotalExpenses = 0;
+	for (const txn of allFYTransactions) {
+		if (txn.voidedAt) continue;
+		if (txn.type === 'income') fyTotalIncome += txn.amountCents;
+		else fyTotalExpenses += txn.amountCents;
+	}
+	const fyNetIncome = fyTotalIncome - fyTotalExpenses;
+
+	// Calculate display totals from the filtered transaction list
 	let totalIncome = 0;
 	let totalExpenses = 0;
 
-	for (const txn of allFYTransactions) {
-		// Skip voided transactions in totals
+	for (const txn of transactionsWithTags) {
 		if (txn.voidedAt) continue;
-
-		if (txn.type === 'income') {
-			totalIncome += txn.amountCents;
-		} else {
-			totalExpenses += txn.amountCents;
-		}
+		if (txn.type === 'income') totalIncome += txn.amountCents;
+		else totalExpenses += txn.amountCents;
 	}
 
 	const netIncome = totalIncome - totalExpenses;
 
-	// Count totals for display
-	const totalCount = allFYTransactions.length;
-	const filteredCount = transactionsWithTags.length;
+	// Check if any content filters are active (beyond FY/date/sort)
+	const hasContentFilters = !!(typeFilter || (payeeFilter && payeeFilter.trim()) || tagFilters.length > 0 || methodFilter);
 
 	// Query all tags for filters
 	const availableTags = db.select().from(tags).orderBy(tags.name).all();
@@ -262,7 +270,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		fiscalYear: number;
 	}[] = [];
 
-	if (settings.type === 'sole_prop' && settings.taxConfigured) {
+	if (settings.type === 'sole_prop' && settings.taxConfigured && !hasContentFilters) {
 		// Calculate tax rates from stored settings
 		const federalRate = (settings.federalBracketRate ?? 22) / 100;
 		let stateRate: number;
@@ -274,15 +282,15 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		}
 		const localEitRate = settings.localEitRate ? settings.localEitRate / 10000 : 0;
 
-		// Calculate taxes using net income
-		const selfEmploymentTax = calculateSelfEmploymentTax(netIncome);
+		// Calculate taxes using full FY net income (not affected by filters)
+		const selfEmploymentTax = calculateSelfEmploymentTax(fyNetIncome);
 		const federalTaxCents = calculateFederalIncomeTax(
-			netIncome,
+			fyNetIncome,
 			federalRate,
 			selfEmploymentTax.deductibleCents
 		);
-		const stateTaxCents = calculateStateIncomeTax(netIncome, stateRate);
-		const localEitCents = calculateLocalEIT(netIncome, localEitRate);
+		const stateTaxCents = calculateStateIncomeTax(fyNetIncome, stateRate);
+		const localEitCents = calculateLocalEIT(fyNetIncome, localEitRate);
 
 		const totalEstimatedTaxCents =
 			selfEmploymentTax.totalCents + federalTaxCents + stateTaxCents + localEitCents;
@@ -318,7 +326,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		const perQuarterCents = activeQuarters > 0 ? Math.round(remainingTaxCents / activeQuarters) : 0;
 
 		// Split recommended amounts: federal portion and state portion
-		const federalPortion = netIncome > 0 && totalEstimatedTaxCents > 0
+		const federalPortion = fyNetIncome > 0 && totalEstimatedTaxCents > 0
 			? (federalTaxCents + selfEmploymentTax.totalCents) / totalEstimatedTaxCents
 			: 0.7;
 

@@ -195,6 +195,12 @@ export const actions: Actions = {
 		);
 		if (sortedExisting !== sortedNew) changedFields.push('tags');
 
+		// Check for attachment changes
+		const removeAttachment = formData.get('removeAttachment') === 'true';
+		const newAttachment = formData.get('attachment') as File | null;
+		const hasAttachmentChange = removeAttachment || (newAttachment && newAttachment.size > 0);
+		if (hasAttachmentChange) changedFields.push('attachment');
+
 		// Only proceed if there are changes
 		if (changedFields.length === 0) {
 			return { success: true, message: 'No changes detected' };
@@ -251,9 +257,6 @@ export const actions: Actions = {
 		}
 
 		// Handle attachment changes
-		const removeAttachment = formData.get('removeAttachment') === 'true';
-		const newAttachment = formData.get('attachment') as File | null;
-
 		if (removeAttachment) {
 			// Delete existing attachment
 			deleteAttachment(params.workspace, existing.publicId);

@@ -12,6 +12,9 @@ export default defineConfig({
 	},
 	ssr: {
 		// Force bundling of CJS packages that don't work well with ESM interop
-		noExternal: ['@nozbe/microfuzz']
+		noExternal: ['@nozbe/microfuzz'],
+		optimizeDeps: {
+			include: ['@nozbe/microfuzz']
+		}
 	}
 });
