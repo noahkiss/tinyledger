@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	server: {
 		host: true,
+		port: 2726,
 		fs: {
 			allow: [process.env.DATA_DIR || './data']
 		}

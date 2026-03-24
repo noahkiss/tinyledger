@@ -183,8 +183,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	const netIncome = totalIncome - totalExpenses;
 
-	// Check if any content filters are active (beyond FY/date/sort)
-	const hasContentFilters = !!(typeFilter || (payeeFilter && payeeFilter.trim()) || tagFilters.length > 0 || methodFilter);
+	// Check if any content filters are active (beyond FY/sort)
+	const hasContentFilters = !!(typeFilter || (payeeFilter && payeeFilter.trim()) || tagFilters.length > 0 || methodFilter || fromFilter || toFilter);
 
 	// Query all tags for filters
 	const availableTags = db.select().from(tags).orderBy(tags.name).all();
