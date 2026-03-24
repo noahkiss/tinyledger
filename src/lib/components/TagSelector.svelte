@@ -137,6 +137,7 @@
 		<div class="flex items-center gap-2">
 			<div class="flex-1">
 				<Select
+					name="tag_{i}"
 					value={allocation.tagId}
 					options={availableTags.length === 0
 						? [{ value: 0, label: 'No tags available' }]
